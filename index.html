@@ -25,10 +25,10 @@
 
         .container {
             /* background-image: url(./thestars/.gif); */
-            /* background-color: #000311; */
+            background-color: #000311;
             width: 84vw;
             display: grid;
-            grid-template-rows: repeat(7, 6.2vh);
+            grid-template-rows: repeat(7, 9vh);
             gap: 1vh;
         }
 
@@ -48,8 +48,10 @@
         }
 
         .jbasictext,
-        .chlurl {
+        .chlurl,
+        a {
             font-family: "PT Sans", sans-serif;
+            color: #d9d9f6;
 
         }
 
@@ -63,9 +65,11 @@
 
         .jbasictext {
             font-size: 1.0vw;
-            color: #d3d0cf;
             letter-spacing: 0.1vw;
+        }
 
+        a {
+            text-decoration: none;
         }
 
         .jtitlefont {
@@ -74,17 +78,20 @@
             color: #20dff8;
             font-style: italic;
             letter-spacing: 1.2vw;
-            line-height: 1vw;
-            text-shadow: -0.2vw 0vh #f8f4f2,
-                0.1vw 0vh #a7fb0b;
+            line-height: 1433vh;
+            text-shadow: -0.2vw 0.1vh 0px #fa5706,
+                0.2vw .1vh #a7fb0b;
             z-index: 9;
         }
 
         #countdown {
-            color: #d4f20c;
+            color: #bbd50d;
+            text-shadow: -0.1vw 0.1vh 0px #07baf1,
+                0.1vw .1vh #a7fb0b;
             font-family: "Atkinson Hyperlegible Mono", sans-serif;
-            font-size: 6vw;
+            font-size: 5vw;
             letter-spacing: -0.4vw;
+            line-height: 5vh;
             z-index: 4;
         }
 
@@ -95,7 +102,7 @@
             margin: 0;
             width: 100vw;
             height: 100vh;
-            filter: saturate(2220%) invert();
+            filter: saturate(40%) invert();
             -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
             z-index: 2;
@@ -160,7 +167,7 @@
 
         <div class="div6">
             <div class="chlurl">
-                www.cubistheart.com
+                <a href="www.cubistheart.com">www.cubistheart.com</a>
             </div>
         </div>
 
