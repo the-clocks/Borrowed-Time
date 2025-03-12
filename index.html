@@ -24,12 +24,12 @@
         }
 
         .container {
-            background-image: url(./thestars.gif);
-            background-color: #bae36f;
-            width: 90vw;
+            /* background-image: url(./thestars/.gif); */
+            /* background-color: #000311; */
+            width: 84vw;
             display: grid;
-            grid-template-rows: repeat(7, 5.2vh);
-            gap: 8vh;
+            grid-template-rows: repeat(7, 6.2vh);
+            gap: 1vh;
         }
 
         .div0,
@@ -39,10 +39,11 @@
         .div4,
         .div5,
         .div6 {
-
+            background-color: #14160f;
             display: flex;
             align-items: center;
             justify-content: center;
+
 
         }
 
@@ -70,21 +71,21 @@
         .jtitlefont {
             font-family: "Oxanium", sans-serif;
             font-size: 8vw;
-            color: #35baf8;
+            color: #20dff8;
             font-style: italic;
             letter-spacing: 1.2vw;
             line-height: 1vw;
-            text-shadow: -0.1vw 0vh #f86808,
+            text-shadow: -0.2vw 0vh #f8f4f2,
                 0.1vw 0vh #a7fb0b;
-            z-index: 5;
+            z-index: 9;
         }
 
         #countdown {
-            color: #bae36f;
+            color: #d4f20c;
             font-family: "Atkinson Hyperlegible Mono", sans-serif;
             font-size: 6vw;
             letter-spacing: -0.4vw;
-            z-index: 2;
+            z-index: 4;
         }
 
         .fish {
@@ -94,10 +95,10 @@
             margin: 0;
             width: 100vw;
             height: 100vh;
-            filter: saturate(60%) invert() brightness(53%);
+            filter: saturate(2220%) invert();
             -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
-            z-index: 3;
+            z-index: 2;
         }
 
         .stars {
@@ -108,6 +109,7 @@
             opacity: 90%;
             width: 100vw;
             height: 100vh;
+            filter: saturate(300%);
             z-index: -3;
         }
     </style>
@@ -161,8 +163,6 @@
                 www.cubistheart.com
             </div>
         </div>
-
-
 
         <script>
             // Set the target date and time
