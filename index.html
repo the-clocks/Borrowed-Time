@@ -10,25 +10,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Oxanium:wght@200..800&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Gideon+Roman&family=Oxanium:wght@200..800&family=PT+Sans+Narrow:wght@400;700&display=swap"
         rel="stylesheet">
+
     <style>
         html,
         body {
             height: 100vh;
             width: 100vw;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             overflow: hidden;
+            margin: 0;
+            position: relative;
         }
 
         .container {
-            /* background-color: #000311; */
-            width: 84vw;
+            background-color: #0d0d46;
             display: grid;
             grid-template-rows: repeat(7, 9vh);
             gap: 0.5vh;
+            align-items: center;
+            justify-items: center;
+            text-align: center;
         }
 
         .div0,
@@ -38,29 +43,31 @@
         .div4,
         .div5,
         .div6 {
-            background-color: #14160f;
+            background-color: #1b084b;
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 100%;
+        }
+
+        .div2 {
+            margin: 66px;
         }
 
         .jbasictext,
-        .chlurl,
-        a {
+        .chlurl {
             font-family: "PT Sans", sans-serif;
             color: #d9d9f6;
+
         }
 
         .chlurl {
-            font-size: 4vh;
-            color: #d9d9f6;
-            /* letter-spacing: 0.4vw; */
+            font-size: 3.5vh;
             z-index: 7;
         }
 
         .jbasictext {
-            font-size: 3.0vh;
-            /* letter-spacing: 0.1vw; */
+            font-size: 2.50vh;
         }
 
         a {
@@ -69,25 +76,23 @@
 
         .jtitlefont {
             font-family: "Oxanium", sans-serif;
-            font-size: 2rem;
+            font-size: 11vh;
             color: #20dff8;
             font-style: italic;
-            /* letter-spacing: 1.2vw; */
             text-shadow:
-                -0.2vw 0.1vh #fa5706,
-                0.2vw .1vh #a7fb0b;
+                -0.2vw 0.1vh #ec6104,
+                0.2vw .1vh #ffffff;
             z-index: 9;
         }
 
         #countdown {
             color: #bbd50d;
             text-shadow:
-                -0.1vw 0.1vh 0px #07baf1,
+                -0.1vw 0.1vh 1px #07baf1,
                 0.1vw .1vh #a7fb0b;
             font-family: "Atkinson Hyperlegible Mono", sans-serif;
-            font-size: 5vh;
-            /* letter-spacing: -0.4vw; */
-            line-height: 5vh;
+            font-size: 8vh;
+            line-height: 8vh;
             z-index: 4;
         }
 
@@ -99,7 +104,6 @@
             width: 100vw;
             height: 100vh;
             filter: saturate(99%) invert();
-            -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
             z-index: 2;
         }
@@ -115,16 +119,48 @@
             filter: saturate(300%);
             z-index: -3;
         }
+
+        .motto {
+            font-family: "Gideon Roman", serif;
+            font-size: 1.5vh;
+            letter-spacing: 0.6vh;
+            width: 100vw;
+            position: absolute;
+            color: #d5d0d0;
+            text-align: center;
+            top: 0;
+        }
+
+        .mottoeng {
+            font-family: "PT Sans", sans-serif;
+            width: 100vw;
+            position: absolute;
+            bottom: 0;
+            color: #9f9d9d;
+            text-align: right;
+            font-size: 0.9rem;
+            /* background-color: rgb(14, 185, 114); */
+        }
+
+
+
+        .asterisk {
+            margin-right: 5px;
+            /* Space between asterisk and label */
+            font-size: 1.2em;
+            /* Size of the asterisk */
+            line-height: 0;
+            /* Adjust line height to position */
     </style>
 </head>
 
 <body>
     <img src="./thestars.gif" class="stars">
     <img src="./golffish.gif" class="fish">
-
-
+    <div class="motto">
+        PLUS⬩ARS⬩CITIUS⬩GRATIS⬩OMNI⬩TEMPORE⬩NAM⬩QUISQUE*
+    </div>
     <div class="container">
-
         <div class="div0">
             <div class="chlurl">
                 CUBIST HEART LABORATORIES
@@ -133,7 +169,7 @@
 
         <div class="div1">
             <div class="jbasictext">
-                reminds you that
+                gently reminds you that
             </div>
         </div>
 
@@ -166,32 +202,37 @@
                 www.cubistheart.com
             </div>
         </div>
+    </div>
+    <div class="mottoeng">
+        *More Free Art Faster for Everybody All the Time &nbsp;
+    </div>
 
-        <script>
-            // Set the target date and time
-            const targetDate = new Date("March 24, 2025 12:01:00").getTime();
+    <script>
+        // Set the target date and time
+        const targetDate = new Date("March 24, 2025 12:01:00").getTime();
 
-            // Update the countdown every second
-            const interval = setInterval(() => {
-                const now = new Date().getTime();
-                const distance = targetDate - now;
+        // Update the countdown every second
+        const interval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
 
-                // Calculate days, hours, minutes, and seconds
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Calculate days, hours, minutes, and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                // Display the result in the element with id="countdown"
-                document.getElementById("countdown").innerHTML =
-                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            // Display the result in the element with id="countdown"
+            document.getElementById("countdown").innerHTML =
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
 
-                // If the countdown is finished, display a message
-                if (distance < 0) {
-                    clearInterval(interval);
-                    document.getElementById("countdown").innerHTML = "EXPIRED";
-                }
-            }, 1000);
-        </script>
+            // If the countdown is finished, display a message
+            if (distance < 0) {
+                clearInterval(interval);
+                document.getElementById("countdown").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
+</body>
 
 </html>
