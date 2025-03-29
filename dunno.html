@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>BorrowedTime @ Cubist Heart Laboratories </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oxanium:wght@200..800&display=swap"
+        rel="stylesheet">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <style>
+        body {
+            margin: 0;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            font-family: "Noto Sans", sans-serif;
+            background-color: rgb(237, 239, 234);
+        }
+
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(7, 7f);
+            grid-column-gap: 0px;
+            grid-row-gap: 0px;
+            /* background-color: #bb1a1a; */
+        }
+
+        .div1 {
+            grid-area: 1 / 1 / 2 / 4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #dddbde;
+            width: 100%;
+
+        }
+
+        .div2 {
+            grid-area: 2 / 1 / 3 / 4;
+            /* background-color: rgb(244, 249, 225); */
+            width: 100%;
+        }
+
+        .div3 {
+            grid-area: 3 / 1 / 4 / 4;
+            background-color: rgb(246, 232, 223);
+            width: 100%;
+        }
+
+        .div4 {
+            grid-area: 4 / 1 / 5 / 3;
+            margin: 0.2rem;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            /* align-items: center; */
+            /* background-color: saddlebrown; */
+        }
+
+        .div5 {
+            grid-area: 4 / 3 / 5 / 4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0.4rem;
+            margin-top: 1rem;
+            /* background-color: saddlebrown; */
+        }
+        }
+
+        .div6 {
+            grid-area: 5 / 1 / 6 / 2;
+            background-color: rgb(255, 225, 0);
+        }
+
+        .div7 {
+            grid-area: 5 / 2 / 6 / 3;
+            background-color: rgb(31, 209, 40);
+        }
+
+        .div8 {
+            grid-area: 5 / 3 / 6 / 4;
+            background-color: rgb(255, 225, 0);
+        }
+
+        .div9 {
+            grid-area: 6 / 1 / 7 / 4;
+            background-color: rgb(31, 209, 40);
+        }
+
+        .div10 {
+            grid-area: 7 / 1 / 8 / 4;
+            background-color: rgb(255, 225, 0);
+        }
+
+
+
+        .full-page-image,
+        .full-page-image2,
+        .full-page-image3 {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            top: 0;
+            background-image: url("../../static/gears-13950.gif"), url("../../static/gears-13950_128.gif");
+            background-repeat: repeat;
+            background-position: center;
+            background-repeat: repeat;
+        }
+
+        .full-page-image {
+            left: 0;
+            background-size: 22vw 18vw;
+            opacity: 0.15;
+            filter: alpha(opacity=50);
+            z-index: 7;
+        }
+
+        .full-page-image2 {
+            background-size: 21vw 17vw;
+            z-index: 6;
+            opacity: 0.1;
+            filter: alpha(opacity=50);
+        }
+
+        .full-page-image3 {
+            background-size: 20vw 16vw;
+            z-index: 5;
+            opacity: 0.1;
+            filter: alpha(opacity=50);
+        }
+
+        .motto {
+            font-family: "Cinzel", serif;
+            /* position: absolute; */
+            /* left: 50%; */
+            /* top: 0.2rem; */
+            /* transform: translate(-50%, -50%); */
+            color: rgba(167, 124, 5, 0.877);
+            font-size: 0.3rem;
+            letter-spacing: 0.2rem;
+            margin: 0.2em;
+            ;
+        }
+
+        .mottohyphen {
+            font-family: "Cinzel", serif;
+            /* position: absolute; */
+            /* left: 50%; */
+            /* top: 0.2rem; */
+            /* transform: translate(-50%, -50%); */
+            color: rgba(167, 124, 5, 0.877);
+            font-size: 0.3rem;
+            letter-spacing: 0.2rem;
+        }
+
+
+        .chltitle {
+            font-family: "Noto Sans", sans-serif;
+            color: rgb(125, 157, 131);
+            font-size: 0.7rem;
+            line-height: 1.0rem;
+            margin: 0.2rem;
+            /* position: relative;
+            top: 6px;
+            left: 10px; */
+            /* letter-spacing: 0.05rem; */
+        }
+
+        .bttitle {
+            color: #140431;
+            text-shadow: #bb1a1a 0.02em 0.001rem 0px,
+                #ffffff -0.02em -0.02em 0px;
+            font-size: 2.7rem;
+            letter-spacing: -0.1rem;
+            /* position: relative; */
+            text-align: center;
+            font-style: italic;
+            line-height: 2.5rem;
+            z-index: 15;
+            /* position: relative;
+            top: -10px; */
+        }
+
+        .bt_newclockeveryday {
+            font-size: 0.6em;
+            line-height: 0.9rem;
+            font-weight: lighter;
+            color: #d2c9e0;
+            text-shadow:
+                #000000 -0.002em -0.001rem 1px;
+            letter-spacing: 0.03rem;
+            position: relative;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .todaysclockis {
+            font-size: 0.7rem;
+            line-height: 1.0rem;
+            position: relative;
+        }
+
+        a {
+            text-decoration: none;
+            color: #1751ce;
+        }
+
+        .clocklist {
+            margin-left: 0.9rem;
+            font-size: 0.6rem;
+            /* line-height: 0.9rem; */
+            position: relative;
+            z-index: 10;
+        }
+
+        .clocklistdate {
+            letter-spacing: 0.05rem;
+            align-items: center;
+            position: relative;
+        }
+
+        /* .clocklistname {
+            position: relative;
+
+        }  */
+
+        .aboutthis {
+            margin: 1vw;
+            font-size: 0.4rem;
+            line-height: 0.6rem;
+            /* letter-spacing: 0.05rem; */
+            /* position: relative; */
+        }
+
+        /* .pageviews {
+            font-size: 1.1rem;
+            line-height: 0.3rem;
+            position: relatve;
+            color: rgb(67, 67, 4);
+        } */
+        }
+
+        .clocklist {
+            margin-left: 0.5rem;
+            font-size: 0.6rem;
+            /* line-height: 0.9rem; */
+            position: relative;
+            z-index: 10;
+        }
+
+        .clocklistdate {
+            letter-spacing: 0.05rem;
+            align-items: center;
+            position: relative;
+        }
+
+        /* .clocklistname {
+            position: relative;
+
+        }  */
+
+        .aboutthis {
+            margin: 1vw;
+            font-size: 0.4rem;
+            line-height: 0.6rem;
+            /* letter-spacing: 0.05rem; */
+            /* position: relative; */
+        }
+
+        /* .pageviews {
+            font-size: 1.1rem;
+            line-height: 0.3rem;
+            position: relatve;
+            color: rgb(67, 67, 4);
+        } */
+
+        .copyright {
+            font-size: 0.3rem;
+            color: grey;
+            line-height: 0.3rem;
+            text-align: right;
+            bottom: 1px;
+            right: 1px;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="full-page-image"></div>
+    <div class="full-page-image2"></div>
+    <div class="full-page-image3"></div>
+    <div class="parent">
+        <div class="div1">
+            <div class="motto">
+                PLUS⬩ARS⬩CITIUS⬩OMNI⬩TEMPORE⬩NAM⬩QUISQUE*</div>
+        </div>
+        <div class="div2">
+            <div class="chltitle">Cubist Heart Laboratories
+            </div>
+        </div>
+        <div class="div3">
+            <div class="bttitle">BorrowedTime</div>
+            <div class="bt_newclockeveryday">
+                a new clock for you every day</div>
+        </div>
+        <div class="div4">
+            <div class="clocklist">
+                <div class="todaysclockis">Today is <span id="current-date"></span>. <br>Your clock for today is the
+
+                    <a href="prinary.html">
+                        Boring Clock.</a>
+                    <br>Tomorrow's clock will be the Random Color Clock.<BR>Until tomorrow, Good Day.
+                </div>
+                <div class="clocklist">
+                </div>
+
+                <table border="0" cellpadding="4" cellspacing="0">
+                    <tr>
+                        <td class="clocklistdate">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">3/30/25</td>
+                        <td>Random Color Clock</td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">3/29/25</td>
+                        <td><a href="space.html">Boring Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">---</td>
+                        <td>---</td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">---</td>
+                        <td>---</td>
+                    </tr>
+                    <!-- <tr>
+                        <td class="clocklistdate">3/29/25</td>
+                        <td>Test Run Clock</td>
+                    </tr> -->
+                    <tr>
+                        <td class="clocklistdate"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate"></td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate"></td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="div5">
+            <div class="aboutthis">About this Project:<BR>
+
+                <P>
+                <P></P>
+
+                About this Website:<BR>The standard chunk of Lorem Ipsum used since the 1500s is
+                reproduced below for those
+                interested.
+            </div>
+        </div>
+        <div class="div6"></div>
+        <div class="div7"></div>
+        <div class="div8"></div>
+        <div class="div9">
+            <!-- <div class="pageviews">number pageviews</div> -->
+        </div>
+        <div class="div10">
+            <div class="copyright">*More Art Faster All The Time For Everyone<BR>©2025 Cubist
+                Heart Laboratories. All rights
+                reserved.
+            </div>
+        </div>
+    </div>
+    <script>
+        function updateDate() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const today = new Date().toLocaleDateString('en-US', options);
+            document.getElementById("current-date").textContent = today;
+        }
+
+        window.onload = updateDate;
+    </script>
+</body>
+
+</html>
