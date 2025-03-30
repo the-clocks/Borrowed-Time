@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Boring Clock</title>
+    <title>Boring Clock - BorrowedTime</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -149,7 +149,7 @@
         .clockname {
             font-family: "Oxanium", serif;
             color: #edb125;
-            font-size: 1rem;
+            font-size: 4vw;
             position: fixed;
             bottom: 0;
             left: 50%;
@@ -157,15 +157,13 @@
             z-index: 6;
         }
 
+
         .easteregg {
-            font-family: "Oxanium", serif;
+            font-family: "Libre Baskerville", serif;
             color: transparent;
-            font-size: 0.1rem;
-            position: fixed;
-            top: 20%;
-            left: 70%;
-            transform: translateX(-50%);
-            z-index: 6;
+            font-size: 0.4rem;
+            z-index: 11;
+            position: relative right: 33px;
         }
 
         a {
@@ -186,53 +184,61 @@
         }
     </style>
 </head>
+<a href="#" onclick="openEgg(); return false;" class="easteregg">
+    our heads
+    are <br>round so our thoughts<br> can
+    change direction
+</a>
 
-<body>
-    <a href="https://youtu.be/vAlNvIB_EF4?feature=shared" class="easteregg" target="_blank" "width="400" height="200">our<br> heads<br> are <br>round so  our thoughts<br> can
-        changre direction</a>
-    <div class="chltitle">Cubist Heart Laboratories</div>
-    <div class="bttitle">BorrowedTime</div>
-    <a href="../index.html" class="clockname">Boring Clock</a>
-    <div class="fade-overlay1"> </div>
+<div class="chltitle">Cubist Heart Laboratories</div>
+<div class="bttitle">BorrowedTime</div>
+<a href="../index.html" class="clockname">Boring Clock</a>
+<!-- <div class="fade-overlay1"> </div>
     <div class="fade-overlay2"></div>
-    <img src="images/inst.webp" class="borer2">
+    <img src="images/inst.webp" class="borer2"> -->
 
 
-    <div class="clock">
-        <img src="images/hand2.webp" class="hand second-hand">
-        <img src="images/hand1.webp" class="hand hour-hand">
-        <img src="images/hand3.webp" class="hand min-hand">
-    </div>
+<div class="clock">
+    <img src="images/hand2.webp" class="hand second-hand">
+    <img src="images/hand1.webp" class="hand hour-hand">
+    <img src="images/hand3.webp" class="hand min-hand">
+</div>
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const secondHand = document.querySelector('.second-hand');
-            const minsHand = document.querySelector('.min-hand');
-            const hourHand = document.querySelector('.hour-hand');
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const secondHand = document.querySelector('.second-hand');
+        const minsHand = document.querySelector('.min-hand');
+        const hourHand = document.querySelector('.hour-hand');
 
-            function updateClock() {
-                const now = new Date();
+        function updateClock() {
+            const now = new Date();
 
-                const milliseconds = now.getMilliseconds();
-                const seconds = now.getSeconds() + milliseconds / 1000;
-                const minutes = now.getMinutes() + seconds / 60;
-                const hours = now.getHours() + minutes / 60;
+            const milliseconds = now.getMilliseconds();
+            const seconds = now.getSeconds() + milliseconds / 1000;
+            const minutes = now.getMinutes() + seconds / 60;
+            const hours = now.getHours() + minutes / 60;
 
-                const secondDegrees = ((seconds / 60) * 360) + 90;
-                const minuteDegrees = ((minutes / 60) * 360) + 90;
-                const hourDegrees = ((hours / 12) * 360) + 90;
+            const secondDegrees = ((seconds / 60) * 360) + 90;
+            const minuteDegrees = ((minutes / 60) * 360) + 90;
+            const hourDegrees = ((hours / 12) * 360) + 90;
 
-                secondHand.style.transform = `rotate(${secondDegrees}deg)`;
-                minsHand.style.transform = `rotate(${minuteDegrees}deg)`;
-                hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+            secondHand.style.transform = `rotate(${secondDegrees}deg)`;
+            minsHand.style.transform = `rotate(${minuteDegrees}deg)`;
+            hourHand.style.transform = `rotate(${hourDegrees}deg)`;
 
-                requestAnimationFrame(updateClock);
-            }
+            requestAnimationFrame(updateClock);
+        }
 
-            updateClock();
-        });
-    </script>
+        updateClock();
+    });
+</script>
+<script>
+    function openEgg() {
+        window.open("https://upload.wikimedia.org/wikipedia/en/b/be/Duchamp_LargeGlass.jpg", "_blank", "width = 300, height = 400");
+    }
+</script>
+
 </body>
 
 </html>
