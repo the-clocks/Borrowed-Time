@@ -174,27 +174,46 @@
             pointer-events: none;
         }
 
-        .clockname {
-            font-family: "Oxanium", serif;
-            color: #edb125;
-            font-size: 4vw;
-            position: fixed;
-            bottom: 0;
+
+
+
+
+        .date-container {
+             color: #edb125;
+            position: absolute;
+            bottom: 5px;
             left: 50%;
             transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
             z-index: 6;
         }
 
-        .dates {
+        .clockname {
+            font-family: "Oxanium", serif;
             position: fixed;
-            bottom: 0;
-            line-height: 3vw;
-            right: 5px;
-            color: #edb125;
-            font-size: 3vw;
-            z-index: 6;
-            font-family: "Nanum Gothic Coding", monospace;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
         }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
     </style>
 </head>
 <a href="#" onclick="openEgg(); return false;" class="easteregg">
