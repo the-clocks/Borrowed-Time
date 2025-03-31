@@ -142,15 +142,25 @@
         }
 
         .dates {
-            position: fixed;
-            bottom: 0;
-            /* line-height: 1.2rem; */
-            left: 5px;
             color: #edb125;
             font-size: 3vw;
             z-index: 6;
             font-family: "Nanum Gothic Coding", monospace;
         }
+        
+        .dateleft {
+            position: fixed;
+            bottom: 0;
+            /* line-height: 1.2rem; */
+            left: 5px;
+        }
+        .dateright {
+            position: fixed;
+            bottom: 0;
+            /* line-height: 1.2rem; */
+            right: 5px;
+        }
+        
     </style>
 </head>
 
@@ -178,8 +188,9 @@
         <div class="hand second" id="second"></div>
 
     </div>
-
-    <a href="../boring/" class="dates">03/29/25</div>
+<div class="dates">
+    <a href="../boring/" class="dateleft">03/29/25</div>
+     <a href="../deepspace/" class="dateright">03/31/25</div>
         <a href="../index.html" class="clockname">Random Color Clock</a>
 
 
