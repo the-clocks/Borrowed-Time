@@ -3,14 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
-      <title>Random Color Clock - BorrowedTime</title>
+    <title>Random Color Clock - BorrowedTime</title>
     <style>
         body {
             display: flex;
@@ -90,8 +89,6 @@
             font-family: "Noto Sans", sans-serif;
             color: rgb(201, 196, 158);
             font-size: 0.4rem;
-            /* line-height: 1.0rem; */
-            /* margin: 0.1em; */
             position: absolute;
             top: 1px;
             right: 1px;
@@ -131,37 +128,36 @@
         }
 
         .clockname {
+            position: relative;
             font-family: "Oxanium", serif;
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: "Oxanium", serif;
-            color: #edb125;
             font-size: 4vw;
+            line-height: 4vw;
             z-index: 6;
         }
 
-        .dates {
+        .date-container {
             color: #edb125;
-            font-size: 3vw;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            display: flex;
+            justify-content: space-between;
             z-index: 6;
             font-family: "Nanum Gothic Coding", monospace;
+            font-size: 3vw;
         }
-        
+
         .dateleft {
-            position: fixed;
-            bottom: 0;
-            /* line-height: 1.2rem; */
-            left: 5px;
+            position: relative;
+            left: 0;
         }
+
         .dateright {
-            position: fixed;
-            bottom: 0;
-            /* line-height: 1.2rem; */
-            right: 5px;
+            position: relative;
+            right: 0;
         }
-        
     </style>
 </head>
 
@@ -189,90 +185,91 @@
         <div class="hand second" id="second"></div>
 
     </div>
-
-    <a href="../boring/" class="dates" class="dateleft">03/29/25</a></div>
-    <a href="../deepspace/" class="dates" class="dateright">03/31/25</a></div>
-     
+    <div class="date-container">
+        <a href="../boring/" class="dates dateleft">03/29/25</a>
         <a href="../index.html" class="clockname">Random Color Clock</a>
-    
-        <a href="#" onclick="openEgg(); return false;" class="easteregg">
-            “Today everything exists<br> to end in a photograph.”<br> -Sontag
-        </a>
+        <a href="../deepspace/" class="dates dateright">03/31/25</a>
+    </div>
 
-        <script>
-            function updateClock() {
-                const now = new Date();
-                const hours = now.getHours() % 12;
-                const minutes = now.getMinutes();
-                const seconds = now.getSeconds();
 
-                const hourDeg = (hours + minutes / 60) * 30;
-                const minuteDeg = (minutes + seconds / 60) * 6;
-                const secondDeg = seconds * 6;
+    <a href="#" onclick="openEgg(); return false;" class="easteregg">
+        “Today everything exists<br> to end in a photograph.”<br> -Sontag
+    </a>
 
-                document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-                document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
-                document.getElementById("second").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
 
-                document.getElementById("hour").style.background = getRandomColor();
-                document.getElementById("minute").style.background = getRandomColor();
-                document.getElementById("second").style.background = getRandomColor();
+            const hourDeg = (hours + minutes / 60) * 30;
+            const minuteDeg = (minutes + seconds / 60) * 6;
+            const secondDeg = seconds * 6;
 
-                changeDotColors();
-                changeSquareColors();  
-                document.body.style.backgroundColor = getRandomColor();
+            document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+            document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.getElementById("second").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+
+            document.getElementById("hour").style.background = getRandomColor();
+            document.getElementById("minute").style.background = getRandomColor();
+            document.getElementById("second").style.background = getRandomColor();
+
+            changeDotColors();
+            changeSquareColors();
+            document.body.style.backgroundColor = getRandomColor();
+        }
+
+        function getRandomColor() {
+            return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+        }
+
+        function createDots() {
+            const johndots = document.getElementById("johndots");
+            johndots.innerHTML = "";
+            const clockSize = Math.min(window.innerWidth, window.innerHeight) * 0.5;
+            const radius = clockSize * 0.4;
+            const centerX = clockSize / 2;
+            const centerY = clockSize / 2;
+            const totalDots = 12;
+
+            for (let i = 0; i < totalDots; i++) {
+                const angle = (i * 30) * (Math.PI / 180);
+                const x = centerX + radius * Math.cos(angle) - clockSize * 0.04;
+                const y = centerY + radius * Math.sin(angle) - clockSize * 0.04;
+
+                const dot = document.createElement("div");
+                dot.className = "dot";
+                dot.style.left = `${x}px`;
+                dot.style.top = `${y}px`;
+                johndots.appendChild(dot);
             }
+        }
 
-            function getRandomColor() {
-                return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-            }
+        function changeDotColors() {
+            document.querySelectorAll(".dot").forEach(dot => {
+                dot.style.backgroundColor = getRandomColor();
+            });
+        }
 
-            function createDots() {
-                const johndots = document.getElementById("johndots");
-                johndots.innerHTML = "";
-                const clockSize = Math.min(window.innerWidth, window.innerHeight) * 0.5;
-                const radius = clockSize * 0.4;
-                const centerX = clockSize / 2;
-                const centerY = clockSize / 2;
-                const totalDots = 12;
+        function changeSquareColors() {
+            document.querySelectorAll(".square").forEach(square => {
+                square.style.backgroundColor = getRandomColor();
+            });
+        }
 
-                for (let i = 0; i < totalDots; i++) {
-                    const angle = (i * 30) * (Math.PI / 180);
-                    const x = centerX + radius * Math.cos(angle) - clockSize * 0.04;
-                    const y = centerY + radius * Math.sin(angle) - clockSize * 0.04;
+        window.addEventListener("resize", createDots);
+        createDots();
+        setInterval(updateClock, 1000);
+        updateClock();
 
-                    const dot = document.createElement("div");
-                    dot.className = "dot";
-                    dot.style.left = `${x}px`;
-                    dot.style.top = `${y}px`;
-                    johndots.appendChild(dot);
-                }
-            }
+    </script>
 
-            function changeDotColors() {
-                document.querySelectorAll(".dot").forEach(dot => {
-                    dot.style.backgroundColor = getRandomColor();
-                });
-            }
-
-            function changeSquareColors() {
-                document.querySelectorAll(".square").forEach(square => {
-                    square.style.backgroundColor = getRandomColor();
-                });
-            }
-
-            window.addEventListener("resize", createDots);
-            createDots();
-            setInterval(updateClock, 1000);
-            updateClock();
-
-        </script>
-
-        <script>
-            function openEgg() {
-                window.open("https://upload.wikimedia.org/wikipedia/commons/5/5d/%D0%94%D0%B6%D1%83%D0%B7%D0%B5%D0%BF%D0%BF%D0%B5_%D0%90%D1%80%D1%87%D0%B8%D0%BC%D0%B1%D0%BE%D0%BB%D1%8C%D0%B4%D0%BE._%D0%92%D0%BE%D0%B4%D0%B0_%281566%29.jpg", "_blank", "width = 300, height = 400");
-            }
-        </script>
+    <script>
+        function openEgg() {
+            window.open("https://upload.wikimedia.org/wikipedia/commons/5/5d/%D0%94%D0%B6%D1%83%D0%B7%D0%B5%D0%BF%D0%BF%D0%B5_%D0%90%D1%80%D1%87%D0%B8%D0%BC%D0%B1%D0%BE%D0%BB%D1%8C%D0%B4%D0%BE._%D0%92%D0%BE%D0%B4%D0%B0_%281566%29.jpg", "_blank", "width = 300, height = 400");
+        }
+    </script>
 
 </body>
 
