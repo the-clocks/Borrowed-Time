@@ -50,6 +50,8 @@
             flex: 1;
             align-items: center;
             justify-content: center;
+            opacity: 0;
+            transition: opacity 2s ease-in;
         }
 
         .title-container {
@@ -444,6 +446,13 @@
             }
 
         }, 10);
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(() => {
+                document.body.style.opacity = 1;
+            }, 1000);
+        });
     </script>
 
 </body>
