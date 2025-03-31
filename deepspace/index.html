@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800" rel="stylesheet">
+    <title>
+        Deep Space Clock - BorrowedTime
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+    </script>
+
+    <style>
+        :root {
+            --dot-size: 4vmin;
+        }
+
+        html {
+            background: url(./images/stars.webp) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        body {
+            background: url(./images/437cb739d14912acd84d65ee853b9067.gif) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #clock {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 10%;
+            gap: 3vw;
+        }
+
+        .digit {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            /* gap: 1vw; */
+            width: 13vw;
+            height: 44vh;
+        }
+
+        .digit div {
+            height: var(--dot-size);
+            width: var(--dot-size);
+            background-image: url('./images/sdswrf.gif');
+            background-size: 220% 250%;
+            transition: all 0.9s ease-in-out;
+        }
+
+        svg {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .full-page-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./images/974.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 3;
+            opacity: 0.2;
+            filter: alpha(opacity=50);
+        }
+
+        .full-page-image2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./images/OzJtZ3Z.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 6;
+            opacity: 0.35;
+            filter: alpha(opacity=50);
+        }
+
+        .full-page-image3 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./images/2556744_d34a4.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 5;
+            opacity: 0.15;
+            filter: alpha(opacity=50);
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            color: #259ded;
+            font-size: 4vw;
+            z-index: 6;
+        }
+
+        .j-transform {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 32vh;
+            transform-style: preserve-3d;
+            transform-origin: -48% 90%;
+            transform: rotateX(-40deg) rotateY(-25deg) rotateZ(-30deg) translate3d(-6px, -36px, -14px) scaleX(0.85) scaleY(0.85) skew(1deg, -6deg);
+        }
+
+        .dates {
+            position: fixed;
+            bottom: 0;
+            /* line-height: 1.2rem; */
+            left: 5px;
+            color: #259ded;
+            font-size: 3vw;
+            z-index: 6;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+    </style>
+</head>
+
+<body>
+
+    <svg version=" 1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        viewBox="0 0 195 20" xml:space="preserve" preserveAspectRatio="none">
+
+        <text transform="matrix(1 0 0 1 0 18)">
+            <div class="j-transform">
+                <div id="clock">
+                    <div id="hour1" class="digit"></div>&nbsp;
+                    <div id="hour2" class="digit"></div>&nbsp;
+                    &nbsp;
+                    <div id="minute1" class="digit"></div>&nbsp;
+                    <div id="minute2" class="digit"></div>&nbsp;
+                    &nbsp;
+                    <div id="second1" class="digit"></div>&nbsp;
+                    <div id="second2" class="digit"></div>&nbsp;
+                </div>
+            </div>
+        </text>
+
+    </svg>
+
+    <div class="full-page-image"></div>
+    <div class="full-page-image2"></div>
+    <div class="full-page-image3"></div>
+
+
+    <script>let shownSeconds = -1;
+        let shownMinutes = -1
+        let shownHours = -1;
+
+        let zero = [
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 0, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ];
+
+        let one = [
+            [1, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [1, 1, 1]
+        ];
+
+        let two = [
+            [1, 1, 1],
+            [0, 0, 1],
+            [1, 1, 1],
+            [1, 0, 0],
+            [1, 1, 1]
+        ];
+
+        let three = [
+            [1, 1, 1],
+            [0, 0, 1],
+            [1, 1, 1],
+            [0, 0, 1],
+            [1, 1, 1]
+        ];
+
+        let four = [
+            [1, 0, 1],
+            [1, 0, 1],
+            [1, 1, 1],
+            [0, 0, 1],
+            [0, 0, 1]
+        ];
+
+        let five = [
+            [1, 1, 1],
+            [1, 0, 0],
+            [1, 1, 1],
+            [0, 0, 1],
+            [1, 1, 1]
+        ];
+
+        let six = [
+            [1, 0, 0],
+            [1, 0, 0],
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ];
+
+        let seven = [
+            [1, 1, 1],
+            [0, 0, 1],
+            [0, 0, 1],
+            [0, 0, 1],
+            [0, 0, 1]
+        ];
+
+        let eight = [
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ];
+
+        let nine = [
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1],
+            [0, 0, 1],
+            [0, 0, 1]
+        ];
+
+        const digit = {
+            //----------------------------------------------------//
+            //                                                    //
+            //----------------------------------------------------//
+
+            "0": zero,
+            "1": one,
+            "2": two,
+            "3": three,
+            "4": four,
+            "5": five,
+            "6": six,
+            "7": seven,
+            "8": eight,
+            "9": nine
+        }
+
+        function makeDigit(target, digit) {
+
+            let pixels = document.querySelectorAll("#" + target.id + " > div");
+            if (pixels) {
+                for (let i = 0; i < pixels.length; i++) {
+                    pixels[i].style.width = "0em";
+                    pixels[i].style.height = "0rem";
+                }
+            }
+
+            setTimeout(function () {
+                target.innerHTML = "";
+                for (let i = 0; i < digit.length; i++) {
+                    for (let j = 0; j < digit[0].length; j++) {
+
+                        if (digit[i][j]) {
+                            let div = document.createElement("div");
+                            div.style.gridRow = `${i + 1} / ${i + 2}`;
+                            div.style.gridColumn = `${j + 1} / ${j + 2}`;
+                            target.appendChild(div);
+                        }
+
+                    }
+                }
+            }, 760);
+
+        }
+
+        function hasFirstDigitChanged(shown, now) {
+            return Math.floor(shown / 10) != Math.floor(Number(now) / 10);
+        }
+
+        let hour1 = document.getElementById("hour1");
+        let hour2 = document.getElementById("hour2");
+        let minute1 = document.getElementById("minute1");
+        let minute2 = document.getElementById("minute2");
+        let second1 = document.getElementById("second1");
+        let second2 = document.getElementById("second2");
+
+
+        let hourNow, minuteNow, secondNow, time;
+
+        makeDigit(hour1, nine);
+        let refreshInterval = setInterval(function () {
+
+            time = new Date();
+            hourNow = time.getHours().toString(10).padStart(2, 0);
+            minuteNow = time.getMinutes().toString(10).padStart(2, 0);
+            secondNow = time.getSeconds().toString(10).padStart(2, 0);
+
+            if (shownHours !== hourNow) {
+
+                if (hasFirstDigitChanged(shownHours, hourNow)) {
+                    makeDigit(hour1, digit[hourNow[0]]);
+                }
+
+                makeDigit(hour2, digit[hourNow[1]]);
+
+                shownHours = hourNow;
+            }
+
+            if (shownMinutes !== minuteNow) {
+                if (hasFirstDigitChanged(shownMinutes, minuteNow)) {
+                    makeDigit(minute1, digit[minuteNow[0]]);
+                }
+
+                makeDigit(minute2, digit[minuteNow[1]]);
+
+                shownMinutes = minuteNow;
+            }
+
+            if (shownSeconds !== secondNow) {
+
+                if (hasFirstDigitChanged(shownSeconds, secondNow)) {
+                    makeDigit(second1, digit[secondNow[0]]);
+                }
+
+                makeDigit(second2, digit[secondNow[1]]);
+
+                shownSeconds = secondNow;
+            }
+
+        }, 10);
+    </script>
+    <a href="./random/index.html" class="dates">03/28/25</div>
+        <a href="../index.html" class="clockname">Deep Space Clock</a>
+
+</body>
+
+</html>
