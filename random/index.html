@@ -1,120 +1,168 @@
 <!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
-    <title>Random Color Clock - BorrowedTime</title>
+    <title>
+        Deep Space Clock - BorrowedTime
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
+    </script>
+
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f7050d;
-            transition: background-color 2s;
+        :root {
+            --dot-size: 4vmin;
+        }
+
+        html {
+            background-color: black;
+            background: url(./images/stars.webp) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
             overflow: hidden;
         }
 
-        .clock {
-            position: relative;
-            width: 50vmin;
-            height: 50vmin;
-
+        body {
+            background: url(./images/437cb739d14912acd84d65ee853b9067.gif) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 2s ease-in;
         }
 
-        .hand {
+        .title-container {
+            color: #880382;
+            text-shadow: #4e8477 1px 0px;
             position: absolute;
-            bottom: 50%;
+            top: 5px;
             left: 50%;
-            transform-origin: bottom;
-            transform: translateX(-50%) rotate(0deg);
-            z-index: 2;
-        }
-
-        .second {
-            width: 3vmin;
-            height: 200%;
-            background: red;
-            transition: background-color 1s;
-            z-index: 5;
-        }
-
-        .minute {
-            width: 8vmin;
-            height: 92%;
-            background: green;
-            transition: background-color 1s;
-            z-index: 4;
-        }
-
-        .hour {
-            width: 11vmin;
-            height: 50%;
-            background: blue;
-            transition: background-color 1s;
-            z-index: 3;
-        }
-
-        .dot {
-            position: absolute;
-            width: 3vw;
-            height: 3vw;
-            transition: background-color 1s;
-            z-index: 1;
-        }
-
-        .square {
-            position: absolute;
-            width: 7vw;
-            height: 7vw;
-            top: calc(50% + (calc(50vh - 9vh) * cos(var(--angle))));
-            left: calc(50% + (calc(50vw - 7vw) * sin(var(--angle))));
-            transform: translate(-50%, -50%);
-            background-color: #3498db;
-            transition: background-color 1s;
-            z-index: 2;
-        }
-
-        .hidden {
-            visibility: hidden;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
         }
 
         .chltitle {
-            font-family: "Noto Sans", sans-serif;
-            color: rgb(201, 196, 158);
-            font-size: 0.4rem;
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
             position: absolute;
             top: 1px;
             right: 1px;
-            letter-spacing: 0.02rem;
+            letter-spacing: 0.1vh;
         }
 
         .bttitle {
-            color: #c28b4c;
+            position: relative;
+            left: 0;
             font-family: "Oxanium", serif;
-            font-size: 0.5rem;
-            position: absolute;
+            font-size: 2.8vh;
             font-style: italic;
             z-index: 15;
-            top: 1px;
-            left: 1px;
+            letter-spacing: -0.1vh;
         }
 
-        .easteregg {
-            font-family: "Libre Baskerville", serif;
-            color: transparent;
-            font-size: 0.4rem;
-            z-index: 11;
+
+        #clock {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: absolute;
-            right: 12px;
-            top: 35px;
+            top: 10%;
+            gap: 3vw;
         }
+
+        .digit {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            /* gap: 1vw; */
+            width: 13vw;
+            height: 44vh;
+        }
+
+        .digit div {
+            height: var(--dot-size);
+            width: var(--dot-size);
+            background-image: url('./images/sdswrf.gif');
+            background-size: 220% 250%;
+            transition: all 0.9s ease-in-out;
+        }
+
+        svg {
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .full-page-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./images/974.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 3;
+            opacity: 0.2;
+            filter: alpha(opacity=50);
+        }
+
+        .full-page-image2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./images/OzJtZ3Z.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 6;
+            opacity: 0.35;
+            filter: alpha(opacity=50);
+        }
+
+        .full-page-image3 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./images/2556744_d34a4.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 5;
+            opacity: 0.15;
+            filter: alpha(opacity=50);
+        }
+
 
         a {
             color: inherit;
@@ -127,34 +175,51 @@
             text-decoration: none;
         }
 
-        .clockname {
+
+        .j-transform {
             position: relative;
-            font-family: "Oxanium", serif;
-            font-size: 4vw;
-            line-height: 4vw;
-            z-index: 6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 32vh;
+            transform-style: preserve-3d;
+            transform-origin: -48% 90%;
+            transform: rotateX(-40deg) rotateY(-25deg) rotateZ(-30deg) translate3d(-6px, -36px, -14px) scaleX(0.85) scaleY(0.85) skew(1deg, -6deg);
         }
 
         .date-container {
-            color: #edb125;
+            color: #a5a6f6;
             position: absolute;
             bottom: 5px;
             left: 50%;
             transform: translateX(-50%);
-            width: 95%;
+            width: 98%;
             display: flex;
-            justify-content: space-between;
+            /* justify-content: space-between; */
             z-index: 6;
-            font-family: "Nanum Gothic Coding", monospace;
-            font-size: 3vw;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
         }
 
         .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
             position: relative;
             left: 0;
         }
 
         .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
             position: relative;
             right: 0;
         }
@@ -162,113 +227,231 @@
 </head>
 
 <body>
-    <div class="chltitle">Cubist Heart Laboratories</div>
-    <div class="bttitle">BorrowedTime</div>
-
-    <div class="clock">
-        <div class="square" style="--angle: 0deg;"></div>
-        <div class="square" style="--angle: 30deg;"></div>
-        <div class="square" style="--angle: 60deg;"></div>
-        <div class="square" style="--angle: 90deg;"></div>
-
-        <div class="square" style="--angle: 120deg;"></div>
-        <div class="square" style="--angle: 150deg;"></div>
-        <div class="square" style="--angle: 180deg;"></div>
-        <div class="square" style="--angle: 210deg;"></div>
-        <div class="square" style="--angle: 240deg;"></div>
-        <div class="square" style="--angle: 270deg;"></div>
-        <div class="square" style="--angle: 300deg;"></div>
-        <div class="square" style="--angle: 330deg;"></div>
-        <div class="johndots" id="johndots"></div>
-        <div class="hand hour" id="hour"></div>
-        <div class="hand minute" id="minute"></div>
-        <div class="hand second" id="second"></div>
-
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
     </div>
+    <div class="full-page-image"></div>
+    <div class="full-page-image2"></div>
+    <div class="full-page-image3"></div>
+
+    <svg version=" 1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        viewBox="0 0 195 20" xml:space="preserve" preserveAspectRatio="none">
+
+        <text transform="matrix(1 0 0 1 0 18)">
+            <div class="j-transform">
+                <div id="clock">
+                    <div id="hour1" class="digit"></div>&nbsp;
+                    <div id="hour2" class="digit"></div>&nbsp;
+                    &nbsp;
+                    <div id="minute1" class="digit"></div>&nbsp;
+                    <div id="minute2" class="digit"></div>&nbsp;
+                    &nbsp;
+                    <div id="second1" class="digit"></div>&nbsp;
+                    <div id="second2" class="digit"></div>&nbsp;
+                </div>
+            </div>
+        </text>
+
+    </svg>
+
     <div class="date-container">
-        <a href="../boring/" class="dates dateleft">03/29/25</a>
-        <a href="../index.html" class="clockname">Random Color Clock</a>
-        <a href="../deepspace/" class="dates dateright">03/31/25</a>
+        <a href="../random/" class="dates dateleft">03/30/25</a>
+        <a href="../index.html" class="clockname">Deep Space Clock</a>
+        <!-- <a href="../deepspace/" class="dates dateright"></a> -->
     </div>
 
+    <script>let shownSeconds = -1;
+        let shownMinutes = -1
+        let shownHours = -1;
 
-    <a href="#" onclick="openEgg(); return false;" class="easteregg">
-        “Today everything exists<br> to end in a photograph.”<br> -Sontag
-    </a>
+        let zero = [
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 0, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ];
 
-    <script>
-        function updateClock() {
-            const now = new Date();
-            const hours = now.getHours() % 12;
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
+        let one = [
+            [1, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [0, 1, 0],
+            [1, 1, 1]
+        ];
 
-            const hourDeg = (hours + minutes / 60) * 30;
-            const minuteDeg = (minutes + seconds / 60) * 6;
-            const secondDeg = seconds * 6;
+        let two = [
+            [1, 1, 1],
+            [0, 0, 1],
+            [1, 1, 1],
+            [1, 0, 0],
+            [1, 1, 1]
+        ];
 
-            document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-            document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
-            document.getElementById("second").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+        let three = [
+            [1, 1, 1],
+            [0, 0, 1],
+            [1, 1, 1],
+            [0, 0, 1],
+            [1, 1, 1]
+        ];
 
-            document.getElementById("hour").style.background = getRandomColor();
-            document.getElementById("minute").style.background = getRandomColor();
-            document.getElementById("second").style.background = getRandomColor();
+        let four = [
+            [1, 0, 1],
+            [1, 0, 1],
+            [1, 1, 1],
+            [0, 0, 1],
+            [0, 0, 1]
+        ];
 
-            changeDotColors();
-            changeSquareColors();
-            document.body.style.backgroundColor = getRandomColor();
+        let five = [
+            [1, 1, 1],
+            [1, 0, 0],
+            [1, 1, 1],
+            [0, 0, 1],
+            [1, 1, 1]
+        ];
+
+        let six = [
+            [1, 0, 0],
+            [1, 0, 0],
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ];
+
+        let seven = [
+            [1, 1, 1],
+            [0, 0, 1],
+            [0, 0, 1],
+            [0, 0, 1],
+            [0, 0, 1]
+        ];
+
+        let eight = [
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ];
+
+        let nine = [
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1],
+            [0, 0, 1],
+            [0, 0, 1]
+        ];
+
+        const digit = {
+            //----------------------------------------------------//
+            //                                                    //
+            //----------------------------------------------------//
+
+            "0": zero,
+            "1": one,
+            "2": two,
+            "3": three,
+            "4": four,
+            "5": five,
+            "6": six,
+            "7": seven,
+            "8": eight,
+            "9": nine
         }
 
-        function getRandomColor() {
-            return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-        }
+        function makeDigit(target, digit) {
 
-        function createDots() {
-            const johndots = document.getElementById("johndots");
-            johndots.innerHTML = "";
-            const clockSize = Math.min(window.innerWidth, window.innerHeight) * 0.5;
-            const radius = clockSize * 0.4;
-            const centerX = clockSize / 2;
-            const centerY = clockSize / 2;
-            const totalDots = 12;
-
-            for (let i = 0; i < totalDots; i++) {
-                const angle = (i * 30) * (Math.PI / 180);
-                const x = centerX + radius * Math.cos(angle) - clockSize * 0.04;
-                const y = centerY + radius * Math.sin(angle) - clockSize * 0.04;
-
-                const dot = document.createElement("div");
-                dot.className = "dot";
-                dot.style.left = `${x}px`;
-                dot.style.top = `${y}px`;
-                johndots.appendChild(dot);
+            let pixels = document.querySelectorAll("#" + target.id + " > div");
+            if (pixels) {
+                for (let i = 0; i < pixels.length; i++) {
+                    pixels[i].style.width = "0em";
+                    pixels[i].style.height = "0rem";
+                }
             }
+
+            setTimeout(function () {
+                target.innerHTML = "";
+                for (let i = 0; i < digit.length; i++) {
+                    for (let j = 0; j < digit[0].length; j++) {
+
+                        if (digit[i][j]) {
+                            let div = document.createElement("div");
+                            div.style.gridRow = `${i + 1} / ${i + 2}`;
+                            div.style.gridColumn = `${j + 1} / ${j + 2}`;
+                            target.appendChild(div);
+                        }
+
+                    }
+                }
+            }, 760);
+
         }
 
-        function changeDotColors() {
-            document.querySelectorAll(".dot").forEach(dot => {
-                dot.style.backgroundColor = getRandomColor();
-            });
+        function hasFirstDigitChanged(shown, now) {
+            return Math.floor(shown / 10) != Math.floor(Number(now) / 10);
         }
 
-        function changeSquareColors() {
-            document.querySelectorAll(".square").forEach(square => {
-                square.style.backgroundColor = getRandomColor();
-            });
-        }
+        let hour1 = document.getElementById("hour1");
+        let hour2 = document.getElementById("hour2");
+        let minute1 = document.getElementById("minute1");
+        let minute2 = document.getElementById("minute2");
+        let second1 = document.getElementById("second1");
+        let second2 = document.getElementById("second2");
 
-        window.addEventListener("resize", createDots);
-        createDots();
-        setInterval(updateClock, 1000);
-        updateClock();
 
+        let hourNow, minuteNow, secondNow, time;
+
+        makeDigit(hour1, nine);
+        let refreshInterval = setInterval(function () {
+
+            time = new Date();
+            hourNow = time.getHours().toString(10).padStart(2, 0);
+            minuteNow = time.getMinutes().toString(10).padStart(2, 0);
+            secondNow = time.getSeconds().toString(10).padStart(2, 0);
+
+            if (shownHours !== hourNow) {
+
+                if (hasFirstDigitChanged(shownHours, hourNow)) {
+                    makeDigit(hour1, digit[hourNow[0]]);
+                }
+
+                makeDigit(hour2, digit[hourNow[1]]);
+
+                shownHours = hourNow;
+            }
+
+            if (shownMinutes !== minuteNow) {
+                if (hasFirstDigitChanged(shownMinutes, minuteNow)) {
+                    makeDigit(minute1, digit[minuteNow[0]]);
+                }
+
+                makeDigit(minute2, digit[minuteNow[1]]);
+
+                shownMinutes = minuteNow;
+            }
+
+            if (shownSeconds !== secondNow) {
+
+                if (hasFirstDigitChanged(shownSeconds, secondNow)) {
+                    makeDigit(second1, digit[secondNow[0]]);
+                }
+
+                makeDigit(second2, digit[secondNow[1]]);
+
+                shownSeconds = secondNow;
+            }
+
+        }, 10);
     </script>
-
     <script>
-        function openEgg() {
-            window.open("https://upload.wikimedia.org/wikipedia/commons/5/5d/%D0%94%D0%B6%D1%83%D0%B7%D0%B5%D0%BF%D0%BF%D0%B5_%D0%90%D1%80%D1%87%D0%B8%D0%BC%D0%B1%D0%BE%D0%BB%D1%8C%D0%B4%D0%BE._%D0%92%D0%BE%D0%B4%D0%B0_%281566%29.jpg", "_blank", "width = 300, height = 400");
-        }
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(() => {
+                document.body.style.opacity = 1;
+            }, 1000);
+        });
     </script>
 
 </body>
