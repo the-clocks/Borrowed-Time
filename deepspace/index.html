@@ -9,13 +9,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
-      <title>
+    <title>
         Deep Space Clock - BorrowedTime
     </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -32,6 +31,7 @@
         }
 
         html {
+            background-color: black;
             background: url(./images/stars.webp) no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
@@ -51,6 +51,40 @@
             align-items: center;
             justify-content: center;
         }
+
+        .title-container {
+            color: #880382;
+            text-shadow: #0f9292 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 3vw;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vw;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 3.5vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+
+        }
+
 
         #clock {
             display: flex;
@@ -140,17 +174,6 @@
             text-decoration: none;
         }
 
-        .clockname {
-            font-family: "Oxanium", serif;
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: "Oxanium", serif;
-            color: #259ded;
-            font-size: 4vw;
-            z-index: 6;
-        }
 
         .j-transform {
             position: relative;
@@ -164,45 +187,52 @@
             transform: rotateX(-40deg) rotateY(-25deg) rotateZ(-30deg) translate3d(-6px, -36px, -14px) scaleX(0.85) scaleY(0.85) skew(1deg, -6deg);
         }
 
-        .dates {
-            position: fixed;
-            bottom: 0;
-            /* line-height: 1.2rem; */
-            left: 5px;
-            color: #259ded;
-            font-size: 3vw;
-            z-index: 6;
-            font-family: "Nanum Gothic Coding", monospace;
-        }
-        
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            color: rgb(201, 196, 158);
-            font-size: 2vw;
+        .date-container {
+            color: #a5a6f6;
             position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vw;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
         }
 
-        .bttitle {
-            color: #92bc8f;
+        .clockname {
             font-family: "Oxanium", serif;
-            font-size: 2vw;
-            position: absolute;
-            font-style: italic;
-            z-index: 15;
-            letter-spacing: 0.1vw;
-            top: 1px;
-            left: 1px;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            right: 0;
         }
     </style>
 </head>
 
 <body>
-
-<div class="chltitle">Cubist Heart Laboratories</div>
-<div class="bttitle">BorrowedTime</div>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="full-page-image"></div>
+    <div class="full-page-image2"></div>
+    <div class="full-page-image3"></div>
 
     <svg version=" 1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         viewBox="0 0 195 20" xml:space="preserve" preserveAspectRatio="none">
@@ -224,10 +254,11 @@
 
     </svg>
 
-    <div class="full-page-image"></div>
-    <div class="full-page-image2"></div>
-    <div class="full-page-image3"></div>
-
+    <div class="date-container">
+        <a href="../boring/" class="dates dateleft">03/30/25</a>
+        <a href="../index.html" class="clockname">Deep Space Clock</a>
+        <!-- <a href="../deepspace/" class="dates dateright"></a> -->
+    </div>
 
     <script>let shownSeconds = -1;
         let shownMinutes = -1
@@ -414,8 +445,6 @@
 
         }, 10);
     </script>
-    <a href="../random/index.html" class="dates">03/28/25</div>
-        <a href="../index.html" class="clockname">Deep Space Clock</a>
 
 </body>
 
