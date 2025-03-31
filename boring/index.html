@@ -1,24 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Boring Clock - BorrowedTime</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
+    <title>Boring Clock - BorrowedTime</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         html {
             overflow: hidden;
         }
@@ -32,7 +24,18 @@
             background-color: rgb(154, 110, 53);
         }
 
-
+        .title-container {
+            color: #535346;
+            text-shadow: #aea094 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
 
         .chltitle {
             font-family: "Roboto Slab", serif;
@@ -52,7 +55,8 @@
             z-index: 15;
             letter-spacing: -0.1vh;
         }
-        
+
+
         .clock {
             width: 80vw;
             height: 80vh;
@@ -116,9 +120,9 @@
             -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
             background: url('images/boring.webp') center/cover no-repeat;
-            animation: fadeOut 8s ease-out forwards;
+            animation: fadeOut 12s ease-out forwards;
             z-index: 10;
-            opacity: 0.3;
+            /* opacity: 0.9; */
         }
 
         /* .fade-overlay2 {
@@ -152,7 +156,8 @@
             color: transparent;
             font-size: 0.4rem;
             z-index: 11;
-            position: relative right: 33px;
+            position: relative;
+            right: 33px;
         }
 
         a {
@@ -172,12 +177,8 @@
             pointer-events: none;
         }
 
-
-
-
-
         .date-container {
-             color: #edb125;
+            color: #d48804;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -211,21 +212,20 @@
             position: absolute;
             right: 0;
         }
-
     </style>
 </head>
-<a href="#" onclick="openEgg(); return false;" class="easteregg">
-    our heads
-    are <br>round so our thoughts<br> can
-    change direction
-</a>
 
-<div class="chltitle">Cubist Heart Laboratories</div>
-<div class="bttitle">BorrowedTime</div>
-<a href="../random/" class="dates">03/30/25</div>
-    <a href="../index.html" class="clockname">Boring Clock</a>
-
-    <div class="fade-overlay1"></div>
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="" class="dates dateleft">&nbsp;</a>
+        <a href="../index.html" class="clockname">Boring Clock</a>
+        <a href="../deepspace/" class="dates dateright">03/30/25</a>
+    </div>
+    <!-- <div class="fade-overlay1"></div> -->
     <div class="fade-overlay2"></div>
     <img src="images/inst.webp" class="borer2">
 
@@ -235,6 +235,11 @@
         <img src="images/hand1.webp" class="hand hour-hand">
         <img src="images/hand3.webp" class="hand min-hand">
     </div>
+    <a href="#" onclick="openEgg(); return false;" class="easteregg">
+        our heads
+        are <br>round so our thoughts<br> can
+        change direction
+    </a>
 
 
     <script>
@@ -271,6 +276,6 @@
         }
     </script>
 
-    </body>
+</body>
 
 </html>
