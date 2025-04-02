@@ -1,158 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moby-Dick Clock - BorrowedTime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Yuji+Boku&display=swap"
+    rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #81a3c5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(123, 127, 127);
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moby-Dick Clock - BorrowedTime</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Yuji+Boku&display=swap"
-        rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            background-color: #86888e;
-            color: #767474;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .full-page-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: contrast(100%);
+        z-index: 6;
+        opacity: 0.5;
+        filter: alpha(opacity=50);
+        pointer-events: none;
+    }
 
-        .full-page-image4 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: contrast(100%);
-            z-index: 6;
-            opacity: 0.5;
-            filter: alpha(opacity=50);
-        }
+    .title-container {
+        color: #ecece7;
+        text-shadow: #186e51 1px 0px;
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 98%;
+        display: flex;
+        /* justify-content: space-between; */
+        z-index: 6;
+    }
 
-        .full-page-image5 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: grayscale(30%) contrast(160%) brightness(100%);
-            z-index: 7;
-            opacity: 0.2;
-            filter: alpha(opacity=50);
-        }
+    .chltitle {
+        font-family: "Roboto Slab", serif;
+        font-size: 2.8vh;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        letter-spacing: 0.1vh;
+    }
 
-        .title-container {
-            color: #ecece7;
-            text-shadow: #186e51 1px 0px;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            /* justify-content: space-between; */
-            z-index: 6;
-        }
-
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.8vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
-
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.8vh;
-            font-style: italic;
-            z-index: 15;
-            letter-spacing: -0.1vh;
-        }
+    .bttitle {
+        position: relative;
+        left: 0;
+        font-family: "Oxanium", serif;
+        font-size: 2.8vh;
+        font-style: italic;
+        z-index: 15;
+        letter-spacing: -0.1vh;
+    }
 
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
 
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-            text-decoration: none;
-        }
+    a:hover {
+        color: #e8ecec;
+        background-color: rgb(21, 0, 255);
+        text-decoration: none;
+    }
 
-        .date-container {
-            color: #c5cacd;
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            /* justify-content: space-between; */
-            z-index: 6;
-        }
+    .date-container {
+        color: #c5cacd;
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 98%;
+        display: flex;
+        /* justify-content: space-between; */
+        z-index: 6;
+    }
 
-        .clockname {
-            font-family: "Oxanium", serif;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 4vh;
-            line-height: 4vh;
-        }
+    .clockname {
+        font-family: "Oxanium", serif;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 4vh;
+        line-height: 4vh;
+    }
 
-        .dateleft {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: relative;
-            left: 0;
-        }
+    .dateleft {
+        font-size: 3vh;
+        font-family: "Nanum Gothic Coding", monospace;
+        position: relative;
+        left: 0;
+    }
 
-        .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: absolute;
-            right: 0;
-        }
-    </style>
+    .dateright {
+        font-size: 3vh;
+        font-family: "Nanum Gothic Coding", monospace;
+        position: absolute;
+        right: 0;
+    }
+
+
+
+    .clock {
+        position: absolute;
+        left: 10;
+        font-weight: bold;
+        opacity: 0;
+        transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    }
+</style>
 </head>
 
 <body>
-    <div class="title-container">
+    <div id="clock" class="clock"></div>
+    <img src="./image/waves.gif" class="full-page-image">
+    <div class=" title-container">
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
 
 
+    <script>
+        function updateClock() {
+            const clock = document.getElementById('clock');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            clock.textContent = timeString;
 
-    <img src="../images/waves.gif" class="full-page-image3">
-    <img src="./images/6a.gif" class="full-page-image5">
-    <img src="images/6a.gif" class="full-page-image5">
+            const randomX = Math.random() * (window.innerWidth - 100);
+            const randomY = Math.random() * (window.innerHeight - 50);
+            const randomSize = Math.random() * 80 + 20;
+            const randomOpacity = Math.random();
 
-    <img src="/images/6a.gif" class="full-page-image5">
-<div class="date-container">
-    <a href="../bargraph" class="dates dateleft">04/01/25</a>
-    <a href="../index.html" class="clockname">Random Color Clock</a>
-    <a href="../deepspace/" class="dates dateright"></a>
-</div>
+            clock.style.transform = `translate(${randomX}px, ${randomY}px) scale(${randomSize / 50})`;
+            clock.style.opacity = randomOpacity;
+            clock.style.fontSize = `${randomSize}px`;
+        }
 
+        setInterval(updateClock, 2000);
+        updateClock();
+    </script>
+    <div class="date-container">
+        <a href="../bargraph" class="dates dateleft">04/01/25</a>
+        <a href="../index.html" class="clockname">Moby-Dick Clock</a>
+        <a href="../deepspace/" class="dates dateright"></a>
+    </div>
 </body>
 
 </html>
