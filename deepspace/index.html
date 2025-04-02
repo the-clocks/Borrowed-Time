@@ -18,12 +18,6 @@
         Deep Space Clock - BorrowedTime
     </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
-    </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js">
-    </script>
 
     <style>
         :root {
@@ -84,9 +78,7 @@
             font-style: italic;
             z-index: 15;
             letter-spacing: -0.1vh;
-
         }
-
 
         #clock {
             display: flex;
@@ -164,7 +156,6 @@
             filter: alpha(opacity=50);
         }
 
-
         a {
             color: inherit;
             text-decoration: none;
@@ -175,7 +166,6 @@
             background-color: rgb(21, 0, 255);
             text-decoration: none;
         }
-
 
         .j-transform {
             position: relative;
@@ -197,7 +187,6 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            /* justify-content: space-between; */
             z-index: 6;
         }
 
@@ -207,11 +196,10 @@
             left: 50%;
             transform: translateX(-50%);
             font-family: "Oxanium", serif;
-            font-size: 3.5vh;
-            line-height: 3.5vh;
+            font-size: 4vh;
+            line-height: 4vh;
         }
 
-  
         .dateleft {
             font-size: 3vh;
             font-family: "Nanum Gothic Coding", monospace;
@@ -222,7 +210,7 @@
         .dateright {
             font-size: 3vh;
             font-family: "Nanum Gothic Coding", monospace;
-            position: absolute;
+            position: relative;
             right: 0;
         }
     </style>
@@ -258,9 +246,9 @@
     </svg>
 
     <div class="date-container">
-        <a href="../random/" class="dates dateleft">03/30/25</a>
+        <a href="../random/" class="dateleft">03/30/25</a>
         <a href="../index.html" class="clockname">Deep Space Clock</a>
-        <a href="../bargraph/" class="dates dateright">04/01/25</a>
+        <!-- <a href="../deepspace/" class="dates dateright"></a> -->
     </div>
 
     <script>let shownSeconds = -1;
@@ -448,7 +436,13 @@
 
         }, 10);
     </script>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(() => {
+                document.body.style.opacity = 1;
+            }, 1000);
+        });
+    </script>
 
 </body>
 
