@@ -11,20 +11,59 @@
         href="https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Yuji+Boku&display=swap"
         rel="stylesheet">
     <style>
-        <style>
-            body {
+        body {
             margin: 0;
+            padding: 0;
+            height: 100vh;
             overflow: hidden;
-            background-color: black;
-            color: rgb(150, 147, 147);
-            font-family: Arial, sans-serif;
+            background-color: #86888e;
+            color: #767474;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .clock {
+        .full-page-image4 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: contrast(100%);
+            z-index: 6;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+        }
+
+        .full-page-image5 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: grayscale(30%) contrast(160%) brightness(100%);
+            z-index: 7;
+            opacity: 0.2;
+            filter: alpha(opacity=50);
+        }
+
+        .title-container {
+            color: #ecece7;
+            text-shadow: #186e51 1px 0px;
             position: absolute;
-            font-size: 3rem;
-          
-            transition: opacity 3s ease-in-out;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
         }
 
         .chltitle {
@@ -59,7 +98,7 @@
         }
 
         .date-container {
-            color: #8fccf2;
+            color: #c5cacd;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -92,35 +131,6 @@
             position: absolute;
             right: 0;
         }
-        .full-page-image4 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: contrast(100%);
-            z-index: 6;
-            opacity: 0.5;
-            filter: alpha(opacity=50);
-        }
-
-        .full-page-image5 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: grayscale(30%) contrast(160%) brightness(100%);
-            z-index: 7;
-            opacity: 0.2;
-            filter: alpha(opacity=50);
-        }
     </style>
 </head>
 
@@ -129,54 +139,20 @@
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
-        <img src="../images/waves.gif" class="full-page-image4">
+
+
+
+    <img src="../images/waves.gif" class="full-page-image3">
+    <img src="./images/6a.gif" class="full-page-image5">
+    <img src="images/6a.gif" class="full-page-image5">
+
     <img src="/images/6a.gif" class="full-page-image5">
+<div class="date-container">
+    <a href="../bargraph" class="dates dateleft">04/01/25</a>
+    <a href="../index.html" class="clockname">Random Color Clock</a>
+    <a href="../deepspace/" class="dates dateright"></a>
+</div>
 
-
-    </style>
-    </head>
-
-    <body>
-        <div id="clock" class="clock"></div>
-        <script>
-            function updateClock() {
-                const now = new Date();
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                const seconds = String(now.getSeconds()).padStart(2, '0');
-                return `${hours}:${minutes}:${seconds}`;
-            }
-
-            function moveClock() {
-                const clock = document.getElementById("clock");
-                clock.textContent = updateClock();
-
-                const maxX = window.innerWidth - clock.offsetWidth;
-                const maxY = window.innerHeight - clock.offsetHeight;
-                const randomX = Math.random() * maxX;
-                const randomY = Math.random() * maxY;
-
-                clock.style.left = `${randomX}px`;
-                clock.style.top = `${randomY}px`;
-                clock.style.opacity = 1;
-
-                setTimeout(() => {
-                    clock.style.opacity = 0;
-                }, 3000);
-            }
-
-            function startClock() {
-                moveClock();
-                setInterval(moveClock, Math.random() * 5000 + 3000);
-            }
-
-            window.onload = startClock;
-        </script>
-        <div class="date-container">
-            <a href="../bargraph" class="dates dateleft">04/01/25</a>
-            <a href="../index.html" class="clockname">Random Color Clock</a>
-            <a href="../deepspace/" class="dates dateright"></a>
-        </div>
-    </body>
+</body>
 
 </html>
