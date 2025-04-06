@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Clock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Syne+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: url('https://www.transparenttextures.com/patterns/brick-wall.png');
+            background-color: #000;
+            background-size: 100px 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            box-shadow: inset 0 0 200px #0ff, inset 0 0 300px #f0f;
+        }
+
+        .clock {
+            position: relative;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: radial-gradient(circle at center, #111 30%, #000 100%);
+            box-shadow:
+                0 0 40px #00ffff,
+                0 0 90px #ff00ff,
+                0 0 160px #00ffff,
+                inset 0 0 30px #00ffff,
+                inset 0 0 80px #ff00ff;
+            overflow: hidden;
+            border: 6px solid #0ff;
+            filter: drop-shadow(0 0 20px #0ff) drop-shadow(0 0 30px #f0f);
+        }
+
+        .center {
+            width: 22px;
+            height: 22px;
+            background: radial-gradient(circle, #ff00ff, #800080);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow:
+                0 0 20px #ff00ff,
+                0 0 40px #ff00ff,
+                0 0 80px #ff00ff,
+                inset 0 0 10px #ff00ff;
+            z-index: 10;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: translateX(-50%) rotate(0deg);
+            border-radius: 10px;
+            background: currentColor;
+            box-shadow:
+                0 0 10px currentColor,
+                0 0 30px currentColor,
+                0 0 50px currentColor,
+                inset 0 0 4px #000;
+        }
+
+        .hour {
+            width: 10px;
+            height: 90px;
+            color: #ff0040;
+            z-index: 4;
+        }
+
+        .minute {
+            width: 6px;
+            height: 120px;
+            color: #00ff90;
+            z-index: 3;
+        }
+
+        .second {
+            width: 4px;
+            height: 140px;
+            color: #32a6c3;
+            z-index: 2;
+        }
+
+        .tick {
+            position: absolute;
+            width: 5px;
+            height: 12px;
+            background: #ffff00;
+            top: 50%;
+            left: 50%;
+            transform-origin: center center;
+            border-radius: 3px;
+            box-shadow:
+                0 0 10px #ffff00,
+                0 0 20px #ffff00,
+                0 0 40px #ffff00;
+            transition: transform 5s ease, box-shadow 0.3s ease;
+        }
+
+        .tick.hour {
+            height: 24px;
+            width: 6px;
+            background: #ff00ff;
+            box-shadow:
+                0 0 15px #ff00ff,
+                0 0 30px #ff00ff,
+                0 0 60px #ff00ff;
+        }
+
+        .tick.glow {
+            transform: scale(1.8);
+            box-shadow:
+                0 0 25px #00ffff,
+                0 0 50px #00ffff,
+                0 0 100px #00ffff;
+        }
+
+        .number {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            line-height: 32px;
+            color: #00ffff;
+            font-size: 18px;
+            font-family: 'Orbitron', sans-serif;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-shadow:
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 30px #00ffff;
+        }
+
+        .title-container {
+            color: #f406b0;
+            text-shadow: #06f7a6 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #ef5902;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="clock" id="clock">
+        <div class="center"></div>
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+    </div>
+    <div class="date-container">
+        <a href="../digitalroman/" class="dates dateleft">03/04/25</a>
+        <a href="../index.html" class="clockname">Neon Clock</a>
+        <a href="../deepspace/" class="dates dateright">03/06/25</a>
+    </div>
+    <script>
+        const clock = document.getElementById('clock');
+        const centerX = 170;
+        const centerY = 170;
+        const tickRadius = 155;
+        const numberRadius = 130;
+        const ticks = [];
+
+        // Create tick marks
+        for (let i = 0; i < 60; i++) {
+            const angleDeg = i * 6 - 90;
+            const angleRad = angleDeg * (Math.PI / 180);
+            const tick = document.createElement('div');
+            tick.classList.add('tick');
+            if (i % 5 === 0) tick.classList.add('hour');
+
+            const tickX = centerX + tickRadius * Math.cos(angleRad);
+            const tickY = centerY + tickRadius * Math.sin(angleRad);
+
+            tick.style.left = `${tickX}px`;
+            tick.style.top = `${tickY}px`;
+            tick.style.transform = `translate(-50%, -50%) rotate(${angleDeg + 90}deg)`;
+            clock.appendChild(tick);
+            ticks.push(tick);
+        }
+
+        // Create neon numbers
+        for (let i = 1; i <= 12; i++) {
+            const angleDeg = i * 30 - 90;
+            const angleRad = angleDeg * (Math.PI / 180);
+            const number = document.createElement('div');
+            number.classList.add('number');
+            number.textContent = i;
+
+            const numberX = centerX + numberRadius * Math.cos(angleRad);
+            const numberY = centerY + numberRadius * Math.sin(angleRad);
+
+            number.style.left = `${numberX}px`;
+            number.style.top = `${numberY}px`;
+            clock.appendChild(number);
+        }
+
+        // Update clock hands
+        function updateClock() {
+            const now = new Date();
+            const ms = now.getMilliseconds();
+            const second = now.getSeconds() + ms / 1000;
+            const minute = now.getMinutes() + second / 60;
+            const hour = now.getHours() + minute / 60;
+
+            const secondDeg = second * 6;
+            const minuteDeg = minute * 6;
+            const hourDeg = (hour % 12) * 30;
+
+            document.getElementById('second').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+            document.getElementById('minute').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.getElementById('hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+            const tickIndex = Math.floor(second) % 60;
+            const tickToGlow = ticks[tickIndex];
+
+            if (!tickToGlow.classList.contains('glow')) {
+                tickToGlow.classList.add('glow');
+                setTimeout(() => {
+                    tickToGlow.classList.remove('glow');
+                }, 4000);
+            }
+
+            requestAnimationFrame(updateClock);
+        }
+
+        requestAnimationFrame(updateClock);
+    </script>
+</body>
+
+</html>
