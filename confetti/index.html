@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confetti Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+
+            background-color: #06075f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .number {
+            font-family: "Bubblegum Sans", sans-serif;
+            position: absolute;
+            color: rgb(251, 2, 222);
+            font-size: 11vh;
+            /* font-weight: bold; */
+            opacity: 0.8;
+            animation-duration: 4s;
+            animation-timing-function: linear;
+        }
+
+        .full-page-image2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./images/conf.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 6;
+            filter: alpha(opacity=50);
+        }
+
+        .full-page-image3 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* background-image: url('./images/conf2.gif'); */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 5;
+            filter: alpha(opacity=50);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #a5a6f6;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+
+        .title-container {
+            color: #880382;
+            text-shadow: #4e8477 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="full-page-image2"></div>
+    <div class="full-page-image3"></div>
+
+    <div class="date-container">
+        <a href="../neon/" class="dates dateleft">04/05/25</a>
+        <a href="../index.html" class="clockname">Confetti Clock</a>
+        <a href="../index.html" class="dates dateright">04/07/25</a>
+    </div>
+
+    <script>
+        function getCurrentTimeNumbers() {
+            const now = new Date();
+            return [
+                now.getHours(),
+                now.getMinutes(),
+                now.getSeconds()
+            ];
+        }
+
+        function createFlutteringNumber() {
+            const numbers = getCurrentTimeNumbers();
+            const randomIndex = Math.floor(Math.random() * numbers.length);
+            const number = numbers[randomIndex];
+
+            const numberElement = document.createElement('div');
+            numberElement.className = 'number';
+            numberElement.textContent = number;
+
+            numberElement.style.left = Math.random() * window.innerWidth + 'px';
+            numberElement.style.top = '0px';
+
+            document.body.appendChild(numberElement);
+
+            // Create the fluttering animation
+            const fallDuration = Math.random() * 3 + 2; // between 2 to 5 seconds
+            const flutterDistance = Math.random() * 100 + 50; // random distance
+
+            numberElement.style.animationName = `fall`;
+            numberElement.style.animationDuration = `${fallDuration}s`;
+            numberElement.style.transform = `translateY(${flutterDistance}px) rotate(${Math.random() * 360}deg)`;
+
+            // Remove the element after the animation
+            setTimeout(() => {
+                document.body.removeChild(numberElement);
+            }, fallDuration * 1000);
+        }
+
+        // Repeat the number creation every 500ms
+        setInterval(createFlutteringNumber, 500);
+    </script>
+
+    <style>
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0);
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+    </style>
+
+</body>
+
+</html>
