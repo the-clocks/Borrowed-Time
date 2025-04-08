@@ -108,7 +108,7 @@
         }
 
         .mountains {
-            opacity: 0.2;
+            opacity: 0.6;
             position: absolute;
             bottom: 40vh;
             width: 100%;
@@ -184,31 +184,18 @@
 
             .cactus {
                 width: 4vw;
-                height: 12vh;
+                height: 14vh;
             }
 
             .cactus .arm {
-                width: 2vw;
-                height: 4vh;
+                width: 3vw;
+                height: 5vh;
             }
-        }
-
-        .clock {
-            display: flex;
-            /* gap: 1rem; */
-            /* font-size: 3rem; */
-            text-align: center;
-        }
-
-        .value {
-            min-width: 6ch;
-            /* Enough space for "00.000" */
         }
 
         @media (max-width: 600px) {
             .clock {
                 flex-direction: column;
-                font-size: 2rem;
             }
         }
 
@@ -292,11 +279,18 @@
             letter-spacing: -0.1vh;
         }
 
-        .clock {
 
+        .clock {
+            display: flex;
+            text-align: center;
             font-family: "Smokum", serif;
             color: #f0ea8c;
-            font-size: 5vh;
+            font-size: 5vw;
+        }
+
+        .value {
+            min-width: 6ch;
+            /* Enough space for "00.000" */
         }
     </style>
 
