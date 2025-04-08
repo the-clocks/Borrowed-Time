@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revolving Backgrounds</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .background-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .background-container::before,
+        .background-container::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            transform: translate(-50%, -50%);
+            animation: rotateCW 60s linear infinite;
+            z-index: -1;
+        }
+
+        .background-container::after {
+            background-image: url('./images/sddg12.jpg');
+            /* Replace with your image */
+            animation: rotateCW 60s linear infinite;
+            opacity: 0.5;
+        }
+
+        .background-container::before {
+            background-image: url('./images/amal.jpg');
+
+            /* Replace with your second image */
+            animation: rotateCCW 60s linear infinite;
+        }
+
+        @keyframes rotateCW {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @keyframes rotateCCW {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-container"></div>
+</body>
+
+</html>
