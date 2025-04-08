@@ -1,0 +1,132 @@
+v
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Red Curtain Clock - BorrowedTime</title>
+    <style>
+        body {
+            margin: 0;
+            /* background: #735454; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        .clock-container {
+            position: relative;
+            width: 10vw;
+            height: 10vh;
+        }
+
+        .clock {
+            width: 100%;
+            height: 100%;
+            border: 8px solid #fff;
+            border-radius: 50%;
+            position: relative;
+            background: #222;
+        }
+
+        .hand {
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            /* background: #fff; */
+            top: 50%;
+            left: 50%;
+            transform-origin: 0% 50%;
+            transform: rotate(90deg);
+            transition: all 0.05s ease-in-out;
+        }
+
+        .hand.hour {
+            width: 30%;
+            height: 4px;
+            background: #f00;
+        }
+
+        .hand.minute {
+            width: 40%;
+            height: 3px;
+            background: #0f0;
+        }
+
+        .hand.second {
+            width: 45%;
+            height: 2px;
+            background: rgb(183, 28, 157);
+        }
+
+        .curtain {
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 206, 194, 0.85);
+            animation: curtainLoop 8s infinite;
+            z-index: 10;
+        }
+
+        @keyframes curtainLoop {
+            0% {
+                top: -100%;
+            }
+
+            37.5% {
+                top: 0%;
+            }
+
+            62.5% {
+                top: 0%;
+            }
+
+            100% {
+                top: -100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock-container">
+        <div class="clock">
+            <div class="hand hour" id="hour"></div>
+            <div class="hand minute" id="minute"></div>
+            <div class="hand second" id="second"></div>
+        </div>
+        <div class="curtain"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hour = document.getElementById('hour');
+            const minute = document.getElementById('minute');
+            const second = document.getElementById('second');
+
+            const h = now.getHours() % 12;
+            const m = now.getMinutes();
+            const s = now.getSeconds();
+
+            const hourDeg = (h + m / 60) * 30;
+            const minuteDeg = (m + s / 60) * 6;
+            const secondDeg = s * 6;
+
+            hour.style.transform = `rotate(${hourDeg}deg)`;
+            minute.style.transform = `rotate(${minuteDeg}deg)`;
+            second.style.transform = `rotate(${secondDeg}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
