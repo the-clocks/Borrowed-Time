@@ -24,10 +24,23 @@
 
         .full-page-image1 {
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 54%;
+            left: 47%;
             transform: translate(-50%, -50%);
             height: 122vh;
+            object-fit: cover;
+            opacity: 0.3;
+            filter: saturate(99.5) brightness(290%) contrast(550%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .full-page-image1flip {
+            position: fixed;
+            top: 48%;
+            left: 53;
+            transform: translate(-50%, -50%);
+            height: 152vh;
             object-fit: cover;
             opacity: 0.3;
             filter: saturate(99.5) brightness(290%) contrast(550%);
@@ -35,60 +48,14 @@
             z-index: 1;
         }
 
-
-        .full-page-image1flip {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: scale(-1, -1);
-            -moz-transform: scale(-1, -1);
-            -o-transform: scale(-1, -1);
-            transform: scale(-1, -1);
-            -webkit-transform: scale(-1, -1);
-            -moz-transform: scale(-1, -1);
-            -o-transform: scale(-1, -1);
-            transform: scale(-1, -1);
-            -webkit-transform: scale(-1, -1);
-            -moz-transform: scale(-1, -1);
-            -o-transform: scale(-1, -1);
-            transform: scale(-1, -1);
-            -webkit-transform: scale(-1, -1);
-            -moz-transform: scale(-1, -1);
-            -o-transform: scale(-1, -1);
-            transform: scale(-1, -1);
-            -webkit-transform: scale(-1, -1);
-            -moz-transform: scale(-1, -1);
-            -o-transform: scale(-1, -1);
-            transform: scale(-1, -1);
-            -webkit-transform: scale(-1, -1);
-            -moz-transform: scale(-1, -1);
-            -o-transform: scale(-1, -1);
-            transform: scale(-1, -1);
-            -webkit-transform: scale(-1, -1);
-            -moz-transform: scale(-1, -1);
-            -o-transform: scale(-1, -1);
-            transform: scale(-1, -1);
-            -webkit-transform: scale(-1, -1);
-            -moz-transform: scale(-1, -1);
-            -o-transform: scale(-1, -1);
-            transform: scale(-1, -1);
-            transform: translate(-50%, -50%);
-            height: 122vh;
-            object-fit: cover;
-            /* opacity: 0.4; */
-            filter: saturate(99.5) brightness(290%) contrast(550%);
-            pointer-events: none;
-            z-index: 3;
-        }
-
         .full-page-image2 {
             position: fixed;
-            top: 50%;
+            top: 52%;
             left: 50%;
             transform: translate(-50%, -50%);
-            height: 100vh;
+            height: 105vh;
             object-fit: cover;
-            opacity: 0.4;
+            opacity: 0.2;
             filter: saturate(2.5) brightness(200%) contrast(450%);
             pointer-events: none;
             z-index: 2;
@@ -96,39 +63,39 @@
 
         .full-page-image2flip {
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 47%;
+            left: 52%;
             transform: translate(-50%, -50%);
-            height: 100vh;
+            height: 130vh;
             object-fit: cover;
-            opacity: 0.4;
+            opacity: 0.2;
             filter: saturate(2.5) brightness(200%) contrast(450%);
             pointer-events: none;
-            z-index: 2;
+            z-index: 3;
         }
 
         .full-page-image3 {
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 54%;
+            left: 45%;
             transform: translate(-50%, -50%);
-            height: 120vh;
+            height: 130vh;
             opacity: 0.2;
             filter: saturate(55.5) brightness(800%) contrast(450%);
             pointer-events: none;
-            z-index: 3;
+            z-index: 4;
         }
 
         .full-page-image3flip {
             position: fixed;
-            top: 50%;
-            left: 50%;
+            top: 46%;
+            left: 53%;
             transform: translate(-50%, -50%);
-            height: 120vh;
+            height: 180vh;
             opacity: 0.2;
             filter: saturate(55.5) brightness(800%) contrast(450%);
             pointer-events: none;
-            z-index: 3;
+            z-index: 5;
         }
 
         .title-container {
@@ -252,10 +219,12 @@
         <div class="bttitle">BorrowedTime</div>
     </div>
 
-    <!-- <img src="./images/sys1.gif" class="full-page-image1"> -->
+    <img src="./images/sys1.gif" class="full-page-image1">
     <img src="./images/sys1.gif" class="full-page-image1flip">
-    <!-- <img src="./images/sys2.gif" class="full-page-image2"> -->
-    <!-- <img src="./images/sys3.gif" class="full-page-image3"> -->
+    <img src="./images/sys2.gif" class="full-page-image2">
+    <img src="./images/sys2.gif" class="full-page-image2flip">
+    <img src="./images/sys3.gif" class="full-page-image3">
+    <img src="./images/sys3.gif" class="full-page-image3flip">
 
     <div class="date-container">
         <a href="../confetti/" class="dates dateleft">04/06/25</a>
