@@ -4,80 +4,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revolving Backgrounds</title>
+    <title>Rotating Zoomed Backgrounds</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body,
         html {
+            margin: 0;
+            padding: 0;
             height: 100%;
             overflow: hidden;
         }
 
-        .background-container {
-            position: relative;
-            width: 100vw;
+        .container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100vh;
+            overflow: hidden;
         }
 
-        .background-container::before,
-        .background-container::after {
-            content: '';
+        .background1,
+        .background2 {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 200%;
-            height: 200%;
-            background-size: cover;
-            background-position: center;
+            width: 300%;
+            /* Much larger to ensure no edges show */
+            height: 300%;
+            background-size: 100% 100%;
+            /* Force image to stretch to container */
             background-repeat: no-repeat;
-            transform: translate(-50%, -50%);
-            animation: rotateCW 60s linear infinite;
-            z-index: -1;
+            transform-origin: 50% 33.33%;
+            /* Center at 1/3 from top */
+            left: -100%;
+            /* Center the oversized image */
+            top: -100%;
         }
 
-        .background-container::after {
-            background-image: url('./images/sddg12.jpg');
-            /* Replace with your image */
-            animation: rotateCW 60s linear infinite;
+        .background1 {
+            background-image: url('./images/WIE.jpg');
+            animation: rotateClockwise 20s linear infinite;
+            z-index: 1;
+        }
+
+        .background2 {
+            background-image: url('https://picsum.photos/1920/1080?random=2');
+            animation: rotateCounterClockwise 20s linear infinite;
+            z-index: 2;
             opacity: 0.5;
         }
 
-        .background-container::before {
-            background-image: url('./images/amal.jpg');
-
-            /* Replace with your second image */
-            animation: rotateCCW 60s linear infinite;
-        }
-
-        @keyframes rotateCW {
-            0% {
-                transform: translate(-50%, -50%) rotate(0deg);
+        @keyframes rotateClockwise {
+            from {
+                transform: rotate(0deg);
             }
 
-            100% {
-                transform: translate(-50%, -50%) rotate(360deg);
+            to {
+                transform: rotate(360deg);
             }
         }
 
-        @keyframes rotateCCW {
-            0% {
-                transform: translate(-50%, -50%) rotate(0deg);
+        @keyframes rotateCounterClockwise {
+            from {
+                transform: rotate(0deg);
             }
 
-            100% {
-                transform: translate(-50%, -50%) rotate(-360deg);
+            to {
+                transform: rotate(-360deg);
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="background-container"></div>
+    <div class="container">
+        <div class="background1"></div>
+        <div class="background2"></div>
+    </div>
 </body>
 
 </html>

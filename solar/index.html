@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moby-Dick Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Island+Moments&family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #5e5b5b;
+        }
+
+        .full-page-image1 {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100vw;
+            max-height: 100vh;
+            object-fit: cover;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .full-page-image2 {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100vw;
+            max-height: 100vh;
+            object-fit: cover;
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .full-page-image3 {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 100vw;
+            height: 120vh;
+            /* object-fit: cover; */
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .title-container {
+            color: #a2b1a6;
+            text-shadow: #15b28a 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        .date-container {
+            color: #6a41d2;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+
+        .clock {
+            position: absolute;
+            width: 60vh;
+            height: 60vh;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .ball {
+            position: absolute;
+            width: 15vh;
+            height: 15vh;
+            opacity: 0.8;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .hour {
+            background: rgb(55, 68, 239);
+        }
+
+        .minute {
+            background: #3f3;
+        }
+
+        .second {
+            background: rgb(250, 7, 3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <img src="./images/sys1.gif" class="full-page-image1">
+    <img src="./images/sys2.gif" class="full-page-image2">
+    <img src="./images/sys3.gif" class="full-page-image3">
+
+    <div class="date-container">
+        <a href="../confetti/" class="dates dateleft">04/06/25</a>
+        <a href="../index.html" class="clockname">Solar System Clock</a>
+        <a href="../triplecactus/" class="dates dateright">04/08/25</a>
+    </div>
+
+    <div class="clock">
+        <div class="ball hour"></div>
+        <div class="ball minute"></div>
+        <div class="ball second"></div>
+    </div>
+
+    <script>
+        const hourBall = document.querySelector('.hour');
+        const minuteBall = document.querySelector('.minute');
+        const secondBall = document.querySelector('.second');
+        const clock = document.querySelector('.clock');
+
+        function updateClock() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours() % 12;
+
+            const secAngle = seconds * 6;
+            const minAngle = minutes * 6 + seconds * 0.1;
+            const hourAngle = hours * 30 + minutes * 0.5;
+
+            setBallPosition(secondBall, secAngle, 27);
+            setBallPosition(minuteBall, minAngle, 20);
+            setBallPosition(hourBall, hourAngle, 13);
+        }
+
+        function setBallPosition(ball, angle, radiusVh) {
+            const rad = (angle - 90) * (Math.PI / 180);
+            const clockRect = clock.getBoundingClientRect();
+            const centerX = clockRect.width / 2;
+            const centerY = clockRect.height / 2;
+            const radiusPx = (radiusVh / 100) * window.innerHeight;
+            const x = centerX + radiusPx * Math.cos(rad);
+            const y = centerY + radiusPx * Math.sin(rad);
+            ball.style.left = `${x}px`;
+            ball.style.top = `${y}px`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+
+</body>
+
+</html>
