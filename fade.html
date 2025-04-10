@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Slow Fade Out Black Screen</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 3s ease;
+            /* slow fade */
+        }
+
+        #overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #content {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            color: black;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="overlay"></div>
+
+    <div id="content">
+        <p>Hello there 👋</p>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('overlay').classList.add('fade-out');
+            }, 500); // wait 0.5 seconds before starting the slow fade
+        });
+    </script>
+</body>
+
+</html>

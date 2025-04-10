@@ -161,7 +161,6 @@
             right: 0;
         }
 
-
         .title-container {
             color: #0e0c0d;
             text-shadow: #9dd9ed 1px 0px;
@@ -207,11 +206,32 @@
                 transform: scaleX(calc(100vw / (10 * 1em)));
             }
         }
+
+
+
+        #fadein {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 1s ease;
+            /* slow fade */
+        }
+
+        #fadein.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 
 </head>
 
 <body>
+    <div id="fadein"></div>
     <div class="title-container">
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
@@ -240,6 +260,13 @@
         }
 
         updateClock();
+    </script>
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('fadein').classList.add('fade-out');
+            }, 500); // wait 0.5 seconds before starting the slow fade
+        });
     </script>
     <div class="overlay"></div>
     <div class="overlay2"></div>
