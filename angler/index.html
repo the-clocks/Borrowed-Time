@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Anglerfish Clock - BorrowedTime</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barriecito&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: #074060;
+        }
+
+        .content {
+            font-family: "Barriecito", Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            background: linear-gradient(90deg, #932dec, #0e8c68, #711579);
+            background-repeat: no-repeat;
+            background-size: 75%;
+            animation: animate 3s linear infinite;
+            background-clip: text;
+            opacity: 0.5;
+            -webkit-text-fill-color: rgba(255, 255, 255, 0);
+            white-space: nowrap;
+            z-index: 9;
+            position: relative;
+        }
+
+        @keyframes animate {
+            0% {
+                background-position: -500%;
+            }
+
+            50% {
+                background-position: 500%;
+            }
+
+            100% {
+                background-position: 100%;
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.9;
+            background: url(./images/anglerfish-gif_anglerfish_idle_swim.webp) no-repeat center center;
+            background-size: 100% 100%;
+            z-index: 1;
+        }
+
+        .overlay2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.4;
+            background: url(./images/Deep-Sea-Anglerfish-Fuse.webp) no-repeat center center fixed;
+            background-size: 100% 100%;
+            z-index: 2;
+        }
+
+        .overlay3 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.4;
+            background: url(./images/qsxwwd.webp) no-repeat center center;
+            background-size: 33% 33%;
+            background-repeat: repeat;
+            z-index: 4;
+        }
+
+        .overlay4 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.3;
+            background: url(./images/7df53555256259.560974c2cff47.gif) no-repeat center center fixed;
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            z-index: 4;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #6f70bd;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+
+        .title-container {
+            color: #880382;
+            text-shadow: #4e8477 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        @media (min-aspect-ratio: 1/1) {
+            .content {
+                font-size: calc(100vw / 5);
+                transform: scaleY(calc(100vh / (10 * 1em)));
+            }
+        }
+
+        @media (max-aspect-ratio: 1/1) {
+            .content {
+                font-size: calc(100vh / 5);
+                transform: scaleX(calc(100vw / (10 * 1em)));
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <!-- <div class="full-page-image2"></div> -->
+    <div class="full-page-image3"></div>
+
+    <div class="date-container">
+        <a href="../room/" class="dates dateleft">04/09/25</a>
+        <a href="../index.html" class="clockname">Anglerfish Clock</a>
+        <a href="../index.html" class="dates dateright">04/11/25</a>
+    </div>
+
+    <div class="content" id="clock"></div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+
+            hours = hours % 24;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+
+            const time = '' + hours + ' ' + minutes + '';
+            document.getElementById('clock').textContent = time;
+            setTimeout(updateClock, 1000);
+        }
+
+        updateClock();
+    </script>
+    <div class="overlay"></div>
+    <div class="overlay2"></div>
+    <div class="overlay3"></div>
+    <div class="overlay4"></div>
+
+</body>
+
+</html>
