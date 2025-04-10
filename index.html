@@ -25,18 +25,45 @@
             -o-background-size: cover;
             background-size: cover;
             font-family: "Noto Sans", sans-serif;
-            background-color: rgb(237, 239, 234);
+            background-color: rgb(230, 225, 215);
+            animation: colorFade 35s infinite;
+            transition: background-color 5s ease;
+
         }
 
-        .parent {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(7, 7f);
-            grid-column-gap: 0px;
-            grid-row-gap: 0px;
+        @keyframes colorFade {
+            0% {
+                background-color: rgb(250, 227, 227);
+            }
+
+            14% {
+                background-color: rgb(233, 222, 201);
+            }
+
+            28% {
+                background-color: rgb(241, 241, 203);
+            }
+
+            42% {
+                background-color: rgb(206, 242, 206);
+            }
+
+            57% {
+                background-color: rgb(217, 217, 246);
+            }
+
+            71% {
+                background-color: rgb(238, 224, 247);
+            }
+
+            85% {
+                background-color: rgb(245, 208, 245);
+            }
+
+            100% {
+                background-color: rgb(249, 217, 217);
+            }
         }
-
-
 
         .full-page-image,
         .full-page-image2,
@@ -80,6 +107,8 @@
             font-size: 1.5vh;
             letter-spacing: 0.3vh;
             margin: 0.2vh;
+            text-align: center;
+            background-color: #eadfc2;
         }
 
         .chltitle {
@@ -88,6 +117,7 @@
             font-size: 2.8vh;
             line-height: 3.5vh;
             margin: 0.2vh;
+            background-color: #d9dad9;
         }
 
         .bttitle {
@@ -100,24 +130,28 @@
             font-style: italic;
             z-index: 15;
             letter-spacing: -0.6vh;
+            background-color: #e6f5e2;
         }
 
         .bt_newclockeveryday {
             font-size: 2vh;
-            line-height: 2vh;
+            line-height: 2.7vh;
             font-weight: lighter;
-            color: #d2c9e0;
-            text-shadow:
-                #000000 -0.1vh -0.1vh 1px;
+            color: #352747;
+            /* text-shadow:
+                #000000 -0.1vh -0.1vh 1px; */
             letter-spacing: 0.1vh;
             position: relative;
             text-align: center;
             font-style: italic;
+            background-color: #e6f5e2;
         }
 
         .todaysclockis {
-            font-size: 3vh;
-            line-height: 4vh;
+            color: rgb(152, 156, 156);
+            text-shadow: ;
+            font-size: 4vh;
+            line-height: 5.5vh;
             position: relative;
         }
 
@@ -165,77 +199,86 @@
         PLUS⬩ARS⬩CITIUS⬩OMNI⬩TEMPORE⬩NAM⬩QUISQUE*
     </div>
 
-    <div class="chltitle">Cubist Heart Laboratories
+    <div class="chltitle">
+        Cubist Heart Laboratories
     </div>
 
 
-    <div class="bttitle">BorrowedTime</div>
+    <div class="bttitle">
+        BorrowedTime
+    </div>
     <div class="bt_newclockeveryday">
-        a new clock every day</div>
+        a new clock every day
+    </div>
 
 
 
     <div class="clocklist">
-        <div class="todaysclockis">Today is <span id="current-date"></span>.
-        </div>
-        <table cellpadding="4" cellspacing="0">
-            <tr>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">04/10/25</td>
-                <td> <a href="/angler">Anglerfish Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">04/09/25</td>
-                <td> <a href="/room/">Empty Room Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">04/08/25</td>
-                <td> <a href="/triplecactus/">Triple Cactus Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">04/07/25</td>
-                <td> <a href="/solar/">Solar System Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">04/06/25</td>
-                <td><a href="/confetti/">Confetti Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">04/05/25</td>
-                <td><a href="/neon/">Neon Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">04/04/25</td>
-                <td><a href="/digitalroman/">Digital Roman Numeral Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">04/03/25</td>
-                <td><a href="/tall/">Tall Clock Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">04/02/25</td>
-                <td><a href="/mobydick/">Moby Dick Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">04/01/25</td>
-                <td><a href="/bargraph/">Bar Graph Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">03/31/25</td>
-                <td><a href="/deepspace/">Deep Space Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">03/30/25</td>
-                <td><a href="/random/">Random Color Clock</a></td>
-            </tr>
-            <tr>
-                <td class="clocklistdate">03/29/25</td>
-                <td><a href="/boring/">Boring Clock</a></td>
-            </tr>
-        </table>
+        <center>
+            <div class="todaysclockis">
+                Today is <span id="current-date"></span>.
+            </div>
+        </center>
+        <center>
+            <table cellpadding="4" cellspacing="0">
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/10/25</td>
+                    <td> <a href="/angler">Anglerfish Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/09/25</td>
+                    <td> <a href="/room/">Empty Room Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/08/25</td>
+                    <td> <a href="/triplecactus/">Triple Cactus Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/07/25</td>
+                    <td> <a href="/solar/">Solar System Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/06/25</td>
+                    <td><a href="/confetti/">Confetti Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/05/25</td>
+                    <td><a href="/neon/">Neon Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/04/25</td>
+                    <td><a href="/digitalroman/">Digital Roman Numeral Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/03/25</td>
+                    <td><a href="/tall/">Tall Clock Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/02/25</td>
+                    <td><a href="/mobydick/">Moby Dick Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/01/25</td>
+                    <td><a href="/bargraph/">Bar Graph Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">03/31/25</td>
+                    <td><a href="/deepspace/">Deep Space Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">03/30/25</td>
+                    <td><a href="/random/">Random Color Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">03/29/25</td>
+                    <td><a href="/boring/">Boring Clock</a></td>
+                </tr>
+            </table>
+        </center>
     </div>
     </div>
 
