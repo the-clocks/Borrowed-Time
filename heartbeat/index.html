@@ -2,42 +2,28 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        Heart Clock - BorrowedTime</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heartbeat Clock - BorrowedTime</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
     <style>
         body {
             margin: 0;
+            /* background: black; */
             overflow: hidden;
-
-            background-color: #06075f;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             position: relative;
-        }
-
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-            text-decoration: none;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .date-container {
-            color: #a5a6f6;
+            color: #82b080;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -72,10 +58,9 @@
             right: 0;
         }
 
-
         .title-container {
-            color: #880382;
-            text-shadow: #4e8477 1px 0px;
+            color: #2b1c1f;
+            text-shadow: #f0749d 1px 0px;
             position: absolute;
             top: 5px;
             left: 50%;
@@ -104,6 +89,119 @@
             z-index: 15;
             letter-spacing: -0.1vh;
         }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                url('./images/beat4.webp');
+            filter: saturate(300%);
+            background-repeat: repeat;
+            background-size: 6%;
+            z-index: 0;
+        }
+
+        .clock {
+            position: relative;
+            width: 50vh;
+            height: 50vh;
+            background-image: url('./images/tumblr_eb7034da88f87c02b8539374dca9c92e_746715e1_500.webp');
+            filter: hue-rotate(200deg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 2px solid #eb0808;
+            border-radius: 50%;
+            box-shadow: 0 0 400px #8e4dff;
+            animation: heartbeat 1s infinite;
+            transform-origin: center;
+            z-index: 10;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            20% {
+                transform: scale(1.2);
+            }
+
+            40% {
+                transform: scale(0.95);
+            }
+
+            60% {
+                transform: scale(1.1);
+            }
+
+            80% {
+                transform: scale(1.03);
+            }
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: rotate(0deg);
+        }
+
+        .hour {
+            width: 14px;
+            height: 90px;
+            background: #f7ef07;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #fff700;
+            z-index: 3;
+        }
+
+        .minute {
+            width: 6px;
+            height: 180px;
+            background: #00ffe0;
+            border-radius: 6px;
+            box-shadow: 0 0 10px #00ffe0;
+            z-index: 2;
+        }
+
+        .second {
+            width: 4px;
+            height: 1500px;
+            background: #48ec08;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .center-dot {
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            box-shadow: 0 0 5px #fff;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -113,13 +211,44 @@
         <div class="bttitle">BorrowedTime</div>
     </div>
 
-    <div class="date-container">
-        <a href="../neon/" class="dates dateleft">04/05/25</a>
-        <a href="../index.html" class="clockname">Confetti Clock</a>
-        <a href="../solar/" class="dates dateright">04/07/25</a>
+    <div class="background"></div>
+    <div class="clock">
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+        <div class="center-dot"></div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hourHand = document.getElementById('hour');
+            const minuteHand = document.getElementById('minute');
+            const secondHand = document.getElementById('second');
 
+            function updateClock() {
+                const now = new Date();
+                const seconds = now.getSeconds();
+                const minutes = now.getMinutes();
+                const hours = now.getHours();
+
+                const secDeg = seconds * 6;
+                const minDeg = minutes * 6 + seconds * 0.1;
+                const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+
+                secondHand.style.transform = `rotate(${secDeg}deg)`;
+                minuteHand.style.transform = `rotate(${minDeg}deg)`;
+                hourHand.style.transform = `rotate(${hourDeg}deg)`;
+            }
+
+            setInterval(updateClock, 1000);
+            updateClock();
+        });
+    </script>
+    <div class="date-container">
+        <a href="../random/" class="dates dateleft">04/10/25</a>
+        <a href="../index.html" class="clockname">Heartbeat Clock</a>
+        <a href="../index.html" class="dates dateright">04/12/25</a>
+    </div>
 
 </body>
 
