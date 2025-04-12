@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
 
 <head>
@@ -16,19 +12,19 @@
         rel="stylesheet">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+
     <style>
+        html,
         body {
             margin: 0;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
+            padding: 0;
+            height: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
             font-family: "Noto Sans", sans-serif;
             background-color: rgb(230, 225, 215);
-            animation: colorFade 35s infinite;
+            animation: colorFade 90s infinite;
             transition: background-color 5s ease;
-
         }
 
         @keyframes colorFade {
@@ -71,34 +67,36 @@
             position: fixed;
             width: 100%;
             height: 100%;
-            margin: 0;
             top: 0;
-            background-image: url("images/gears-13950_128.gif"), url("images/gears-13950_128.gif");
+            left: 0;
+            background-image: url("images/gears-13950_128.gif");
             background-repeat: repeat;
             background-position: center;
-            background-repeat: repeat;
+            pointer-events: none;
         }
 
         .full-page-image {
-            left: 0;
             background-size: 22vw 18vw;
             opacity: 0.15;
-            filter: alpha(opacity=50);
-            z-index: 7;
+            z-index: 5;
         }
 
         .full-page-image2 {
             background-size: 21vw 17vw;
-            z-index: 6;
             opacity: 0.1;
-            filter: alpha(opacity=50);
+            z-index: 4;
         }
 
         .full-page-image3 {
             background-size: 20vw 16vw;
-            z-index: 5;
             opacity: 0.1;
-            filter: alpha(opacity=50);
+            z-index: 3;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            padding: 2vh 2vw 8vh 2vw;
         }
 
         .motto {
@@ -106,7 +104,6 @@
             color: rgba(150, 118, 29, 0.877);
             font-size: 1.5vh;
             letter-spacing: 0.3vh;
-            margin: 0.2vh;
             text-align: center;
             background-color: #eadfc2;
         }
@@ -116,19 +113,17 @@
             color: rgb(125, 157, 131);
             font-size: 2.8vh;
             line-height: 3.5vh;
-            margin: 0.2vh;
             background-color: #d9dad9;
+            text-align: center;
         }
 
         .bttitle {
             color: #140431;
-            text-shadow: #bb1a1a 0.2vh 0vh 0px,
-                #b6e548 -0.25vh -0.0vh 0px;
+            text-shadow: #bb1a1a 0.2vh 0vh 0px, #b6e548 -0.25vh -0.0vh 0px;
             font-size: 9vh;
             line-height: 8vh;
             text-align: center;
             font-style: italic;
-            z-index: 15;
             letter-spacing: -0.6vh;
             background-color: #e6f5e2;
         }
@@ -138,10 +133,7 @@
             line-height: 2.7vh;
             font-weight: lighter;
             color: #600dcc;
-            /* text-shadow:
-                #000000 -0.1vh -0.1vh 1px; */
             letter-spacing: 0.1vh;
-            position: relative;
             text-align: center;
             font-style: italic;
             background-color: #e6f5e2;
@@ -151,7 +143,7 @@
             color: rgb(152, 156, 156);
             font-size: 3.5vh;
             line-height: 5.5vh;
-            position: relative;
+            text-align: center;
         }
 
         a {
@@ -160,10 +152,8 @@
         }
 
         .clocklist {
-            margin-left: 2vh;
             font-size: 3vh;
-            position: relative;
-            z-index: 10;
+            margin-top: 2vh;
         }
 
         .aboutthis {
@@ -174,17 +164,13 @@
 
         .clocklistdate {
             letter-spacing: 0.3vh;
-            align-items: center;
-            position: relative;
         }
 
         .copyright {
             font-size: 1.5vh;
             color: rgb(196, 191, 191);
             text-align: right;
-            bottom: 1px;
-            right: 1px;
-            position: absolute;
+            margin-top: 4vh;
         }
     </style>
 </head>
@@ -194,104 +180,100 @@
     <div class="full-page-image2"></div>
     <div class="full-page-image3"></div>
 
-    <div class="motto">
-        PLUS⬩ARS⬩CITIUS⬩OMNI⬩TEMPORE⬩NAM⬩QUISQUE*
-    </div>
+    <div class="content-wrapper">
+        <div class="motto">
+            PLUS⬩ARS⬩CITIUS⬩OMNI⬩TEMPORE⬩NAM⬩QUISQUE*
+        </div>
 
-    <div class="chltitle">
-        Cubist Heart Laboratories
-    </div>
+        <div class="chltitle">
+            Cubist Heart Laboratories
+        </div>
 
+        <div class="bttitle">
+            BorrowedTime
+        </div>
 
-    <div class="bttitle">
-        BorrowedTime
-    </div>
-    <div class="bt_newclockeveryday">
-        a new clock every day
-    </div>
+        <div class="bt_newclockeveryday">
+            a new clock every day
+        </div>
 
-    <div class="clocklist">
-        <center>
+        <div class="clocklist">
             <div class="todaysclockis">
                 Today is <span id="current-date"></span>.
             </div>
-        </center>
-        <center>
-            <table cellpadding="2" cellspacing="0">
-                <tr>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/12/25</td>
-                    <td> <a href="/magenta/">Magenta Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/11/25</td>
-                    <td> <a href="/heartbeat/">Heartbeat Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/10/25</td>
-                    <td> <a href="/angler/">Anglerfish Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/09/25</td>
-                    <td> <a href="/room/">Empty Room Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/08/25</td>
-                    <td> <a href="/triplecactus/">Triple Cactus Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/07/25</td>
-                    <td> <a href="/solar/">Solar System Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/06/25</td>
-                    <td><a href="/confetti/">Confetti Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/05/25</td>
-                    <td><a href="/neon/">Neon Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/04/25</td>
-                    <td><a href="/digitalroman/">Digital Roman Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/03/25</td>
-                    <td><a href="/tall/">Tall Clock Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/02/25</td>
-                    <td><a href="/mobydick/">Moby Dick Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/01/25</td>
-                    <td><a href="/bargraph/">Bar Graph Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">03/31/25</td>
-                    <td><a href="/deepspace/">Deep Space Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">03/30/25</td>
-                    <td><a href="/random/">Random Color Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">03/29/25</td>
-                    <td><a href="/boring/">Boring Clock</a></td>
-                </tr>
-            </table>
-        </center>
-    </div>
+
+            <center>
+                <table cellpadding="2" cellspacing="0">
+                    <tr>
+                        <td class="clocklistdate">04/12/25</td>
+                        <td><a href="/magenta/">Magenta Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/11/25</td>
+                        <td><a href="/heartbeat/">Heartbeat Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/10/25</td>
+                        <td><a href="/angler/">Anglerfish Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/09/25</td>
+                        <td><a href="/room/">Empty Room Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/08/25</td>
+                        <td><a href="/triplecactus/">Triple Cactus Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/07/25</td>
+                        <td><a href="/solar/">Solar System Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/06/25</td>
+                        <td><a href="/confetti/">Confetti Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/05/25</td>
+                        <td><a href="/neon/">Neon Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/04/25</td>
+                        <td><a href="/digitalroman/">Digital Roman Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/03/25</td>
+                        <td><a href="/tall/">Tall Clock Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/02/25</td>
+                        <td><a href="/mobydick/">Moby Dick Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">04/01/25</td>
+                        <td><a href="/bargraph/">Bar Graph Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">03/31/25</td>
+                        <td><a href="/deepspace/">Deep Space Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">03/30/25</td>
+                        <td><a href="/random/">Random Color Clock</a></td>
+                    </tr>
+                    <tr>
+                        <td class="clocklistdate">03/29/25</td>
+                        <td><a href="/boring/">Boring Clock</a></td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+
+        <div class="copyright">
+            *More Art Faster All The Time For Everyone<br>
+            ©2025 Cubist Heart Laboratories. All rights reserved.
+        </div>
     </div>
 
-    <div class="copyright">*More Art Faster All The Time For Everyone<BR>©2025 Cubist
-        Heart Laboratories. All rights reserved.
-    </div>
-
-    </div>
     <script>
         function updateDate() {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
