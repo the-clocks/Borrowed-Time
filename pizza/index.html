@@ -25,10 +25,8 @@
             width: 85vh;
             height: 85vh;
             background: url('./images/pie.gif') no-repeat center/cover;
-
             filter: saturate(1.4);
             border-radius: 50%;
-
         }
 
         .hand {
@@ -50,18 +48,22 @@
 
         .hour img {
             height: 28vh;
-            /* filter: brightness(120%); */
+            z-index: 9;
+            opacity: 0.8;
+            filter: brightness(120%);
         }
 
         .minute img {
             height: 44vh;
-            /* filter: brightness(110%); */
+            z-index: 6;
+            opacity: 0.8;
+            filter: brightness(110%);
         }
 
         .second img {
             height: 42vh;
-            filter: brightness(120%);
-            /* z-index: 2; */
+            filter: brightness(130%);
+            opacity: 0.7;
         }
 
         a {
@@ -166,11 +168,12 @@
     </div>
 
     <div class="clock">
-        <div class="hand hour">
-            <img src="./images/slice3.png" alt="Hour Hand">
-        </div>
+
         <div class="hand minute">
             <img src="./images/slice2.png" alt="Minute Hand">
+        </div>
+        <div class="hand hour">
+            <img src="./images/slice3.png" alt="Hour Hand">
         </div>
         <div class="hand second">
             <img src="./images/slice1.png" alt="Second Hand">
