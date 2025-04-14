@@ -2,8 +2,14 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>3D Clock Rooms Represented by Balls</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blue Brick Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
     <style>
         body {
             margin: 0;
@@ -12,11 +18,9 @@
             align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
-            background: #6d8f7e;
         }
 
         .container {
-            /* background: #6c776f; */
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -33,8 +37,6 @@
         .room {
             position: relative;
             width: 90vw;
-            /* height: 2vh; */
-            /* border: 0.3vh solid #13e73a; */
         }
 
         .ball-container {
@@ -52,8 +54,8 @@
         .time-ball {
             width: 2vw;
             height: 3vw;
-            background: radial-gradient(circle at 30% 30%, #e8eae9, #e5822b);
-            box-shadow: 0 0 1vw 0.4vw rgba(13, 25, 20, 0.8);
+            background: radial-gradient(circle at 30% 30%, #7d9ac9, #a5c1e6);
+            box-shadow: 0 0 1vw 0.4vw rgba(117, 151, 215, 0.8);
             animation: pop 0.6s cubic-bezier(0.28, 0.84, 0.42, 1);
         }
 
@@ -70,49 +72,175 @@
                 transform: scale(1);
             }
         }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #c0d5ed;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #114b81;
+            text-shadow: #d3d0d1 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        .full-page-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            transform: rotate(180deg);
+            filter: blur(4px);
+            filter: hue-rotate(180deg);
+            background-size: 33% 33%;
+            background-repeat: repeat;
+            filter: hue-rotate(180deg);
+            z-index: 1;
+
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="room">
-            <div id="balls-hours" class="ball-container"></div>
-        </div>
 
-        <div class="room">
-            <div id="balls-minutes" class="ball-container"></div>
-        </div>
-
-        <div class="room">
-            <div id="balls-seconds" class="ball-container"></div>
-        </div>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
     </div>
+    <div class="container">
+        <table>
+            <tr>
+                <td>
+                    <div class="room">
+                        <div id="balls-hours" class="ball-container"></div>
+                    </div>
+                </td>
+            </tr>
 
-    <script>
-        function updateClock() {
-            const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
 
-            updateBalls("balls-hours", hours);
-            updateBalls("balls-minutes", minutes);
-            updateBalls("balls-seconds", seconds);
-        }
+            <te>
+                <td>
+                    <div class="room">
+                        <div id="balls-minutes" class="ball-container"></div>
+                    </div>
+                </td>
+                </tr>
 
-        function updateBalls(containerId, count) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = "";
-            for (let i = 0; i < count; i++) {
-                const ball = document.createElement("div");
-                ball.className = "time-ball";
-                container.appendChild(ball);
+
+
+                <tr>
+                    <td>
+                        <div class="room">
+                            <div id="balls-seconds" class="ball-container"></div>
+                        </div>
+                    </td>
+                </tr>
+
+        </table>
+        <div class="date-container">
+            <a href="../angler/" class="dates dateleft">04/13/25</a>
+            <a href="../index.html" class="clockname">Blue Brick Clock Clock</a>
+            <a href="../magenta/" class="dates dateright">04/15/25</a>
+        </div>
+
+
+
+
+        <img src="./images/photo-1495578942200-c5f5d2137def.avif" class="full-page-image">
+        <script>
+            function updateClock() {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                const seconds = now.getSeconds();
+
+                updateBalls("balls-hours", hours);
+                updateBalls("balls-minutes", minutes);
+                updateBalls("balls-seconds", seconds);
             }
-        }
 
-        updateClock();
-        setInterval(updateClock, 1000);
-    </script>
+            function updateBalls(containerId, count) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = "";
+                for (let i = 0; i < count; i++) {
+                    const ball = document.createElement("div");
+                    ball.className = "time-ball";
+                    container.appendChild(ball);
+                }
+            }
+
+            updateClock();
+            setInterval(updateClock, 1000);
+        </script>
 </body>
 
 </html>
