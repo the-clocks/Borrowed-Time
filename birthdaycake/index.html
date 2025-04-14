@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rotating Image Circle</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #a78686;
+        }
+
+        .circle {
+            width: 60vw;
+            height: 60vw;
+            border-radius: 50%;
+            overflow: hidden;
+            animation: rotateCounterClockwise 60s linear infinite;
+        }
+
+        .circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes rotateCounterClockwise {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+        .clock {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .clock-face {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 50%;
+        }
+
+        .hand {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            transform: rotate(0deg);
+            transition: transform 0.05s linear;
+            pointer-events: none;
+        }
+
+        .hand.hour {
+            z-index: 3;
+        }
+
+        .hand.minute {
+            z-index: 2;
+        }
+
+        .hand.second {
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="circle">
+        <img src="./images/cake.png" alt="Rotating Image" />
+    </div>
+
+    <div class="clock">
+        <img src="https://i.imgur.com/JYQ9O0G.png" class="clock-face" alt="Clock Face" />
+        <img src="./images/200w.webp" class="hand hour" alt="Hour Hand" />
+        <img src="./images/200w (4).webp" class="hand minute" alt="Minute Hand" />
+        <img src="https://i.imgur.com/dqQX1Wg.png" class="hand second" alt="Second Hand" />
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const ms = now.getMilliseconds();
+            const s = now.getSeconds() + ms / 1000;
+            const m = now.getMinutes() + s / 60;
+            const h = now.getHours() % 12 + m / 60;
+
+            const secondDeg = s * 6;
+            const minuteDeg = m * 6;
+            const hourDeg = h * 30;
+
+            document.querySelector('.second').style.transform = `rotate(${secondDeg}deg)`;
+            document.querySelector('.minute').style.transform = `rotate(${minuteDeg}deg)`;
+            document.querySelector('.hour').style.transform = `rotate(${hourDeg}deg)`;
+
+            requestAnimationFrame(updateClock);
+        }
+
+        requestAnimationFrame(updateClock);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Cake Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Rock+3D&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background-color: rgb(185, 211, 211);
+        }
+
+        .clock-wrapper {
+            position: relative;
+            width: 80vh;
+            height: 80vh;
+        }
+
+
+        .clock {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            filter: saturate(1.6);
+            border-radius: 50%;
+            z-index: 5;
+        }
+
+        .hand {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: center center;
+            pointer-events: none;
+        }
+
+        .hand img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+        }
+
+        .hour img {
+            height: 28vh;
+            z-index: 9;
+            filter: contrast(160%) brightness(80%);
+            /* opacity: 0.8; */
+
+        }
+
+        .minute img {
+            height: 44vh;
+            z-index: 6;
+            /* filter: hue-rotate(180deg); */
+            /* opacity: 0.8; */
+            /* filter: brightness(190%) contrast(120%); */
+        }
+
+        .second img {
+            height: 38vh;
+            filter: brightness(120%) contrast(130%);
+            /* opacity: 0.7; */
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #051b0c9a;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #6f6d6e;
+            text-shadow: #f6f6fa 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        @keyframes rotateCounterClockwise {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+        .circle {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: rotateCounterClockwise 60s linear infinite;
+            z-index: 1;
+        }
+
+        .circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: hue-rotate(-20deg) brightness(150%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../magenta/" class="dates dateleft">04/15/25</a>
+        <a href="../index.html" class="clockname">Birthday Cake Clock</a>
+        <a href="../bluebrick/" class="dates dateright">04/17/25</a>
+    </div>
+
+    <div class="clock-wrapper">
+        <div class="circle">
+            <img src="./images/cake.png" alt="Rotating Image" />
+        </div>
+
+        <div class="clock">
+            <div class="hand minute">
+                <img src="./images/200w.webp">
+            </div>
+            <div class="hand hour">
+                <img src="./images/jhgh.webp">
+            </div>
+            <div class="hand second">
+                <img src="./images/2hhj.webp">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hourHand = document.querySelector('.hour');
+        const minuteHand = document.querySelector('.minute');
+        const secondHand = document.querySelector('.second');
+
+        function updateClockSmooth() {
+            const now = new Date();
+            const ms = now.getMilliseconds();
+            const s = now.getSeconds() + ms / 1000;
+            const m = now.getMinutes() + s / 60;
+            const h = now.getHours() % 12 + m / 60;
+
+            const hourDeg = h * 30;
+            const minuteDeg = m * 6;
+            const secondDeg = s * 6;
+
+            hourHand.style.transform = `rotate(${hourDeg}deg)`;
+            minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+            secondHand.style.transform = `rotate(${secondDeg}deg)`;
+
+            requestAnimationFrame(updateClockSmooth);
+        }
+
+        requestAnimationFrame(updateClockSmooth);
+    </script>
+</body>
+
+</html>
