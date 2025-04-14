@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>3D Clock Rooms Represented by Balls</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            background: #787c7a;
+        }
+
+        .container {
+            background: #6c776f;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 60vw) {
+            .container {
+                flex-direction: column;
+            }
+        }
+
+        .room {
+            position: relative;
+            width: 100vw;
+            height: 10vh;
+            /* border: 0.3vh solid #13e73a; */
+        }
+
+        .ball-container {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 0.5vw);
+            justify-content: center;
+            align-content: center;
+            gap: 5vw;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .time-ball {
+            width: 4vw;
+            height: 4vw;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #e8eae9, #40e52b);
+            box-shadow: 0 0 1vw 0.4vw rgba(146, 215, 183, 0.8);
+            animation: pop 0.6s cubic-bezier(0.28, 0.84, 0.42, 1);
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0);
+            }
+
+            70% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="room">
+            <div id="balls-hours" class="ball-container"></div>
+        </div>
+
+        <div class="room">
+            <div id="balls-minutes" class="ball-container"></div>
+        </div>
+
+        <div class="room">
+            <div id="balls-seconds" class="ball-container"></div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            updateBalls("balls-hours", hours);
+            updateBalls("balls-minutes", minutes);
+            updateBalls("balls-seconds", seconds);
+        }
+
+        function updateBalls(containerId, count) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = "";
+            for (let i = 0; i < count; i++) {
+                const ball = document.createElement("div");
+                ball.className = "time-ball";
+                container.appendChild(ball);
+            }
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+
+</html>
