@@ -22,7 +22,6 @@
             overflow-x: hidden;
             overflow-y: auto;
             font-family: "Noto Sans", sans-serif;
-            background-color: rgb(230, 225, 215);
             animation: colorFade 90s infinite;
             transition: background-color 5s ease;
         }
@@ -93,11 +92,11 @@
             z-index: 3;
         }
 
-        .content-wrapper {
+        /* .content-wrapper {
             position: relative;
             z-index: 10;
             padding: 2vh 2vw 8vh 2vw;
-        }
+        } */
 
         .motto {
             font-family: "Cinzel", serif;
@@ -141,7 +140,7 @@
 
         .todaysclockis {
             color: rgb(152, 156, 156);
-            font-size: 3.5vh;
+            font-size: 1.9vh;
             line-height: 5.5vh;
             text-align: center;
         }
@@ -163,12 +162,12 @@
         }
 
         .clocklistdate {
-            letter-spacing: 0.3vh;
+            letter-spacing: 0.2vh;
         }
 
         .copyright {
             font-size: 1.5vh;
-            color: rgb(196, 191, 191);
+            color: rgb(173, 169, 169);
             text-align: right;
             margin-top: 4vh;
         }
@@ -180,118 +179,117 @@
     <div class="full-page-image2"></div>
     <div class="full-page-image3"></div>
 
-    <div class="content-wrapper">
-        <div class="motto">
-            PLUS⬩ARS⬩CITIUS⬩OMNI⬩TEMPORE⬩NAM⬩QUISQUE*
+
+    <div class="motto">
+        PLUS⬩ARS⬩CITIUS⬩OMNI⬩TEMPORE⬩NAM⬩QUISQUE*
+    </div>
+
+    <div class="chltitle">
+        Cubist Heart Laboratories
+    </div>
+
+    <div class="bttitle">
+        BorrowedTime
+    </div>
+
+    <div class="bt_newclockeveryday">
+        a new clock every day
+    </div>
+
+    <div class="clocklist">
+        <div class="todaysclockis">
+            Today is <span id="current-date"></span>.
         </div>
 
-        <div class="chltitle">
-            Cubist Heart Laboratories
-        </div>
+        <center>
+            <table cellpadding="2" cellspacing="0">
+                <tr>
+                    <td class="clocklistdate"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/16/25</td>
+                    <td><a href="/birthdaycake/">Birthday Cake Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/15/25</td>
+                    <td><a href="/horizon/">Horizon Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/14/25</td>
+                    <td><a href="/bluebrick/">Blue Brick Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/13/25</td>
+                    <td><a href="/pizza/">Pepperoni Pizza Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/12/25</td>
+                    <td><a href="/magenta/">Magenta Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/11/25</td>
+                    <td><a href="/heartbeat/">Heartbeat Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/10/25</td>
+                    <td><a href="/angler/">Anglerfish Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/09/25</td>
+                    <td><a href="/room/">Empty Room Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/08/25</td>
+                    <td><a href="/triplecactus/">Triple Cactus Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/07/25</td>
+                    <td><a href="/solar/">Solar System Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/06/25</td>
+                    <td><a href="/confetti/">Confetti Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/05/25</td>
+                    <td><a href="/neon/">Neon Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/04/25</td>
+                    <td><a href="/digitalroman/">Digital Roman Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/03/25</td>
+                    <td><a href="/tall/">Tall Clock Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/02/25</td>
+                    <td><a href="/mobydick/">Moby Dick Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">04/01/25</td>
+                    <td><a href="/bargraph/">Bar Graph Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">03/31/25</td>
+                    <td><a href="/deepspace/">Deep Space Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">03/30/25</td>
+                    <td><a href="/random/">Random Color Clock</a></td>
+                </tr>
+                <tr>
+                    <td class="clocklistdate">03/29/25</td>
+                    <td><a href="/boring/">Boring Clock</a></td>
+                </tr>
+            </table>
+        </center>
+    </div>
 
-        <div class="bttitle">
-            BorrowedTime
-        </div>
-
-        <div class="bt_newclockeveryday">
-            a new clock every day
-        </div>
-
-        <div class="clocklist">
-            <div class="todaysclockis">
-                Today is <span id="current-date"></span>.
-            </div>
-
-            <center>
-                <table cellpadding="2" cellspacing="0">
-                    <tr>
-                        <td class="clocklistdate"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/16/25</td>
-                        <td><a href="/birthdaycake/">Birthday Cake Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/15/25</td>
-                        <td><a href="/horizon/">Horizon Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/14/25</td>
-                        <td><a href="/bluebrick/">Blue Brick Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/13/25</td>
-                        <td><a href="/pizza/">Pepperoni Pizza Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/12/25</td>
-                        <td><a href="/magenta/">Magenta Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/11/25</td>
-                        <td><a href="/heartbeat/">Heartbeat Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/10/25</td>
-                        <td><a href="/angler/">Anglerfish Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/09/25</td>
-                        <td><a href="/room/">Empty Room Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/08/25</td>
-                        <td><a href="/triplecactus/">Triple Cactus Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/07/25</td>
-                        <td><a href="/solar/">Solar System Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/06/25</td>
-                        <td><a href="/confetti/">Confetti Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/05/25</td>
-                        <td><a href="/neon/">Neon Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/04/25</td>
-                        <td><a href="/digitalroman/">Digital Roman Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/03/25</td>
-                        <td><a href="/tall/">Tall Clock Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/02/25</td>
-                        <td><a href="/mobydick/">Moby Dick Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">04/01/25</td>
-                        <td><a href="/bargraph/">Bar Graph Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">03/31/25</td>
-                        <td><a href="/deepspace/">Deep Space Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">03/30/25</td>
-                        <td><a href="/random/">Random Color Clock</a></td>
-                    </tr>
-                    <tr>
-                        <td class="clocklistdate">03/29/25</td>
-                        <td><a href="/boring/">Boring Clock</a></td>
-                    </tr>
-                </table>
-            </center>
-        </div>
-
-        <div class="copyright">
-            *More Art Faster All The Time For Everyone<br>
-            ©2025 Cubist Heart Laboratories. All rights reserved.
-        </div>
+    <div class="copyright">
+        *More Art Faster All The Time For Everyone<br>
+        ©2025 Cubist Heart Laboratories. All rights reserved.
     </div>
 
     <script>
