@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stripe Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Asset&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Workbench&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Courier New', monospace;
+            background: #838282;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #clock {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 85vh;
+            transition: all 0.5s ease;
+            font-family: "Asset", serif;
+        }
+
+        .stripe {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 8vw;
+            font-weight: bold;
+            transition: all 0.5s ease;
+        }
+
+        @media (min-width: 768px) {
+            #clock {
+                flex-direction: row;
+            }
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #fdfdff;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #a3a4a5;
+            text-shadow: #565756 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../birthdaycake/" class="dates dateleft">04/14/25</a>
+        <a href="../index.html" class="clockname">Horizon Clock</a>
+        <a href="../index.html" class="dates dateright">04/16/25</a>
+    </div>
+
+    <div id="clock"></div>
+
+    <script>
+        const digitStyles = {
+            '0': { bg: 'red', color: 'green' },
+            '1': { bg: 'blue', color: 'orange' },
+            '2': { bg: 'yellow', color: 'purple' },
+            '3': { bg: 'green', color: 'red' },
+            '4': { bg: 'orange', color: 'blue' },
+            '5': { bg: 'purple', color: 'yellow' },
+            '6': { bg: 'pink', color: 'black' },
+            '7': { bg: 'cyan', color: 'black' },
+            '8': { bg: 'brown', color: 'white' },
+            '9': { bg: 'black', color: 'white' },
+            ':': { bg: 'white', color: 'black' }
+        };
+
+        function updateClock() {
+            const now = new Date();
+            const h = now.getHours().toString().padStart(2, '0');
+            const m = now.getMinutes().toString().padStart(2, '0');
+            const s = now.getSeconds().toString().padStart(2, '0');
+            const timeStr = h + m + s;
+
+            const clockDiv = document.getElementById('clock');
+            const existingStripes = clockDiv.children;
+
+            if (existingStripes.length === timeStr.length) {
+                for (let i = 0; i < timeStr.length; i++) {
+                    const char = timeStr[i];
+                    const style = digitStyles[char];
+                    existingStripes[i].style.backgroundColor = style.bg;
+                    existingStripes[i].style.color = style.color;
+                    existingStripes[i].textContent = char;
+                }
+            } else {
+                clockDiv.innerHTML = '';
+                for (let char of timeStr) {
+                    const style = digitStyles[char];
+                    const stripe = document.createElement('div');
+                    stripe.className = 'stripe';
+                    stripe.style.backgroundColor = style.bg;
+                    stripe.style.color = style.color;
+                    stripe.textContent = char;
+                    clockDiv.appendChild(stripe);
+                }
+            }
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
