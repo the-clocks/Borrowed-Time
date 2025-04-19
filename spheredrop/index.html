@@ -182,8 +182,9 @@
 
         const roomTypes = [
             { name: 'hours', color: 'hour-ball', countFn: () => new Date().getHours(), max: 24, size: BALL_SIZES.hours, gravity: GRAVITIES.hours, properties: BALL_PROPERTIES.hours },
-            { name: 'seconds', color: 'second-ball', countFn: () => new Date().getSeconds(), max: 60, size: BALL_SIZES.seconds, gravity: GRAVITIES.seconds, properties: BALL_PROPERTIES.seconds },
             { name: 'minutes', color: 'minute-ball', countFn: () => new Date().getMinutes(), max: 60, size: BALL_SIZES.minutes, gravity: GRAVITIES.minutes, properties: BALL_PROPERTIES.minutes },
+            { name: 'seconds', color: 'second-ball', countFn: () => new Date().getSeconds(), max: 60, size: BALL_SIZES.seconds, gravity: GRAVITIES.seconds, properties: BALL_PROPERTIES.seconds },
+
         ];
 
         let state = {
@@ -197,12 +198,6 @@
             room.className = 'room';
             room.style.transform = `translateY(${index * ROOM_SIZE}vh)`;
             room.id = name + '-room';
-
-            ['front', 'back', 'left', 'right', 'top', 'bottom'].forEach(face => {
-                const faceDiv = document.createElement('div');
-                faceDiv.className = 'face ' + face;
-                room.appendChild(faceDiv);
-            });
 
             tower.appendChild(room);
             return room;
@@ -267,11 +262,6 @@
             while (room.firstChild) {
                 room.removeChild(room.firstChild);
             }
-            ['front', 'back', 'left', 'right', 'top', 'bottom'].forEach(face => {
-                const faceDiv = document.createElement('div');
-                faceDiv.className = 'face ' + face;
-                room.appendChild(faceDiv);
-            });
         }
 
         // Initialize all rooms
