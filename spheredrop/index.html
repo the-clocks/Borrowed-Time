@@ -2,15 +2,15 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sphere Drop Clock - BorrowedTime</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Syne+Mono&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" />
     <style>
         * {
             margin: 0;
@@ -38,7 +38,6 @@
         }
 
         .room {
-
             position: absolute;
             transform-style: preserve-3d;
         }
@@ -48,6 +47,13 @@
             position: absolute;
             transform-style: preserve-3d;
             box-shadow: 0 0 6px rgba(1, 23, 23, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Nanum Gothic Coding', monospace;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 2px black;
         }
 
         .hour-ball {
@@ -75,7 +81,7 @@
         }
 
         .chltitle {
-            font-family: "Roboto Slab", serif;
+            font-family: 'Roboto Slab', serif;
             font-size: 2.8vh;
             position: absolute;
             top: 1px;
@@ -86,7 +92,7 @@
         .bttitle {
             position: relative;
             left: 0;
-            font-family: "Oxanium", serif;
+            font-family: 'Oxanium', serif;
             font-size: 2.8vh;
             font-style: italic;
             z-index: 15;
@@ -116,7 +122,7 @@
         }
 
         .clockname {
-            font-family: "Oxanium", serif;
+            font-family: 'Oxanium', serif;
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
@@ -124,18 +130,33 @@
             line-height: 4vh;
         }
 
-        .dateleft {
+        .dateleft,
+        .dateright {
             font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
+            font-family: 'Nanum Gothic Coding', monospace;
+        }
+
+        .dateleft {
             position: relative;
             left: 0;
         }
 
         .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
             position: absolute;
             right: 0;
+        }
+
+        .ampm-label {
+            position: fixed;
+            top: 6vh;
+            right: 2vw;
+            font-family: 'Nanum Gothic Coding', monospace;
+            font-size: 3.5vh;
+            color: #fffdf4;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 0.3em 0.6em;
+            border-radius: 0.6em;
+            z-index: 10;
         }
     </style>
 </head>
@@ -151,29 +172,28 @@
         <a href="../index.html" class="dates dateright">04/19/25</a>
     </div>
 
+    <div id="ampm-label" class="ampm-label">--</div>
+
     <div class="tower" id="tower">
         <!-- Rooms will be injected here -->
     </div>
 
     <script>
         const tower = document.getElementById('tower');
-        const ROOM_SIZE = 27;  // 30vw
+        const ROOM_SIZE = 27;
 
-        // Define sizes for each type of ball
         const BALL_SIZES = {
-            hours: 8,    // 4vh for hour balls
-            minutes: 5,  // 3vh for minute balls
-            seconds: 3   // 2vh for second balls
+            hours: 8,
+            minutes: 5,
+            seconds: 3
         };
 
-        // Define different gravity values for each ball type
         const GRAVITIES = {
-            hours: 2,   // Lighter gravity for hour balls
-            minutes: 3, // Standard gravity for minute balls
-            seconds: 5  // Heavier gravity for second balls
+            hours: 2,
+            minutes: 3,
+            seconds: 5
         };
 
-        // Define bounce and friction for each ball type
         const BALL_PROPERTIES = {
             hours: { bounce: 0.9, friction: 0.5 },
             minutes: { bounce: 0.9, friction: 0.6 },
@@ -181,10 +201,37 @@
         };
 
         const roomTypes = [
-            { name: 'hours', color: 'hour-ball', countFn: () => new Date().getHours(), max: 24, size: BALL_SIZES.hours, gravity: GRAVITIES.hours, properties: BALL_PROPERTIES.hours },
-            { name: 'minutes', color: 'minute-ball', countFn: () => new Date().getMinutes(), max: 60, size: BALL_SIZES.minutes, gravity: GRAVITIES.minutes, properties: BALL_PROPERTIES.minutes },
-            { name: 'seconds', color: 'second-ball', countFn: () => new Date().getSeconds(), max: 60, size: BALL_SIZES.seconds, gravity: GRAVITIES.seconds, properties: BALL_PROPERTIES.seconds },
-
+            {
+                name: 'hours',
+                color: 'hour-ball',
+                countFn: () => {
+                    const h = new Date().getHours();
+                    return h % 12 === 0 ? 12 : h % 12;
+                },
+                ampmFn: () => (new Date().getHours() >= 12 ? 'PM' : 'AM'),
+                max: 12,
+                size: BALL_SIZES.hours,
+                gravity: GRAVITIES.hours,
+                properties: BALL_PROPERTIES.hours
+            },
+            {
+                name: 'minutes',
+                color: 'minute-ball',
+                countFn: () => new Date().getMinutes(),
+                max: 60,
+                size: BALL_SIZES.minutes,
+                gravity: GRAVITIES.minutes,
+                properties: BALL_PROPERTIES.minutes
+            },
+            {
+                name: 'seconds',
+                color: 'second-ball',
+                countFn: () => new Date().getSeconds(),
+                max: 60,
+                size: BALL_SIZES.seconds,
+                gravity: GRAVITIES.seconds,
+                properties: BALL_PROPERTIES.seconds
+            }
         ];
 
         let state = {
@@ -198,19 +245,24 @@
             room.className = 'room';
             room.style.transform = `translateY(${index * ROOM_SIZE}vh)`;
             room.id = name + '-room';
-
             tower.appendChild(room);
             return room;
+        }
+
+        function getNextNumber(room) {
+            return room.childElementCount + 1;
         }
 
         function dropBall(room, colorClass, size, gravity, bounce, friction) {
             const ball = document.createElement('div');
             ball.className = `ball ${colorClass}`;
+            ball.innerText = getNextNumber(room);
             ball.style.width = `${size}vh`;
             ball.style.height = `${size}vh`;
+            ball.style.fontSize = `${size / 2.5}vh`;
 
             let posX = Math.random() * (ROOM_SIZE - size);
-            let posY = -ROOM_SIZE; // Start above the room
+            let posY = -ROOM_SIZE;
             let posZ = Math.random() * (ROOM_SIZE - size);
             let velocityY = 0;
             const bounceFactor = bounce;
@@ -223,8 +275,7 @@
 
             function animate() {
                 if (!bouncing) return;
-
-                velocityY += gravity * 0.016;  // Apply specific gravity for the ball type
+                velocityY += gravity * 0.016;
                 posX += velocityX * 0.016;
                 posY += velocityY * 0.016;
                 posZ += velocityZ * 0.016;
@@ -264,7 +315,6 @@
             }
         }
 
-        // Initialize all rooms
         roomTypes.forEach((type, i) => createRoom(i, type.name));
 
         function syncBalls() {
@@ -284,6 +334,12 @@
 
                 state[type.name] = current;
             });
+
+            const hourType = roomTypes.find(t => t.name === 'hours');
+            if (hourType && hourType.ampmFn) {
+                const ampm = hourType.ampmFn().toUpperCase();
+                document.getElementById('ampm-label').textContent = ampm;
+            }
         }
 
         syncBalls();
