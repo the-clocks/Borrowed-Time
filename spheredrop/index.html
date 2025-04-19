@@ -75,7 +75,7 @@
             border-radius: 50%;
             position: absolute;
             transform-style: preserve-3d;
-            box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 6px rgba(1, 23, 23, 0.4);
         }
 
         .hour-ball {
@@ -196,7 +196,7 @@
 
         // Define sizes for each type of ball
         const BALL_SIZES = {
-            hours: 9,    // 4vh for hour balls
+            hours: 8,    // 4vh for hour balls
             minutes: 5,  // 3vh for minute balls
             seconds: 3  // 2vh for second balls
         };
@@ -210,9 +210,9 @@
 
         // Define bounce and friction for each ball type
         const BALL_PROPERTIES = {
-            hours: { bounce: 0.7, friction: 0.9 },
-            minutes: { bounce: 0.8, friction: 0.6 },
-            seconds: { bounce: 0.1, friction: 0.1 }
+            hours: { bounce: 0.9, friction: 0.5 },
+            minutes: { bounce: 0.9, friction: 0.6 },
+            seconds: { bounce: 0.4, friction: 0.1 }
         };
 
         const roomTypes = [
