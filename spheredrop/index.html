@@ -26,19 +26,21 @@
         }
 
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
             perspective: 1500px;
             position: relative;
         }
 
+
+
         .tower {
-            max-width: 500px;
-            position: relative;
+            position: absolute;
+            top: 5vh;
+            right: 50vw;
+            transform-origin: top right;
             transform-style: preserve-3d;
-            transform: rotateX(20deg) rotateY(20deg);
+            transform: scale(0.8) rotateX(20deg) rotateY(20deg);
         }
+
 
         .room {
             position: absolute;
@@ -72,39 +74,19 @@
             background: radial-gradient(circle at 30%, #04fa5e, #079a29);
         }
 
-        .title-container {
-            color: #a9a872;
-            text-shadow: #186e51 1px 0px;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.8vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
-
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.8vh;
-            font-style: italic;
-            z-index: 15;
-            letter-spacing: -0.1vh;
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
         }
 
         .date-container {
-            color: #4e3d0f;
+            color: #91c9e9;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -136,6 +118,37 @@
             position: absolute;
             right: 0;
         }
+
+        .title-container {
+            color: #c52991;
+            text-shadow: #830d27 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
     </style>
 </head>
 
@@ -153,15 +166,15 @@
 
     <div class="tower" id="tower"></div>
 
+
+
     <script>
         const tower = document.getElementById('tower');
-        const roomCount = 3;
-        const ROOM_SIZE = 100 / roomCount;
 
         const BALL_SIZES = {
-            hours: ROOM_SIZE * 0.3,
-            minutes: ROOM_SIZE * 0.2,
-            seconds: ROOM_SIZE * 0.12
+            hours: 8,     // in vh
+            minutes: 5,   // in vh
+            seconds: 3    // in vh
         };
 
         const GRAVITIES = {
@@ -188,8 +201,8 @@
                 size: BALL_SIZES.hours,
                 gravity: GRAVITIES.hours,
                 properties: BALL_PROPERTIES.hours,
-                width: 50, // Custom width (percentage)
-                height: 30 // Custom height (percentage)
+                width: 50, // in vw
+                height: 30 // in vh
             },
             {
                 name: 'minutes',
@@ -199,8 +212,8 @@
                 size: BALL_SIZES.minutes,
                 gravity: GRAVITIES.minutes,
                 properties: BALL_PROPERTIES.minutes,
-                width: 60, // Custom width (percentage)
-                height: 30 // Custom height (percentage)
+                width: 60,
+                height: 35
             },
             {
                 name: 'seconds',
@@ -210,8 +223,8 @@
                 size: BALL_SIZES.seconds,
                 gravity: GRAVITIES.seconds,
                 properties: BALL_PROPERTIES.seconds,
-                width: 40, // Custom width (percentage)
-                height: 30 // Custom height (percentage)
+                width: 40,
+                height: 35
             }
         ];
 
@@ -224,9 +237,9 @@
         function createRoom(index, type) {
             const room = document.createElement('div');
             room.className = 'room';
-            room.style.width = `${type.width}%`;
+            room.style.width = `${type.width}vw`;
             room.style.height = `${type.height}vh`;
-            room.style.transform = `translateY(${index * type.height}vh)`;
+            room.style.transform = `translateY(${roomTypes.slice(0, index).reduce((sum, r) => sum + r.height, 0)}vh)`;
             room.id = type.name + '-room';
             tower.appendChild(room);
             return room;
@@ -236,7 +249,7 @@
             return room.childElementCount + 1;
         }
 
-        function dropBall(room, colorClass, size, gravity, bounce, friction) {
+        function dropBall(room, colorClass, size, gravity, bounce, friction, roomHeight, roomWidth) {
             const ball = document.createElement('div');
             ball.className = `ball ${colorClass}`;
             ball.innerText = getNextNumber(room);
@@ -244,9 +257,9 @@
             ball.style.height = `${size}vh`;
             ball.style.fontSize = `${size / 2.5}vh`;
 
-            let posX = Math.random() * (100 - size);
-            let posY = -ROOM_SIZE;
-            let posZ = Math.random() * (100 - size);
+            let posX = Math.random() * (roomWidth - size);
+            let posY = -size;
+            let posZ = Math.random() * (roomWidth - size);
             let velocityY = 0;
             const bounceFactor = bounce;
             const frictionFactor = friction;
@@ -263,18 +276,18 @@
                 posY += velocityY * 0.016;
                 posZ += velocityZ * 0.016;
 
-                if (posX <= 0 || posX >= 100 - size) {
-                    posX = Math.max(0, Math.min(posX, 100 - size));
+                if (posX <= 0 || posX >= roomWidth - size) {
+                    posX = Math.max(0, Math.min(posX, roomWidth - size));
                     velocityX = -velocityX * bounceFactor;
                 }
 
-                if (posZ <= 0 || posZ >= 100 - size) {
-                    posZ = Math.max(0, Math.min(posZ, 100 - size));
+                if (posZ <= 0 || posZ >= roomWidth - size) {
+                    posZ = Math.max(0, Math.min(posZ, roomWidth - size));
                     velocityZ = -velocityZ * bounceFactor;
                 }
 
-                if (posY >= ROOM_SIZE - size) {
-                    posY = ROOM_SIZE - size;
+                if (posY >= roomHeight - size) {
+                    posY = roomHeight - size;
                     velocityY = -velocityY * bounceFactor;
                     velocityX *= frictionFactor;
                     velocityZ *= frictionFactor;
@@ -312,7 +325,16 @@
 
                 for (let i = state[type.name]; i < current; i++) {
                     const room = document.getElementById(type.name + '-room');
-                    dropBall(room, type.color, type.size, type.gravity, type.properties.bounce, type.properties.friction);
+                    dropBall(
+                        room,
+                        type.color,
+                        type.size,
+                        type.gravity,
+                        type.properties.bounce,
+                        type.properties.friction,
+                        type.height,
+                        type.width
+                    );
                 }
 
                 state[type.name] = current;
@@ -322,6 +344,8 @@
         syncBalls();
         setInterval(syncBalls, 1000);
     </script>
+
+
 </body>
 
 </html>
