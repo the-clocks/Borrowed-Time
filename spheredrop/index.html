@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -99,7 +102,6 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            /* justify-content: space-between; */
             z-index: 6;
         }
 
@@ -141,7 +143,6 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            /* justify-content: space-between; */
             z-index: 6;
         }
 
@@ -150,7 +151,6 @@
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            font-family: "Oxanium", serif;
             font-size: 4vh;
             line-height: 4vh;
         }
@@ -172,9 +172,6 @@
 </head>
 
 <body>
-
-
-
     <div class="title-container">
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
@@ -184,7 +181,6 @@
         <a href="../index.html" class="clockname">Sphere Drop Clock</a>
         <a href="../index.html" class="dates dateright">04/19/25</a>
     </div>
-
 
     <div class="tower" id="tower">
         <!-- Rooms will be injected here -->
@@ -198,7 +194,7 @@
         const BALL_SIZES = {
             hours: 8,    // 4vh for hour balls
             minutes: 5,  // 3vh for minute balls
-            seconds: 3  // 2vh for second balls
+            seconds: 3   // 2vh for second balls
         };
 
         // Define different gravity values for each ball type
@@ -218,7 +214,6 @@
         const roomTypes = [
             { name: 'hours', color: 'hour-ball', countFn: () => new Date().getHours(), max: 24, size: BALL_SIZES.hours, gravity: GRAVITIES.hours, properties: BALL_PROPERTIES.hours },
             { name: 'seconds', color: 'second-ball', countFn: () => new Date().getSeconds(), max: 60, size: BALL_SIZES.seconds, gravity: GRAVITIES.seconds, properties: BALL_PROPERTIES.seconds },
-
             { name: 'minutes', color: 'minute-ball', countFn: () => new Date().getMinutes(), max: 60, size: BALL_SIZES.minutes, gravity: GRAVITIES.minutes, properties: BALL_PROPERTIES.minutes },
         ];
 
@@ -251,7 +246,7 @@
             ball.style.height = `${size}vh`;
 
             let posX = Math.random() * (ROOM_SIZE - size);
-            let posY = 0;
+            let posY = -ROOM_SIZE; // Start above the room
             let posZ = Math.random() * (ROOM_SIZE - size);
             let velocityY = 0;
             const bounceFactor = bounce;
