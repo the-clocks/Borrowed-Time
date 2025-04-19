@@ -253,8 +253,15 @@
             ball.style.height = `${size}vh`;
             ball.style.fontSize = `${size / 2.5}vh`;
 
+
+
+
+
+
+
             let posX = Math.random() * (roomWidth - size);
-            let posY = -size;
+            let posY = -30; // Instead of: let posY = -size;
+
             let posZ = Math.random() * (roomWidth - size);
             let velocityY = 0;
             const bounceFactor = bounce;
