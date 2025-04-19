@@ -1,0 +1,340 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sphere Drop Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Syne+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #cf3b3b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            perspective: 1500px;
+            overflow: hidden;
+        }
+
+        .tower {
+            width: 30vw;
+            height: 90vh;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(20deg) rotateY(20deg);
+        }
+
+        .room {
+            width: 30vw;
+            height: 30vh;
+            position: absolute;
+            transform-style: preserve-3d;
+        }
+
+        .face {
+            position: absolute;
+            width: 30vw;
+            height: 30vh;
+        }
+
+        .front {
+            transform: translateZ(15vw);
+        }
+
+        .back {
+            transform: translateZ(-15vw) rotateY(180deg);
+        }
+
+        .left {
+            transform: translateX(-15vw) rotateY(-90deg);
+        }
+
+        .right {
+            transform: translateX(15vw) rotateY(90deg);
+        }
+
+        .top {
+            transform: translateY(-15vh) rotateX(90deg);
+        }
+
+        .bottom {
+            transform: translateY(15vh) rotateX(-90deg);
+        }
+
+        .ball {
+            border-radius: 50%;
+            position: absolute;
+            transform-style: preserve-3d;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .hour-ball {
+            background: radial-gradient(circle at 30%, #0dcaec, #056d7b);
+        }
+
+        .minute-ball {
+            background: radial-gradient(circle at 30%, #dce30b, #c2b30c);
+        }
+
+        .second-ball {
+            background: radial-gradient(circle at 30%, #04fa5e, #079a29);
+        }
+
+        .title-container {
+            color: #427290;
+            text-shadow: #42afef 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #89b9d6;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../antartica/" class="dates dateleft">04/18/25</a>
+        <a href="../index.html" class="clockname">Sphere Drop Clock</a>
+        <a href="../index.html" class="dates dateright">04/19/25</a>
+    </div>
+
+
+    <div class="tower" id="tower">
+        <!-- Rooms will be injected here -->
+    </div>
+
+    <script>
+        const tower = document.getElementById('tower');
+        const ROOM_SIZE = 27;  // 30vw
+
+        // Define sizes for each type of ball
+        const BALL_SIZES = {
+            hours: 9,    // 4vh for hour balls
+            minutes: 5,  // 3vh for minute balls
+            seconds: 3  // 2vh for second balls
+        };
+
+        // Define different gravity values for each ball type
+        const GRAVITIES = {
+            hours: 3,   // Lighter gravity for hour balls
+            minutes: 2, // Standard gravity for minute balls
+            seconds: 1  // Heavier gravity for second balls
+        };
+
+        // Define bounce and friction for each ball type
+        const BALL_PROPERTIES = {
+            hours: { bounce: 0.7, friction: 0.9 },
+            minutes: { bounce: 0.8, friction: 0.6 },
+            seconds: { bounce: 0.1, friction: 0.1 }
+        };
+
+        const roomTypes = [
+            { name: 'hours', color: 'hour-ball', countFn: () => new Date().getHours(), max: 24, size: BALL_SIZES.hours, gravity: GRAVITIES.hours, properties: BALL_PROPERTIES.hours },
+            { name: 'seconds', color: 'second-ball', countFn: () => new Date().getSeconds(), max: 60, size: BALL_SIZES.seconds, gravity: GRAVITIES.seconds, properties: BALL_PROPERTIES.seconds },
+
+            { name: 'minutes', color: 'minute-ball', countFn: () => new Date().getMinutes(), max: 60, size: BALL_SIZES.minutes, gravity: GRAVITIES.minutes, properties: BALL_PROPERTIES.minutes },
+        ];
+
+        let state = {
+            hours: 0,
+            minutes: 0,
+            seconds: 0
+        };
+
+        function createRoom(index, name) {
+            const room = document.createElement('div');
+            room.className = 'room';
+            room.style.transform = `translateY(${index * ROOM_SIZE}vh)`;
+            room.id = name + '-room';
+
+            ['front', 'back', 'left', 'right', 'top', 'bottom'].forEach(face => {
+                const faceDiv = document.createElement('div');
+                faceDiv.className = 'face ' + face;
+                room.appendChild(faceDiv);
+            });
+
+            tower.appendChild(room);
+            return room;
+        }
+
+        function dropBall(room, colorClass, size, gravity, bounce, friction) {
+            const ball = document.createElement('div');
+            ball.className = `ball ${colorClass}`;
+            ball.style.width = `${size}vh`;
+            ball.style.height = `${size}vh`;
+
+            let posX = Math.random() * (ROOM_SIZE - size);
+            let posY = 0;
+            let posZ = Math.random() * (ROOM_SIZE - size);
+            let velocityY = 0;
+            const bounceFactor = bounce;
+            const frictionFactor = friction;
+            let velocityX = (Math.random() - 0.5) * 100;
+            let velocityZ = (Math.random() - 0.5) * 100;
+            let bouncing = true;
+
+            room.appendChild(ball);
+
+            function animate() {
+                if (!bouncing) return;
+
+                velocityY += gravity * 0.016;  // Apply specific gravity for the ball type
+                posX += velocityX * 0.016;
+                posY += velocityY * 0.016;
+                posZ += velocityZ * 0.016;
+
+                if (posX <= 0 || posX >= ROOM_SIZE - size) {
+                    posX = Math.max(0, Math.min(posX, ROOM_SIZE - size));
+                    velocityX = -velocityX * bounceFactor;
+                }
+
+                if (posZ <= 0 || posZ >= ROOM_SIZE - size) {
+                    posZ = Math.max(0, Math.min(posZ, ROOM_SIZE - size));
+                    velocityZ = -velocityZ * bounceFactor;
+                }
+
+                if (posY >= ROOM_SIZE - size) {
+                    posY = ROOM_SIZE - size;
+                    velocityY = -velocityY * bounceFactor;
+                    velocityX *= frictionFactor;
+                    velocityZ *= frictionFactor;
+
+                    if (Math.abs(velocityY) < 2 && Math.abs(velocityX) < 2 && Math.abs(velocityZ) < 2) {
+                        bouncing = false;
+                    }
+                }
+
+                ball.style.transform = `translateX(${posX}vw) translateY(${posY}vh) translateZ(${posZ - ROOM_SIZE / 2}vh)`;
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        function resetRoom(roomId) {
+            const room = document.getElementById(roomId);
+            while (room.firstChild) {
+                room.removeChild(room.firstChild);
+            }
+            ['front', 'back', 'left', 'right', 'top', 'bottom'].forEach(face => {
+                const faceDiv = document.createElement('div');
+                faceDiv.className = 'face ' + face;
+                room.appendChild(faceDiv);
+            });
+        }
+
+        // Initialize all rooms
+        roomTypes.forEach((type, i) => createRoom(i, type.name));
+
+        function syncBalls() {
+            roomTypes.forEach(type => {
+                const current = type.countFn();
+                const prev = state[type.name];
+
+                if (current < prev || prev > type.max) {
+                    resetRoom(type.name + '-room');
+                    state[type.name] = 0;
+                }
+
+                for (let i = state[type.name]; i < current; i++) {
+                    const room = document.getElementById(type.name + '-room');
+                    dropBall(room, type.color, type.size, type.gravity, type.properties.bounce, type.properties.friction);
+                }
+
+                state[type.name] = current;
+            });
+        }
+
+        syncBalls();
+        setInterval(syncBalls, 1000);
+    </script>
+</body>
+
+</html>

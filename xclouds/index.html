@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloud Clock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Puddles&family=Oxanium:wght@200..800&display=swap"
+        rel="stylesheet" />
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+        }
+
+        .box {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .rubik-puddles-regular {
+            font-family: "Rubik Puddles", serif;
+            color: #c7dbf2;
+            font-size: 1em;
+            text-align: center;
+            z-index: 6;
+        }
+
+        .time-stack {
+            display: flex;
+            flex-direction: row;
+
+        }
+
+        .time-part {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes digitFade {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .digit {
+            text-shadow:
+                #cdcffe 50px 50px 5px,
+                #dfdbdb 90px 90px 5px,
+                #dfdbdb 15px 18px 5px,
+                #ffffff -80px 80px 4px,
+                #ffffff -60px 60px 4px,
+                #ffffff -20px 20px 4px,
+                #ffffff 80px -80px 4px,
+                #f0f1f4 28px -18px 5px,
+                #f0f1f4 57px -43px 5px,
+                #bbd0ea -21px -17px 4px,
+                #bbd0ea -54px -30px 4px,
+                #c4d4e9 -70px -60px 4px,
+                #9494c9 1px 1px 1px;
+            animation: digitFade 1.2s ease-in-out infinite;
+        }
+
+        .bigclouds {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+        }
+
+        .bigclouds2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2;
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            opacity: 0.5;
+        }
+
+        a {
+            text-decoration: none;
+            color: #93b6f6;
+        }
+
+        @media (max-width: 600px) {
+            .time-stack {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <script>
+        function updateTime() {
+            const now = new Date();
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            function getStyledText(str) {
+                return str.split('').map(char => {
+                    const randomSize = Math.floor(Math.random() * 500) / 3;
+                    return `<span class="digit" style="font-size: ${randomSize}px;">${char}</span>`;
+                }).join('');
+            }
+
+            document.getElementById('hours').innerHTML = getStyledText(hours);
+            document.getElementById('minutes').innerHTML = getStyledText(minutes);
+            document.getElementById('seconds').innerHTML = getStyledText(seconds);
+        }
+
+        setInterval(updateTime, 1000);
+        window.onload = updateTime;
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="rubik-puddles-regular time-stack">
+            <div id="hours" class="time-part"></div>
+            <div id="minutes" class="time-part"></div>
+            <div id="seconds" class="time-part"></div>
+        </div>
+        <img class="bigclouds" src="./images/clouds.gif" alt="Clouds Background" />
+
+        <img class="bigclouds2" src="./images/clouds.gif" alt="Clouds Background" />
+    </div>
+</body>
+
+</html>
