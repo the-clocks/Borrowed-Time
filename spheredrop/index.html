@@ -32,8 +32,8 @@
 
         .tower {
             position: absolute;
-            top: 1vh;
-            right: 50vw;
+            /* top: 1vh; */
+            right: 90vw;
             transform-origin: top right;
             transform-style: preserve-3d;
             transform: scale(0.8) rotateX(20deg) rotateY(20deg);
@@ -171,19 +171,19 @@
         const BALL_SIZES = {
             hours: 12,     // in vh
             minutes: 7,   // in vh
-            seconds: 5    // in vh
+            seconds: 2    // in vh
         };
 
         const GRAVITIES = {
-            hours: 0.5,
-            minutes: 1,
-            seconds: 5
+            hours: 0.005,
+            minutes: 0.8,
+            seconds: 8
         };
 
         const BALL_PROPERTIES = {
             hours: { bounce: 0.9, friction: 0.9 },
-            minutes: { bounce: 0.9, friction: 0.6 },
-            seconds: { bounce: 0.4, friction: 0.1 }
+            minutes: { bounce: 0.8, friction: 0.9 },
+            seconds: { bounce: 0.4, friction: 0.999 }
         };
 
         const roomTypes = [
@@ -198,7 +198,7 @@
                 size: BALL_SIZES.hours,
                 gravity: GRAVITIES.hours,
                 properties: BALL_PROPERTIES.hours,
-                width: 50, // in vw
+                width: 100, // in vw
                 height: 20 // in vh
             },
             {
@@ -209,7 +209,7 @@
                 size: BALL_SIZES.minutes,
                 gravity: GRAVITIES.minutes,
                 properties: BALL_PROPERTIES.minutes,
-                width: 60,
+                width: 100,
                 height: 35
             },
             {
@@ -220,7 +220,7 @@
                 size: BALL_SIZES.seconds,
                 gravity: GRAVITIES.seconds,
                 properties: BALL_PROPERTIES.seconds,
-                width: 40,
+                width: 100,
                 height: 35
             }
         ];
