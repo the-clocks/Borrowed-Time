@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sphere Drop Clock - BorrowedTime</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Syne+Mono&display=swap"
-        rel="stylesheet" />
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Permanent+Marker&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -18,20 +17,24 @@
             box-sizing: border-box;
         }
 
+        html,
         body {
-            font-family: Arial, sans-serif;
+            width: 100%;
+            height: 100%;
             background: #a10d0d;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            perspective: 1500px;
             overflow: hidden;
         }
 
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+            position: relative;
+        }
+
         .tower {
-            width: 30vw;
-            height: 100vh;
+            max-width: 500px;
             position: relative;
             transform-style: preserve-3d;
             transform: rotateX(20deg) rotateY(20deg);
@@ -40,6 +43,7 @@
         .room {
             position: absolute;
             transform-style: preserve-3d;
+            /* Width and Height will be set dynamically */
         }
 
         .ball {
@@ -50,10 +54,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Nanum Gothic Coding', monospace;
+            font-family: "Permanent Marker", cursive;
             font-weight: bold;
-            color: white;
-            text-shadow: 0 0 2px black;
+            color: rgb(239, 8, 8);
+            text-shadow: 0 0 px rgb(250, 246, 246);
         }
 
         .hour-ball {
@@ -69,8 +73,8 @@
         }
 
         .title-container {
-            color: #a90823;
-            text-shadow: #3b0117 1px 0px;
+            color: #a9a872;
+            text-shadow: #186e51 1px 0px;
             position: absolute;
             top: 5px;
             left: 50%;
@@ -81,7 +85,7 @@
         }
 
         .chltitle {
-            font-family: 'Roboto Slab', serif;
+            font-family: "Roboto Slab", serif;
             font-size: 2.8vh;
             position: absolute;
             top: 1px;
@@ -92,26 +96,15 @@
         .bttitle {
             position: relative;
             left: 0;
-            font-family: 'Oxanium', serif;
+            font-family: "Oxanium", serif;
             font-size: 2.8vh;
             font-style: italic;
             z-index: 15;
             letter-spacing: -0.1vh;
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-            text-decoration: none;
-        }
-
         .date-container {
-            color: #b1eec2;
+            color: #4e3d0f;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -122,7 +115,7 @@
         }
 
         .clockname {
-            font-family: 'Oxanium', serif;
+            font-family: "Oxanium", serif;
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
@@ -130,33 +123,18 @@
             line-height: 4vh;
         }
 
-        .dateleft,
-        .dateright {
-            font-size: 3vh;
-            font-family: 'Nanum Gothic Coding', monospace;
-        }
-
         .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
             position: relative;
             left: 0;
         }
 
         .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
             position: absolute;
             right: 0;
-        }
-
-        .ampm-label {
-            position: fixed;
-            top: 6vh;
-            right: 2vw;
-            font-family: 'Nanum Gothic Coding', monospace;
-            font-size: 3.5vh;
-            color: #fffdf4;
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 0.3em 0.6em;
-            border-radius: 0.6em;
-            z-index: 10;
         }
     </style>
 </head>
@@ -166,26 +144,24 @@
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
+
     <div class="date-container">
         <a href="../antartica/" class="dates dateleft">04/18/25</a>
         <a href="../index.html" class="clockname">Sphere Drop Clock</a>
         <a href="../index.html" class="dates dateright">04/19/25</a>
     </div>
 
-    <div id="ampm-label" class="ampm-label">--</div>
-
-    <div class="tower" id="tower">
-        <!-- Rooms will be injected here -->
-    </div>
+    <div class="tower" id="tower"></div>
 
     <script>
         const tower = document.getElementById('tower');
-        const ROOM_SIZE = 27;
+        const roomCount = 3;
+        const ROOM_SIZE = 100 / roomCount;
 
         const BALL_SIZES = {
-            hours: 8,
-            minutes: 5,
-            seconds: 3
+            hours: ROOM_SIZE * 0.3,
+            minutes: ROOM_SIZE * 0.2,
+            seconds: ROOM_SIZE * 0.12
         };
 
         const GRAVITIES = {
@@ -195,7 +171,7 @@
         };
 
         const BALL_PROPERTIES = {
-            hours: { bounce: 0.9, friction: 0.5 },
+            hours: { bounce: 0.9, friction: 0.9 },
             minutes: { bounce: 0.9, friction: 0.6 },
             seconds: { bounce: 0.4, friction: 0.1 }
         };
@@ -208,11 +184,12 @@
                     const h = new Date().getHours();
                     return h % 12 === 0 ? 12 : h % 12;
                 },
-                ampmFn: () => (new Date().getHours() >= 12 ? 'PM' : 'AM'),
                 max: 12,
                 size: BALL_SIZES.hours,
                 gravity: GRAVITIES.hours,
-                properties: BALL_PROPERTIES.hours
+                properties: BALL_PROPERTIES.hours,
+                width: 50, // Custom width (percentage)
+                height: 30 // Custom height (percentage)
             },
             {
                 name: 'minutes',
@@ -221,7 +198,9 @@
                 max: 60,
                 size: BALL_SIZES.minutes,
                 gravity: GRAVITIES.minutes,
-                properties: BALL_PROPERTIES.minutes
+                properties: BALL_PROPERTIES.minutes,
+                width: 60, // Custom width (percentage)
+                height: 30 // Custom height (percentage)
             },
             {
                 name: 'seconds',
@@ -230,7 +209,9 @@
                 max: 60,
                 size: BALL_SIZES.seconds,
                 gravity: GRAVITIES.seconds,
-                properties: BALL_PROPERTIES.seconds
+                properties: BALL_PROPERTIES.seconds,
+                width: 40, // Custom width (percentage)
+                height: 30 // Custom height (percentage)
             }
         ];
 
@@ -240,11 +221,13 @@
             seconds: 0
         };
 
-        function createRoom(index, name) {
+        function createRoom(index, type) {
             const room = document.createElement('div');
             room.className = 'room';
-            room.style.transform = `translateY(${index * ROOM_SIZE}vh)`;
-            room.id = name + '-room';
+            room.style.width = `${type.width}%`;
+            room.style.height = `${type.height}vh`;
+            room.style.transform = `translateY(${index * type.height}vh)`;
+            room.id = type.name + '-room';
             tower.appendChild(room);
             return room;
         }
@@ -261,9 +244,9 @@
             ball.style.height = `${size}vh`;
             ball.style.fontSize = `${size / 2.5}vh`;
 
-            let posX = Math.random() * (ROOM_SIZE - size);
+            let posX = Math.random() * (100 - size);
             let posY = -ROOM_SIZE;
-            let posZ = Math.random() * (ROOM_SIZE - size);
+            let posZ = Math.random() * (100 - size);
             let velocityY = 0;
             const bounceFactor = bounce;
             const frictionFactor = friction;
@@ -280,13 +263,13 @@
                 posY += velocityY * 0.016;
                 posZ += velocityZ * 0.016;
 
-                if (posX <= 0 || posX >= ROOM_SIZE - size) {
-                    posX = Math.max(0, Math.min(posX, ROOM_SIZE - size));
+                if (posX <= 0 || posX >= 100 - size) {
+                    posX = Math.max(0, Math.min(posX, 100 - size));
                     velocityX = -velocityX * bounceFactor;
                 }
 
-                if (posZ <= 0 || posZ >= ROOM_SIZE - size) {
-                    posZ = Math.max(0, Math.min(posZ, ROOM_SIZE - size));
+                if (posZ <= 0 || posZ >= 100 - size) {
+                    posZ = Math.max(0, Math.min(posZ, 100 - size));
                     velocityZ = -velocityZ * bounceFactor;
                 }
 
@@ -301,7 +284,7 @@
                     }
                 }
 
-                ball.style.transform = `translateX(${posX}vw) translateY(${posY}vh) translateZ(${posZ - ROOM_SIZE / 2}vh)`;
+                ball.style.transform = `translateX(${posX}vw) translateY(${posY}vh) translateZ(${posZ - 50}vh)`;
                 requestAnimationFrame(animate);
             }
 
@@ -315,7 +298,7 @@
             }
         }
 
-        roomTypes.forEach((type, i) => createRoom(i, type.name));
+        roomTypes.forEach((type, i) => createRoom(i, type));
 
         function syncBalls() {
             roomTypes.forEach(type => {
@@ -334,12 +317,6 @@
 
                 state[type.name] = current;
             });
-
-            const hourType = roomTypes.find(t => t.name === 'hours');
-            if (hourType && hourType.ampmFn) {
-                const ampm = hourType.ampmFn().toUpperCase();
-                document.getElementById('ampm-label').textContent = ampm;
-            }
         }
 
         syncBalls();
