@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloud Clock - BorrowedTime</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Rubik+Puddles&display=swap"
         rel="stylesheet">
-    <title>Cloud Clock - BorrowedTime</title>
     <style>
         html,
         body {
@@ -39,7 +39,6 @@
         .time-stack {
             display: flex;
             flex-direction: row;
-
         }
 
         .time-part {
@@ -51,15 +50,29 @@
         @keyframes digitFade {
             0% {
                 opacity: 0;
+                transform: translateY(10px);
             }
 
-            50% {
+            25% {
                 opacity: 1;
+                transform: translateY(0);
+            }
+
+            75% {
+                opacity: 1;
+                transform: translateY(0);
             }
 
             100% {
                 opacity: 0;
+                transform: translateY(-10px);
             }
+        }
+
+        .digit-group {
+            animation: digitFade 3s ease-in-out;
+            display: inline-block;
+            margin: 0 5px;
         }
 
         .digit {
@@ -77,10 +90,10 @@
                 #bbd0ea -54px -30px 4px,
                 #c4d4e9 -70px -60px 4px,
                 #145293 1px 1px 1px;
-            animation: digitFade 1.2s ease-in-out infinite;
         }
 
-        .bigclouds {
+        .bigclouds,
+        .bigclouds2 {
             position: fixed;
             top: 0;
             left: 0;
@@ -90,12 +103,6 @@
         }
 
         .bigclouds2 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 2;
             -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
             opacity: 0.5;
@@ -134,22 +141,22 @@
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            font-family: "Oxanium", serif;
             font-size: 4vh;
             line-height: 4vh;
         }
 
-
-        .dateleft {
+        .dateleft,
+        .dateright {
             font-size: 3vh;
             font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
             position: relative;
             left: 0;
         }
 
         .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
             position: absolute;
             right: 0;
         }
@@ -163,7 +170,6 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            /* justify-content: space-between; */
             z-index: 6;
         }
 
@@ -186,7 +192,34 @@
             letter-spacing: -0.1vh;
         }
     </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../spheredrop/" class="dates dateleft">04/19/25</a>
+        <a href="../index.html" class="clockname">Cloud Clock</a>
+        <a href="../peacock/" class="dates dateright">04/21/25</a>
+    </div>
+
+    <div class="box">
+        <div class="rubik-puddles-regular time-stack">
+            <div id="hours" class="time-part"></div>
+            <div id="minutes" class="time-part"></div>
+            <div id="seconds-container" class="time-part"></div>
+        </div>
+
+        <img class="bigclouds" src="./images/clouds.gif" alt="Clouds Background" />
+        <img class="bigclouds2" src="./images/clouds.gif" alt="Clouds Background" />
+    </div>
+
     <script>
+        const recentSeconds = [];
+
         function updateTime() {
             const now = new Date();
 
@@ -203,35 +236,17 @@
 
             document.getElementById('hours').innerHTML = getStyledText(hours);
             document.getElementById('minutes').innerHTML = getStyledText(minutes);
-            document.getElementById('seconds').innerHTML = getStyledText(seconds);
+
+            const formatted = `<div class="digit-group">${getStyledText(seconds)}</div>`;
+            recentSeconds.push(formatted);
+            if (recentSeconds.length > 3) recentSeconds.shift();
+
+            document.getElementById('seconds-container').innerHTML = recentSeconds.join('');
         }
 
         setInterval(updateTime, 1000);
         window.onload = updateTime;
     </script>
-</head>
-<div class="title-container">
-    <div class="chltitle">Cubist Heart Laboratories</div>
-    <div class="bttitle">BorrowedTime</div>
-</div>
-
-<div class="date-container">
-    <a href="../spheredrop/" class="dates dateleft">04/19/25</a>
-    <a href="../index.html" class="clockname">Cloud Clock</a>
-    <a href="../index.html" class="dates dateright">04/21/25</a>
-</div>
-
-<body>
-    <div class="box">
-        <div class="rubik-puddles-regular time-stack">
-            <div id="hours" class="time-part"></div>
-            <div id="minutes" class="time-part"></div>
-            <div id="seconds" class="time-part"></div>
-        </div>
-        <img class="bigclouds" src="./images/clouds.gif" alt="Clouds Background" />
-
-        <img class="bigclouds2" src="./images/clouds.gif" alt="Clouds Background" />
-    </div>
 </body>
 
 </html>

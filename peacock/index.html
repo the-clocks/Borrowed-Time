@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iridescent Peacock Clock</title>
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .clock {
+            position: relative;
+            width: 340px;
+            height: 340px;
+            border: 10px solid transparent;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #00ffe0, #8a2be2, #39ff14, #ff00ff, #00ffe0);
+            background-size: 400% 400%;
+            animation: shimmer 20s linear infinite;
+            box-shadow: 0 0 60px #00ffe0aa, 0 0 120px #ff00ff66 inset;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 14px;
+            height: 14px;
+            background: radial-gradient(circle, #ffd700, #ff00ff);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px #ffffff;
+            z-index: 10;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            transform: translateX(-50%) rotate(0deg);
+            border-radius: 6px;
+            background: linear-gradient(180deg, #fff, #00ffe0);
+            box-shadow: 0 0 10px #ffffffaa;
+        }
+
+        .hand.hour {
+            width: 8px;
+            height: 80px;
+            background: linear-gradient(to top, #6a0dad, #ffd700);
+        }
+
+        .hand.minute {
+            width: 5px;
+            height: 110px;
+            background: linear-gradient(to top, #00ffe0, #8a2be2);
+        }
+
+        .hand.second {
+            width: 3px;
+            height: 130px;
+            background: linear-gradient(to top, #ff00ff, #00ffe0);
+        }
+
+        .feather {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: radial-gradient(circle, #00ffe0, #ff00ff, #8a2be2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform-origin: center;
+            box-shadow: 0 0 12px #ffffff66;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .feather:hover {
+            transform: scale(1.3) rotate(var(--angle)) translateY(-150px);
+        }
+
+        .corner-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            opacity: 0.9;
+            height: auto;
+            z-index: 1000;
+        }
+
+        .corner-image2 {
+            -moz-transform: scale(-1, -1);
+            -o-transform: scale(-1, -1);
+            -webkit-transform: scale(-1, -1);
+            transform: scale(-1, -1);
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            opacity: 0.9;
+            height: auto;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock" id="clock">
+        <div class="center"></div>
+        <div class="hand hour" id="hourHand"><img src="./images/Peacock.png></div>
+        <div class=" hand minute" id="minuteHand"></div>
+        <div class="hand second" id="secondHand"></div>
+    </div>
+
+    <script>
+        // Add 12 iridescent feather markers
+        const clock = document.getElementById('clock');
+        for (let i = 0; i < 12; i++) {
+            const feather = document.createElement('div');
+            feather.classList.add('feather');
+            const angle = i * 30;
+            feather.style.setProperty('--angle', `${angle}deg`);
+            feather.style.transform = `translate(-50%, -50%) rotate(${angle}deg) translateY(-140px)`;
+            clock.appendChild(feather);
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const sec = now.getSeconds();
+            const min = now.getMinutes();
+            const hr = now.getHours() % 12;
+
+            const secDeg = sec * 6;
+            const minDeg = min * 6 + sec * 0.1;
+            const hrDeg = hr * 30 + min * 0.5;
+
+            document.getElementById('secondHand').style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+            document.getElementById('minuteHand').style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
+            document.getElementById('hourHand').style.transform = `translateX(-50%) rotate(${hrDeg}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
