@@ -24,33 +24,29 @@
             overflow: hidden;
             background-image: url('./images/Untitled.png');
             background-size: cover;
-            /* 🔥 Make image cover whole screen */
             background-position: center;
-            /* 🔍 Center it */
             background-repeat: no-repeat;
-            /* 🚫 Prevent tiling */
         }
-
 
         .rotating-wrapper {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 150vw;
-            height: 150vh;
+            width: 100vw;
+            height: 100vh;
             transform: translate(-50%, -50%);
             transform-origin: center center;
             pointer-events: none;
         }
 
         .rotate-cw {
-            animation: rotate 123s linear infinite;
+            animation: rotate 180s linear infinite;
             z-index: 1;
-            opacity: 0.5;
+            opacity: 0.7;
         }
 
         .rotate-ccw {
-            animation: rotate 111s linear infinite reverse;
+            animation: rotate 175s linear infinite reverse;
             z-index: 2;
             /* mix-blend-mode: difference; */
             opacity: 0.5;
@@ -113,7 +109,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            opacity: 0.7;
+            opacity: 0.6;
             height: auto;
             z-index: 5;
         }
@@ -126,21 +122,26 @@
             position: fixed;
             bottom: 0;
             right: 0;
-            opacity: 0.7;
+            opacity: 0.5;
             height: auto;
             z-index: 5;
         }
 
         .clock-wrapper {
-            position: relative;
+            position: absolute;
+            top: 20%;
+            left: 50%;
             width: 80vmin;
             aspect-ratio: 1 / 1;
+            transform: translate(-50%, -50%);
+            z-index: 9;
         }
+
 
 
         .clock {
             position: absolute;
-            top: 0;
+            top: 30vh;
             left: 0;
             width: 100%;
             height: 100%;
@@ -168,7 +169,7 @@
         }
 
         .hour img {
-            height: 34vh;
+            height: 44vh;
             z-index: 9;
             filter: contrast(120%) brightness(100%);
         }
@@ -180,7 +181,7 @@
         }
 
         .second img {
-            height: 28vh;
+            height: 36vh;
             filter: brightness(160%);
             -webkit-transform: rotate(240deg);
             -moz-transform: rotate(240deg);
