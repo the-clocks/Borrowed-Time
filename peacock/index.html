@@ -4,110 +4,118 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Iridescent Peacock Clock</title>
+    <title>Peacock Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Syne+Mono&display=swap"
+        rel="stylesheet">
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
             overflow: hidden;
+            background-image: url('./images/Untitled.png');
+            background-size: cover;
+            /* 🔥 Make image cover whole screen */
+            background-position: center;
+            /* 🔍 Center it */
+            background-repeat: no-repeat;
+            /* 🚫 Prevent tiling */
         }
 
-        .clock {
-            position: relative;
-            width: 340px;
-            height: 340px;
-            border: 10px solid transparent;
-            border-radius: 50%;
-            background: conic-gradient(from 0deg, #00ffe0, #8a2be2, #39ff14, #ff00ff, #00ffe0);
-            background-size: 400% 400%;
-            animation: shimmer 20s linear infinite;
-            box-shadow: 0 0 60px #00ffe0aa, 0 0 120px #ff00ff66 inset;
-        }
 
-        @keyframes shimmer {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        .center {
+        .rotating-wrapper {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 14px;
-            height: 14px;
-            background: radial-gradient(circle, #ffd700, #ff00ff);
-            border-radius: 50%;
+            width: 150vw;
+            height: 150vh;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 15px #ffffff;
-            z-index: 10;
+            transform-origin: center center;
+            pointer-events: none;
         }
 
-        .hand {
-            position: absolute;
-            bottom: 50%;
-            left: 50%;
-            transform-origin: bottom;
-            transform: translateX(-50%) rotate(0deg);
-            border-radius: 6px;
-            background: linear-gradient(180deg, #fff, #00ffe0);
-            box-shadow: 0 0 10px #ffffffaa;
+        .rotate-cw {
+            animation: rotate 123s linear infinite;
+            z-index: 1;
+            opacity: 0.5;
         }
 
-        .hand.hour {
-            width: 8px;
-            height: 80px;
-            background: linear-gradient(to top, #6a0dad, #ffd700);
+        .rotate-ccw {
+            animation: rotate 111s linear infinite reverse;
+            z-index: 2;
+            /* mix-blend-mode: difference; */
+            opacity: 0.5;
         }
 
-        .hand.minute {
-            width: 5px;
-            height: 110px;
-            background: linear-gradient(to top, #00ffe0, #8a2be2);
+
+        .split-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
         }
 
-        .hand.second {
-            width: 3px;
-            height: 130px;
-            background: linear-gradient(to top, #ff00ff, #00ffe0);
+        .left-half,
+        .right-half {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        .feather {
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            background: radial-gradient(circle, #00ffe0, #ff00ff, #8a2be2);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform-origin: center;
-            box-shadow: 0 0 12px #ffffff66;
-            transition: transform 0.3s ease-in-out;
+        .rotate-cw .left-half {
+            background-image: url('./images/Untitled.png');
         }
 
-        .feather:hover {
-            transform: scale(1.3) rotate(var(--angle)) translateY(-150px);
+        .rotate-cw .right-half {
+            background-image: url('./images/PEACOCK-W-FEATHERS-OUT-STATUE_3e4d7f8a-a1ab-42d7-990e-4104e2fafe8e.5b85fc7293a509f2223b869b11481e53.jpeg');
         }
+
+        .rotate-ccw .left-half {
+            background-image: url('./images/Untitled.png');
+            /* change this */
+        }
+
+        .rotate-ccw .right-half {
+            background-image: url('./images/PEACOCK-W-FEATHERS-OUT-STATUE_3e4d7f8a-a1ab-42d7-990e-4104e2fafe8e.5b85fc7293a509f2223b869b11481e53.jpeg');
+            /* change this */
+        }
+
+        @keyframes rotate {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .split-container {
+                flex-direction: column;
+            }
+        }
+
 
         .corner-image {
             position: fixed;
             top: 0;
             left: 0;
-            opacity: 0.9;
+            opacity: 0.7;
             height: auto;
-            z-index: 1000;
+            z-index: 5;
         }
 
         .corner-image2 {
@@ -118,50 +126,219 @@
             position: fixed;
             bottom: 0;
             right: 0;
-            opacity: 0.9;
+            opacity: 0.7;
             height: auto;
-            z-index: 1000;
+            z-index: 5;
+        }
+
+        .clock-wrapper {
+            position: relative;
+            width: 80vmin;
+            aspect-ratio: 1 / 1;
+        }
+
+
+        .clock {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            filter: saturate(1.6);
+            /* border-radius: 50%; */
+            z-index: 9;
+        }
+
+        .hand {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform-origin: center center;
+            pointer-events: none;
+
+        }
+
+        .hand img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+        }
+
+        .hour img {
+            height: 34vh;
+            z-index: 9;
+            filter: contrast(120%) brightness(100%);
+        }
+
+        .minute img {
+            height: 44vh;
+            z-index: 6;
+            filter: brightness(120%);
+        }
+
+        .second img {
+            height: 28vh;
+            filter: brightness(160%);
+            -webkit-transform: rotate(240deg);
+            -moz-transform: rotate(240deg);
+            transform: rotate(240deg);
+
+        }
+
+        .title-container {
+            color: #67ac87;
+            text-shadow: #516a62 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #8efac6;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
         }
     </style>
 </head>
 
 <body>
-    <div class="clock" id="clock">
-        <div class="center"></div>
-        <div class="hand hour" id="hourHand"><img src="./images/Peacock.png></div>
-        <div class=" hand minute" id="minuteHand"></div>
-        <div class="hand second" id="secondHand"></div>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <img src="./images/Antarctica Satellite Image.jpg" class="bgimage">
+    <div class="date-container">
+        <a href="../cloud/" class="dates dateleft">04/20/25</a>
+        <a href="../index.html" class="clockname">Peacock Clock</a>
+        <a href="../index.html" class="dates dateright">04/22/25</a>
+    </div>
+    <img src="./images/Pea.png" class="corner-image" />
+    <img src="./images/Pea.png" class="corner-image2" />
+    <!-- Bottom layer rotating clockwise -->
+    <div class="rotating-wrapper rotate-cw">
+        <div class="split-container">
+            <div class="left-half"></div>
+            <div class="right-half"></div>
+        </div>
     </div>
 
+    <!-- Top layer rotating counterclockwise -->
+    <div class="rotating-wrapper rotate-ccw">
+        <div class="split-container">
+            <div class="left-half"></div>
+            <div class="right-half"></div>
+        </div>
+
+
+    </div>
+    <div class="clock-wrapper">
+        <div class="clock">
+
+            <div class="hand minute">
+                <img src="./images/fea.png">
+            </div>
+            <div class="hand hour">
+                <img src="./images/Peaco.png">
+            </div>
+            <div class=" hand second">
+                <img src="./images/Peacock.png">
+            </div>
+
+        </div>
+    </div>
     <script>
-        // Add 12 iridescent feather markers
-        const clock = document.getElementById('clock');
-        for (let i = 0; i < 12; i++) {
-            const feather = document.createElement('div');
-            feather.classList.add('feather');
-            const angle = i * 30;
-            feather.style.setProperty('--angle', `${angle}deg`);
-            feather.style.transform = `translate(-50%, -50%) rotate(${angle}deg) translateY(-140px)`;
-            clock.appendChild(feather);
-        }
+        const hourHand = document.querySelector('.hour');
+        const minuteHand = document.querySelector('.minute');
+        const secondHand = document.querySelector('.second');
 
-        function updateClock() {
+        function updateClockSmooth() {
             const now = new Date();
-            const sec = now.getSeconds();
-            const min = now.getMinutes();
-            const hr = now.getHours() % 12;
+            const ms = now.getMilliseconds();
+            const s = now.getSeconds() + ms / 1000;
+            const m = now.getMinutes() + s / 60;
+            const h = now.getHours() % 12 + m / 60;
 
-            const secDeg = sec * 6;
-            const minDeg = min * 6 + sec * 0.1;
-            const hrDeg = hr * 30 + min * 0.5;
+            const hourDeg = h * 30;
+            const minuteDeg = m * 6;
+            const secondDeg = s * 6;
 
-            document.getElementById('secondHand').style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
-            document.getElementById('minuteHand').style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
-            document.getElementById('hourHand').style.transform = `translateX(-50%) rotate(${hrDeg}deg)`;
+            hourHand.style.transform = `rotate(${hourDeg}deg)`;
+            minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+            secondHand.style.transform = `rotate(${secondDeg}deg)`;
+
+            requestAnimationFrame(updateClockSmooth);
         }
 
-        setInterval(updateClock, 1000);
-        updateClock();
+        requestAnimationFrame(updateClockSmooth);
     </script>
 </body>
 
