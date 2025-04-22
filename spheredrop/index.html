@@ -34,17 +34,14 @@
             position: absolute;
             top: 5vh;
             right: 85vw;
-            /* bottom: 20vh; */
             transform-origin: top right;
             transform-style: preserve-3d;
             transform: scale(0.8) rotateX(20deg) rotateY(20deg);
         }
 
-
         .room {
             position: absolute;
             transform-style: preserve-3d;
-            /* Width and Height will be set dynamically */
         }
 
         .ball {
@@ -79,7 +76,6 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            /* justify-content: space-between; */
             z-index: 6;
         }
 
@@ -121,7 +117,6 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            /* justify-content: space-between; */
             z-index: 6;
         }
 
@@ -130,7 +125,6 @@
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            font-family: "Oxanium", serif;
             font-size: 4vh;
             line-height: 4vh;
         }
@@ -165,15 +159,13 @@
 
     <div class="tower" id="tower"></div>
 
-
-
     <script>
         const tower = document.getElementById('tower');
 
         const BALL_SIZES = {
-            hours: 12,     // in vh
-            minutes: 7,   // in vh
-            seconds: 2    // in vh
+            hours: 12,
+            minutes: 7,
+            seconds: 2
         };
 
         const GRAVITIES = {
@@ -200,8 +192,8 @@
                 size: BALL_SIZES.hours,
                 gravity: GRAVITIES.hours,
                 properties: BALL_PROPERTIES.hours,
-                width: 100, // in vw
-                height: 20 // in vh
+                width: 100,
+                height: 20
             },
             {
                 name: 'minutes',
@@ -233,6 +225,12 @@
             seconds: 0
         };
 
+        // Track the latest balls for hours and minutes
+        let latestBalls = {
+            hours: null,
+            minutes: null
+        };
+
         function createRoom(index, type) {
             const room = document.createElement('div');
             room.className = 'room';
@@ -248,7 +246,7 @@
             return room.childElementCount + 1;
         }
 
-        function dropBall(room, colorClass, size, gravity, bounce, friction, roomHeight, roomWidth) {
+        function dropBall(room, colorClass, size, gravity, bounce, friction, roomHeight, roomWidth, typeName) {
             const ball = document.createElement('div');
             ball.className = `ball ${colorClass}`;
             ball.innerText = getNextNumber(room);
@@ -256,50 +254,74 @@
             ball.style.height = `${size}vh`;
             ball.style.fontSize = `${size / 2.5}vh`;
 
-
-
-
-
-
-
             let posX = Math.random() * (roomWidth - size);
-            let posY = -30; // Instead of: let posY = -size;
-
+            let posY = -30;
             let posZ = Math.random() * (roomWidth - size);
             let velocityY = 0;
-            const bounceFactor = bounce;
-            const frictionFactor = friction;
             let velocityX = (Math.random() - 0.5) * 100;
             let velocityZ = (Math.random() - 0.5) * 100;
+            const bounceFactor = bounce;
+            const frictionFactor = friction;
             let bouncing = true;
+
+            // For hours and minutes, assign as latest ball
+            if (typeName === 'hours' || typeName === 'minutes') {
+                latestBalls[typeName] = ball;
+            }
 
             room.appendChild(ball);
 
             function animate() {
-                if (!bouncing) return;
-                velocityY += gravity * 0.016;
-                posX += velocityX * 0.016;
-                posY += velocityY * 0.016;
-                posZ += velocityZ * 0.016;
+                if (bouncing) {
+                    velocityY += gravity * 0.016;
+                    posX += velocityX * 0.016;
+                    posY += velocityY * 0.016;
+                    posZ += velocityZ * 0.016;
 
-                if (posX <= 0 || posX >= roomWidth - size) {
-                    posX = Math.max(0, Math.min(posX, roomWidth - size));
-                    velocityX = -velocityX * bounceFactor;
-                }
+                    if (posX <= 0 || posX >= roomWidth - size) {
+                        posX = Math.max(0, Math.min(posX, roomWidth - size));
+                        velocityX = -velocityX * bounceFactor;
+                    }
 
-                if (posZ <= 0 || posZ >= roomWidth - size) {
-                    posZ = Math.max(0, Math.min(posZ, roomWidth - size));
-                    velocityZ = -velocityZ * bounceFactor;
-                }
+                    if (posZ <= 0 || posZ >= roomWidth - size) {
+                        posZ = Math.max(0, Math.min(posZ, roomWidth - size));
+                        velocityZ = -velocityZ * bounceFactor;
+                    }
 
-                if (posY >= roomHeight - size) {
-                    posY = roomHeight - size;
-                    velocityY = -velocityY * bounceFactor;
-                    velocityX *= frictionFactor;
-                    velocityZ *= frictionFactor;
+                    if (posY >= roomHeight - size) {
+                        posY = roomHeight - size;
+                        velocityY = -velocityY * bounceFactor;
+                        velocityX *= frictionFactor;
+                        velocityZ *= frictionFactor;
 
-                    if (Math.abs(velocityY) < 2 && Math.abs(velocityX) < 2 && Math.abs(velocityZ) < 2) {
-                        bouncing = false;
+                        if (Math.abs(velocityY) < 2 && Math.abs(velocityX) < 2 && Math.abs(velocityZ) < 2) {
+                            bouncing = false;
+                            // Initialize slow movement for latest hour/minute balls
+                            if ((typeName === 'hours' || typeName === 'minutes') && latestBalls[typeName] === ball) {
+                                velocityX = (Math.random() - 0.5) * 10; // Slow random velocity
+                                velocityZ = (Math.random() - 0.5) * 10;
+                            }
+                        }
+                    }
+                } else if ((typeName === 'hours' || typeName === 'minutes') && latestBalls[typeName] === ball) {
+                    // Continue slow movement for latest hour/minute balls
+                    posX += velocityX * 0.016;
+                    posZ += velocityZ * 0.016;
+
+                    // Bounce off walls
+                    if (posX <= 0 || posX >= roomWidth - size) {
+                        posX = Math.max(0, Math.min(posX, roomWidth - size));
+                        velocityX = -velocityX;
+                    }
+                    if (posZ <= 0 || posZ >= roomWidth - size) {
+                        posZ = Math.max(0, Math.min(posZ, roomWidth - size));
+                        velocityZ = -velocityZ;
+                    }
+
+                    // Occasionally change direction
+                    if (Math.random() < 0.01) {
+                        velocityX = (Math.random() - 0.5) * 10;
+                        velocityZ = (Math.random() - 0.5) * 10;
                     }
                 }
 
@@ -310,10 +332,14 @@
             animate();
         }
 
-        function resetRoom(roomId) {
+        function resetRoom(roomId, typeName) {
             const room = document.getElementById(roomId);
             while (room.firstChild) {
                 room.removeChild(room.firstChild);
+            }
+            // Clear latest ball reference
+            if (typeName === 'hours' || typeName === 'minutes') {
+                latestBalls[typeName] = null;
             }
         }
 
@@ -325,7 +351,7 @@
                 const prev = state[type.name];
 
                 if (current < prev || prev > type.max) {
-                    resetRoom(type.name + '-room');
+                    resetRoom(type.name + '-room', type.name);
                     state[type.name] = 0;
                 }
 
@@ -339,7 +365,8 @@
                         type.properties.bounce,
                         type.properties.friction,
                         type.height,
-                        type.width
+                        type.width,
+                        type.name
                     );
                 }
 
@@ -350,8 +377,6 @@
         syncBalls();
         setInterval(syncBalls, 1000);
     </script>
-
-
 </body>
 
 </html>
