@@ -3,291 +3,150 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
-        rel="stylesheet">
-    <title>Random Color Clock - BorrowedTime</title>
+    <title>Live Sundial - Horizon View</title>
     <style>
         body {
+            background: #e0f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+            perspective: 1000px;
+            flex-direction: column;
+        }
+
+        .sundial-container {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            width: 100vw;
+        }
+
+        .sundial {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            background: #fffde7;
+            border-radius: 50%;
+            border: 4px solid #bdb76b;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f7050d;
-            transition: background-color 2s;
-            overflow: hidden;
+            /* Tilt the sundial so the horizon is at the top */
+            transform: rotateX(65deg);
+            transform-style: preserve-3d;
         }
 
-        .clock {
-            position: relative;
-            width: 50vmin;
-            height: 50vmin;
-
-        }
-
-        .hand {
+        .gnomon {
             position: absolute;
-            bottom: 50%;
             left: 50%;
-            transform-origin: bottom;
-            transform: translateX(-50%) rotate(0deg);
+            top: 50%;
+            width: 8px;
+            height: 100px;
+            background: #455a64;
+            transform-origin: bottom center;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px #888;
             z-index: 2;
         }
 
-        .second {
-            width: 3vmin;
-            height: 200%;
-            background: red;
-            transition: background-color 1s;
-            z-index: 5;
-        }
-
-        .minute {
-            width: 8vmin;
-            height: 92%;
-            background: green;
-            transition: background-color 1s;
-            z-index: 4;
-        }
-
-        .hour {
-            width: 11vmin;
-            height: 50%;
-            background: blue;
-            transition: background-color 1s;
-            z-index: 3;
-        }
-
-        .dot {
+        .shadow {
             position: absolute;
-            width: 3vw;
-            height: 3vw;
-            transition: background-color 1s;
+            left: 50%;
+            top: 50%;
+            width: 6px;
+            height: 120px;
+            background: rgba(44, 62, 80, 0.3);
+            transform-origin: bottom center;
+            border-radius: 3px;
             z-index: 1;
+            pointer-events: none;
         }
 
-        .square {
-            position: absolute;
-            width: 7vw;
-            height: 7vw;
-            top: calc(50% + (calc(50vh - 9vh) * cos(var(--angle))));
-            left: calc(50% + (calc(50vw - 7vw) * sin(var(--angle))));
-            transform: translate(-50%, -50%);
-            background-color: #3498db;
-            transition: background-color 1s;
-            z-index: 2;
+        /* Optional: Hide hour labels for clarity in this view */
+        .hour-label {
+            display: none;
         }
 
-        .hidden {
-            visibility: hidden;
-        }
-
-        .title-container {
-            color: #908f42;
-            text-shadow: #186e51 1px 0px;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            /* justify-content: space-between; */
-            z-index: 6;
-        }
-
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.8vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
-
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.8vh;
-            font-style: italic;
-            z-index: 15;
-            letter-spacing: -0.1vh;
-        }
-
-        .easteregg {
-            font-family: "Libre Baskerville", serif;
-            color: transparent;
-            font-size: 0.4rem;
-            z-index: 11;
-            position: absolute;
-            right: 12px;
-            top: 35px;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-            text-decoration: none;
-        }
-
-        .date-container {
-            color: #e40c63;
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            /* justify-content: space-between; */
-            z-index: 6;
-        }
-
-        .clockname {
-            font-family: "Oxanium", serif;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: "Oxanium", serif;
-            font-size: 4vh;
-            line-height: 4vh;
-        }
-
-        .dateleft {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: relative;
-            left: 0;
-        }
-
-        .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: absolute;
-            right: 0;
+        #info {
+            margin-top: 32px;
+            font-family: sans-serif;
+            color: #37474f;
+            text-align: center;
         }
     </style>
 </head>
 
 <body>
-    <div class="title-container">
-        <div class="chltitle">Cubist Heart Laboratories</div>
-        <div class="bttitle">BorrowedTime</div>
+    <div class="sundial-container">
+        <div class="sundial" id="sundial">
+            <div class="gnomon" id="gnomon"></div>
+            <div class="shadow" id="shadow"></div>
+            <!-- Hour labels (hidden in this view, but you can adjust/re-enable) -->
+            <div class="hour-label" style="left: 50%; top: 28px; transform: translate(-50%, 0);">12</div>
+            <div class="hour-label" style="left: 292px; top: 50%; transform: translate(0, -50%);">3</div>
+            <div class="hour-label" style="left: 50%; top: 292px; transform: translate(-50%, 0);">6</div>
+            <div class="hour-label" style="left: 28px; top: 50%; transform: translate(0, -50%);">9</div>
+        </div>
     </div>
-
-    <div class="clock">
-        <div class="square" style="--angle: 0deg;"></div>
-        <div class="square" style="--angle: 30deg;"></div>
-        <div class="square" style="--angle: 60deg;"></div>
-        <div class="square" style="--angle: 90deg;"></div>
-
-        <div class="square" style="--angle: 120deg;"></div>
-        <div class="square" style="--angle: 150deg;"></div>
-        <div class="square" style="--angle: 180deg;"></div>
-        <div class="square" style="--angle: 210deg;"></div>
-        <div class="square" style="--angle: 240deg;"></div>
-        <div class="square" style="--angle: 270deg;"></div>
-        <div class="square" style="--angle: 300deg;"></div>
-        <div class="square" style="--angle: 330deg;"></div>
-        <div class="johndots" id="johndots"></div>
-        <div class="hand hour" id="hour"></div>
-        <div class="hand minute" id="minute"></div>
-        <div class="hand second" id="second"></div>
-
-    </div>
-    <div class="date-container">
-        <a href="../boring/" class="dates dateleft">03/29/25</a>
-        <a href="../index.html" class="clockname">Random Color Clock</a>
-        <a href="../deepspace/" class="dates dateright">03/31/25</a>
-    </div>
-
-
-    <a href="#" onclick="openEgg(); return false;" class="easteregg">
-        “Today everything exists<br> to end in a photograph.”<br> -Sontag
-    </a>
-
+    <div id="info">Locating…</div>
     <script>
-        function updateClock() {
+        const info = document.getElementById('info');
+        let latitude = null, longitude = null;
+
+        function pad(n) { return n < 10 ? '0' + n : n; }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (pos) {
+                latitude = pos.coords.latitude;
+                longitude = pos.coords.longitude;
+                info.textContent = `Latitude: ${latitude.toFixed(4)}, Longitude: ${longitude.toFixed(4)}`;
+                startSundial();
+            }, function () {
+                info.textContent = "Location access denied. Sundial will use UTC.";
+                startSundial();
+            });
+        } else {
+            info.textContent = "Geolocation not supported. Sundial will use UTC.";
+            startSundial();
+        }
+
+        function startSundial() {
+            setInterval(updateSundial, 1000);
+            updateSundial();
+        }
+
+        function updateSundial() {
             const now = new Date();
-            const hours = now.getHours() % 12;
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
-
-            const hourDeg = (hours + minutes / 60) * 30;
-            const minuteDeg = (minutes + seconds / 60) * 6;
-            const secondDeg = seconds * 6;
-
-            document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-            document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
-            document.getElementById("second").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
-
-            document.getElementById("hour").style.background = getRandomColor();
-            document.getElementById("minute").style.background = getRandomColor();
-            document.getElementById("second").style.background = getRandomColor();
-
-            changeDotColors();
-            changeSquareColors();
-            document.body.style.backgroundColor = getRandomColor();
-        }
-
-        function getRandomColor() {
-            return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-        }
-
-        function createDots() {
-            const johndots = document.getElementById("johndots");
-            johndots.innerHTML = "";
-            const clockSize = Math.min(window.innerWidth, window.innerHeight) * 0.5;
-            const radius = clockSize * 0.4;
-            const centerX = clockSize / 2;
-            const centerY = clockSize / 2;
-            const totalDots = 12;
-
-            for (let i = 0; i < totalDots; i++) {
-                const angle = (i * 30) * (Math.PI / 180);
-                const x = centerX + radius * Math.cos(angle) - clockSize * 0.04;
-                const y = centerY + radius * Math.sin(angle) - clockSize * 0.04;
-
-                const dot = document.createElement("div");
-                dot.className = "dot";
-                dot.style.left = `${x}px`;
-                dot.style.top = `${y}px`;
-                johndots.appendChild(dot);
+            let offset = 0;
+            if (longitude !== null) {
+                offset = longitude / 15;
             }
-        }
+            let hours = now.getUTCHours() + now.getUTCMinutes() / 60 + now.getUTCSeconds() / 3600 + offset;
+            if (hours < 0) hours += 24;
+            if (hours >= 24) hours -= 24;
 
-        function changeDotColors() {
-            document.querySelectorAll(".dot").forEach(dot => {
-                dot.style.backgroundColor = getRandomColor();
-            });
-        }
+            let hourAngle = (hours - 12) * 15; // degrees
+            const shadowAngle = hourAngle + 180;
 
-        function changeSquareColors() {
-            document.querySelectorAll(".square").forEach(square => {
-                square.style.backgroundColor = getRandomColor();
-            });
-        }
+            // Update shadow
+            const shadow = document.getElementById('shadow');
+            shadow.style.transform = `translate(-50%, -100%) rotate(${shadowAngle}deg)`;
 
-        window.addEventListener("resize", createDots);
-        createDots();
-        setInterval(updateClock, 1000);
-        updateClock();
+            // Gnomon remains upright relative to the dial
+            const gnomon = document.getElementById('gnomon');
+            gnomon.style.transform = `translate(-50%, -100%) rotate(-30deg)`;
 
-    </script>
-
-    <script>
-        function openEgg() {
-            window.open("https://upload.wikimedia.org/wikipedia/commons/5/5d/%D0%94%D0%B6%D1%83%D0%B7%D0%B5%D0%BF%D0%BF%D0%B5_%D0%90%D1%80%D1%87%D0%B8%D0%BC%D0%B1%D0%BE%D0%BB%D1%8C%D0%B4%D0%BE._%D0%92%D0%BE%D0%B4%D0%B0_%281566%29.jpg", "_blank", "width = 300, height = 400");
+            info.innerHTML = `
+        <b>Solar Time:</b> ${pad(Math.floor(hours))}:${pad(Math.floor((hours % 1) * 60))}:${pad(Math.floor((hours * 60 % 1) * 60))}<br>
+        <b>Hour Angle:</b> ${hourAngle.toFixed(2)}°<br>
+        ${latitude ? `<b>Latitude:</b> ${latitude.toFixed(4)}<br>` : ""}
+        ${longitude ? `<b>Longitude:</b> ${longitude.toFixed(4)}` : ""}
+      `;
         }
     </script>
-
 </body>
 
 </html>
