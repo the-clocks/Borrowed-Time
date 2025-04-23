@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rectangle Analog Clock with Numbers</title>
+    <style>
+        body {
+            background: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .clock {
+            width: 300px;
+            height: 200px;
+            border: 10px solid #fff;
+            border-radius: 10px;
+            position: relative;
+            background: #222;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .hour {
+            width: 6px;
+            height: 50px;
+            background: #f00;
+            z-index: 3;
+        }
+
+        .minute {
+            width: 4px;
+            height: 70px;
+            background: #0f0;
+            z-index: 2;
+        }
+
+        .second {
+            width: 2px;
+            height: 90px;
+            background: #00f;
+            z-index: 1;
+        }
+
+        .center-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        .number {
+            position: absolute;
+            color: white;
+            font-size: 16px;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+
+        /* Approximate positions of numbers */
+        .n12 {
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .n3 {
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
+
+        .n6 {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .n9 {
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+        }
+
+        .n1 {
+            top: 20px;
+            right: 40px;
+        }
+
+        .n2 {
+            top: 20px;
+            right: 20px;
+        }
+
+        .n4 {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .n5 {
+            bottom: 20px;
+            right: 40px;
+        }
+
+        .n7 {
+            bottom: 20px;
+            left: 40px;
+        }
+
+        .n8 {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .n10 {
+            top: 20px;
+            left: 20px;
+        }
+
+        .n11 {
+            top: 20px;
+            left: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock">
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+        <div class="center-dot"></div>
+
+        <!-- Numbers -->
+        <div class="number n12">12</div>
+        <div class="number n1">1</div>
+        <div class="number n2">2</div>
+        <div class="number n3">3</div>
+        <div class="number n4">4</div>
+        <div class="number n5">5</div>
+        <div class="number n6">6</div>
+        <div class="number n7">7</div>
+        <div class="number n8">8</div>
+        <div class="number n9">9</div>
+        <div class="number n10">10</div>
+        <div class="number n11">11</div>
+    </div>
+
+    <script>
+        const hourHand = document.getElementById("hour");
+        const minuteHand = document.getElementById("minute");
+        const secondHand = document.getElementById("second");
+
+        function updateClock() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours();
+
+            const secDeg = (seconds / 60) * 360;
+            const minDeg = ((minutes + seconds / 60) / 60) * 360;
+            const hourDeg = ((hours % 12 + minutes / 60) / 12) * 360;
+
+            secondHand.style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+            minuteHand.style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
+            hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
