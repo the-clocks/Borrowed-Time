@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pirate Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Metamorphous&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1c4dd3;
+        }
+
+        .clock {
+
+            font-family: "Metamorphous", serif;
+            font-weight: 400;
+            font-style: normal;
+
+
+            width: 50vw;
+            height: 50vw;
+            border-radius: 50%;
+            position: relative;
+            min-width: 300px;
+            min-height: 300px;
+            max-width: 800px;
+            max-height: 800px;
+            z-index: 8;
+        }
+
+        .clock::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1.5vw;
+            height: 1.5vw;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 15px;
+            min-height: 15px;
+
+            z-index: 8;
+        }
+
+
+
+        /* Adjust hand lengths and bottom for central alignment */
+        .hand {
+            position: absolute;
+            bottom: 500%;
+            left: 50%;
+            transform-origin: bottom;
+            transform: translateX(-50%);
+        }
+
+        /* Adjust hand lengths and bottom for central alignment */
+        .hour {
+            bottom: 52%;
+            width: 20vh;
+            filter: contrast(0.8);
+        }
+
+        .minute {
+            bottom: 52%;
+            width: 25vh;
+            filter: saturate(0.5);
+        }
+
+        .second {
+            bottom: 55%;
+            width: 40vh;
+        }
+
+        .number {
+            position: absolute;
+            font-size: 12vw;
+            color: #c29b0e;
+            text-shadow: rgb(14, 2, 26) 1px 1px 5px;
+            text-align: center;
+            width: 4vw;
+            height: 4vw;
+            line-height: 4vw;
+            min-width: 30px;
+            min-height: 30px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(-50%, -50%) translateY(0);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) translateY(-0.5vw);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) translateY(0);
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.4;
+            background: url(./images/sasasd.gif) no-repeat center center;
+            background-size: 15% 15%;
+            background-repeat: repeat;
+            z-index: 8;
+        }
+
+        .full-page-image2 {
+            position: fixed;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            opacity: 0.6;
+            filter: hue-rotate(-19deg) contrast(1.5) saturate(200%);
+            background-repeat: repeat;
+            z-index: 4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <img src="./images/2afe90c0ee6f32a3c59f29e2418047fd.gif" class="full-page-image2">
+    <div class="clock" id="clock">
+        <img class="hand hour" src="./images/pngtree-silver-pirate-hook-3d-object-png-image_11098846.png">
+        <img class="hand minute" src="./images/pirate_foam_cutlass_2.webp">
+        <img class="hand second" src="./images/cut.png">
+    </div>
+
+    <script>
+        function placeNumbers() {
+            const clock = document.getElementById('clock');
+            const clockWidth = clock.offsetWidth;
+            const radius = clockWidth * 0.45;
+            const centerX = clockWidth / 2;
+            const centerY = clockWidth / 2;
+            const romanNumerals = ['XII', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'];
+
+            for (let i = 0; i < 12; i++) {
+                const angle = (i * 30 - 90) * Math.PI / 180;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+
+                const numberDiv = document.createElement('div');
+                numberDiv.className = 'number';
+                numberDiv.textContent = romanNumerals[i];
+                numberDiv.style.left = `${x}px`;
+                numberDiv.style.top = `${y}px`;
+                numberDiv.style.transform = 'translate(-50%, -50%)';
+                numberDiv.style.animationDelay = `${Math.random() * 2}s`;
+                numberDiv.style.animationDuration = `${3.5 + Math.random() * 1}s`;
+
+                clock.appendChild(numberDiv);
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const hourDeg = (hours * 30) + (minutes * 0.5);
+            const minuteDeg = minutes * 6;
+            const secondDeg = seconds * 6;
+
+            document.querySelector('.hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+            document.querySelector('.minute').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.querySelector('.second').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+        }
+
+        placeNumbers();
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        window.addEventListener('resize', () => {
+            document.querySelectorAll('.number').forEach(num => num.remove());
+            placeNumbers();
+        });
+    </script>
+</body>
+
+</html>
