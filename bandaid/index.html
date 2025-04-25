@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Band Aid Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Oswald:wght@200..700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            background-color: #b79417;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .clock {
+            width: 70vw;
+            height: 70vw;
+            max-width: 50vh;
+            max-height: 50vh;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .clock::before {
+            content: '';
+            position: absolute;
+            width: 1.5vw;
+            height: 1.5vw;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            z-index: 6;
+        }
+
+        .hour {
+            width: 40vw;
+            /* Reduced width */
+            height: 54vw;
+            /* Reduced height */
+            transform: translateX(-50%);
+        }
+
+        .minute {
+            width: 12vw;
+            /* Reduced width */
+            height: 75vw;
+            /* Reduced height */
+            transform: translateX(-50%);
+            filter: brightness(0.9) contrast(1.2);
+        }
+
+        .second {
+            width: 7.5vw;
+            /* Reduced width */
+            height: 80vw;
+            /* Reduced height */
+            transform: translateX(-50%);
+            filter: brightness(1.1) contrast(0.9);
+        }
+
+
+        .number {
+            position: absolute;
+            font-family: "Oswald", sans-serif;
+            font-optical-sizing: auto;
+            font-size: 13vw;
+            color: rgb(240, 7, 7);
+            font-weight: bold;
+            text-align: center;
+            line-height: 3vw;
+            z-index: 5;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .bgimage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 3;
+            opacity: 60%;
+        }
+
+
+
+        .title-container {
+            color: #c5c6a6;
+            text-shadow: #958f4e 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #753905;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../stripe/" class="dates dateleft">04/19/25</a>
+        <a href="../index.html" class="clockname">Antartica Clock</a>
+        <a href="../peacock/" class="dates dateright">04/21/25</a>
+    </div>
+
+
+
+    <!-- <img src="./images/images.jpg" class="bgimage2" alt="Background Image"> -->
+    <img src="./images/bad.png" class="bgimage" alt="Background Image">
+    <div class="clock">
+        <img class="hand hour" id="hour" src="images/59bf80e17a216d0b052f12e3.png">
+        <img class="hand minute" id="minute" src="images/59bf80e17a216d0b052f12e3.png">
+        <img class="hand second" id="second" src="images/59bf80e17a216d0b052f12e3.png" alt="Second Hand">
+    </div>
+
+    <script>
+        function createClockNumbers() {
+            const clock = document.querySelector('.clock');
+            const clockWidth = clock.offsetWidth;
+            const radius = clockWidth * 0.45;
+            const numberSize = clockWidth * 0.1;
+
+            for (let i = 1; i <= 12; i++) {
+                const angle = (i * 30) * Math.PI / 180;
+                const x = radius * Math.sin(angle);
+                const y = -radius * Math.cos(angle);
+                const number = document.createElement('div');
+                number.className = 'number';
+                number.style.left = `calc(50% + ${x}px - ${numberSize / 2}px)`;
+                number.style.top = `calc(50% + ${y}px - ${numberSize / 2}px)`;
+                number.textContent = i;
+                clock.appendChild(number);
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const hourDeg = (hours * 30) + (minutes * 0.5);
+            const minuteDeg = minutes * 6;
+            const secondDeg = seconds * 6;
+
+            document.getElementById('hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+            document.getElementById('minute').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.getElementById('second').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+        }
+
+        // Initialize the clock
+        createClockNumbers();
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // Recreate numbers on window resize
+        window.addEventListener('resize', () => {
+            document.querySelectorAll('.number').forEach(number => number.remove());
+            createClockNumbers();
+        });
+    </script>
+</body>
+
+</html>
