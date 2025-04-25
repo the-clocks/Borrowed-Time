@@ -28,7 +28,6 @@
             background-repeat: no-repeat;
         }
 
-
         .rotating-wrapper {
             position: absolute;
             top: 50%;
@@ -43,7 +42,7 @@
         .rotate-cw {
             animation: rotate 180s linear infinite;
             z-index: 1;
-            opacity: 0.7;
+            opacity: 0.5;
         }
 
         .rotate-ccw {
@@ -110,7 +109,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            opacity: 0.6;
+            opacity: 0.5;
             height: auto;
             z-index: 5;
         }
@@ -128,6 +127,30 @@
             z-index: 5;
         }
 
+        .corner-image3 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.2;
+            /* filter: blur(0.5px); */
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 7;
+        }
+
+
+        .corner-image4 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.2;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 8;
+        }
+
         .clock-wrapper {
             position: absolute;
             top: 20%;
@@ -141,6 +164,7 @@
 
 
         .clock {
+            opacity: 0.8;
             position: absolute;
             top: 30vh;
             left: 0;
@@ -272,7 +296,7 @@
 </head>
 
 <body>
-    <div class="fade"></div>
+
     <div class="title-container">
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
@@ -284,6 +308,8 @@
     </div>
     <img src="./images/Pea.png" class="corner-image" />
     <img src="./images/Pea.png" class="corner-image2" />
+    <img src="./images/feth.png" class="corner-image3" />
+    <img src="./images/feath.png" class="corner-image4" />
     <div class="rotating-wrapper rotate-cw">
         <div class="split-container">
             <div class="left-half"></div>
