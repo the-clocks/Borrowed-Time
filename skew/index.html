@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Skew Clock -BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Eater&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+
+            font-family: "Eater", serif;
+            font-weight: 400;
+            font-style: normal;
+            background: skyblue;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .title-container {
+            color: pink;
+            text-shadow: #516a62 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: red;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../bandaid/" class="dates dateleft">04/25/25</a>
+        <a href="../index.html" class="clockname">Skew Clock</a>
+        <a href="../index.html" class="dates dateright">04/27/25</a>
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        let skew = 0, stretch = 1;
+        let currentTime = "";
+        let fadeDuration = 20000;  // Increased fade duration (20 seconds for slower fade)
+        let fadeProgress = 0;  // Progress of fade (from 0 to 1)
+        let fadeStartTime = Date.now(); // Time of the last update
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            currentTime = `${hours}:${minutes}:${seconds}`;
+
+            // Restart the fade effect every time the time updates
+            fadeStartTime = Date.now();
+        }
+
+        function animate() {
+            skew += (Math.random() - 0.5) * 2;
+            stretch += (Math.random() - 0.5) * 0.05;
+            stretch = Math.max(0.8, Math.min(1.2, stretch));
+
+            fadeProgress = (Date.now() - fadeStartTime) / fadeDuration;
+            if (fadeProgress > 1) fadeProgress = 1; // Clamp to 1 to stop the fade after the duration
+
+            drawText();
+            requestAnimationFrame(animate);
+        }
+
+        function drawText() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Calculate the color interpolation (red to blue)
+            let r = Math.floor(255 * (90 - fadeProgress));  // Red component decreases over time
+            let g = Math.floor(255 * (0 - fadeProgress));  // Green component remains constant
+            let b = Math.floor(255 * fadeProgress);  // Blue component increases over time
+
+            ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;  // Set the color using the interpolated values
+            ctx.font = `${canvas.height * 0.2}px 'Eater', serif`; // Changed to use 'Eater' font
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+
+            // Set the shadow properties
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';  // Shadow color (black with some transparency)
+            ctx.shadowBlur = 10;  // Shadow blur
+            ctx.shadowOffsetX = 5;  // Horizontal shadow offset
+            ctx.shadowOffsetY = 5;  // Vertical shadow offset
+
+            ctx.setTransform(stretch, skew * 0.01, skew * 0.01, 1, canvas.width / 2, canvas.height / 2);
+            ctx.fillText(currentTime, 0, 0);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+        updateClock();
+        setInterval(updateClock, 1000);
+        animate();
+    </script>
+
+</body>
+
+</html>
