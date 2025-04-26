@@ -149,10 +149,15 @@
 
         function updateClock() {
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
+            let hours = now.getHours();
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
-            currentTime = `${hours}:${minutes}:${seconds}`;
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12;
+            hours = hours ? hours : 12; // '0' hours should be '12'
+
+            currentTime = `${hours}:${minutes}:${seconds} ${ampm}`;
 
             currentColor = getRandomVibrantColor();
             outlineColor = getRandomVibrantColor(); // Random outline color too!
@@ -160,6 +165,7 @@
             targetSkew = (Math.random() - 0.5) * 80;
             targetStretch = 0.7 + Math.random() * 0.8;
         }
+
 
         function animate() {
             skew += (targetSkew - skew) * 0.05;
