@@ -26,6 +26,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
 
         canvas {
@@ -34,6 +35,18 @@
             left: 0;
             width: 100vw;
             height: 100vh;
+        }
+
+        .time-container {
+            color: gainsboro;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 98%;
+            display: flex;
+            justify-content: space-around;
+            z-index: -1;
         }
 
         .title-container {
@@ -112,6 +125,34 @@
             position: absolute;
             right: 0;
         }
+
+        /* Media query for small screens (phones) */
+        @media (max-width: 768px) {
+            .time-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .time {
+                font-size: 6vh;
+            }
+        }
+
+        /* Media query for larger screens (laptops, desktops) */
+        @media (min-width: 769px) {
+            .time-container {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                width: 100%;
+            }
+
+            .time {
+                font-size: 8vh;
+            }
+        }
     </style>
 </head>
 
@@ -124,6 +165,11 @@
         <a href="../bandaid/" class="dates dateleft">04/25/25</a>
         <a href="../index.html" class="clockname">Skew Clock</a>
         <a href="../index.html" class="dates dateright">04/27/25</a>
+    </div>
+    <div class="time-container">
+        <div class="time" id="hours"></div>
+        <div class="time" id="minutes"></div>
+        <div class="time" id="seconds"></div>
     </div>
     <canvas id="canvas"></canvas>
 
@@ -152,20 +198,24 @@
             let hours = now.getHours();
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const ampm = hours >= 12 ? '' : '';
 
             hours = hours % 12;
             hours = hours ? hours : 12; // '0' hours should be '12'
 
-            currentTime = `${hours}:${minutes}:${seconds} ${ampm}`;
+            currentTime = `${hours}${minutes}${seconds} ${ampm}`;
+
+            // Update individual time elements
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
 
             currentColor = getRandomVibrantColor();
             outlineColor = getRandomVibrantColor(); // Random outline color too!
 
-            targetSkew = (Math.random() - 0.5) * 80;
+            targetSkew = (Math.random() - 0.5) * 200;
             targetStretch = 0.7 + Math.random() * 0.8;
         }
-
 
         function animate() {
             skew += (targetSkew - skew) * 0.05;
@@ -178,7 +228,6 @@
         function drawText() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Changed font to use the "Stick" font
             ctx.font = `${canvas.height * 0.2}px 'Stick', sans-serif`;
             ctx.textBaseline = "middle";
             ctx.textAlign = "center";
