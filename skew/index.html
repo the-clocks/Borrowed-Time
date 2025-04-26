@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Skew Clock -BorrowedTime</title>
+    <title>Skew Clock - BorrowedTime</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -18,11 +18,8 @@
         }
 
         body {
-
             font-family: "Eater", serif;
-            font-weight: 400;
-            font-style: normal;
-            background: skyblue;
+            background: teal;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -38,7 +35,7 @@
         }
 
         .title-container {
-            color: pink;
+            color: #67ac87;
             text-shadow: #516a62 1px 0px;
             position: absolute;
             top: 5px;
@@ -46,7 +43,6 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            /* justify-content: space-between; */
             z-index: 6;
         }
 
@@ -77,18 +73,16 @@
         a:hover {
             color: #e8ecec;
             background-color: rgb(21, 0, 255);
-            text-decoration: none;
         }
 
         .date-container {
-            color: red;
+            color: #8efac6;
             position: absolute;
             bottom: 5px;
             left: 50%;
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            /* justify-content: space-between; */
             z-index: 6;
         }
 
@@ -97,21 +91,22 @@
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            font-family: "Oxanium", serif;
             font-size: 4vh;
             line-height: 4vh;
         }
 
-        .dateleft {
+        .dateleft,
+        .dateright {
             font-size: 3vh;
             font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
             position: relative;
             left: 0;
         }
 
         .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
             position: absolute;
             right: 0;
         }
@@ -135,14 +130,19 @@
         const ctx = canvas.getContext("2d");
 
         let skew = 0, stretch = 1;
+        let targetSkew = 0, targetStretch = 1;
         let currentTime = "";
-        let fadeDuration = 20000;  // Increased fade duration (20 seconds for slower fade)
-        let fadeProgress = 0;  // Progress of fade (from 0 to 1)
-        let fadeStartTime = Date.now(); // Time of the last update
+        let currentColor = "rgb(255,0,0)";
+        let outlineColor = "white";
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+        }
+
+        function getRandomVibrantColor() {
+            const hue = Math.floor(Math.random() * 360);
+            return `hsl(${hue}, 100%, 50%)`;
         }
 
         function updateClock() {
@@ -152,17 +152,16 @@
             const seconds = String(now.getSeconds()).padStart(2, '0');
             currentTime = `${hours}:${minutes}:${seconds}`;
 
-            // Restart the fade effect every time the time updates
-            fadeStartTime = Date.now();
+            currentColor = getRandomVibrantColor();
+            outlineColor = getRandomVibrantColor(); // Random outline color too!
+
+            targetSkew = (Math.random() - 0.5) * 80;
+            targetStretch = 0.7 + Math.random() * 0.8;
         }
 
         function animate() {
-            skew += (Math.random() - 0.5) * 2;
-            stretch += (Math.random() - 0.5) * 0.05;
-            stretch = Math.max(0.8, Math.min(1.2, stretch));
-
-            fadeProgress = (Date.now() - fadeStartTime) / fadeDuration;
-            if (fadeProgress > 1) fadeProgress = 1; // Clamp to 1 to stop the fade after the duration
+            skew += (targetSkew - skew) * 0.05;
+            stretch += (targetStretch - stretch) * 0.05;
 
             drawText();
             requestAnimationFrame(animate);
@@ -171,23 +170,19 @@
         function drawText() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Calculate the color interpolation (red to blue)
-            let r = Math.floor(255 * (90 - fadeProgress));  // Red component decreases over time
-            let g = Math.floor(255 * (0 - fadeProgress));  // Green component remains constant
-            let b = Math.floor(255 * fadeProgress);  // Blue component increases over time
-
-            ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;  // Set the color using the interpolated values
-            ctx.font = `${canvas.height * 0.2}px 'Eater', serif`; // Changed to use 'Eater' font
+            ctx.font = `${canvas.height * 0.2}px 'Eater', serif`;
             ctx.textBaseline = "middle";
             ctx.textAlign = "center";
 
-            // Set the shadow properties
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';  // Shadow color (black with some transparency)
-            ctx.shadowBlur = 10;  // Shadow blur
-            ctx.shadowOffsetX = 5;  // Horizontal shadow offset
-            ctx.shadowOffsetY = 5;  // Vertical shadow offset
-
             ctx.setTransform(stretch, skew * 0.01, skew * 0.01, 1, canvas.width / 2, canvas.height / 2);
+
+            // Stroke (outline) first
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = outlineColor;
+            ctx.strokeText(currentTime, 0, 0);
+
+            // Fill after
+            ctx.fillStyle = currentColor;
             ctx.fillText(currentTime, 0, 0);
         }
 
