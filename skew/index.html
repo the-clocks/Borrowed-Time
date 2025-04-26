@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Eater&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Stick&display=swap"
         rel="stylesheet">
     <style>
         * {
@@ -18,7 +18,9 @@
         }
 
         body {
-            font-family: "Eater", serif;
+            font-family: "Stick", sans-serif;
+            font-weight: 400;
+            font-style: normal;
             background: teal;
             height: 100vh;
             display: flex;
@@ -170,7 +172,8 @@
         function drawText() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            ctx.font = `${canvas.height * 0.2}px 'Eater', serif`;
+            // Changed font to use the "Stick" font
+            ctx.font = `${canvas.height * 0.2}px 'Stick', sans-serif`;
             ctx.textBaseline = "middle";
             ctx.textAlign = "center";
 
@@ -192,7 +195,6 @@
         setInterval(updateClock, 1000);
         animate();
     </script>
-
 </body>
 
 </html>
