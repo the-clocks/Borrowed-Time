@@ -171,7 +171,6 @@
     <div class="time-container">
         <div class="time" id="hours"></div>
         <div class="time" id="minutes"></div>
-        <div class="time" id="seconds"></div>
     </div>
     <canvas id="canvas"></canvas>
 
@@ -199,29 +198,27 @@
             const now = new Date();
             let hours = now.getHours();
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const ampm = hours >= 12 ? '' : '';
-
             hours = hours % 12;
-            hours = hours ? hours : 12; // '0' hours should be '12'
 
-            currentTime = `${hours}${minutes}${seconds} ${ampm}`;
+            currentTime = `${hours}${minutes}`;
 
             // Update individual time elements
             document.getElementById('hours').textContent = hours;
             document.getElementById('minutes').textContent = minutes;
-            document.getElementById('seconds').textContent = seconds;
+            // document.getElementById('seconds').textContent = seconds;
 
             currentColor = getRandomVibrantColor();
             outlineColor = getRandomVibrantColor(); // Random outline color too!
 
-            targetSkew = (Math.random() - 0.5) * 200;
-            targetStretch = 0.7 + Math.random() * 0.8;
+            // Update skew and stretch every second for a dynamic effect
+            targetSkew = (Math.random() - 0.5) * 500; // Increased randomness for skew
+            targetStretch = 0.6 + Math.random() * 0.8; // Slightly increased randomness for stretch
         }
 
+
         function animate() {
-            skew += (targetSkew - skew) * 0.05;
-            stretch += (targetStretch - stretch) * 0.05;
+            skew += (targetSkew - skew) * 0.1; // Increased smoothing factor for more random movement
+            stretch += (targetStretch - stretch) * 0.1; // Increased smoothing factor for stretch
 
             drawText();
             requestAnimationFrame(animate);
