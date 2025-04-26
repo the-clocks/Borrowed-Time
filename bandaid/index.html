@@ -15,40 +15,34 @@
             background-color: #deab34;
             height: 100vh;
             margin: 0;
-            display: flex;
             justify-content: center;
             align-items: center;
-            font-family: sans-serif;
             overflow: hidden;
         }
 
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
 
         .clock-wrapper {
-            position: relative;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-grow: 1;
             width: 100%;
+            z-index: 7;
         }
+
 
         .clock {
             width: 70vw;
             height: 70vw;
             max-width: 50vh;
             max-height: 50vh;
+            top: 50%;
             border-radius: 50%;
             position: relative;
-            z-index: 4;
+            z-index: 8;
         }
 
         .bgimage {
@@ -67,7 +61,8 @@
             bottom: 50%;
             left: 50%;
             transform-origin: bottom center;
-            z-index: 6;
+            z-index: 8;
+            opacity: 0.9;
         }
 
         .hour {
@@ -101,43 +96,37 @@
             z-index: 5;
         }
 
+
         .title-container {
-            color: #c5c6a6;
-            text-shadow: #e80826 1px 0px;
-            width: 100%;
+            color: #250d83;
+            text-shadow: #a37498 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
             display: flex;
-            justify-content: space-between;
-            padding: 10px 20px;
+            /* justify-content: space-between; */
             z-index: 6;
-            font-size: 2.8vh;
         }
 
         .chltitle {
             font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
             letter-spacing: 0.1vh;
         }
 
         .bttitle {
+            position: relative;
+            left: 0;
             font-family: "Oxanium", serif;
+            font-size: 2.8vh;
             font-style: italic;
+            z-index: 15;
             letter-spacing: -0.1vh;
-        }
-
-        .date-container {
-            color: #753905;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 20px;
-            z-index: 6;
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-        }
-
-        .clockname {
-            font-family: "Oxanium", serif;
-            font-size: 3.5vh;
-            line-height: 4vh;
         }
 
         a {
@@ -150,31 +139,70 @@
             background-color: rgb(21, 0, 255);
             text-decoration: none;
         }
+
+        .date-container {
+            color: #ca4261;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
     </style>
 </head>
 
 <body>
-    <div class="main-container">
-        <div class="title-container">
-            <div class="chltitle">Cubist Heart Laboratories</div>
-            <div class="bttitle">BorrowedTime</div>
-        </div>
-
-        <div class="clock-wrapper">
-            <img src="./images/bad.png" class="bgimage" alt="Background Image" />
-            <div class="clock">
-                <img class="hand hour" id="hour" src="images/59bf80e17a216d0b052f12e3.png" />
-                <img class="hand minute" id="minute" src="images/59bf80e17a216d0b052f12e3.png" />
-                <img class="hand second" id="second" src="images/59bf80e17a216d0b052f12e3.png" alt="Second Hand" />
-            </div>
-        </div>
-
-        <div class="date-container">
-            <a href="../lava/" class="dates">04/19/25</a>
-            <a href="../index.html" class="clockname">Band Aid Clock</a>
-            <a href="../index.html" class="dates">04/21/25</a>
+    <div class="clock-wrapper">
+        <div class="clock">
+            <img src="./images/59bf80e17a216d0b052f12e3.png" class="hand hour" id="hour" alt="Hour Hand" />
+            <img src="./images/59bf80e17a216d0b052f12e3.png" class="hand minute" id="minute" />
+            <img src="./images/59bf80e17a216d0b052f12e3.png" class="hand second" id="second" alt="Second Hand" />
         </div>
     </div>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+
+    <img src="./images/bad.png" class="bgimage" alt="Background Image" />
+
+
+
+    <div class="date-container">
+        <a href="../lava/" class="dates dateleft">04/24/25</a>
+        <a href="../index.html" class="clockname">Band Aid Clock</a>
+        <a href="../index.html" class="dates dateright">04/26/25</a>
+    </div>
+
 
     <script>
         function createClockNumbers() {
