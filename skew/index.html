@@ -47,6 +47,8 @@
             display: flex;
             justify-content: space-around;
             z-index: -1;
+            transition: transform 0.5s ease;
+            /* Smooth rotation transition */
         }
 
         .title-container {
@@ -181,7 +183,7 @@
         let targetSkew = 0, targetStretch = 1;
         let currentTime = "";
         let currentColor = "rgb(255,0,0)";
-        let outlineColor = "white";
+        let outlineColor = "transparent";
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -244,11 +246,19 @@
             ctx.fillText(currentTime, 0, 0);
         }
 
+        function spinClock() {
+            const randomX = Math.random() * 360;
+            const randomY = Math.random() * 360;
+            const randomZ = Math.random() * 360;
+            document.querySelector('.time-container').style.transform += `rotateX(${randomX}deg) rotateY(${randomY}deg) rotateZ(${randomZ}deg)`;
+        }
+
         window.addEventListener("resize", resizeCanvas);
         resizeCanvas();
         updateClock();
         setInterval(updateClock, 1000);
         animate();
+        setInterval(spinClock, 5000); // Spins every 5 seconds
     </script>
 </body>
 
