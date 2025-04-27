@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Clock - BorrowedTime</title>
+    <style>
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body {
+            margin: 0;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .clock {
+            position: relative;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            overflow: hidden;
+            animation: spin 60s linear infinite;
+            /* Clock spinning */
+        }
+
+        .center {
+            width: 22px;
+            height: 22px;
+            background: radial-gradient(circle, #ff00ff, #800080);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: translateX(-50%) rotate(0deg);
+            border-radius: 10px;
+            background: currentColor;
+        }
+
+        .hour {
+            width: 10px;
+            height: 90px;
+            color: #ff0040;
+            z-index: 4;
+        }
+
+        .minute {
+            width: 6px;
+            height: 120px;
+            color: #00ff90;
+            z-index: 3;
+        }
+
+        .second {
+            width: 4px;
+            height: 140px;
+            color: #32a6c3;
+            z-index: 2;
+        }
+
+        .number {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            text-align: center;
+            line-height: 32px;
+            color: #00ffff;
+            font-size: 18px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock" id="clock">
+        <div class="center"></div>
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+    </div>
+
+    <script>
+        const clock = document.getElementById('clock');
+        const centerX = 170;
+        const centerY = 170;
+        const tickRadius = 155;
+        const numberRadius = 130;
+        const ticks = [];
+
+        // Create tick marks
+        for (let i = 0; i < 60; i++) {
+            const angleDeg = i * 6 - 90;
+            const angleRad = angleDeg * (Math.PI / 180);
+            const tick = document.createElement('div');
+            tick.classList.add('tick');
+            if (i % 5 === 0) tick.classList.add('hour');
+
+            const tickX = centerX + tickRadius * Math.cos(angleRad);
+            const tickY = centerY + tickRadius * Math.sin(angleRad);
+
+            tick.style.left = `${tickX}px`;
+            tick.style.top = `${tickY}px`;
+            tick.style.transform = `translate(-50%, -50%) rotate(${angleDeg + 90}deg)`;
+            clock.appendChild(tick);
+            ticks.push(tick);
+        }
+
+        // Create neon numbers
+        for (let i = 1; i <= 12; i++) {
+            const angleDeg = i * 30 - 90;
+            const angleRad = angleDeg * (Math.PI / 180);
+            const number = document.createElement('div');
+            number.classList.add('number');
+            number.textContent = i;
+
+            const numberX = centerX + numberRadius * Math.cos(angleRad);
+            const numberY = centerY + numberRadius * Math.sin(angleRad);
+
+            number.style.left = `${numberX}px`;
+            number.style.top = `${numberY}px`;
+            clock.appendChild(number);
+        }
+
+        // Update clock hands
+        function updateClock() {
+            const now = new Date();
+            const ms = now.getMilliseconds();
+            const second = now.getSeconds() + ms / 1000;
+            const minute = now.getMinutes() + second / 60;
+            const hour = now.getHours() + minute / 60;
+
+            const secondDeg = second * 6;
+            const minuteDeg = minute * 6;
+            const hourDeg = (hour % 12) * 30;
+
+            document.getElementById('second').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+            document.getElementById('minute').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.getElementById('hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+            requestAnimationFrame(updateClock);
+        }
+
+        requestAnimationFrame(updateClock);
+    </script>
+</body>
+
+</html>

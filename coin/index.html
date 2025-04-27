@@ -3,8 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Spinning Analog Clock with Numbers</title>
+    <title>Coin Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Asset&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Workbench&display=swap"
+        rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'MoneyMoney-Regular';
+            src: url('fonts/MoneyMoney-Regular.ttf') format('truetype');
+        }
+
         body {
             display: flex;
             justify-content: center;
@@ -15,19 +25,18 @@
         }
 
         .scene {
-            perspective: 1000px;
+            perspective: 100vw;
         }
 
         .clock {
-            /* color:aqua */
-            width: 300px;
-            height: 300px;
-            /* background: white; */
-            border: 1px solid #f6b709;
+            width: 50vw;
+            height: 50vw;
+            max-width: 90vmin;
+            max-height: 90vmin;
             border-radius: 50%;
             position: relative;
             transform-style: preserve-3d;
-            animation: spin 10s linear infinite;
+            animation: spin 15s linear infinite;
         }
 
         @keyframes spin {
@@ -43,37 +52,37 @@
         .hand {
             position: absolute;
             width: 50%;
-            height: 6px;
-            background: #333;
+            height: 0.6vw;
+            background: #f6b709;
             top: 50%;
             left: 50%;
             transform-origin: 0% 50%;
             transform: rotate(90deg);
-            border-radius: 3px;
+            border-radius: 0.3vw;
         }
 
         .hour {
-            height: 8px;
+            height: 0.8vw;
             width: 35%;
-            background: #555;
+            background: #f6b709;
         }
 
         .minute {
-            height: 6px;
+            height: 0.6vw;
             width: 45%;
-            background: #777;
+            background: #f6b709;
         }
 
         .second {
-            height: 2px;
+            height: 0.2vw;
             width: 48%;
-            background: red;
+            background: #f6b709;
         }
 
         .center {
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 1.2vw;
+            height: 1.2vw;
             background: #333;
             border-radius: 50%;
             top: 50%;
@@ -83,31 +92,32 @@
         }
 
         .number {
+            font-family: 'MoneyMoney-Regular', sans-serif;
             position: absolute;
-            width: 20px;
-            height: 20px;
-            color: #e9e10d;
-            font-family: sans-serif;
-            font-weight: bold;
+            /* width: 2vh;
+            height: 2vh; */
+            color: #f6b709;
             text-align: center;
-            line-height: 20px;
+            line-height: 2vw;
             top: 50%;
             left: 50%;
             transform-origin: center center;
-            transform: translate(-50%, -50%) rotate(0deg) translateY(-120px) rotate(0deg);
+            transform: translate(-50%, -50%) rotate(0deg) translateY(-12vw) rotate(0deg);
             pointer-events: none;
+            font-size: 9.5vh;
         }
 
         .bgimage {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             object-fit: cover;
             z-index: -1;
         }
     </style>
+
 </head>
 
 <body>
