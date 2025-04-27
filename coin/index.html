@@ -2,12 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Spinning Coin Clock - BorrowedTime</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spinning Coin CLock - BorrowedTime</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Asset&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Workbench&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
     <style>
         @font-face {
@@ -15,103 +16,102 @@
             src: url('fonts/MoneyMoney-Regular.ttf') format('truetype');
         }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .scene {
-            perspective: 100vw;
-        }
-
-        .clock {
-            width: 50vw;
-            height: 50vw;
-            max-width: 90vmin;
-            max-height: 90vmin;
-            border-radius: 50%;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: spin 15s linear infinite;
-        }
-
         @keyframes spin {
-            from {
+            0% {
                 transform: rotateY(0deg);
             }
 
-            to {
+            100% {
                 transform: rotateY(360deg);
             }
         }
 
-        .hand {
-            position: absolute;
-            width: 50%;
-            height: 0.6vw;
-            background: #f6b709;
-            top: 50%;
-            left: 50%;
-            transform-origin: 0% 50%;
-            transform: rotate(90deg);
-            border-radius: 0.3vw;
+        body {
+            margin: 0;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            perspective: 1000px;
+            /* Add perspective to create the 3D effect */
         }
 
-        .hour {
-            height: 0.8vw;
-            width: 35%;
-            background: #f6b709;
-        }
-
-        .minute {
-            height: 0.6vw;
-            width: 45%;
-            background: #f6b709;
-        }
-
-        .second {
-            height: 0.2vw;
-            width: 9998%;
-            background: #f6b709;
+        .clock {
+            position: relative;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            overflow: hidden;
+            animation: spin 7s linear infinite;
+            /* Faster spin like a coin */
+            transform-style: preserve-3d;
+            /* Allow 3D transformations */
         }
 
         .center {
-            position: absolute;
-            width: 1.2vw;
-            height: 1.2vw;
-            background: #333;
+            width: 22px;
+            height: 22px;
+            color: #c7a641;
             border-radius: 50%;
+            position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
         }
 
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: translateX(-50%) rotate(0deg);
+            border-radius: 10px;
+            background: currentColor;
+        }
+
+        .hour {
+            width: 10px;
+            height: 90px;
+            color: #c7a641;
+            z-index: 4;
+        }
+
+        .minute {
+            width: 6px;
+            height: 120px;
+            color: #c7a641;
+            z-index: 3;
+        }
+
+        .second {
+            width: 4px;
+            height: 1234vh;
+            color: #c7a641;
+            z-index: 2;
+        }
+
         .number {
             font-family: 'MoneyMoney-Regular', sans-serif;
             position: absolute;
-            /* width: 2vh;
-            height: 2vh; */
-            color: #f6b709;
+            width: 32px;
+            height: 32px;
             text-align: center;
-            line-height: 2vw;
+            line-height: 32px;
+            color: #c7a641;
+            font-size: 2rem;
             top: 50%;
             left: 50%;
-            transform-origin: center center;
-            transform: translate(-50%, -50%) rotate(0deg) translateY(-12vw) rotate(0deg);
-            pointer-events: none;
-            font-size: 9.5vh;
+            transform: translate(-50%, -50%);
         }
 
         .bgimage {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100vw;
+            width: 130vw;
             height: 100vh;
             object-fit: cover;
             z-index: -1;
@@ -196,7 +196,6 @@
             letter-spacing: -0.1vh;
         }
     </style>
-
 </head>
 
 <body>
@@ -205,53 +204,80 @@
         <div class="bttitle">BorrowedTime</div>
     </div>
     <img src="./images/coin.gif" class="bgimage">
-    <div class="scene">
-        <div class="clock" id="clock">
-            <div class="hand hour" id="hour-hand"></div>
-            <div class="hand minute" id="minute-hand"></div>
-            <div class="hand second" id="second-hand"></div>
-            <div class="center"></div>
-        </div>
+    <div class="clock" id="clock">
+        <div class="center"></div>
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
     </div>
     <div class="date-container">
-        <a href="../skew/" class="dates dateleft">04/26/25</a>
+        <a href="../skew/" class="dates dateleft">04/13/25</a>
         <a href="../index.html" class="clockname">Spinning Coin Clock</a>
-        <a href="../index.html" class="dates dateright">04/28/25</a>
+        <a href="../index.html" class="dates dateright">04/15/25</a>
     </div>
+
     <script>
         const clock = document.getElementById('clock');
+        const centerX = 170;
+        const centerY = 170;
+        const tickRadius = 155;
+        const numberRadius = 130;
+        const ticks = [];
 
-        // Add numbers
+        // Create tick marks
+        for (let i = 0; i < 60; i++) {
+            const angleDeg = i * 6 - 90;
+            const angleRad = angleDeg * (Math.PI / 180);
+            const tick = document.createElement('div');
+            tick.classList.add('tick');
+            if (i % 5 === 0) tick.classList.add('hour');
+
+            const tickX = centerX + tickRadius * Math.cos(angleRad);
+            const tickY = centerY + tickRadius * Math.sin(angleRad);
+
+            tick.style.left = `${tickX}px`;
+            tick.style.top = `${tickY}px`;
+            tick.style.transform = `translate(-50%, -50%) rotate(${angleDeg + 90}deg)`;
+            clock.appendChild(tick);
+            ticks.push(tick);
+        }
+
+        // Create neon numbers
         for (let i = 1; i <= 12; i++) {
+            const angleDeg = i * 30 - 90;
+            const angleRad = angleDeg * (Math.PI / 180);
             const number = document.createElement('div');
-            number.className = 'number';
-            number.innerText = i;
-            const angle = i * 30; // 360/12 = 30 degrees per hour
-            number.style.transform = `translate(-50%, -50%) rotate(${angle}deg) translateY(-120px) rotate(${-angle}deg)`;
+            number.classList.add('number');
+            number.textContent = i;
+
+            const numberX = centerX + numberRadius * Math.cos(angleRad);
+            const numberY = centerY + numberRadius * Math.sin(angleRad);
+
+            number.style.left = `${numberX}px`;
+            number.style.top = `${numberY}px`;
             clock.appendChild(number);
         }
 
-        const hourHand = document.getElementById('hour-hand');
-        const minuteHand = document.getElementById('minute-hand');
-        const secondHand = document.getElementById('second-hand');
-
+        // Update clock hands
         function updateClock() {
             const now = new Date();
-            const seconds = now.getSeconds();
-            const minutes = now.getMinutes();
-            const hours = now.getHours() % 12;
+            const ms = now.getMilliseconds();
+            const second = now.getSeconds() + ms / 1000;
+            const minute = now.getMinutes() + second / 60;
+            const hour = now.getHours() + minute / 60;
 
-            const secondDeg = seconds * 6;
-            const minuteDeg = minutes * 6 + seconds * 0.1;
-            const hourDeg = hours * 30 + minutes * 0.5;
+            const secondDeg = second * 6;
+            const minuteDeg = minute * 6;
+            const hourDeg = (hour % 12) * 30;
 
-            secondHand.style.transform = `rotate(${secondDeg}deg)`;
-            minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
-            hourHand.style.transform = `rotate(${hourDeg}deg)`;
+            document.getElementById('second').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+            document.getElementById('minute').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.getElementById('hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+            requestAnimationFrame(updateClock);
         }
 
-        setInterval(updateClock, 1000);
-        updateClock();
+        requestAnimationFrame(updateClock);
     </script>
 </body>
 
