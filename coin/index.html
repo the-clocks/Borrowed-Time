@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spinning Coin CLock - BorrowedTime</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,9 +11,24 @@
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
     <style>
-        @font-face {
-            font-family: 'MoneyMoney-Regular';
-            src: url('fonts/MoneyMoney-Regular.ttf') format('truetype');
+        body {
+            background-color: #0f0202;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            perspective: 100vw;
+        }
+
+        .clock {
+            width: 50vw;
+            height: 50vw;
+            border: 0.5vw solid #333;
+            border-radius: 50%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin 4s linear infinite;
         }
 
         @keyframes spin {
@@ -26,41 +41,15 @@
             }
         }
 
-        body {
-            margin: 0;
-            background-color: #111;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            perspective: 1000px;
-            /* Add perspective to create the 3D effect */
-        }
-
-        .clock {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            overflow: hidden;
-            animation: spin 6s linear infinite;
-            /* Faster spin like a coin */
-            transform-style: preserve-3d;
-            /* Allow 3D transformations */
-        }
-
-        .center {
-            width: 5vh;
-            height: 5vh;
-            background-image: url('./images/spin.webp');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            border-radius: 50%;
+        .clock::before {
+            content: '';
             position: absolute;
             top: 50%;
             left: 50%;
+            width: 1vw;
+            height: 1vw;
+            background-color: #333;
+            border-radius: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
         }
@@ -69,52 +58,49 @@
             position: absolute;
             bottom: 50%;
             left: 50%;
-            transform-origin: bottom center;
-            transform: translateX(-50%) rotate(0deg);
-            border-radius: 10px;
-            background: currentColor;
+            transform-origin: bottom;
+            background-color: #333;
         }
 
-        .hour {
-            width: 10px;
-            height: 90px;
-            color: #c7a641;
-            z-index: 4;
+        .hour-hand {
+            width: 0.6vw;
+            height: 6vw;
+            transform: translateX(-50%);
         }
 
-        .minute {
-            width: 6px;
-            height: 120px;
-            color: #c7a641;
-            z-index: 3;
+        .minute-hand {
+            width: 0.4vw;
+            height: 8vw;
+            transform: translateX(-50%);
         }
 
-        .second {
-            width: 4px;
-            height: 1234vh;
-            color: #c7a641;
-            z-index: 2;
+        .second-hand {
+            width: 0.2vw;
+            height: 9vw;
+            background-color: red;
+            transform: translateX(-50%);
+        }
+
+        @font-face {
+            font-family: 'MoneyMoney-Regular';
+            src: url('fonts/MoneyMoney-Regular.ttf') format('truetype');
         }
 
         .number {
             font-family: 'MoneyMoney-Regular', sans-serif;
             position: absolute;
-            width: 32px;
-            height: 32px;
+            font-family: Arial, sans-serif;
+            font-size: 7.6vw;
+            color: #f3d13c;
             text-align: center;
-            line-height: 32px;
-            color: #c7a641;
-            font-size: 2rem;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            width: 2vw;
         }
 
         .bgimage {
             position: absolute;
             top: 0;
             left: 0;
-            width: 130vw;
+            width: 100vw;
             height: 100vh;
             object-fit: cover;
             z-index: -1;
@@ -207,80 +193,60 @@
         <div class="bttitle">BorrowedTime</div>
     </div>
     <img src="./images/coin.gif" class="bgimage">
-    <div class="clock" id="clock">
-        <div class="center"></div>
-        <div class="hand hour" id="hour"></div>
-        <div class="hand minute" id="minute"></div>
-        <div class="hand second" id="second"></div>
-    </div>
+
+    <div class="clock" id="clock"></div>
     <div class="date-container">
         <a href="../skew/" class="dates dateleft">04/13/25</a>
         <a href="../index.html" class="clockname">Spinning Coin Clock</a>
         <a href="../index.html" class="dates dateright">04/15/25</a>
     </div>
-
     <script>
-        const clock = document.getElementById('clock');
-        const centerX = 170;
-        const centerY = 170;
-        const tickRadius = 155;
-        const numberRadius = 130;
-        const ticks = [];
+        function createClock() {
+            const clock = document.getElementById('clock');
 
-        // Create tick marks
-        for (let i = 0; i < 60; i++) {
-            const angleDeg = i * 6 - 90;
-            const angleRad = angleDeg * (Math.PI / 180);
-            const tick = document.createElement('div');
-            tick.classList.add('tick');
-            if (i % 5 === 0) tick.classList.add('hour');
+            // Create hour markers
+            for (let i = 1; i <= 12; i++) {
+                const angle = (i * 30) * Math.PI / 180;
+                const number = document.createElement('div');
+                number.className = 'number';
+                number.textContent = i;
+                number.style.left = `calc(50% + ${Math.sin(angle) * 19}vw - 1vw)`;
+                number.style.top = `calc(50% - ${Math.cos(angle) * 19}vw - 1vw)`;
+                clock.appendChild(number);
+            }
 
-            const tickX = centerX + tickRadius * Math.cos(angleRad);
-            const tickY = centerY + tickRadius * Math.sin(angleRad);
+            // Create hands
+            const hourHand = document.createElement('div');
+            hourHand.className = 'hand hour-hand';
+            clock.appendChild(hourHand);
 
-            tick.style.left = `${tickX}px`;
-            tick.style.top = `${tickY}px`;
-            tick.style.transform = `translate(-50%, -50%) rotate(${angleDeg + 90}deg)`;
-            clock.appendChild(tick);
-            ticks.push(tick);
+            const minuteHand = document.createElement('div');
+            minuteHand.className = 'hand minute-hand';
+            clock.appendChild(minuteHand);
+
+            const secondHand = document.createElement('div');
+            secondHand.className = 'hand second-hand';
+            clock.appendChild(secondHand);
         }
 
-        // Create neon numbers
-        for (let i = 1; i <= 12; i++) {
-            const angleDeg = i * 30 - 90;
-            const angleRad = angleDeg * (Math.PI / 180);
-            const number = document.createElement('div');
-            number.classList.add('number');
-            number.textContent = i;
-
-            const numberX = centerX + numberRadius * Math.cos(angleRad);
-            const numberY = centerY + numberRadius * Math.sin(angleRad);
-
-            number.style.left = `${numberX}px`;
-            number.style.top = `${numberY}px`;
-            clock.appendChild(number);
-        }
-
-        // Update clock hands
         function updateClock() {
             const now = new Date();
-            const ms = now.getMilliseconds();
-            const second = now.getSeconds() + ms / 1000;
-            const minute = now.getMinutes() + second / 60;
-            const hour = now.getHours() + minute / 60;
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
 
-            const secondDeg = second * 6;
-            const minuteDeg = minute * 6;
-            const hourDeg = (hour % 12) * 30;
+            const hourDeg = (hours * 30) + (minutes * 0.5);
+            const minuteDeg = minutes * 6;
+            const secondDeg = seconds * 6;
 
-            document.getElementById('second').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
-            document.getElementById('minute').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
-            document.getElementById('hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-
-            requestAnimationFrame(updateClock);
+            document.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+            document.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.querySelector('.second-hand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
         }
 
-        requestAnimationFrame(updateClock);
+        createClock();
+        updateClock();
+        setInterval(updateClock, 1000);
     </script>
 </body>
 
