@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+    <title>Jackson Pollock Clock - BorrowedTime</title>
+
+    <style>
+        @font-face {
+            font-family: 'Skater';
+            src: url('fonts/Skater.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Skater', sans-serif;
+            height: 100vh;
+            background-color: #ced0d3;
+            overflow: hidden;
+        }
+
+        .cleartime {
+            color: transparent;
+        }
+
+        .title-container {
+            color: #857f81;
+            text-shadow: #cdbfc8 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #097b7e;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../coin/" class="dates dateleft">04/26/25</a>
+        <a href="../index.html" class="clockname">Jackson Pollock Clock</a>
+        <a href="../index.html" class="dates dateright">04/28/25</a>
+    </div>
+    <div class="cleartime" id="current-time">00:00:00</div>
+    <script>
+        const grayShades = [
+            '#747070', '#767D7C', '#33312D', '#4D4E55', '#DAD3DB',
+            '#282838', '#171417', '#d6d6d6', '#262616', '#161414'
+        ]; // 10 different shades of gray
+        let impressionCount = 0; // Counter to track the number of impressions
+
+        function getRandomPosition() {
+            const x = Math.random() * (window.innerWidth - 200); // Adjust for width of elements
+            const y = Math.random() * (window.innerHeight - 50); // Adjust for height of elements
+            return { x, y };
+        }
+
+        function getRandomRotation() {
+            const rotationX = Math.random() * 360; // Random X rotation
+            const rotationY = Math.random() * 360; // Random Y rotation
+            const rotationZ = Math.random() * 360; // Random Z rotation
+            return { rotationX, rotationY, rotationZ };
+        }
+
+        function getRandomGrayShade() {
+            return grayShades[Math.floor(Math.random() * grayShades.length)];
+        }
+
+        function getRandomSize() {
+            // Random size between 10px and 100px
+            const size = Math.random() * 90 + 10;
+            return `${size}px`;
+        }
+
+        function getRandomSkew() {
+            // Random skew between -30deg and 30deg for both X and Y
+            const skewX = Math.random() * 60 - 3;
+            const skewY = Math.random() * 60 - 3
+            return `skew(${skewX}deg, ${skewY}deg)`;
+        }
+
+        function updateClock() {
+            if (impressionCount >= 10000) return; // Stop after 300 impressions
+
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+
+            // Update the current time display
+            document.getElementById('current-time').textContent = timeString;
+
+            // Create a new element for the time impression
+            const impression = document.createElement('div');
+            impression.className = 'clock-impression';
+            impression.textContent = timeString;
+
+            // Set random position for the impression
+            const { x, y } = getRandomPosition();
+            impression.style.position = 'absolute';
+            impression.style.left = `${x}px`;
+            impression.style.top = `${y}px`;
+
+            // Set random rotation for the impression
+            const { rotationX, rotationY, rotationZ } = getRandomRotation();
+            impression.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg) rotateZ(${rotationZ}deg)`;
+
+            // Set random size for the impression
+            impression.style.fontSize = getRandomSize();
+
+            // Apply random skew
+            impression.style.transform += ` ${getRandomSkew()}`;
+
+            // Set random gray color for the impression
+            impression.style.color = getRandomGrayShade();
+
+            document.body.appendChild(impression); // Add the impression to the document
+
+            // Increment the impression count
+            impressionCount++;
+        }
+
+        // Update the clock every 10ms
+        setInterval(updateClock, 100); // Change to 1000ms to update every second
+
+        // Initial call to display the current time immediately
+        updateClock();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #282c34;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            font-size: 3rem;
+        }
+
+        .clock {
+            display: flex;
+            align-items: center;
+        }
+
+        .digit {
+            width: 1ch;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock">
+        <div class="digit" id="hourTens">0</div>
+        <div class="digit" id="hourUnits">0</div>
+        <span>:</span>
+        <div class="digit" id="minuteTens">0</div>
+        <div class="digit" id="minuteUnits">0</div>
+        <span>:</span>
+        <div class="digit" id="secondTens">0</div>
+        <div class="digit" id="secondUnits">0</div>
+    </div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            // Extract digits
+            const hourTens = hours[0];
+            const hourUnits = hours[1];
+            const minuteTens = minutes[0];
+            const minuteUnits = minutes[1];
+            const secondTens = seconds[0];
+            const secondUnits = seconds[1];
+
+            // Update the clock display
+            document.getElementById('hourTens').textContent = hourTens;
+            document.getElementById('hourUnits').textContent = hourUnits;
+            document.getElementById('minuteTens').textContent = minuteTens;
+            document.getElementById('minuteUnits').textContent = minuteUnits;
+            document.getElementById('secondTens').textContent = secondTens;
+            document.getElementById('secondUnits').textContent = secondUnits;
+        }
+
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+
+        // Initialize the clock immediately
+        updateClock();
+    </script>
+</body>
+
+</html>
