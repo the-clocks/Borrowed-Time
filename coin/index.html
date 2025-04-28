@@ -32,7 +32,16 @@
             border-radius: 50%;
             position: relative;
             transform-style: preserve-3d;
-            animation: spin 4s linear infinite;
+            animation: spin 8s linear infinite;
+        }
+
+        .clock2 {
+            width: 80vh;
+            height: 80vh;
+            border-radius: 50%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin 8s linear infinite;
         }
 
         @keyframes spin {
@@ -62,7 +71,7 @@
             bottom: 50%;
             left: 50%;
             transform-origin: bottom;
-            background-color: #fddb30;
+            background-color: #d3ad62;
         }
 
         .hour-hand {
@@ -80,7 +89,6 @@
         .second-hand {
             width: 0.2vw;
             height: 2000vw;
-            background-color: rgb(235, 187, 43);
             transform: translateX(-50%);
         }
 
@@ -88,7 +96,7 @@
             font-family: 'MoneyMoney-Regular', sans-serif;
             position: absolute;
             font-size: 7.6vw;
-            color: #f3d13c;
+            color: #d3ad62;
             text-align: center;
             width: 2vw;
         }
@@ -97,7 +105,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 130vw;
+            width: 100vw;
             height: 100vh;
             object-fit: cover;
             z-index: -1;
@@ -191,17 +199,35 @@
             object-fit: cover;
             z-index: -1;
         }
+
+        .center {
+            width: 5vh;
+            height: 5vh;
+            background-image: url('./images/spin.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
     </style>
 </head>
 
 <body>
+
     <div class="title-container">
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
     <img src="./images/coin.gif" class="bgimage">
 
-    <div class="clock" id="clock"></div>
+    <div class="clock" id="clock">
+        <div class="center"></div>
+    </div>
     <div class="date-container">
         <a href="../skew/" class="dates dateleft">04/26/25</a>
         <a href="../index.html" class="clockname">Spinning Coin Clock</a>
