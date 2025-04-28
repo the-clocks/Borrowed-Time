@@ -155,7 +155,7 @@
         }
 
         function updateClock() {
-            if (impressionCount >= 10000) return; // Stop after 300 impressions
+            if (impressionCount >= 1000) return; // Stop after 300 impressions
 
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -197,7 +197,7 @@
         }
 
         // Update the clock every 10ms
-        setInterval(updateClock, 100); // Change to 1000ms to update every second
+        setInterval(updateClock, 1000); // Change to 1000ms to update every second
 
         // Initial call to display the current time immediately
         updateClock();
