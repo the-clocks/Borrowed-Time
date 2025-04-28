@@ -32,16 +32,7 @@
             border-radius: 50%;
             position: relative;
             transform-style: preserve-3d;
-            animation: spin 8s linear infinite;
-        }
-
-        .clock2 {
-            width: 80vh;
-            height: 80vh;
-            border-radius: 50%;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: spin 8s linear infinite;
+            animation: spin 7s linear infinite;
         }
 
         @keyframes spin {
@@ -105,7 +96,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100vw;
+            width: 130vw;
             height: 100vh;
             object-fit: cover;
             z-index: -1;
@@ -200,9 +191,10 @@
             z-index: -1;
         }
 
+
         .center {
-            width: 5vh;
-            height: 5vh;
+            width: 8vh;
+            height: 8vh;
             background-image: url('./images/spin.webp');
             background-size: cover;
             background-position: center;
@@ -213,6 +205,8 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
+            opacity: 0.9;
+            filter: saturate(800%);
         }
     </style>
 </head>
