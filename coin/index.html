@@ -17,7 +17,7 @@
         }
 
         body {
-            background-color: #060606;
+            /* background-color: #060606; */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -208,6 +208,25 @@
             opacity: 0.9;
             filter: saturate(800%);
         }
+
+        .tinted-image {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tinted-image::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(173, 37, 141, 0.4);
+            /* blue tint at 40% opacity */
+            mix-blend-mode: multiply;
+            /* or overlay/soft-light */
+            pointer-events: none;
+        }
     </style>
 </head>
 
@@ -217,7 +236,7 @@
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
-    <img src="./images/coin.gif" class="bgimage">
+    <!-- <img src="./images/coin.gif" class="bgimage"> -->
 
     <div class="clock" id="clock">
         <div class="center"></div>
