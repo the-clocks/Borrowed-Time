@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <style>
+        body {
+            background-color: #080808;
+            height: 100%;
+        }
+
+        .bgimage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 100%;
+            filter: saturate(1.3);
+            opacity: 0.7;
+            z-index: 4;
+        }
+
+        #clock {
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .digit {
+            font-weight: bold;
+            animation: flicker 0.4s infinite alternate;
+            will-change: transform, opacity;
+        }
+
+        @keyframes riseUp {
+            0% {
+                transform: translateY(100vh);
+            }
+
+            100% {
+                transform: translateY(-30vh);
+            }
+        }
+
+        @keyframes explodeWild {
+            0% {
+                opacity: 1;
+                transform: scale(1) translate(0, 0) rotate(0deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform:
+                    scale(5) translate(var(--dx), var(--dy)) rotate(var(--rot));
+            }
+        }
+
+        @keyframes flicker {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0.6;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="clock"></div>
+    <img src="./images/fw.gif" class="bgimage">
+    <img src="./images/giphy (11).gif" class="bgimage">
+    <img src="./images/41e74b0f91b7cb7df6b73e34ae8528a4.gif" class="bgimage">
+    <img src="./images/534320_791f5.gif" class="bgimage">
+    <img src="./images/6053eea2252d679c884989db76ae8410.gif" class="bgimage">
+    <img src="./images/84298.gif" class="bgimage">
+    <img src="./images/CLIPLY_372109170_FREE_FIREWORKS_400.gif" class="bgimage">
+    <img src="./images/icegif-85.gif" class="bgimage">
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <script src="" async defer></script>
+
+
+    <script>
+        function getRandomBrightColor() {
+            const hue = Math.floor(Math.random() * 360);
+            return `hsl(${hue}, 100%, 60%)`;
+        }
+
+        function getRandomFontSize() {
+            return `${Math.floor(Math.random() * 40) + 40}px`;
+        }
+
+        function getRandomExplosionVector() {
+            const dx = `${(Math.random() - 0.5) * 400}px`;
+            const dy = `${(Math.random() - 0.5) * 400}px`;
+            const rot = `${Math.random() * 1440 - 720}deg`;
+            return { dx, dy, rot };
+        }
+
+        function showClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+            const clock = document.getElementById('clock');
+            clock.innerHTML = '';
+            clock.style.animation = 'none';
+            void clock.offsetWidth; // force reflow
+            clock.style.animation = 'riseUp 1.5s ease-out forwards';
+
+            for (const char of timeString) {
+                const span = document.createElement('span');
+                span.className = 'digit';
+                span.textContent = char;
+                span.style.color = getRandomBrightColor();
+                span.style.fontSize = getRandomFontSize();
+
+                const { dx, dy, rot } = getRandomExplosionVector();
+                span.style.setProperty('--dx', dx);
+                span.style.setProperty('--dy', dy);
+                span.style.setProperty('--rot', rot);
+                clock.appendChild(span);
+            }
+
+            // Trigger explosion just before the next reset
+            setTimeout(() => {
+                for (const digit of clock.children) {
+                    digit.style.animation = 'explodeWild 1.5s ease-out forwards';
+                }
+            }, 1500);
+        }
+
+        showClock();
+        setInterval(showClock, 5000);
+    </script>
+
+</body>
+
+</html>
