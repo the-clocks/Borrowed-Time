@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bounce Clock - BorrowedTime</title>
+    <style>
+        /* Global box-sizing for predictable sizing */
+        * {
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            background: linear-gradient(to top, #786f6f, #c6cdc2);
+            font-family: sans-serif;
+        }
+
+        .room {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Clock styles with vendor prefixes */
+        .clock {
+            position: absolute;
+            border-radius: 50%;
+            /* Transition with prefixes */
+            transition: transform 5s ease, opacity 5s ease;
+            -webkit-transition: -webkit-transform 5s ease, opacity 5s ease;
+            -moz-transition: -moz-transform 5s ease, opacity 5s ease;
+            -o-transition: -o-transform 5s ease, opacity 5s ease;
+            /* Shadow with prefixes */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            /* For smooth scaling/opacity */
+            will-change: transform, opacity;
+        }
+
+        /* Hands styles with vendor prefixes */
+        .hand {
+            position: absolute;
+            transform-origin: bottom center;
+            -webkit-transform-origin: bottom center;
+            -moz-transform-origin: bottom center;
+            border-radius: 2px;
+        }
+
+        .hour {
+            background: black;
+        }
+
+        .minute {
+            background: rgb(95, 95, 99);
+        }
+
+        .second {
+            background: red;
+        }
+
+        /* Fade out class */
+        .fade-out {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        /* Title container styles */
+        .title-container {
+            color: #cacccb;
+            text-shadow: #82877e 1px 0;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        /* Date container styles */
+        .date-container {
+            color: #361c33;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../fireworks/" class="dates dateleft">04/29/25</a>
+        <a href="../index.html" class="clockname">Bounce Clock</a>
+        <a href="../index.html" class="dates dateright">05/01/25</a>
+    </div>
+    <div class="room" id="room"></div>
+
+    <script>
+        // Polyfill for requestAnimationFrame for older browsers
+        if (!window.requestAnimationFrame) {
+            window.requestAnimationFrame = function (callback) {
+                return setTimeout(callback, 1000 / 60);
+            };
+        }
+
+        const room = document.getElementById("room");
+
+        function createClock() {
+            const sizes = [
+                { size: 20, gravity: 1.0 },
+                { size: 40, gravity: 0.5 },
+                { size: 70, gravity: 0.01 },
+                { size: 100, gravity: 0.05 },
+                { size: 130, gravity: 0.001 }
+            ];
+
+            const { size, gravity } = sizes[Math.floor(Math.random() * sizes.length)];
+
+            const clock = document.createElement("div");
+            clock.className = "clock";
+            clock.style.width = size + "px";
+            clock.style.height = size + "px";
+            clock.style.left = Math.random() * (window.innerWidth - size) + "px";
+            clock.style.top = "-150px";
+
+            const color = `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`;
+            clock.style.background = color;
+            clock.style.boxShadow = `0 0 ${size * 0.2}px ${color}`;
+
+            // Create hands
+            const hour = document.createElement("div");
+            hour.className = "hand hour";
+            hour.style.width = `${size * 0.05}px`;
+            hour.style.height = `${size * 0.25}px`;
+            hour.style.top = `${size * 0.25}px`;
+            hour.style.left = `${size / 2 - (size * 0.05) / 2}px`;
+
+            const minute = document.createElement("div");
+            minute.className = "hand minute";
+            minute.style.width = `${size * 0.025}px`;
+            minute.style.height = `${size * 0.4}px`;
+            minute.style.top = `${size * 0.1}px`;
+            minute.style.left = `${size / 2 - (size * 0.025) / 2}px`;
+
+            const second = document.createElement("div");
+            second.className = "hand second";
+            second.style.width = `${size * 0.012}px`;
+            second.style.height = `${size * 0.45}px`;
+            second.style.top = `${size * 0.05}px`;
+            second.style.left = `${size / 2 - (size * 0.012) / 2}px`;
+
+            clock.appendChild(hour);
+            clock.appendChild(minute);
+            clock.appendChild(second);
+            room.appendChild(clock);
+
+            let y = -150;
+            let velocity = 0;
+            const bounce = 0.7;
+
+            function animate() {
+                velocity += gravity;
+                y += velocity;
+
+                if (y > window.innerHeight - size) {
+                    y = window.innerHeight - size;
+                    velocity *= -bounce;
+                }
+
+                clock.style.top = y + "px";
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+            updateHands(hour, minute, second);
+
+            // Make the clock disappear after 15 seconds
+            setTimeout(() => {
+                clock.classList.add("fade-out");
+                clock.addEventListener("transitionend", () => {
+                    if (clock.parentElement) {
+                        clock.parentElement.removeChild(clock);
+                    }
+                });
+            }, 60000); // 15 seconds
+        }
+
+        function updateHands(hour, minute, second) {
+            const now = new Date();
+            const h = now.getHours();
+            const m = now.getMinutes();
+            const s = now.getSeconds();
+
+            hour.style.transform = `rotate(${(h % 12) * 30 + m * 0.5}deg)`;
+            minute.style.transform = `rotate(${m * 6}deg)`;
+            second.style.transform = `rotate(${s * 6}deg)`;
+        }
+
+        // Create a new clock every second
+        setInterval(createClock, 1000);
+    </script>
+</body>
+
+</html>
