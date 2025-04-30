@@ -5,6 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bounce Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
     <style>
         /* Global box-sizing for predictable sizing */
         * {
@@ -33,14 +38,15 @@
             position: absolute;
             border-radius: 50%;
             /* Transition with prefixes */
-            transition: transform 5s ease, opacity 5s ease;
             -webkit-transition: -webkit-transform 5s ease, opacity 5s ease;
             -moz-transition: -moz-transform 5s ease, opacity 5s ease;
             -o-transition: -o-transform 5s ease, opacity 5s ease;
+            transition: transform 5s ease, opacity 5s ease;
             /* Shadow with prefixes */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+
             /* For smooth scaling/opacity */
             will-change: transform, opacity;
         }
@@ -48,9 +54,10 @@
         /* Hands styles with vendor prefixes */
         .hand {
             position: absolute;
-            transform-origin: bottom center;
             -webkit-transform-origin: bottom center;
             -moz-transform-origin: bottom center;
+            transform-origin: bottom center;
+
             border-radius: 2px;
         }
 
@@ -250,7 +257,7 @@
                         clock.parentElement.removeChild(clock);
                     }
                 });
-            }, 60000); // 15 seconds
+            }, 1200000); // 15 seconds
         }
 
         function updateHands(hour, minute, second) {
