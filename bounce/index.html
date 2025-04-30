@@ -69,10 +69,6 @@
             background: rgb(95, 95, 99);
         }
 
-        .second {
-            background: transparent;
-        }
-
         /* Fade out class */
         .fade-out {
             transform: scale(0);
@@ -217,16 +213,8 @@
             minute.style.top = `${size * 0.1}px`;
             minute.style.left = `${size / 2 - (size * 0.025) / 2}px`;
 
-            const second = document.createElement("div");
-            second.className = "hand second";
-            second.style.width = `${size * 0.012}px`;
-            second.style.height = `${size * 0.45}px`;
-            second.style.top = `${size * 0.05}px`;
-            second.style.left = `${size / 2 - (size * 0.012) / 2}px`;
-
             clock.appendChild(hour);
             clock.appendChild(minute);
-            clock.appendChild(second);
             room.appendChild(clock);
 
             let y = -150;
@@ -247,7 +235,7 @@
             }
 
             animate();
-            updateHands(hour, minute, second);
+            updateHands(hour, minute);
 
             // Make the clock disappear after 15 seconds
             setTimeout(() => {
@@ -260,15 +248,13 @@
             }, 30000);
         }
 
-        function updateHands(hour, minute, second) {
+        function updateHands(hour, minute) {
             const now = new Date();
             const h = now.getHours();
             const m = now.getMinutes();
-            const s = now.getSeconds();
 
             hour.style.transform = `rotate(${(h % 12) * 30 + m * 0.5}deg)`;
             minute.style.transform = `rotate(${m * 6}deg)`;
-            second.style.transform = `rotate(${s * 6}deg)`;
         }
 
         // Create a new clock every second
