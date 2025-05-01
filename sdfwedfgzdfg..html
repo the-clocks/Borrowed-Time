@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Underwater Text Effect</title>
+    <style>
+        body {
+            background: #001f3f;
+            color: #00ccff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .underwater-text {
+            font-size: 4rem;
+            position: relative;
+            animation: wave 3s infinite ease-in-out;
+            text-shadow:
+                0 0 10px #00ccff,
+                0 0 20px #00ccff,
+                0 0 30px #00ccff;
+        }
+
+        @keyframes wave {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(-1deg);
+            }
+
+            25% {
+                transform: translateY(-5px) rotate(1deg);
+            }
+
+            50% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            75% {
+                transform: translateY(5px) rotate(-1deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="underwater-text">Under the Sea</div>
+</body>
+
+</html>

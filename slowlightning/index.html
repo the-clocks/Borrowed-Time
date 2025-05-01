@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Slow Lightning Clock - BorrowedTime</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: 'Inner';
+            src: url('fonts/Inner.ttf') format('truetype');
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            background-color: black;
+        }
+
+        .bgimage {
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            height: 100vh;
+            width: 100vw;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        .date-container {
+            color: #67819e;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #b7b7b0;
+            text-shadow: #4a494a 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        .clock-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        #clock {
+            color: rgb(244, 243, 230);
+            font-family: 'Inner', sans-serif;
+            display: flex;
+            /* gap: 1vw; */
+            font-size: 80vh;
+            z-index: 7;
+        }
+
+        #clock span {
+            display: block;
+        }
+
+        .flash-white,
+        .flash-black {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.1s ease-out;
+        }
+
+        .flash-white {
+            background-color: rgb(236, 241, 218);
+        }
+
+        .flash-black {
+            background-color: rgb(16, 3, 95);
+        }
+
+        @keyframes shakeJump {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
+            }
+
+            20% {
+                transform: translate(-50%, -50%) translate(-10px, -20px) rotate(-2deg);
+            }
+
+            40% {
+                transform: translate(-50%, 50%) translate(10px, 10px) rotate(3deg);
+            }
+
+            60% {
+                transform: translate(80%, -50%) translate(-15px, 5px) rotate(-1deg);
+            }
+
+            80% {
+                transform: translate(-50%, -80%) translate(5px, -15px) rotate(2deg);
+            }
+        }
+
+        .animate-clock {
+            animation: shakeJump 0.33s ease-in-out;
+        }
+
+        @media (max-width: 600px) {
+            #clock {
+                flex-direction: column;
+                align-items: center;
+                gap: 2vh;
+                font-size: 50vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../bounce/" class="dates dateleft">04/30/25</a>
+        <a href="../index.html" class="clockname">Slow Lightning Clock</a>
+        <a href="../index.html" class="dates dateright">05/02/25</a>
+    </div>
+
+    <img src="./images/lightning.webp" class="bgimage">
+
+    <div class="clock-container">
+        <div id="clock">
+            <span id="hours">--</span>
+            <span id="minutes">--</span>
+        </div>
+    </div>
+
+    <div class="flash-white" id="flashWhite"></div>
+    <div class="flash-black" id="flashBlack"></div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+        }
+
+        function triggerClockEffect() {
+            const clock = document.getElementById('clock');
+            clock.classList.add('animate-clock');
+            setTimeout(() => clock.classList.remove('animate-clock'), 330);
+        }
+
+        function triggerFlash(type) {
+            const el = document.getElementById(type === 'white' ? 'flashWhite' : 'flashBlack');
+            el.style.opacity = '1';
+            setTimeout(() => el.style.opacity = '0', 100);
+        }
+
+        function randomEffectsLoop() {
+            const rand = Math.random();
+
+            if (rand < 0.09) {
+                triggerClockEffect();
+            }
+
+            if (rand > 0.4) {
+                triggerFlash(Math.random() > 0.5 ? 'white' : 'black');
+            }
+
+            setTimeout(randomEffectsLoop, 500);
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+        randomEffectsLoop();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Z-Index Clock</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #111;
+            color: white;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .clock {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .digit {
+            font-size: 5rem;
+            background: #222;
+            padding: 10px 20px;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Each digit with a different z-index */
+        .digit:nth-child(1) {
+            z-index: 1;
+        }
+
+        .digit:nth-child(2) {
+            z-index: 2;
+        }
+
+        .digit:nth-child(3) {
+            z-index: 3;
+        }
+
+        .digit:nth-child(4) {
+            z-index: 4;
+        }
+
+        .digit:nth-child(5) {
+            z-index: 5;
+        }
+
+        .digit:nth-child(6) {
+            z-index: 6;
+        }
+
+        .digit:nth-child(7) {
+            z-index: 7;
+        }
+
+        .digit:nth-child(8) {
+            z-index: 8;
+        }
+
+        @media (max-width: 600px) {
+            .clock {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock" id="clock">
+        <div class="digit">0</div>
+        <div class="digit">0</div>
+        <div class="digit">:</div>
+        <div class="digit">0</div>
+        <div class="digit">0</div>
+        <div class="digit">:</div>
+        <div class="digit">0</div>
+        <div class="digit">0</div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            const timeStr = h + ':' + m + ':' + s;
+
+            const digits = document.querySelectorAll('.digit');
+            for (let i = 0; i < digits.length; i++) {
+                digits[i].textContent = timeStr[i];
+            }
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // initial call
+    </script>
+</body>
+
+</html>
