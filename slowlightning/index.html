@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Slow Lightning Clock - BorrowedTime</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="preload" href="fonts/Inner.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -39,6 +39,21 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 1;
+            opacity: 0.9;
+        }
+
+        .bgimage1 {
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            height: 100vh;
+            width: 100vw;
+            -moz-transform: scaleX(-1);
+            -o-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            -ms-transform: scaleX(-1);
+            z-index: 2;
+            opacity: 0.5;
         }
 
         a {
@@ -169,7 +184,7 @@
 
             0%,
             100% {
-                transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
+                transform: translate(-50%, 190%) translate(0, 0) rotate(0deg);
             }
 
             20% {
@@ -215,8 +230,9 @@
         <a href="../index.html" class="clockname">Slow Lightning Clock</a>
         <a href="../index.html" class="dates dateright">05/02/25</a>
     </div>
-
     <img src="./images/lightning.webp" class="bgimage">
+
+    <img src="./images/lightning.webp" class="bgimage1">
 
     <div class="clock-container">
         <div id="clock">
