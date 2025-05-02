@@ -236,14 +236,13 @@
                 <div>12</div>
             </div>
             <div class="hand hour-hand">
-                <img src="./images/giphy1.gif" alt="Hour Hand">
+                <img src="./images/giphy1-ezgif.com-rotate(2).gif" alt="Hour Hand">
             </div>
             <div class="hand minute-hand">
-                <img src="./images/sco.webp" alt="Minute Hand">
+                <img src="./images/giphy1-ezgif.com-rotate(1).gif" alt="Minute Hand">
             </div>
             <div class="hand second-hand">
-                <img src="./images/b8ffa9ee909cf8341c398fd3b7f8b8ce-ezgif.com-gif-to-webp-converter.webp"
-                    alt="Second Hand">
+                <img src="./images/giphy1-ezgif.com-rotate(3).gif" alt="Second Hand">
             </div>
 
         </div>
@@ -256,9 +255,9 @@
             const hours = now.getHours() % 12;
 
             const jitter = () => Math.random() * 2 - 1;
-            const secondDeg = (seconds * 6) + jitter() * 3;
-            const minuteDeg = (minutes * 6 + seconds / 10) + jitter() * 2;
-            const hourDeg = (hours * 30 + minutes / 2) + jitter() * 1.5;
+            const secondDeg = (seconds * 6) + jitter() * 0.3;
+            const minuteDeg = (minutes * 6 + seconds / 10) + jitter() * 0.02;
+            const hourDeg = (hours * 30 + minutes / 2) + jitter() * 0.005;
 
             const secondScale = 1 + Math.sin(seconds * Math.PI / 30) * 0.05;
             const minuteScale = 1 + Math.sin(minutes * Math.PI / 30) * 0.03;
