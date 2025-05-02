@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: 'pin_me_needles';
+            src: url('fonts/pin_me_needles.ttf') format('truetype');
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #957236;
+            overflow: hidden;
+        }
+
+        .clock-container {
+            position: relative;
+            width: 90vmin;
+            height: 90vmin;
+            max-width: 400px;
+            max-height: 400px;
+            min-width: 200px;
+            min-height: 200px;
+        }
+
+        .clock-face {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .number {
+            font-family: 'pin_me_needles';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 12.5vmin;
+            color: #c5c53e;
+            text-shadow: #09f745 1px 1px;
+
+
+        }
+
+        .number div {
+            position: absolute;
+            width: 100%;
+            top: 5%;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            transition: transform 0.05s ease-out;
+        }
+
+        .hour-hand {
+            filter: saturate(550%);
+            z-index: 3;
+        }
+
+        .minute-hand {
+            filter: sepia(300%) saturate(400%);
+            /* width: 0.8%; */
+            /* height: 12%; */
+            z-index: 2;
+            transform: translateX(-60%);
+        }
+
+        .second-hand {
+            filter: saturate(80%) sepia(30%) contrast(200%);
+            z-index: 1;
+        }
+
+        .bgimage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 180%;
+            height: 180%;
+
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        .date-container {
+            color: #f28585;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #c3a28d;
+            text-shadow: #dc7910 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../bounce/" class="dates dateleft">05/01/25</a>
+        <a href="../index.html" class="clockname">Scorpion Clock</a>
+        <a href="../index.html" class="dates dateright">05/03/25</a>
+    </div>
+
+    <img src="./images/aeccdb88495307c3048bcf4d1a73086f_w200.gif" class="bgimage">
+    <div class="clock-container">
+        <div class="clock-face">
+            <div class="number" style="transform: rotate(30deg);">
+                <div>1</div>
+            </div>
+            <div class="number" style="transform: rotate(60deg);">
+                <div>2</div>
+            </div>
+            <div class="number" style="transform: rotate(90deg);">
+                <div>3</div>
+            </div>
+            <div class="number" style="transform: rotate(120deg);">
+                <div>4</div>
+            </div>
+            <div class="number" style="transform: rotate(150deg);">
+                <div>5</div>
+            </div>
+            <div class="number" style="transform: rotate(180deg);">
+                <div>6</div>
+            </div>
+            <div class="number" style="transform: rotate(210deg);">
+                <div>7</div>
+            </div>
+            <div class="number" style="transform: rotate(240deg);">
+                <div>8</div>
+            </div>
+            <div class="number" style="transform: rotate(270deg);">
+                <div>9</div>
+            </div>
+            <div class="number" style="transform: rotate(300deg);">
+                <div>10</div>
+            </div>
+            <div class="number" style="transform: rotate(330deg);">
+                <div>11</div>
+            </div>
+            <div class="number" style="transform: rotate(0deg);">
+                <div>12</div>
+            </div>
+            <div class="hand hour-hand">
+                <img src="./images/giphy (14).gif" alt="Hour Hand">
+            </div>
+            <div class="hand minute-hand">
+                <img src="./images/sco.webp" alt="Minute Hand">
+            </div>
+            <div class="hand second-hand">
+                <img src="./images/b8ffa9ee909cf8341c398fd3b7f8b8ce-ezgif.com-gif-to-webp-converter.webp"
+                    alt="Second Hand">
+            </div>
+        </div>
+    </div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours() % 12;
+
+            const jitter = () => Math.random() * 2 - 1;
+            const secondDeg = (seconds * 6) + jitter() * 3;
+            const minuteDeg = (minutes * 6 + seconds / 10) + jitter() * 2;
+            const hourDeg = (hours * 30 + minutes / 2) + jitter() * 1.5;
+
+            const secondScale = 1 + Math.sin(seconds * Math.PI / 30) * 0.05;
+            const minuteScale = 1 + Math.sin(minutes * Math.PI / 30) * 0.03;
+            const hourScale = 1 + Math.sin(hours * Math.PI / 6) * 0.02;
+
+            const secondHand = document.querySelector('.second-hand');
+            const minuteHand = document.querySelector('.minute-hand');
+            const hourHand = document.querySelector('.hour-hand');
+
+            secondHand.style.transform = `translateX(-50%) rotate(${secondDeg}deg) scaleY(${secondScale})`;
+            minuteHand.style.transform = `translateX(-60%) rotate(${minuteDeg}deg) scaleY(${minuteScale})`;
+            hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg) scaleY(${hourScale})`;
+        }
+
+        setInterval(updateClock, 50);
+        updateClock();
+    </script>
+</body>
+
+</html>
