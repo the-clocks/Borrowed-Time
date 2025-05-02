@@ -90,14 +90,17 @@
         }
 
         .bgimage {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            width: 190%;
-            height: 140%;
-            filter: saturate(300%);
-
+            width: 100vw;
+            height: 130vh;
+            object-fit: cover;
+            z-index: -1;
+            transform: none;
+            filter: saturate(200%) contrast(200%);
         }
+
 
         a {
             color: inherit;
