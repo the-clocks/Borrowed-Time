@@ -4,106 +4,138 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Responsive Z-Index Clock</title>
+    <title>Digital Clock</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
-            background: #111;
-            color: white;
-            font-family: 'Courier New', monospace;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-color: #f0f0f0;
+            width: 100vw;
             height: 100vh;
         }
 
-        .clock {
+        .wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .clock-container {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            gap: 2vmin;
             justify-content: center;
-            gap: 10px;
+            align-items: center;
         }
 
-        .digit {
-            font-size: 5rem;
-            background: #222;
-            padding: 10px 20px;
-            border-radius: 10px;
-            position: relative;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        .digit-group {
+            display: flex;
+            gap: 0.5vmin;
         }
 
-        /* Each digit with a different z-index */
-        .digit:nth-child(1) {
-            z-index: 1;
+        .digit-box {
+            background-color: #333;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 1vmin;
+            font-size: 8vmin;
+            width: 6vmin;
+            height: 10vmin;
+            min-width: 6vmin;
+            text-align: center;
+            box-sizing: border-box;
         }
 
-        .digit:nth-child(2) {
-            z-index: 2;
+        @media (max-width: 768px) {
+            .clock-container {
+                gap: 1.5vmin;
+            }
+
+            .digit-group {
+                gap: 0.4vmin;
+            }
+
+            .digit-box {
+                font-size: 10vmin;
+                width: 8vmin;
+                height: 12vmin;
+                min-width: 8vmin;
+            }
         }
 
-        .digit:nth-child(3) {
-            z-index: 3;
-        }
-
-        .digit:nth-child(4) {
-            z-index: 4;
-        }
-
-        .digit:nth-child(5) {
-            z-index: 5;
-        }
-
-        .digit:nth-child(6) {
-            z-index: 6;
-        }
-
-        .digit:nth-child(7) {
-            z-index: 7;
-        }
-
-        .digit:nth-child(8) {
-            z-index: 8;
-        }
-
-        @media (max-width: 600px) {
-            .clock {
+        @media (max-width: 480px) {
+            .clock-container {
                 flex-direction: column;
                 align-items: center;
+                gap: 2vmin;
+            }
+
+            .digit-group {
+                justify-content: center;
+                gap: 0.3vmin;
+            }
+
+            .digit-box {
+                font-size: 12vmin;
+                width: 10vmin;
+                height: 14vmin;
+                min-width: 10vmin;
+            }
+        }
+
+        @media (orientation: landscape) and (max-width: 768px) {
+            .clock-container {
+                flex-wrap: nowrap;
+                gap: 1.5vmin;
+            }
+
+            .digit-box {
+                font-size: 9vmin;
+                width: 7vmin;
+                height: 11vmin;
+                min-width: 7vmin;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="clock" id="clock">
-        <div class="digit">0</div>
-        <div class="digit">0</div>
-        <div class="digit">:</div>
-        <div class="digit">0</div>
-        <div class="digit">0</div>
-        <div class="digit">:</div>
-        <div class="digit">0</div>
-        <div class="digit">0</div>
+    <div class="wrapper">
+        <div class="clock-container" id="clock">
+            <div class="digit-group">
+                <div class="digit-box" id="hour1"></div>
+                <div class="digit-box" id="hour2"></div>
+            </div>
+            <div class="digit-group">
+                <div class="digit-box" id="minute1"></div>
+                <div class="digit-box" id="minute2"></div>
+            </div>
+            <div class="digit-group">
+                <div class="digit-box" id="second1"></div>
+                <div class="digit-box" id="second2"></div>
+            </div>
+        </div>
     </div>
 
     <script>
         function updateClock() {
             const now = new Date();
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            const s = String(now.getSeconds()).padStart(2, '0');
-            const timeStr = h + ':' + m + ':' + s;
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
 
-            const digits = document.querySelectorAll('.digit');
-            for (let i = 0; i < digits.length; i++) {
-                digits[i].textContent = timeStr[i];
-            }
+            document.getElementById('hour1').textContent = hours[0];
+            document.getElementById('hour2').textContent = hours[1];
+            document.getElementById('minute1').textContent = minutes[0];
+            document.getElementById('minute2').textContent = minutes[1];
+            document.getElementById('second1').textContent = seconds[0];
+            document.getElementById('second2').textContent = seconds[1];
         }
 
+        updateClock();
         setInterval(updateClock, 1000);
-        updateClock(); // initial call
     </script>
 </body>
 
