@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unruly Clock - BorrowedTime</title>
+    <style>
+        :root {
+            font-size: 1rem;
+        }
+
+        body {
+            background: #3e3b3d;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .clock {
+            display: flex;
+            flex-direction: column;
+            gap: 2vh;
+            width: 90vw;
+            max-width: 100vw;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .time-group {
+            display: flex;
+            gap: 2vw;
+        }
+
+        .digit,
+        .separator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease;
+            min-width: 4rem;
+            min-height: 5rem;
+        }
+
+        .separator {
+            color: #ccc;
+            font-size: 2rem;
+        }
+
+        /* Responsive layout: horizontal on wider screens */
+        @media (min-width: 768px) {
+            .clock {
+                flex-direction: row;
+                gap: 4vw;
+            }
+
+            .time-group {
+                flex-direction: row;
+            }
+        }
+
+        /* Animations */
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(180deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes scaleUpDown {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+        }
+
+        @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-1rem);
+            }
+        }
+
+        @keyframes skew {
+
+            0%,
+            100% {
+                transform: skew(0deg, 0deg);
+            }
+
+            50% {
+                transform: skew(20deg, 5deg);
+            }
+        }
+
+        .rotate {
+            animation: rotate 1s ease-in-out;
+        }
+
+        .scale {
+            animation: scaleUpDown 1s ease-in-out;
+        }
+
+        .fade {
+            animation: fadeInOut 1s ease-in-out;
+        }
+
+        .bounce {
+            animation: bounce 1s ease-in-out;
+        }
+
+        .skew {
+            animation: skew 1s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock">
+        <div class="time-group" id="hour-group">
+            <div id="h1" class="digit">0</div>
+            <div id="h2" class="digit">0</div>
+        </div>
+        <div class="separator">:</div>
+        <div class="time-group" id="minute-group">
+            <div id="m1" class="digit">0</div>
+            <div id="m2" class="digit">0</div>
+        </div>
+        <div class="separator">:</div>
+        <div class="time-group" id="second-group">
+            <div id="s1" class="digit">0</div>
+            <div id="s2" class="digit">0</div>
+        </div>
+    </div>
+
+    <script>
+        const fonts = [
+            'Courier New', 'Arial', 'Verdana', 'Tahoma',
+            'Georgia', 'Impact', 'Times New Roman', 'Lucida Console',
+            'Comic Sans MS', 'Trebuchet MS', 'Monaco', 'Consolas'
+        ];
+
+        const animations = ['rotate', 'scale', 'fade', 'bounce', 'skew'];
+        const digitIds = ['h1', 'h2', 'm1', 'm2', 's1', 's2'];
+
+        function getRandomFont() {
+            return fonts[Math.floor(Math.random() * fonts.length)];
+        }
+
+        function getRandomSize() {
+            return `${Math.floor(Math.random() * 6 + 2)}rem`; // 2rem to 8rem
+        }
+
+        function getRandomColor() {
+            return `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
+        }
+
+        function getRandomAnimation() {
+            return animations[Math.floor(Math.random() * animations.length)];
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            const digits = [...h, ...m, ...s];
+
+            digits.forEach((val, i) => {
+                const el = document.getElementById(digitIds[i]);
+                el.textContent = val;
+                animations.forEach(anim => el.classList.remove(anim));
+                el.style.fontFamily = getRandomFont();
+                el.style.fontSize = getRandomSize();
+                el.style.color = getRandomColor();
+                const animation = getRandomAnimation();
+                void el.offsetWidth;
+                el.classList.add(animation);
+            });
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
