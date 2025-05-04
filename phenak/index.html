@@ -1,39 +1,77 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Phénakisticope Clock - BorrowedTime
-    </title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Fade Slideshow</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Rock+3D&display=swap"
         rel="stylesheet">
     <style>
         body {
-            background-color: rgb(243, 234, 234);
+            margin: 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        .bgimage {
-            position: fixed;
+        .slideshow-container {
+            position: relative;
+            width: 90vh;
+            height: 90vh;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        .slideshow-container img {
+            position: absolute;
             top: 50%;
             left: 50%;
-            width: 90vw;
-            height: 90vh;
-            object-fit: contain;
             transform: translate(-50%, -50%);
-            z-index: 2;
-            pointer-events: none;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            animation: fade 9s infinite;
+        }
+
+        .slideshow-container img:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .slideshow-container img:nth-child(2) {
+            animation-delay: 3s;
+        }
+
+        .slideshow-container img:nth-child(3) {
+            animation-delay: 6s;
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+
+            11.1% {
+                opacity: 1;
+            }
+
+            33.3% {
+                opacity: 1;
+            }
+
+            44.4% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 0;
+            }
         }
 
         .title-container {
@@ -80,7 +118,7 @@
         }
 
         .date-container {
-            color: #064260;
+            color: #0e4d1b;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -116,21 +154,20 @@
         }
 
         .clock {
-            width: 300px;
-            height: 300px;
+            width: 87vh;
+            height: 87vh;
             border-radius: 50%;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 3;
+            z-index: 9;
         }
 
 
         .hand {
             width: 50%;
             height: 4px;
-            background: white;
             position: absolute;
             top: 50%;
             transform-origin: 100%;
@@ -148,25 +185,32 @@
         }
 
         .second {
-            background: transparent;
-            height: 2px;
+            background: rgb(65, 69, 69);
+            height: 1px;
+        }
+
+        .bgimage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 110%;
+            object-fit: cover;
+
         }
     </style>
 </head>
 
 <body>
-
     <div class="title-container">
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
-    <img src="./images/348986.gif" class="bgimage">
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-
-    <script src="" async defer></script>
-
+    <div class="slideshow-container">
+        <img src="./images/tumb-ezgif.com-optimize.gif" alt="Image 1" />
+        <img src="./images/spinn.gif" alt="Image 2" />
+        <img src="./images/ed-ezgif.com-optimize.gif" alt="Image 3" />
+    </div>
     <div class="date-container">
         <a href="../petal/" class="dates dateleft">05/03/25</a>
         <a href="../index.html" class="clockname">Phénakisticope Clock</a>
@@ -178,6 +222,8 @@
         <div class="hand second" id="second"></div>
         <div class="center-dot"></div>
     </div>
+
+    <img src="./images/wallpapaer-ezgif.com-optimize.gif" class="bgimage">
 
     <script>
         function updateClock() {
