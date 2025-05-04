@@ -61,7 +61,7 @@
             width: 100vw;
             height: 100vh;
             z-index: 2;
-            transform: rotate(190deg);
+            transform: rotate(10deg);
             filter: saturate(1.5) brightness(1.5);
             z-index: 3;
         }
@@ -100,9 +100,8 @@
         }
 
         .digit-box {
-            color: rgb(25, 137, 27);
-            text-shadow: #88f157 2px 3px;
-
+            color: #88f157;
+            text-shadow: #88f157 2px 3px 30px, #88f157 -2px 3px 30px, #88f157 2px -3px 30px, #88f157 -2px -3px 30px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -156,11 +155,11 @@
         @media (orientation: landscape) and (max-width: 768px) {
             .clock-container {
                 flex-wrap: nowrap;
-                gap: 1.5vmin;
+                /* gap: 1.5vmin; */
             }
 
             .digit-box {
-                font-size: 19vmin;
+                font-size: 29vmin;
                 width: 7vmin;
                 height: 11vmin;
                 min-width: 7vmin;
@@ -168,7 +167,7 @@
         }
 
         .title-container {
-            color: #781d46;
+            color: #efa2c4;
             text-shadow: #b5137f 1px 0px;
             position: absolute;
             top: 5px;
@@ -210,7 +209,7 @@
         }
 
         .date-container {
-            color: #92ef54;
+            color: #39a208;
             position: absolute;
             bottom: 5px;
             left: 50%;
