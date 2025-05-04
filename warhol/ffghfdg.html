@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <title>Warhol GraveCam Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Permanent+Marker&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Map';
+            src: url('fonts/Map.ttf') format('truetype');
+        }
+
+        iframe {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            border: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .clock-container {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 2vmin;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .digit-group {
+            font-family: 'Map', sans-serif;
+            display: flex;
+            gap: 0.5vmin;
+        }
+
+        .digit-box {
+            color: #ef1337;
+            /* text-shadow: #88f157 12px 13px 0px, #0ab2f4 -12px 13px 0px, #f7d70a 12px -13px 0px, #e811d9 -12px -13px 0px; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28vmin;
+            width: 16vmin;
+            height: 10vmin;
+            min-width: 6vmin;
+            text-align: center;
+            box-sizing: border-box;
+            z-index: 19;
+        }
+
+        @media (max-width: 768px) {
+            .clock-container {
+                gap: 1.5vmin;
+            }
+
+            .digit-group {
+                gap: 0.4vmin;
+            }
+
+            .digit-box {
+                font-size: 19vmin;
+                width: 8vmin;
+                height: 12vmin;
+                min-width: 8vmin;
+                z-index: 19;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .clock-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 2vmin;
+            }
+
+            .digit-group {
+                justify-content: center;
+                gap: 0.3vmin;
+            }
+
+            .digit-box {
+                font-size: 12vmin;
+                width: 10vmin;
+                height: 14vmin;
+                min-width: 10vmin;
+            }
+        }
+
+        @media (orientation: landscape) and (max-width: 768px) {
+            .clock-container {
+                flex-wrap: nowrap;
+                gap: 1.5vmin;
+            }
+
+            .digit-box {
+                font-size: 29vmin;
+                width: 7vmin;
+                height: 11vmin;
+                min-width: 7vmin;
+            }
+        }
+
+        .title-container {
+            color: #efa2c4;
+            text-shadow: #b5137f 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #39a208;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .clock {
+            height: 20vh;
+            color: rgb(250, 21, 21);
+            font-size: 22vh;
+            font-family: sans-serif;
+            line-height: 20.4vh;
+            display: flex;
+            position: relative;
+            /*background: green;*/
+            overflow: hidden;
+            opacity: 50%;
+            z-index: 8;
+        }
+
+        .clock::before,
+        .clock::after {
+
+
+
+            content: "";
+            width: 7ch;
+            height: 3vh;
+            background: linear-gradient(to top, transparent, black);
+            position: absolute;
+            z-index: 2;
+        }
+
+        .clock::after {
+
+            font-family: 'pin_me_needles';
+
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, black);
+        }
+
+        .clock>div {
+            display: flex;
+        }
+
+        .tick {
+            line-height: 17vh;
+        }
+
+        .tick-hidden {
+            opacity: 0;
+        }
+
+        .move {
+            animation: move linear 1s infinite;
+        }
+
+        @keyframes move {
+            from {
+                transform: translateY(0vh);
+            }
+
+            to {
+                transform: translateY(-20vh);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../phenak/" class="dates dateleft">05/04/25</a>
+        <a href="../index.html" class="clockname">Warhol GraveCam Clock</a>
+        <a href="../index.html" class="dates dateright">05/06/25</a>
+    </div>
+
+    <iframe src="https://www.youtube.com/embed/JHpJvvn9hvk?autoplay=1&mute=1" title="Live YouTube Stream"
+        allow="autoplay; encrypted-media" allowfullscreen>
+    </iframe>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <script src="" async defer></script>
+
+    <div class="wrapper">
+        <div class="clock-container" id="clock">
+            <div class="digit-group">
+                <div class="digit-box" id="hour1"></div>
+                <div class="digit-box" id="hour2"></div>
+            </div>
+            <div class="digit-group">
+                <div class="digit-box" id="minute1"></div>
+                <div class="digit-box" id="minute2"></div>
+            </div>
+            <div class="digit-group">
+                <div class="digit-box" id="second1"></div>
+                <div class="digit-box" id="second2"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById('hour1').textContent = hours[0];
+            document.getElementById('hour2').textContent = hours[1];
+            document.getElementById('minute1').textContent = minutes[0];
+            document.getElementById('minute2').textContent = minutes[1];
+            document.getElementById('second1').textContent = seconds[0];
+            document.getElementById('second2').textContent = seconds[1];
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+
+</html>
