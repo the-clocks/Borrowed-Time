@@ -2,9 +2,17 @@
 <html lang="en">
 
 <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Unruly Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Permanent+Marker&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+
     <style>
         @font-face {
             font-family: 'zzzz';
@@ -43,7 +51,6 @@
         .clock {
             display: flex;
             flex-direction: column;
-            /* gap: 2vh; */
             width: 100vw;
             max-width: 100vw;
             justify-content: center;
@@ -156,10 +163,98 @@
         .skew {
             animation: skew 1s ease-in-out;
         }
+
+
+        .title-container {
+            color: #efa2c4;
+            text-shadow: #b5137f 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #39a208;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3.5vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
     </style>
 </head>
 
 <body>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../warhol/" class="dates dateleft">05/05/25</a>
+        <a href="../index.html" class="clockname">Unruly Clock</a>
+        <a href="../index.html" class="dates dateright">05/07/25</a>
+    </div>
     <div class="clock">
         <div class="time-group" id="hour-group">
             <div id="h1" class="digit">0</div>
@@ -191,7 +286,7 @@
         }
 
         function getRandomSize() {
-            return `${Math.floor(Math.random() * 6)}rem`; // 2rem to 8rem
+            return `${Math.floor(Math.random() * 25 - 20)}rem`; // 2rem to 8rem
         }
 
         function getRandomColor() {
