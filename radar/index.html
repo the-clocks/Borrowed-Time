@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="">
     <style>
         :root {
-            --g: rgb(9, 252, 9);
+            --g: rgb(14, 238, 14);
             --bg-lines: rgb(2, 67, 2);
             --bg-screen: #000100;
             --line-opacity: 1.0;
@@ -34,7 +34,7 @@
             height: 100vh;
             width: 100vw;
             margin: 0;
-            background-color: darkturquoise;
+            background-color: rgb(68, 168, 211);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -52,6 +52,7 @@
         }
 
         #radar {
+            position: relative;
             width: 99vmin;
             aspect-ratio: 1;
             opacity: 90%;
@@ -59,9 +60,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #808488;
+            background-color: #72706a;
             border-radius: 50%;
-            z-index: 5;
+            z-index: 3;
 
             &::before,
             &::after {
@@ -216,6 +217,37 @@
             z-index: 15;
             letter-spacing: -0.1vh;
         }
+
+        .clock {
+            position: relative;
+
+            border-radius: 50%;
+            position: relative;
+            z-index: 4;
+        }
+
+
+
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background-color: #0bf226;
+        }
+
+        .hour-hand {
+            width: 2vh;
+            height: 22vh;
+            border-radius: 3px;
+        }
+
+        .minute-hand {
+            width: 1vh;
+            height: 40vh;
+            border-radius: 2px;
+        }
     </style>
 
 
@@ -227,8 +259,8 @@
         <div class="bttitle">BorrowedTime</div>
     </div>
     <img src="./images/3ce69531311986a8a78f1e093f53df3d-ezgif.com-optiwebp.webp" class="full-page-image">
-    <div id="radar">
-        <!-- <div id="targets"></div> -->
+
+    <!-- <div id="targets"></div> -->
     </div>
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
@@ -239,6 +271,40 @@
         <a href="../index.html" class="dates dateright">05/08/25</a>
     </div>
     <script src="" async defer></script>
+    <div class="clock">
+        <div id="radar">
+            <div class="clock-face">
+
+
+
+
+
+                <div class="hand hour-hand"></div>
+                <div class="hand minute-hand"></div>
+                <div class="hand second-hand"></div>
+                <div class="center"></div>
+            </div>
+        </div>
+
+        <script>
+            function updateClock() {
+                const now = new Date();
+                const seconds = now.getSeconds();
+                const minutes = now.getMinutes();
+                const hours = now.getHours();
+
+                const secondsDeg = (seconds / 60) * 360;
+                const minutesDeg = (minutes / 60) * 360 + (seconds / 60) * 6;
+                const hoursDeg = (hours % 12 / 12) * 360 + (minutes / 60) * 30;
+
+                document.querySelector('.second-hand').style.transform = `translateX(-50%) rotate(${secondsDeg}deg)`;
+                document.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minutesDeg}deg)`;
+                document.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hoursDeg}deg)`;
+            }
+
+            setInterval(updateClock, 1000);
+            updateClock();
+        </script>
 </body>
 
 </html>
