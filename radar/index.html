@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Radar Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <style>
+        :root {
+            --g: rgb(9, 252, 9);
+            --bg-lines: rgb(2, 67, 2);
+            --bg-screen: #000100;
+            --line-opacity: 1.0;
+            --radial-opacity: 1.0;
+            --trail-length: 90deg;
+            --blend: color-dodge;
+            --speed: 60s;
+        }
+
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            background-color: darkturquoise;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all .3s ease;
+
+            &:has(input:checked) {
+
+
+                #radar::after {
+                    content: '';
+                }
+            }
+        }
+
+        #radar {
+            width: 99vmin;
+            aspect-ratio: 1;
+            opacity: 90%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #808488;
+            border-radius: 50%;
+            z-index: 5;
+
+            &::before,
+            &::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 95%;
+                aspect-ratio: 1;
+                border-radius: 50%;
+                transition: all .3s ease;
+            }
+
+            &::before {
+                z-index: -1;
+                background-color: var(--bg-screen);
+                background-image:
+                    linear-gradient(to bottom,
+                        transparent calc(50%),
+                        hsl(from var(--bg-lines) h s l / var(--line-opacity)),
+                        transparent calc(50% + 1px)),
+                    linear-gradient(to right,
+                        transparent calc(50%),
+                        hsl(from var(--bg-lines) h s l / var(--line-opacity)),
+                        transparent calc(50% + 1px)),
+                    linear-gradient(45deg,
+                        transparent calc(50%),
+                        hsl(from var(--bg-lines) h s l / var(--line-opacity)),
+                        transparent calc(50% + 1px)),
+                    linear-gradient(-45deg,
+                        transparent calc(50%),
+                        hsl(from var(--bg-lines) h s l / var(--line-opacity)),
+                        transparent calc(50% + 1px)),
+                    repeating-radial-gradient(hsl(from var(--bg-lines) h s l / var(--radial-opacity)) 0,
+                        transparent 1px 2.5vmin,
+                        hsl(from var(--bg-lines) h s l / var(--radial-opacity)) calc(2.5vmin + 1px));
+            }
+
+            &::after {
+                background-image:
+                    conic-gradient(#000 var(--trail-length), var(--g) 360deg);
+                mix-blend-mode: var(--blend);
+                animation: rotate var(--speed) linear infinite;
+            }
+        }
+
+
+        @keyframes rotate {
+            to {
+                transform: translate(-50%, -50%) rotate(1turn)
+            }
+        }
+
+        @keyframes move {
+            to {
+                background-position: 0 67.5vmin;
+            }
+        }
+
+
+        .full-page-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: contrast(50%);
+            z-index: 1;
+            filter: alpha(opacity=50);
+            pointer-events: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #c0d5ed;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #114b81;
+            text-shadow: #d3d0d1 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <img src="./images/3ce69531311986a8a78f1e093f53df3d-ezgif.com-optiwebp.webp" class="full-page-image">
+    <div id="radar">
+        <!-- <div id="targets"></div> -->
+    </div>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div class="date-container">
+        <a href="../unruly/" class="dates dateleft">05/06/25</a>
+        <a href="../index.html" class="clockname">Radar Clock</a>
+        <a href="../index.html" class="dates dateright">05/08/25</a>
+    </div>
+    <script src="" async defer></script>
+</body>
+
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock with Numbers</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .clock {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 10px solid #333;
+            border-radius: 50%;
+            background-color: white;
+        }
+
+        .hour,
+        .minute {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: 50% 100%;
+            background-color: black;
+            border-radius: 4px;
+        }
+
+        .hour {
+            width: 6px;
+            height: 50px;
+            background-color: #333;
+        }
+
+        .minute {
+            width: 4px;
+            height: 70px;
+            background-color: #666;
+        }
+
+        .numbers {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .numbers span {
+            position: absolute;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .num1 {
+            top: 10px;
+            left: 90px;
+        }
+
+        .num2 {
+            top: 30px;
+            left: 150px;
+        }
+
+        .num3 {
+            top: 90px;
+            left: 175px;
+        }
+
+        .num4 {
+            top: 150px;
+            left: 150px;
+        }
+
+        .num5 {
+            top: 170px;
+            left: 90px;
+        }
+
+        .num6 {
+            top: 150px;
+            left: 30px;
+        }
+
+        .num7 {
+            top: 90px;
+            left: 5px;
+        }
+
+        .num8 {
+            top: 30px;
+            left: -20px;
+        }
+
+        .num9 {
+            top: 10px;
+            left: 30px;
+        }
+
+        .num10 {
+            top: 10px;
+            left: 90px;
+        }
+
+        .num11 {
+            top: 30px;
+            left: 150px;
+        }
+
+        .num12 {
+            top: 90px;
+            left: 175px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock">
+        <div class="numbers">
+            <span class="num1">1</span>
+            <span class="num2">2</span>
+            <span class="num3">3</span>
+            <span class="num4">4</span>
+            <span class="num5">5</span>
+            <span class="num6">6</span>
+            <span class="num7">7</span>
+            <span class="num8">8</span>
+            <span class="num9">9</span>
+            <span class="num10">10</span>
+            <span class="num11">11</span>
+            <span class="num12">12</span>
+        </div>
+        <div class="hour" id="hour"></div>
+        <div class="minute" id="minute"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const hourHand = document.getElementById('hour');
+            const minuteHand = document.getElementById('minute');
+
+            const now = new Date();
+            const hours = now.getHours() % 12; // 12-hour format
+            const minutes = now.getMinutes();
+
+            // Calculate the degree of rotation
+            const hourDeg = (hours + minutes / 60) * 30; // 360° / 12 hours = 30°
+            const minuteDeg = (minutes / 60) * 360; // 360° / 60 minutes = 6°
+
+            // Apply rotations
+            hourHand.style.transform = `rotate(${hourDeg}deg)`;
+            minuteHand.style.transform = `rotate(${minuteDeg}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call to set the correct position immediately
+    </script>
+</body>
+
+</html>
