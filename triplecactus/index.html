@@ -4,7 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <title>Triple Cactus Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Permanent+Marker&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'sage';
+            src: url('fonts/sage.ttf') format('truetype');
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -188,11 +198,6 @@
         }
 
         @media (max-width: 600px) {
-            .mountain {
-                border-bottom: 20vh solid #384d6f;
-                border-bottom: 20vh solid #7690b9;
-                border-bottom: 20vh solid #384d6f;
-            }
 
             .cactus {
                 width: 4vw;
@@ -291,19 +296,19 @@
             letter-spacing: -0.1vh;
         }
 
-
         .clock {
-            display: flex;
+            font-family: 'sage';
+            font-size: 18vh;
+            line-height: 14vh;
+            font-variant-numeric: tabular-nums;
+            /* display: flex; */
             text-align: center;
-            font-family: "Smokum", serif;
             color: #f3f586;
-            font-size: 9vh;
-            line-height: 7vh;
         }
 
         .value {
             min-width: 6ch;
-            /* Enough space for "00.000" */
+            font-variant-numeric: tabular-nums;
         }
     </style>
 
@@ -348,14 +353,10 @@
         </div>
     </div>
 
-    <div class="clock">
-        <div class="value" id="hours">00</div>
-        <div class="value" id="minutes">00</div>
-        <div class="value" id="seconds">00.000</div>
-    </div>
-    <div class="title-container">
-        <div class="chltitle">Cubist Heart Laboratories</div>
-        <div class="bttitle">BorrowedTime</div>
+    <div class="date-container">
+        <a href="../solar/" class="dates dateleft">04/07/25</a>
+        <a href="../index.html" class="clockname">Triple Cactus Clock</a>
+        <a href="../room/" class="dates dateright">04/09/25</a>
     </div>
     <script>
         function updateClock() {
@@ -368,7 +369,11 @@
             document.getElementById('hours').textContent = hours;
             document.getElementById('minutes').textContent = minutes;
             document.getElementById('seconds').textContent = `${seconds}.${milliseconds}`;
+
+            requestAnimationFrame(updateClock);
         }
+
+        requestAnimationFrame(updateClock);
 
         setInterval(updateClock, 25);
         updateClock();
