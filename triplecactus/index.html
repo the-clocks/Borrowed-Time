@@ -49,42 +49,33 @@
                 background: #3bbdf0;
             }
 
-            /* Day */
             15% {
                 background: #8fbee2;
             }
 
-            /* Golden sunset */
             25% {
                 background: #e8a30d;
             }
 
-            /* Golden sunset */
             50% {
                 background: #fd1d1d;
             }
 
-            /* Deep red sunset */
             60% {
                 background: #b43a87;
             }
 
-            /* Twilight */
             75% {
                 background: #833ab4;
             }
 
-            /* Twilight */
             90% {
                 background: #02027f;
             }
 
-            /* Night */
             100% {
                 background: #010102;
             }
-
-            /* Night */
         }
 
         .sun {
@@ -115,6 +106,32 @@
                 top: 90%;
                 opacity: 0;
             }
+        }
+
+        .clock {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'sage';
+            font-size: 18vh;
+            color: #f3f586;
+        }
+
+        .time-row {
+            display: flex;
+            gap: 1vh;
+            margin: 1vh 0;
+        }
+
+        .digit {
+            width: 8vh;
+            height: 14vh;
+            line-height: 14vh;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1vh;
+            font-feature-settings: "tnum";
+            font-variant-numeric: tabular-nums;
         }
 
         .ground {
@@ -197,26 +214,35 @@
             transform-origin: bottom left;
         }
 
-        .clock {
+        .date-container {
+            color: #2b7419;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
             display: flex;
-            gap: 0.5vw;
-            justify-content: center;
-            align-items: center;
-            font-family: 'sage';
-            font-size: 18vh;
-            color: #f3f586;
+            z-index: 6;
         }
 
-        .digit {
-            width: 8vh;
-            height: 14vh;
-            line-height: 14vh;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            margin: 0 0.2vh;
-            border-radius: 1vh;
-            font-feature-settings: "tnum";
-            font-variant-numeric: tabular-nums;
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
         }
 
         .title-container {
@@ -250,38 +276,18 @@
             letter-spacing: -0.1vh;
         }
 
-        .date-container {
-            color: #2b7419;
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-            text-decoration: none;
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
         }
 
         .dateleft {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
             position: relative;
             left: 0;
         }
 
         .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
             position: absolute;
             right: 0;
         }
@@ -296,7 +302,17 @@
 
     <div class="scene">
         <div class="sun">
-            <div class="clock" id="clock"></div>
+
+
+            <div class="clock">
+                <div class="time-row" id="hours"></div>
+                <div class="time-row" id="minutes"></div>
+                <div class="time-row" id="seconds"></div>
+                <div class="time-row" id="milliseconds"></div> <!-- New -->
+            </div>
+
+
+
         </div>
 
         <div class="mountains">
@@ -330,28 +346,38 @@
     </div>
 
     <script>
-        const clockContainer = document.getElementById('clock');
 
-        function setDigits(text) {
-            clockContainer.innerHTML = '';
+        const millisecondsContainer = document.getElementById('milliseconds');
+
+        const hoursContainer = document.getElementById('hours');
+        const minutesContainer = document.getElementById('minutes');
+        const secondsContainer = document.getElementById('seconds');
+
+        function setDigits(container, text) {
+            container.innerHTML = '';
             for (let char of text) {
                 const span = document.createElement('span');
                 span.className = 'digit';
                 span.textContent = char;
-                clockContainer.appendChild(span);
+                container.appendChild(span);
             }
         }
 
         function updateClock() {
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const milliseconds = String(now.getMilliseconds()).padStart(3, '0');
-            const clockString = `${hours}${minutes}${seconds}.${milliseconds}`;
-            setDigits(clockString);
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            const ms = String(now.getMilliseconds()).padStart(3, '0');
+
+            setDigits(hoursContainer, h);
+            setDigits(minutesContainer, m);
+            setDigits(secondsContainer, s);
+            setDigits(millisecondsContainer, ms);
+
             requestAnimationFrame(updateClock);
         }
+
 
         requestAnimationFrame(updateClock);
     </script>
