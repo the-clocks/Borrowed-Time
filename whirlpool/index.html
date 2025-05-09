@@ -38,11 +38,11 @@
 
         .clock {
             position: relative;
-            width: 90vw;
-            height: 90vw;
+            width: 100vw;
+            height: 100vw;
             max-width: 600px;
             max-height: 600px;
-            border-radius: 50%;
+            /* border-radius: 50%; */
             overflow: hidden;
             animation: spin 60s linear infinite;
         }
@@ -84,13 +84,14 @@
             position: absolute;
             font-family: 'Kin';
             text-align: center;
-            color: #970452;
-            text-shadow: 1px 1px 8px #128505;
-            font-size: 15vw;
+            color: #f199c8;
+            text-shadow: 5px 5px #100f10, -2px -2px white;
+            font-size: 25vw;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
+            z-index: 9;
         }
 
         a {
