@@ -28,7 +28,6 @@
 
         body {
             margin: 0;
-            /* background-color: #a08daf; */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -38,8 +37,8 @@
 
         .clock {
             position: relative;
-            width: 100vw;
-            height: 100vw;
+            width: 150vw;
+            height: 150vh;
             max-width: 600px;
             max-height: 600px;
             /* border-radius: 50%; */
@@ -55,29 +54,28 @@
             left: 50%;
             transform-origin: bottom center;
             transform: translateX(-50%) rotate(0deg);
-            border-radius: 10px;
             background: currentColor;
         }
 
         .hour {
-            width: 10px;
+            width: 20px;
             height: 90px;
-            color: #5e85db;
+            color: #4663a2;
             z-index: 4;
         }
 
         .minute {
-            width: 6px;
+            width: 9px;
             height: 220px;
-            color: #00ff90;
-            z-index: 3;
+            color: #f0df6e;
+            z-index: 5;
         }
 
         .second {
             width: 3px;
             height: 540vw;
             color: #ee0909;
-            z-index: 2;
+            z-index: 6;
         }
 
         .number {
@@ -86,12 +84,12 @@
             text-align: center;
             color: #f199c8;
             text-shadow: 5px 5px #100f10, -2px -2px white;
-            font-size: 25vw;
+            font-size: 35vh;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
-            z-index: 9;
+            z-index: 1;
         }
 
         a {
@@ -211,7 +209,7 @@
 
         function addNumbers() {
             const clock = document.getElementById('clock');
-            const radius = clock.offsetWidth / 2 * 0.85;
+            const radius = clock.offsetWidth / 2 * 0.5;
             const centerX = clock.offsetWidth / 2;
             const centerY = clock.offsetHeight / 2;
 
