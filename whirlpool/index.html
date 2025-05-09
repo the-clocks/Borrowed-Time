@@ -28,7 +28,7 @@
 
         body {
             margin: 0;
-            background-color: #a08daf;
+            /* background-color: #a08daf; */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,20 +47,7 @@
             animation: spin 60s linear infinite;
         }
 
-        .center {
-            width: 9vw;
-            height: 9vw;
-            max-width: 60px;
-            max-height: 60px;
-            background: radial-gradient(circle, #7b737b, #867686);
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            box-shadow: 0 0 20px #737073;
-        }
+
 
         .hand {
             position: absolute;
@@ -100,17 +87,119 @@
             position: absolute;
             font-family: 'Kin';
             text-align: center;
-            color: #0e0f0f;
+            color: #d0ac1d;
             font-size: 15vw;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
         }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        .date-container {
+            color: #7afd78;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #c4a693;
+            text-shadow: #66ed7f 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        .bgimage {
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            height: 100vh;
+            width: 100vw;
+            -moz-transform: scaleX(-1);
+            -o-transform: scaleX(-1);
+            -webkit-transform: scaleX(-1);
+            -ms-transform: scaleX(-1);
+            z-index: 0;
+            opacity: 0.3;
+        }
     </style>
 </head>
 
 <body>
+    <img src="./images/9713a796e0c6dfcd83461fa5c16c8984.gif" class="bgimage">
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../golden/" class="dates dateleft">05/07/25</a>
+        <a href="../index.html" class="clockname">Whirlpool Clock</a>
+        <a href="../index.html" class=" dates dateright">05/09/25</a>
+    </div>
     <div class="clock" id="clock">
         <div class="center"></div>
         <div class="hand hour" id="hour"></div>
