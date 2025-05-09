@@ -4,8 +4,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Neon Clock - BorrowedTime</title>
+    <title>Spinning Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Permanent+Marker&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Kin';
+            src: url('fonts/Kin.ttf') format('truetype');
+        }
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -83,11 +93,12 @@
             height: 540vw;
             color: #ee0909;
             z-index: 2;
-            box-shadow: 0 0 20px #ee0909;
+            box-shadow: 0 0 2px #ee0909;
         }
 
         .number {
             position: absolute;
+            font-family: 'Kin';
             text-align: center;
             color: #0e0f0f;
             font-size: 15vw;
