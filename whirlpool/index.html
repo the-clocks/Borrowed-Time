@@ -64,30 +64,28 @@
             height: 90px;
             color: #5e85db;
             z-index: 4;
-            box-shadow: 0 0 10px #5e85db;
         }
 
         .minute {
             width: 6px;
-            height: 120px;
+            height: 220px;
             color: #00ff90;
             z-index: 3;
-            box-shadow: 0 0 10px #00ff90;
         }
 
         .second {
-            width: 4px;
+            width: 3px;
             height: 540vw;
             color: #ee0909;
             z-index: 2;
-            box-shadow: 0 0 2px #ee0909;
         }
 
         .number {
             position: absolute;
             font-family: 'Kin';
             text-align: center;
-            color: #2a2305;
+            color: #970452;
+            text-shadow: 1px 1px 8px #128505;
             font-size: 15vw;
             top: 50%;
             left: 50%;
@@ -184,6 +182,7 @@
             -ms-transform: scaleX(-1);
             z-index: 0;
             opacity: 0.5;
+            filter: hue-rotate(290deg);
         }
     </style>
 </head>
