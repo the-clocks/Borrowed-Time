@@ -4,12 +4,10 @@
 <head>
     <meta charset="UTF-8" />
     <title>Number Toss Clock - BorrowedTime</title>
-    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Orbitron&family=VT323&display=swap"
-        rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Stick&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Michroma&family=Nanum+Gothic+Coding&family=Orbitron:wght@400..900&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Sarpanch:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <style>
         html,
@@ -200,8 +198,8 @@
         }
 
         .title-container {
-            color: #8d9691;
-            text-shadow: #516a62 1px 0px;
+            color: #a9a872;
+            text-shadow: #186e51 1px 0px;
             position: absolute;
             top: 5px;
             left: 50%;
@@ -295,10 +293,11 @@
         let letterId = 0;
 
         const fonts = [
-            "'Major Mono Display', monospace",
-            "'Orbitron', sans-serif",
-            "'VT323', monospace"
+            "'Michroma'",
+            "'Orbitron'",
+            "'Sarpanch'"
         ];
+
 
         function getRand(min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min);
@@ -314,17 +313,17 @@
         }
 
         function throwTimeCharacters(timeStr) {
-            const r = getRand(1, 255);
+            const r = getRand(90, 255);
             const g = getRand(1, 255);
-            const b = getRand(1, 255);
+            const b = getRand(1, 200);
             const sharedColor = `rgb(${r},${g},${b})`;
             const compColor = getComplementaryColor(r, g, b);
 
             for (let i = 0; i < timeStr.length; i++) {
                 const span = document.createElement('span');
                 const x = getRand(0, window.innerWidth - 100);
-                const size = getRand(3, 10);
-                const gravityDuration = size >= 7 ? 1500 : 700;
+                const size = getRand(1, 12);
+                const gravityDuration = size >= 7 ? 1500 : 900;
                 const verticalOffset = getRand(0, window.innerHeight - 100);
 
                 span.textContent = timeStr[i];
@@ -334,7 +333,7 @@
                 span.style.fontFamily = fonts[i % fonts.length];
                 span.style.animationDuration = `${gravityDuration}ms`;
                 span.style.color = sharedColor;
-                span.style.textShadow = `2px 2px 0 ${compColor}`; // Hard-edged shadow
+                span.style.textShadow = `0.5rem  0.5rem 0 ${compColor}`; // Hard-edged shadow
                 span.id = `letter-${letterId++}`;
                 span.className = `an-${getRand(1, 6)}`;
                 throwContainer.appendChild(span);
@@ -361,7 +360,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             loop();
-            setInterval(loop, 3000);
+            setInterval(loop, 2000);
         });
     </script>
 </body>
