@@ -2,29 +2,74 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centered Rectangle</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>clock Titles and Dates Flush Edges</title>
     <style>
         body {
             margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #fff;
         }
 
-        .rectangle {
-            width: 70vw;
-            height: 70vh;
-            background-color: #3498db;
+        ul.clock-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            max-width: 100%;
+        }
+
+        ul.clock-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            /* Important for wrapping */
+            flex-wrap: wrap;
+            width: 100vw;
+            box-sizing: border-box;
+            padding: 10px;
+            border-bottom: 1px dotted #769b60;
+        }
+
+        .clock-title,
+        .clock-date {
+            white-space: normal;
+            word-break: break-word;
+            flex: 1 1 auto;
+        }
+
+        .clock-title {
+            text-align: left;
+            max-width: 75%;
+        }
+
+        .clock-date {
+            text-align: right;
         }
     </style>
 </head>
 
 <body>
-    <div class="rectangle"></div>
+    <ul class="clock-list">
+        <li>
+            <span class="clock-title">1984</span>
+            <span class="clock-date">11/22/63</span>
+        </li>
+        <li>
+            <span class="clock-title">Mystrtiousn and gl kfkkg oddoonfubind Clokf</span>
+            <span class="clock-date">11/22/63</span>
+        </li>
+        <li>
+            <span class="clock-title">2001: A Space Odyssey </span>
+            <span class="clock-date">11/22/63</span>
+        </li>
+        <li>
+            <span class="clock-title">The Great Gatsby or kddkk dsdf gffgfgfgfg eeeeeeee ee ggrg</span>
+            <span class="clock-date">11/22/63</span>
+        </li>
+    </ul>
 </body>
 
 </html>
