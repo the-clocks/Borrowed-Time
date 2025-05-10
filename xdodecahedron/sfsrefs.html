@@ -8,7 +8,7 @@
     <style>
         body {
             margin: 0;
-            background: #111;
+            background: #589dd5;
             overflow: hidden;
             font-family: monospace;
         }
@@ -24,12 +24,12 @@
             will-change: transform;
             white-space: pre;
             pointer-events: none;
-            animation: fly-up 2s ease-out forwards;
+            animation: fly-up 9s ease-out forwards;
         }
 
         @keyframes fly-up {
             0% {
-                transform: translate(var(--x-start), 110vh) scale(var(--scale));
+                transform: translate(var(--x-start), var(--y-start)) scale(var(--scale));
                 opacity: 0;
             }
 
@@ -61,11 +61,25 @@
         }
 
         function randomFontSize() {
-            return `${Math.floor(Math.random() * 40 + 30)}px`;
+            return `${Math.floor(Math.random() * 40 + 60)}px`;
         }
 
         function randomScale() {
             return (Math.random() * 0.5 + 0.75).toFixed(2);
+        }
+
+        function randomDirectionOffset() {
+            const side = ['top', 'bottom', 'left', 'right'][Math.floor(Math.random() * 4)];
+            switch (side) {
+                case 'top':
+                    return { x: `${Math.random() * 100}vw`, y: `-10vh` };
+                case 'bottom':
+                    return { x: `${Math.random() * 100}vw`, y: `110vh` };
+                case 'left':
+                    return { x: `-10vw`, y: `${Math.random() * 100}vh` };
+                case 'right':
+                    return { x: `110vw`, y: `${Math.random() * 100}vh` };
+            }
         }
 
         function throwDigitsUp() {
@@ -75,10 +89,11 @@
                 span.className = "digit";
                 span.textContent = char;
 
-                const xStart = `${Math.random() * 100}vw`;
                 const xOffset = index * 40 + window.innerWidth / 2 - (digits.length * 20);
                 const yFinal = `${window.innerHeight / 2}px`;
                 const scale = randomScale();
+
+                const { x: xStart, y: yStart } = randomDirectionOffset();
 
                 span.style.left = "0";
                 span.style.top = "0";
@@ -86,6 +101,7 @@
                 span.style.fontSize = randomFontSize();
 
                 span.style.setProperty('--x-start', xStart);
+                span.style.setProperty('--y-start', yStart);
                 span.style.setProperty('--x-final', `${xOffset}px`);
                 span.style.setProperty('--y-final', yFinal);
                 span.style.setProperty('--scale', scale);
@@ -95,7 +111,7 @@
         }
 
         throwDigitsUp();
-        setInterval(throwDigitsUp, 3000);
+        setInterval(throwDigitsUp, 1000);
     </script>
 </body>
 
