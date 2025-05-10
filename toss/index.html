@@ -21,7 +21,6 @@
         body {
             background: linear-gradient(180deg, #f50ae1 0%, #ed5e0b 100%);
             overflow: hidden;
-
         }
 
         .throw {
@@ -30,7 +29,7 @@
             width: 100%;
             height: 100%;
             top: 0;
-            left: 0;
+            right: 0;
             overflow: hidden;
             z-index: 1;
         }
@@ -40,6 +39,7 @@
             left: 0;
         }
 
+        /* Define animation classes here */
         .an-1 {
             animation: throw-1-up 1200ms ease-out forwards, throw-1-down 750ms 1200ms ease-in forwards;
         }
@@ -64,6 +64,7 @@
             animation: throw-6-up 320ms ease-out forwards, throw-6-down 940ms 320ms ease-in forwards;
         }
 
+        /* Keyframes for throw animations */
         @keyframes throw-1-up {
             0% {
                 transform: translateY(0%) rotate(0deg);
@@ -184,6 +185,7 @@
             }
         }
 
+        /* Styling for time and date containers */
         .time-container {
             color: gainsboro;
             position: absolute;
@@ -195,7 +197,6 @@
             justify-content: space-around;
             z-index: -1;
             transition: transform 0.5s ease;
-            /* Smooth rotation transition */
         }
 
         .title-container {
@@ -303,6 +304,10 @@
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
 
+        function getComplementaryColor(r, g, b) {
+            return `rgb(${255 - r}, ${255 - g}, ${255 - b})`;
+        }
+
         function getTimeString() {
             const now = new Date();
             return now.toLocaleTimeString('en-US', { hour12: false });
@@ -313,6 +318,7 @@
             const g = getRand(1, 255);
             const b = getRand(1, 255);
             const sharedColor = `rgb(${r},${g},${b})`;
+            const compColor = getComplementaryColor(r, g, b);
 
             for (let i = 0; i < timeStr.length; i++) {
                 const span = document.createElement('span');
@@ -328,6 +334,7 @@
                 span.style.fontFamily = fonts[i % fonts.length];
                 span.style.animationDuration = `${gravityDuration}ms`;
                 span.style.color = sharedColor;
+                span.style.textShadow = `2px 2px 0 ${compColor}`; // Hard-edged shadow
                 span.id = `letter-${letterId++}`;
                 span.className = `an-${getRand(1, 6)}`;
                 throwContainer.appendChild(span);
@@ -337,7 +344,7 @@
                     span.style.opacity = '0';
                     span.style.transform += ' scale(0.5)';
                     setTimeout(() => span.remove(), 2000);
-                }, 60000);
+                }, 30000);
             }
 
             if (throwContainer.children.length > 300) {
@@ -354,7 +361,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             loop();
-            setInterval(loop, 5000);
+            setInterval(loop, 3000);
         });
     </script>
 </body>
