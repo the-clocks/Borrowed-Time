@@ -32,7 +32,7 @@
             top: 0;
             left: 0;
             overflow: hidden;
-            z-index: 10;
+            z-index: 1;
         }
 
         .throw span {
@@ -257,7 +257,6 @@
             transform: translateX(-50%);
             font-size: 4vh;
             line-height: 4vh;
-            z-index: 9;
         }
 
         .dateleft,
@@ -334,7 +333,7 @@
                 throwContainer.appendChild(span);
 
                 setTimeout(() => {
-                    span.style.transition = 'opacity 2s, transform 2s';
+                    span.style.transition = 'opacity 5s, transform 5s';
                     span.style.opacity = '0';
                     span.style.transform += ' scale(0.5)';
                     setTimeout(() => span.remove(), 2000);
@@ -355,7 +354,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             loop();
-            setInterval(loop, 1000);
+            setInterval(loop, 2000);
         });
     </script>
 </body>
