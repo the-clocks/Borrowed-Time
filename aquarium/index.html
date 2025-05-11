@@ -38,10 +38,10 @@
         }
 
         .gfish {
-            opacity: 0.9;
+            /* opacity: 0.9; */
             position: fixed;
             top: 0;
-            z-index: 3;
+            z-index: -3;
             -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
             left: 0;
@@ -56,6 +56,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            z-index: 9;
         }
 
         .hand {
@@ -65,9 +66,9 @@
             top: 40%;
             transform-origin: 100%;
             transform: rotate(90deg);
-            z-index: 9;
+
             filter:
-                drop-shadow(2px 2px 2px rgb(6, 40, 85)) drop-shadow(-2px 2px 2px rgb(6, 40, 85)) drop-shadow(2px -2px 2px rgb(6, 40, 85)) drop-shadow(-2px -2px 2px rgb(6, 40, 85));
+                drop-shadow(2px 2px 3px rgb(6, 40, 85)) drop-shadow(-2px 2px 3px rgb(6, 40, 85)) drop-shadow(2px -2px 3px rgb(6, 40, 85)) drop-shadow(-2px -2px 3px rgb(6, 40, 85));
 
         }
 
@@ -105,7 +106,7 @@
             left: -22vw;
             width: 100%;
             height: 110%;
-            opacity: 0.7;
+            /* opacity: 0.7; */
             z-index: 14;
             pointer-events: none;
         }
@@ -116,8 +117,8 @@
             left: 27vw;
             width: 110%;
             height: 115%;
-            opacity: 0.7;
-            z-index: 1;
+            /* opacity: 0.7; */
+            z-index: 12;
             pointer-events: none;
         }
 
@@ -202,8 +203,8 @@
             position: fixed;
             width: 100vw;
             height: 80vh;
-            z-index: 12;
-            filter: hue-rotate() brightness(120%) contrast(110%);
+            z-index: 1;
+            filter: sepia(100%) hue-rotate(-30deg) brightness(120%) contrast(90%) saturate(400%);
         }
     </style>
     <script>
