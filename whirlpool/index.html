@@ -41,9 +41,11 @@
             height: 100vw;
             max-width: 600px;
             max-height: 600px;
-            overflow: hidden;
             animation: spin 60s linear infinite;
+            overflow: visible;
+            /* changed from hidden */
         }
+
 
         .hand {
             position: absolute;
@@ -70,10 +72,12 @@
 
         .second {
             width: 0.15rem;
-            height: 7rem;
-            color: #ee0909;
-            z-index: 6;
+            height: 200vh;
+            /* extend off-screen vertically */
+            color: #fa0000;
+            z-index: 16;
         }
+
 
         .number {
             position: absolute;
@@ -137,8 +141,8 @@
         }
 
         .title-container {
-            color: #daa8d6;
-            text-shadow: #18982b 1px 0px;
+            color: #e87fdf;
+            text-shadow: #0e3314 1px 0px;
             position: absolute;
             top: 5px;
             left: 50%;
@@ -200,7 +204,7 @@
         <a href="../toss/" class=" dates dateright">05/09/25</a>
     </div>
     <div class="clock" id="clock">
-        <div class="center"></div>
+        <div class="center">.</div>
         <div class="hand hour" id="hour"></div>
         <div class="hand minute" id="minute"></div>
         <div class="hand second" id="second"></div>
