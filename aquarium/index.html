@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aquarium Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Rock+3D&display=swap"
+        rel="stylesheet">
+    <style>
+        .fwds {
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -4;
+        }
+
+        .bckwds {
+            opacity: 0.9;
+            filter: alpha(opacity=50);
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 0;
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            width: 100vw;
+            height: 100vh;
+            z-index: -5;
+        }
+
+        .gfish {
+            opacity: 0.9;
+            filter: alpha(opacity=50);
+            position: fixed;
+            top: 0;
+            z-index: 3;
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .clock {
+            width: 90vw;
+            height: 90vh;
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hand {
+            width: 50%;
+            right: 50%;
+            position: absolute;
+            top: 40%;
+            transform-origin: 100%;
+            transform: rotate(90deg);
+            z-index: 9;
+        }
+
+        .hand.hour-hand {
+            z-index: 8;
+            width: 30%;
+            height: 20%;
+        }
+
+        .hand.min-hand {
+            z-index: 6;
+            width: 50%;
+            height: 20%;
+        }
+
+        .hand.second-hand {
+            z-index: 10;
+            width: 65%;
+            height: 10%;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            color: #07b3b6;
+            font-size: small;
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .bub {
+            position: fixed;
+            top: 0;
+            left: -22vw;
+            width: 100%;
+            height: 110%;
+            opacity: 0.7;
+            z-index: 14;
+            pointer-events: none;
+        }
+
+        .bubl2 {
+            position: absolute;
+            bottom: 0;
+            left: 27vw;
+            width: 110%;
+            height: 115%;
+            opacity: 0.7;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #2fe5d9;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #37dc31;
+            text-shadow: #2d2d38 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const secondHand = document.querySelector('.second-hand');
+            const minsHand = document.querySelector('.min-hand');
+            const hourHand = document.querySelector('.hour-hand');
+
+            function setDate() {
+                const now = new Date();
+
+                const seconds = now.getSeconds();
+                const secondsDegrees = ((seconds / 60) * 360) + 90;
+                secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+                const mins = now.getMinutes();
+                const minsDegrees = ((mins / 60) * 360) + ((seconds / 60) * 6) + 90;
+                minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+
+                const hour = now.getHours();
+                const hourDegrees = ((hour / 12) * 360) + ((mins / 60) * 30) + 90;
+                hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+            }
+
+            setInterval(setDate, 1);
+            setDate();
+        });
+    </script>
+</head>
+
+<body>
+
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../toss/" class="dates dateleft">05/10/25</a>
+        <a href="../index.html" class="clockname">Aquarium</a>
+        <a href="../index.html" class="dates dateright">05/12/25</a>
+    </div>
+    <img src="./images/bubl.gif" class="bub">
+    <img src="./images/bubl.gif" class="bubl2">
+
+
+    <div class="clock">
+        <img src="./images/fish.gif" class="hand hour-hand">
+        <img src="./images/fish.gif" class="hand min-hand">
+        <img src="./images/fish.gif" class="hand second-hand">
+    </div>
+
+    <img src="./images/golffish.gif" class="gfish">
+    <img src="./images/aquarium.gif" class="fwds">
+    <img src="./images/aquarium.gif" class="bckwds">
+</body>
+
+</html>
