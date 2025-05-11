@@ -38,10 +38,10 @@
         }
 
         .gfish {
-            /* opacity: 0.9; */
+            opacity: 0.8;
             position: fixed;
             top: 0;
-            z-index: -3;
+            z-index: 13;
             -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
             left: 0;
@@ -51,7 +51,7 @@
 
         .clock {
             width: 90vw;
-            height: 90vh;
+            height: 100vh;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -66,26 +66,22 @@
             top: 40%;
             transform-origin: 100%;
             transform: rotate(90deg);
-
             filter:
                 drop-shadow(2px 2px 3px rgb(6, 40, 85)) drop-shadow(-2px 2px 3px rgb(6, 40, 85)) drop-shadow(2px -2px 3px rgb(6, 40, 85)) drop-shadow(-2px -2px 3px rgb(6, 40, 85));
 
         }
 
         .hand.hour-hand {
-            z-index: 8;
             width: 30%;
             height: 20%;
         }
 
         .hand.min-hand {
-            z-index: 6;
             width: 50%;
             height: 20%;
         }
 
         .hand.second-hand {
-            z-index: 10;
             width: 65%;
             height: 10%;
         }
@@ -107,7 +103,7 @@
             width: 100%;
             height: 110%;
             /* opacity: 0.7; */
-            z-index: 14;
+            z-index: 7;
             pointer-events: none;
         }
 
@@ -118,7 +114,7 @@
             width: 110%;
             height: 115%;
             /* opacity: 0.7; */
-            z-index: 12;
+            z-index: 6;
             pointer-events: none;
         }
 
@@ -203,7 +199,7 @@
             position: fixed;
             width: 100vw;
             height: 80vh;
-            z-index: 1;
+            z-index: 8;
             filter: sepia(100%) hue-rotate(-30deg) brightness(120%) contrast(90%) saturate(400%);
         }
     </style>
