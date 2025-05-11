@@ -66,6 +66,9 @@
             transform-origin: 100%;
             transform: rotate(90deg);
             z-index: 9;
+            filter:
+                drop-shadow(2px 2px 2px rgb(6, 40, 85)) drop-shadow(-2px 2px 2px rgb(6, 40, 85)) drop-shadow(2px -2px 2px rgb(6, 40, 85)) drop-shadow(-2px -2px 2px rgb(6, 40, 85));
+
         }
 
         .hand.hour-hand {
@@ -200,6 +203,7 @@
             width: 100vw;
             height: 80vh;
             z-index: 12;
+            filter: hue-rotate() brightness(120%) contrast(110%);
         }
     </style>
     <script>
