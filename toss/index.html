@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <title>Number Toss Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Economica&family=Michroma&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Questrial&family=Roboto+Slab:wght@100..900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Michroma&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
     <style>
         html,
@@ -263,7 +264,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-family: "Roboto Slab", serif;
+            font-family: "Michroma";
             font-size: 11vh;
             color: transparent;
             text-shadow: 1px 1px 5px rgba(56, 249, 12, 0.5);
@@ -290,7 +291,7 @@
     <script>
         const throwContainer = document.querySelector('.throw');
         let letterId = 0;
-        const fonts = ["Michroma", "Economica", "Questrial"];
+        const fonts = ["Michroma"];
         const maxSpans = 100;
 
         function getRand(min, max) {
@@ -303,7 +304,11 @@
 
         function getTimeString() {
             const now = new Date();
-            return now.toLocaleTimeString("en-US", { hour12: false });
+            return now.toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false
+            });
         }
 
         function throwTimeCharacters(timeStr) {
@@ -339,7 +344,7 @@
                     span.style.left = `${x}px`;
                     span.style.top = `${y}px`;
                     span.style.fontSize = `${size}rem`;
-                    span.style.fontFamily = fonts[i % fonts.length];
+                    span.style.fontFamily = fonts;
                     span.style.animationDuration = `${gravityDuration}ms`;
                     span.style.color = sharedColor;
                     span.style.textShadow = `0.3rem 0.3rem 0 ${compColor}`;
@@ -363,7 +368,7 @@
                 throwContainer.removeChild(throwContainer.firstChild);
             }
 
-            setTimeout(() => timeDisplay.remove(), 2000);
+            setTimeout(() => timeDisplay.remove(), 8000);
         }
 
         function loop() {
