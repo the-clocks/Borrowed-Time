@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scorpion Clock -</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: 'bau';
+            src: url('bau.ttf') format('truetype');
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #355390;
+            color: white;
+        }
+
+        .clock {
+            display: flex;
+            /* gap: 1rem; */
+            font-family: 'bau', monospace;
+        }
+
+        .digit-box {
+            width: 2rem;
+            /* height: 8rem; */
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 6rem;
+            border-radius: 0.5rem;
+        }
+
+        .colon {
+            font-size: 6rem;
+            line-height: 8rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock">
+        <div class="digit-box" id="hourTens">0</div>
+        <div class="digit-box" id="hourUnits">0</div>
+        <div class="colon">:</div>
+        <div class="digit-box" id="minuteTens">0</div>
+        <div class="digit-box" id="minuteUnits">0</div>
+        <div class="colon">:</div>
+        <div class="digit-box" id="secondTens">0</div>
+        <div class="digit-box" id="secondUnits">0</div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById('hourTens').textContent = hours[0];
+            document.getElementById('hourUnits').textContent = hours[1];
+            document.getElementById('minuteTens').textContent = minutes[0];
+            document.getElementById('minuteUnits').textContent = minutes[1];
+            document.getElementById('secondTens').textContent = seconds[0];
+            document.getElementById('secondUnits').textContent = seconds[1];
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>

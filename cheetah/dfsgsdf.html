@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Digital Clock</title>
+    <style>
+        @font-face {
+            font-family: 'leo';
+            src: url('leo.ttf') format('truetype');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .clock-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .time-section {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+
+        .digit-box {
+            font-family: 'leo';
+            width: 50px;
+            height: 80px;
+            margin: 5px;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .digit-box {
+                width: 40px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+
+        .bgimage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-repeat: repeat;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="A3ui.gif" class="bgimage">
+
+    <div class="clock-container">
+        <div class="time-section" id="hours"></div>
+        <div class="time-section" id="minutes"></div>
+        <div class="time-section" id="seconds"></div>
+        <div class="time-section" id="milliseconds"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const milliseconds = String(now.getMilliseconds()).padStart(3, '0');
+
+            updateTimeSection('hours', hours);
+            updateTimeSection('minutes', minutes);
+            updateTimeSection('seconds', seconds);
+            updateTimeSection('milliseconds', milliseconds);
+        }
+
+        function updateTimeSection(id, timeValue) {
+            const section = document.getElementById(id);
+            section.innerHTML = '';
+            const timeString = String(timeValue);
+            for (let i = 0; i < timeString.length; i++) {
+                const digitBox = document.createElement('div');
+                digitBox.classList.add('digit-box');
+                digitBox.textContent = timeString[i];
+                section.appendChild(digitBox);
+            }
+        }
+
+        setInterval(updateClock, 10);
+        updateClock(); // Initialize the clock
+    </script>
+</body>
+
+</html>

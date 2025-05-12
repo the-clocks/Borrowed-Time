@@ -1,75 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>clock Titles and Dates Flush Edges</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: #fff;
+            font: 400 1em/1.5 "Neuton";
+            background: #090d00;
+            color: rgba(255, 255, 255, .25);
+            text-align: center;
+            margin: 0
         }
 
-        ul.clock-list {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            max-width: 100%;
+        p {
+            text-transform: uppercase;
+            letter-spacing: .5em;
+            display: inline-block;
+            border: 4px double rgba(255, 255, 255, .25);
+            border-width: 4px 0;
+            padding: 1.5em 0em;
+            position: absolute;
+            top: 18%;
+            left: 50%;
+            width: 40em;
+            margin: 0 0 0 -20em;
+
+            span {
+
+                font: 700 4em/1 "Oswald", sans-serif;
+                letter-spacing: 0;
+                padding: .25em 0 .325em;
+                display: block;
+                margin: 0 auto;
+                text-shadow: 0 0 80px rgba(255, 255, 255, .5);
+
+                /* Clip Background Image */
+
+                background: url(https://i.ibb.co/RDTnNrT/animated-text-fill.png) repeat-y;
+                -webkit-background-clip: text;
+                background-clip: text;
+
+                /* Animate Background Image */
+
+                -webkit-text-fill-color: transparent;
+                -webkit-animation: aitf 80s linear infinite;
+
+                /* Activate hardware acceleration for smoother animations */
+
+                -webkit-transform: translate3d(0, 0, 0);
+                -webkit-backface-visibility: hidden;
+
+            }
         }
 
-        ul.clock-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            /* Important for wrapping */
-            flex-wrap: wrap;
-            width: 100vw;
-            box-sizing: border-box;
-            padding: 10px;
-            border-bottom: 1px dotted #769b60;
-        }
+        /* Animate Background Image */
 
-        .clock-title,
-        .clock-date {
-            white-space: normal;
-            word-break: break-word;
-            flex: 1 1 auto;
-        }
+        @-webkit-keyframes aitf {
+            0% {
+                background-position: 0% 50%;
+            }
 
-        .clock-title {
-            text-align: left;
-            max-width: 75%;
-        }
-
-        .clock-date {
-            text-align: right;
+            100% {
+                background-position: 100% 50%;
+            }
         }
     </style>
 </head>
 
 <body>
-    <ul class="clock-list">
-        <li>
-            <span class="clock-title">1984</span>
-            <span class="clock-date">11/22/63</span>
-        </li>
-        <li>
-            <span class="clock-title">Mystrtiousn and gl kfkkg oddoonfubind Clokf</span>
-            <span class="clock-date">11/22/63</span>
-        </li>
-        <li>
-            <span class="clock-title">2001: A Space Odyssey </span>
-            <span class="clock-date">11/22/63</span>
-        </li>
-        <li>
-            <span class="clock-title">The Great Gatsby or kddkk dsdf gffgfgfgfg eeeeeeee ee ggrg</span>
-            <span class="clock-date">11/22/63</span>
-        </li>
-    </ul>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Scorpion Clock -</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+            rel="stylesheet">
+
+        <style>
+            @font-face {
+                font-family: 'bau';
+                src: url('bau.ttf') format('truetype');
+            }
+
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background-color: #355390;
+                color: white;
+                font-family: 'Arial', sans-serif;
+            }
+
+            .clock {
+                display: flex;
+                gap: 1rem;
+                font-family: 'bau', monospace;
+            }
+
+            .digit-box {
+                width: 6rem;
+                height: 8rem;
+                background-color: rgba(255, 255, 255, 0.1);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 6rem;
+                border-radius: 0.5rem;
+            }
+
+            .colon {
+                font-size: 6rem;
+                line-height: 8rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="clock">
+            <div class="digit-box" id="hourTens">0</div>
+            <div class="digit-box" id="hourUnits">0</div>
+            <div class="colon">:</div>
+            <div class="digit-box" id="minuteTens">0</div>
+            <div class="digit-box" id="minuteUnits">0</div>
+            <div class="colon">:</div>
+            <div class="digit-box" id="secondTens">0</div>
+            <div class="digit-box" id="secondUnits">0</div>
+        </div>
+
+        <script>
+            function updateClock() {
+                const now = new Date();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+
+                document.getElementById('hourTens').textContent = hours[0];
+                document.getElementById('hourUnits').textContent = hours[1];
+                document.getElementById('minuteTens').textContent = minutes[0];
+                document.getElementById('minuteUnits').textContent = minutes[1];
+                document.getElementById('secondTens').textContent = seconds[0];
+                document.getElementById('secondUnits').textContent = seconds[1];
+            }
+
+            setInterval(updateClock, 1000);
+            updateClock();
+        </script>
+    </body>
+
+    </html>
+
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <script src="" async defer></script>
 </body>
 
 </html>

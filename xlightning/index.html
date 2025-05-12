@@ -1,92 +1,174 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Lightning Clock - BorrowedTime</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Animated Clock</title>
     <style>
-        .bgimage {
-            background-repeat: no-repeat;
-            background-size: cover;
-            width: 100%;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0.5;
-            z-index: 2;
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background: #1e1e1e;
+            color: white;
+            font-family: sans-serif;
+            height: 100%;
+            overflow: hidden;
         }
 
-        .bgimage2 {
-            background-repeat: no-repeat;
-            background-size: cover;
-            width: 100%;
+        .clock {
+            position: relative;
+            width: 100vw;
             height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0.5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .clock-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            gap: 1rem;
             z-index: 1;
         }
 
-        .bgimage3 {
-            background-repeat: no-repeat;
-            background-size: cover;
-            width: 100%;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0.2;
-            z-index: 3;
-            filter: brightness(3.5);
+        @media (max-width: 600px) {
+            .clock-inner {
+                flex-direction: column;
+            }
         }
 
-        .bgimage4 {
-            background-size: cover;
-            background-position: center;
-            position: absolute;
-            height: 160vh;
-            width: 100vw;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 4;
+        .digit {
+            opacity: 1;
+            position: relative;
+            font-weight: bold;
         }
 
-        .bgimage5 {
-            background-size: cover;
-            background-position: center;
+        .flying {
             position: absolute;
-            height: 100vh;
-            width: 100vw;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 4;
+            z-index: 2;
+            font-weight: bold;
+            opacity: 1;
+            transition: transform 1s ease-out, opacity 0.3s ease-in-out;
         }
     </style>
 </head>
 
 <body>
-    <img src="./images/lightning.webp" class="bgimage5">
-    <!-- <img src="./images/giphy (11).gif" class="bgimage"> -->
-    <!-- <img src="./images/giphy (13).gif" class="bgimage2">
-    <img src="./images/2601110_2b59d.gif" class="bgimage3">
-    <img src="./images/262071_4e90f.gif" class="bgimage4"> -->
+    <div class="clock">
+        <div class="clock-inner" id="clockDisplay">
+            <div class="digit" id="hour1">--</div>
+            <div class="digit" id="hour2">--</div>
+            <div class="digit" id="minute1">--</div>
+            <div class="digit" id="minute2">--</div>
+        </div>
+    </div>
 
+    <script>
+        function getRandomOffscreenPosition() {
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const side = ['top', 'bottom', 'left', 'right'][Math.floor(Math.random() * 4)];
 
+            switch (side) {
+                case 'top':
+                    return { x: Math.random() * vw, y: -100 };
+                case 'bottom':
+                    return { x: Math.random() * vw, y: vh + 100 };
+                case 'left':
+                    return { x: -200, y: Math.random() * vh };
+                case 'right':
+                    return { x: vw + 200, y: Math.random() * vh };
+            }
+        }
 
+        function getRandomColor() {
+            const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FFD700', '#8A2BE2', '#FF4500', '#DA70D6'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
 
-    <script src="" async defer></script>
+        function getRandomSize() {
+            const sizes = [5, 6, 7, 8, 9, 10]; // Font size in rem
+            return sizes[Math.floor(Math.random() * sizes.length)];
+        }
+
+        function flyInNewDigit(digitId, newDigitText) {
+            const digitElement = document.getElementById(digitId);
+            const rect = digitElement.getBoundingClientRect();
+
+            const startPos = getRandomOffscreenPosition();
+            const newSize = getRandomSize();
+            const newColor = getRandomColor();
+
+            const flyingDiv = document.createElement('div');
+            flyingDiv.className = 'flying';
+            flyingDiv.textContent = newDigitText;
+            flyingDiv.style.fontSize = `${newSize}rem`;
+            flyingDiv.style.color = newColor;
+
+            // Set initial random position for flying digit
+            flyingDiv.style.left = `${startPos.x}px`;
+            flyingDiv.style.top = `${startPos.y}px`;
+
+            document.body.appendChild(flyingDiv);
+
+            // Force reflow to apply initial position
+            flyingDiv.getBoundingClientRect();
+
+            // Transition to final position smoothly
+            flyingDiv.style.transform = `translate(${rect.left - startPos.x}px, ${rect.top - startPos.y}px)`;
+
+            // After transition completes, update the static digit and remove the flying digit
+            setTimeout(() => {
+                digitElement.textContent = newDigitText;
+                digitElement.style.fontSize = `${newSize}rem`;
+                digitElement.style.color = newColor;
+                flyingDiv.remove();
+            }, 1000); // Wait for transition to finish (1 second)
+        }
+
+        let lastHour1 = null;
+        let lastHour2 = null;
+        let lastMinute1 = null;
+        let lastMinute2 = null;
+
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+
+            const hour1 = hours.charAt(0);
+            const hour2 = hours.charAt(1);
+            const minute1 = minutes.charAt(0);
+            const minute2 = minutes.charAt(1);
+
+            if (hour1 !== lastHour1) {
+                flyInNewDigit('hour1', hour1);
+                lastHour1 = hour1;
+            }
+
+            if (hour2 !== lastHour2) {
+                flyInNewDigit('hour2', hour2);
+                lastHour2 = hour2;
+            }
+
+            if (minute1 !== lastMinute1) {
+                flyInNewDigit('minute1', minute1);
+                lastMinute1 = minute1;
+            }
+
+            if (minute2 !== lastMinute2) {
+                flyInNewDigit('minute2', minute2);
+                lastMinute2 = minute2;
+            }
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
 </body>
 
 </html>
