@@ -198,14 +198,13 @@
         }
 
         .date-container {
-            color: #ef5902;
+            color: #f00ce4;
             position: absolute;
             bottom: 5px;
             left: 50%;
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            /* justify-content: space-between; */
             z-index: 6;
         }
 
@@ -214,8 +213,7 @@
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            font-family: "Oxanium", serif;
-            font-size: 4vh;
+            font-size: 3.5vh;
             line-height: 4vh;
         }
 
@@ -240,17 +238,18 @@
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
+    <div class="date-container">
+        <a href="./" class="dates dateleft">.</a>
+        <a href="../index.html" class="clockname">Neon Clock</a>
+        <a href="../random/" class="dates dateright">03/30/25</a>
+    </div>
     <div class="clock" id="clock">
         <div class="center"></div>
         <div class="hand hour" id="hour"></div>
         <div class="hand minute" id="minute"></div>
         <div class="hand second" id="second"></div>
     </div>
-    <div class="date-container">
-        <a href="." class="dates dateleft"></a>
-        <a href="../index.html" class="clockname">Neon Clock</a>
-        <a href="../random/" class="dates dateright">03/30/25</a>
-    </div>
+
     <script>
         const clock = document.getElementById('clock');
         const centerX = 170;
