@@ -257,6 +257,19 @@
             position: absolute;
             right: 0;
         }
+
+        .cleantime {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: "Roboto Slab", serif;
+            font-size: 11vh;
+            color: transparent;
+            text-shadow: 1px 1px 5px rgba(56, 249, 12, 0.5);
+            z-index: 5;
+            padding: 0.5em 1em;
+        }
     </style>
 </head>
 
@@ -270,9 +283,8 @@
         <a href="../index.html" class="clockname">Number Toss</a>
         <a href="../aquarium/" class="dates dateright">05/07/25</a>
     </div>
-    <div class="date-container">
-        <a href="../index.html" class="clockname">Number Toss</a>
-    </div>
+    <div class="cleantime" id="cleanTimeDisplay"></div>
+
     <div class="throw"></div>
 
     <script>
@@ -344,6 +356,8 @@
                 }, i * 100); // Stagger animations
             });
 
+
+
             // Clean up excess spans
             while (throwContainer.children.length > maxSpans) {
                 throwContainer.removeChild(throwContainer.firstChild);
@@ -355,7 +369,9 @@
         function loop() {
             const time = getTimeString();
             throwTimeCharacters(time);
+            document.getElementById("cleanTimeDisplay").textContent = time;
         }
+
 
         window.addEventListener("resize", () => {
             // Recalculate positions on resize
