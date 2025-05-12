@@ -182,109 +182,14 @@
                 transform: translateY(0%);
             }
         }
-
-        /* Styling for time and date containers */
-        .time-container {
-            color: rgb(18, 225, 80);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 98%;
-            display: flex;
-            justify-content: space-around;
-            z-index: -1;
-            transition: transform 0.5s ease;
-        }
-
-        .title-container {
-            color: #a9a872;
-            text-shadow: #186e51 1px 0px;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
-
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.1vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
-
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.7vh;
-            font-style: italic;
-            letter-spacing: -0.1vh;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-        }
-
-        .date-container {
-            color: rgb(79, 250, 12);
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
-
-        .clockname {
-            font-family: "Oxanium", serif;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 4vh;
-            line-height: 4vh;
-        }
-
-        .dateleft,
-        .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-        }
-
-        .dateleft {
-            position: relative;
-            left: 0;
-        }
-
-        .dateright {
-            position: absolute;
-            right: 0;
-        }
     </style>
 </head>
 
 <body>
-    <div class="title-container">
-        <div class="chltitle">Cubist Heart Laboratories</div>
-        <div class="bttitle">BorrowedTime</div>
-    </div>
+
     <div class="date-container">
-        <a href="../whirlpool/" class="dates dateleft">05/09/25</a>
-        <a href="../index.html" class="clockname">Number Toss</a>
-        <a href="../aquarium/" class="dates dateright">05/11/25</a>
-    </div>
+          <a href="../index.html" class="clockname">Number Toss</a>
+      </div>
     <div class="throw"></div>
 
     <script>
