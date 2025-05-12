@@ -195,6 +195,17 @@
             z-index: 3;
             filter: sepia(100%) hue-rotate(-30deg) brightness(120%) contrast(110%) saturate(400%);
         }
+
+        .spin2 {
+            position: fixed;
+            opacity: 0.6;
+            width: 100vw;
+            height: 80vh;
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+            z-index: 4;
+            filter: sepia(100%) hue-rotate(-30deg) brightness(120%) contrast(110%) saturate(400%);
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -249,8 +260,8 @@
         <a href="../index.html" class="clockname">Aquarium</a>
         <a href="../index.html" class="dates dateright">05/12/25</a>
     </div>
-
     <img src="./images/20206.gif" class="spin">
+    <img src="./images/20206.gif" class="spin2">
     <img src="./images/bubl.gif" class="bub">
     <img src="./images/bubl.gif" class="bubl2">
 
