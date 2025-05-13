@@ -11,7 +11,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
-
     <style>
         @font-face {
             font-family: 'hyd';
@@ -43,7 +42,8 @@
             background-size: 100% 100%;
             opacity: 0.7;
             filter: saturate(40%) contrast(190%);
-            background-color: #d5caaf
+            background-color: #d5caaf;
+            z-index: 2;
         }
 
         .clock {
@@ -52,7 +52,7 @@
             left: 50%;
             width: 95vw;
             height: 95vw;
-            z-index: 5;
+            z-index: 9;
             max-height: 95vh;
             max-width: 95vh;
             background-image: url('./tiles.jpg');
@@ -63,9 +63,7 @@
             transform: translate(-50%, -50%) rotateX(75deg) translateZ(1px);
             box-shadow: 0 3vh 5vh rgba(5, 6, 6, 0.3), 1px 1vh 1vh rgba(65, 33, 33);
             overflow: visible;
-            /* Prevent clipping */
         }
-
 
         .hand {
             position: absolute;
@@ -75,8 +73,8 @@
             left: 50%;
             transform-origin: left center;
             transform: rotate(0deg);
-            z-index: 6;
-            /* filter: drop-shadow(0.5vh 0.5vh 1vh rgba(0, 0, 0, 0.6)); */
+            z-index: 5;
+            transition: transform 0.1s linear;
         }
 
         .hour {
@@ -96,8 +94,8 @@
             height: 0.8vh;
             background: red;
             box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            transition: transform 0s;
         }
-
 
         .numbers {
             position: absolute;
@@ -106,29 +104,18 @@
             top: 0;
             left: 0;
             transform: translateZ(5px);
-            z-index: 7;
+            z-index: 10;
         }
 
         .number {
             position: absolute;
-            font-family: 'hyd', sans-serif;
+            font-family: 'hyd', 'Roboto Slab', sans-serif;
             font-size: 12vh;
             color: #393705;
             text-shadow: rgb(135, 55, 46) 1px 1px 1px;
             text-align: center;
             transform: translate(-50%, -50%);
             line-height: 1;
-        }
-
-
-        .bgimage {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-repeat: repeat;
-            z-index: 1;
         }
 
         .title-container {
@@ -140,7 +127,7 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            z-index: 9;
+            z-index: 6;
         }
 
         .chltitle {
@@ -171,7 +158,6 @@
             background-color: rgb(21, 0, 255);
         }
 
-        /* Date container styles */
         .date-container {
             color: #fc4646;
             position: absolute;
@@ -180,7 +166,7 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            z-index: 10;
+            z-index: 6;
         }
 
         .clockname {
@@ -205,8 +191,18 @@
             position: absolute;
             right: 0;
         }
-    </style>
 
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
 </head>
 
 <body>
@@ -222,12 +218,14 @@
             <div class="hand minute" id="minute-hand"></div>
             <div class="hand second" id="second-hand"></div>
         </div>
-
     </div>
-
-
+    <div class="sr-only" id="clock-time" aria-live="polite"></div>
+    <div class="date-container">
+        <a href="../cheetah/" class="dates dateleft"></a>
+        <a href="../index.html" class="clockname">Flat Clock</a>
+        <a href="../index.html" class="dates dateright"></a>
+    </div>
     <script>
-        // Update clock hands
         function updateClock() {
             const now = new Date();
             const second = now.getSeconds();
@@ -241,17 +239,36 @@
             document.getElementById('second-hand').style.transform = `rotate(${secDeg}deg)`;
             document.getElementById('minute-hand').style.transform = `rotate(${minDeg}deg)`;
             document.getElementById('hour-hand').style.transform = `rotate(${hourDeg}deg)`;
+
+            document.getElementById('clock-time').textContent = `Current time: ${now.toLocaleTimeString()}`;
         }
 
-        // Add numbers 1–12 around the clock
+        function updateDates() {
+            const now = new Date();
+            const yesterday = new Date(now);
+            yesterday.setDate(now.getDate() - 1);
+            const tomorrow = new Date(now);
+            tomorrow.setDate(now.getDate() + 1);
+
+            const formatDate = (date) => {
+                const m = String(date.getMonth() + 1).padStart(2, '0');
+                const d = String(date.getDate()).padStart(2, '0');
+                const y = String(date.getFullYear()).slice(-2);
+                return `${m}/${d}/${y}`;
+            };
+
+            document.querySelector('.dateleft').textContent = formatDate(yesterday);
+            document.querySelector('.dateright').textContent = formatDate(tomorrow);
+        }
+
         const numbersContainer = document.getElementById('clock-numbers');
         for (let i = 1; i <= 12; i++) {
             const numEl = document.createElement('div');
             numEl.className = 'number';
             numEl.textContent = i;
 
-            const angle = (i * Math.PI * 2) / 12 - Math.PI / 2; // 12 at top
-            const radiusPercent = 42; // Slightly inward for better fit
+            const angle = (i * Math.PI * 2) / 12 - Math.PI / 2;
+            const radiusPercent = 42;
             const x = 50 + radiusPercent * Math.cos(angle);
             const y = 50 + radiusPercent * Math.sin(angle);
 
@@ -260,17 +277,15 @@
 
             numbersContainer.appendChild(numEl);
         }
+
         function tick() {
             updateClock();
             requestAnimationFrame(tick);
         }
+
+        updateDates();
         tick();
     </script>
-    <div class="date-container">
-        <a href="../cheetah/" class="dates dateleft">05/12/25</a>
-        <a href="../index.html" class="clockname">Flat Clock</a>
-        <a href="../index.html" class="dates dateright">05/14/25</a>
-    </div>
 </body>
 
 </html>
