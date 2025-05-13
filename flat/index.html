@@ -112,7 +112,7 @@
             font-family: 'hyd', sans-serif;
             font-size: 12vh;
             color: #393705;
-            text-shadow: rgb(135, 55, 46) 1px 1px 1px);
+            text-shadow: rgb(135, 55, 46) 1px 1px 1px;
             text-align: center;
             transform: translate(-50%, -50%);
             line-height: 1;
@@ -212,61 +212,66 @@
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
+    <div class="scene">
+        <div class="grid-plane"></div>
+        <div class="clock">
+            <div class="numbers" id="clock-numbers"></div>
+            <div class="hand hour" id="hour-hand"></div>
+            <div class="hand minute" id="minute-hand"></div>
+            <div class="hand second" id="second-hand"></div>
+        </div>
+    </div>
+
+
     <div class="date-container">
         <a href="../cheetah/" class="dates dateleft">05/12/25</a>
         <a href="../index.html" class="clockname">Flat Clock</a>
         <a href="../index.html" class="dates dateright">05/14/25</a>
     </div>
+    <script>
+        // Update clock hands
+        function updateClock() {
+            const now = new Date();
+            const second = now.getSeconds();
+            const minute = now.getMinutes();
+            const hour = now.getHours() % 12;
 
-    <body>
-        <div class="scene">
-            <div class="grid-plane"></div>
-            <div class="clock">
-                <div class="numbers" id="clock-numbers"></div>
-                <div class="hand hour" id="hour-hand"></div>
-                <div class="hand minute" id="minute-hand"></div>
-                <div class="hand second" id="second-hand"></div>
-            </div>
-        </div>
+            const secDeg = second * 6;
+            const minDeg = minute * 6 + second * 0.1;
+            const hourDeg = hour * 30 + minute * 0.5;
 
-        <script>
-            // Update clock hands
-            function updateClock() {
-                const now = new Date();
-                const second = now.getSeconds();
-                const minute = now.getMinutes();
-                const hour = now.getHours() % 12;
+            document.getElementById('second-hand').style.transform = `rotate(${secDeg}deg)`;
+            document.getElementById('minute-hand').style.transform = `rotate(${minDeg}deg)`;
+            document.getElementById('hour-hand').style.transform = `rotate(${hourDeg}deg)`;
+        }
 
-                const secDeg = second * 6;
-                const minDeg = minute * 6 + second * 0.1;
-                const hourDeg = hour * 30 + minute * 0.5;
+        setInterval(updateClock, 1000);
+        updateClock();
 
-                document.getElementById('second-hand').style.transform = `rotate(${secDeg}deg)`;
-                document.getElementById('minute-hand').style.transform = `rotate(${minDeg}deg)`;
-                document.getElementById('hour-hand').style.transform = `rotate(${hourDeg}deg)`;
-            }
+        // Add numbers 1–12 around the clock
+        const numbersContainer = document.getElementById('clock-numbers');
+        for (let i = 1; i <= 12; i++) {
+            const numEl = document.createElement('div');
+            numEl.className = 'number';
+            numEl.textContent = i;
 
-            setInterval(updateClock, 1000);
+            const angle = (i * Math.PI * 2) / 12 - Math.PI / 2; // 12 at top
+            const radiusPercent = 42; // Slightly inward for better fit
+            const x = 50 + radiusPercent * Math.cos(angle);
+            const y = 50 + radiusPercent * Math.sin(angle);
+
+            numEl.style.left = `${x}%`;
+            numEl.style.top = `${y}%`;
+
+            numbersContainer.appendChild(numEl);
+        }
+        function tick() {
             updateClock();
+            requestAnimationFrame(tick);
+        }
+        tick();
 
-            // Add numbers 1–12 around the clock
-            const numbersContainer = document.getElementById('clock-numbers');
-            for (let i = 1; i <= 12; i++) {
-                const numEl = document.createElement('div');
-                numEl.className = 'number';
-                numEl.textContent = i;
-
-                const angle = (i * Math.PI * 2) / 12 - Math.PI / 2; // 12 at top
-                const radiusPercent = 42; // Slightly inward for better fit
-                const x = 50 + radiusPercent * Math.cos(angle);
-                const y = 50 + radiusPercent * Math.sin(angle);
-
-                numEl.style.left = `${x}%`;
-                numEl.style.top = `${y}%`;
-
-                numbersContainer.appendChild(numEl);
-            }
-        </script>
-    </body>
+    </script>
+</body>
 
 </html>
