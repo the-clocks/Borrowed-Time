@@ -52,7 +52,7 @@
             left: 50%;
             width: 95vw;
             height: 95vw;
-            z-index: 9;
+            z-index: 5;
             max-height: 95vh;
             max-width: 95vh;
             background-image: url('./tiles.jpg');
@@ -75,7 +75,7 @@
             left: 50%;
             transform-origin: left center;
             transform: rotate(0deg);
-            z-index: 5;
+            z-index: 6;
             /* filter: drop-shadow(0.5vh 0.5vh 1vh rgba(0, 0, 0, 0.6)); */
         }
 
@@ -106,7 +106,7 @@
             top: 0;
             left: 0;
             transform: translateZ(5px);
-            z-index: 10;
+            z-index: 7;
         }
 
         .number {
@@ -140,7 +140,7 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            z-index: 6;
+            z-index: 9;
         }
 
         .chltitle {
@@ -180,7 +180,7 @@
             transform: translateX(-50%);
             width: 98%;
             display: flex;
-            z-index: 6;
+            z-index: 10;
         }
 
         .clockname {
@@ -242,9 +242,6 @@
             document.getElementById('minute-hand').style.transform = `rotate(${minDeg}deg)`;
             document.getElementById('hour-hand').style.transform = `rotate(${hourDeg}deg)`;
         }
-
-        setInterval(updateClock, 1000);
-        updateClock();
 
         // Add numbers 1–12 around the clock
         const numbersContainer = document.getElementById('clock-numbers');
