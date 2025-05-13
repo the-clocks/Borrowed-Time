@@ -25,6 +25,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+
         }
 
         .frame {
@@ -35,35 +36,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 5;
+            z-index: 2;
             box-shadow: 0 0 10px rgba(237, 200, 18, 0.5);
 
         }
-
-        /* .rectangle-frame {
-            position: absolute;
-            top: -1vh;
-            bottom: -1vh;
-            left: -1vw;
-            right: -1vw;
-            border: 4.5vh dashed #db2828;
-            pointer-events: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 3;
-        } */
 
         .clock {
             font-family: 'Shiny';
             color: #f8e9be;
             text-shadow: rgb(213, 102, 80) 1px 1px 1px;
             display: flex;
-            gap: 5vw;
+            /* gap: 5vw; */
             font-size: 18vw;
-            line-height: 24vw;
+            line-height: 21vw;
             text-align: center;
             z-index: 3;
         }
@@ -89,7 +74,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1;
+            z-index: 1;
             filter: brightness(120%);
             -webkit-transform: scaleX(-1);
             transform: scaleX(-1);
@@ -153,7 +138,7 @@
             width: 98%;
             display: flex;
             /* justify-content: space-between; */
-            z-index: 9;
+            z-index: 8;
         }
 
         .chltitle {
@@ -339,11 +324,7 @@
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
-    <div class="date-container">
-        <a href="../radar/" class="dates dateleft">05/07/25</a>
-        <a href="../index.html" class="clockname">Golden Hour</a>
-        <a href="../whirlpool/" class="dates dateright">05/09/25</a>
-    </div>
+
     <img src="./images/d7e781b32269a8a82b500c1a9dc97733-ezgif.com-optimize.gif" class="bgimage">
 
 
@@ -364,6 +345,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="date-container">
+        <a href="../radar/" class="dates dateleft">05/07/25</a>
+        <a href="../index.html" class="clockname">Golden Hour</a>
+        <a href="../whirlpool/" class="dates dateright">05/09/25</a>
     </div>
     <script>
         function updateClock() {
