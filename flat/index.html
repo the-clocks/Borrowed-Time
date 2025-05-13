@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Flat Clock - BorrowedTime</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -225,11 +225,6 @@
     </div>
 
 
-    <div class="date-container">
-        <a href="../cheetah/" class="dates dateleft">05/12/25</a>
-        <a href="../index.html" class="clockname">Flat Clock</a>
-        <a href="../index.html" class="dates dateright">05/14/25</a>
-    </div>
     <script>
         // Update clock hands
         function updateClock() {
@@ -272,8 +267,12 @@
             requestAnimationFrame(tick);
         }
         tick();
-
     </script>
+    <div class="date-container">
+        <a href="../cheetah/" class="dates dateleft">05/12/25</a>
+        <a href="../index.html" class="clockname">Flat Clock</a>
+        <a href="../index.html" class="dates dateright">05/14/25</a>
+    </div>
 </body>
 
 </html>
