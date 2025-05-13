@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curved Roman Numeral Clock</title>
+    <style>
+        @font-face {
+            font-family: 'Steam';
+            src: url('./Steam.ttf') format('truetype');
+        }
+
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #b57676;
+        }
+
+        .clock {
+            width: 90vmin;
+            height: 90vmin;
+            font-family: 'Steam', serif;
+            /* background: #fff;
+            border: 10px solid #333; */
+            border-radius: 50%;
+            position: relative;
+            /* box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); */
+        }
+
+        .number {
+            position: absolute;
+            font-size: 11vh;
+            font-weight: bold;
+            transform-origin: center center;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background: #000;
+        }
+
+        .hour {
+            width: 1%;
+            height: 25%;
+        }
+
+        .minute {
+            width: 0.8%;
+            height: 35%;
+            background: #555;
+        }
+
+        .second {
+            width: 0.5%;
+            height: 40%;
+            background: red;
+        }
+
+        .center-dot {
+            position: absolute;
+            width: 2%;
+            height: 2%;
+            background: #0b07f5;
+            border-radius: 50%;
+            top: 49%;
+            left: 49%;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock" id="clock">
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+        <div class="center-dot"></div>
+    </div>
+
+    <script>
+        const romanNumerals = ["XII", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"];
+        const clock = document.getElementById("clock");
+
+        // Place Roman numerals
+        romanNumerals.forEach((num, i) => {
+            const angleDeg = i * 30; // 360 / 12
+            const angleRad = angleDeg * (Math.PI / 180);
+            const radius = 43; // percent from center
+
+            const x = 50 + radius * Math.sin(angleRad);
+            const y = 50 - radius * Math.cos(angleRad);
+
+            const el = document.createElement("div");
+            el.className = "number";
+            el.style.left = `${x}%`;
+            el.style.top = `${y}%`;
+            el.textContent = num;
+
+            // Rotate numeral so it's tangent to the circle
+            el.style.transform = `translate(-50%, -50%) rotate(${angleDeg}deg)`;
+
+            clock.appendChild(el);
+        });
+
+        function updateClock() {
+            const now = new Date();
+            const sec = now.getSeconds();
+            const min = now.getMinutes();
+            const hr = now.getHours();
+
+            const secondDeg = sec * 6;
+            const minuteDeg = min * 6 + sec * 0.1;
+            const hourDeg = ((hr % 12) * 30) + (min * 0.5);
+
+            document.getElementById("second").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+            document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>

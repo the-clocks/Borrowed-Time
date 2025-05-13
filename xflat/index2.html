@@ -3,19 +3,30 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>3D Grid Plane with Analog Clock</title>
+    <title>Flat Clock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+
     <style>
+        @font-face {
+            font-family: 'hyd';
+            src: url('./hyd.ttf') format('truetype');
+        }
+
         body {
             margin: 0;
             height: 100vh;
-            background: linear-gradient(to top, #a0c4ff 0%, #ffffff 100%);
+            background: linear-gradient(to top, #000000 0%, #122346 100%);
             overflow: hidden;
             perspective: 800px;
         }
 
         .scene {
             width: 100%;
-            height: 100%;
+            height: 85%;
             transform-style: preserve-3d;
         }
 
@@ -23,14 +34,14 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 100vw;
-            height: 100vh;
+            width: 105vw;
+            height: 115vh;
             transform: translate(-50%, -50%) rotateX(75deg);
-            background-image:
-                linear-gradient(to right, #ccc 1px, transparent 1px),
-                linear-gradient(to bottom, #ccc 1px, transparent 1px);
-            background-size: 5vw 5vh;
-            background-color: #e0e0e0;
+            background-image: url('./wood.jpg');
+            background-size: 100% 100%;
+            opacity: 0.7;
+            filter: saturate(40%) contrast(190%);
+            background-color: #d5caaf
         }
 
         .clock {
@@ -39,39 +50,52 @@
             left: 50%;
             width: 95vw;
             height: 95vw;
+            z-index: 9;
             max-height: 95vh;
             max-width: 95vh;
-            background: #fff;
-            border: 0.4vw solid #333;
+            background-image: url('./tiles.jpg');
+            filter: contrast(110%) brightness(90%);
+            background-size: 100% 100%;
+            border: 1vw solid #d3ab0d;
             border-radius: 50%;
             transform: translate(-50%, -50%) rotateX(75deg) translateZ(1px);
-            box-shadow: 0 1vh 2vh rgba(0, 0, 0, 0.3);
+            box-shadow: 0 3vh 5vh rgba(5, 6, 6, 0.3), 1px 1vh 1vh rgba(65, 33, 33);
+            overflow: visible;
+            /* Prevent clipping */
         }
+
 
         .hand {
             position: absolute;
             width: 50%;
-            height: 0.2vh;
-            background: #333;
+            height: 0.7vh;
             top: 50%;
             left: 50%;
             transform-origin: left center;
             transform: rotate(0deg);
+            z-index: 5;
+            filter: drop-shadow(0.5vh 0.5vh 1vh rgba(0, 0, 0, 0.6));
         }
 
         .hour {
-            width: 35%;
-            height: 0.4vh;
+            width: 30%;
+            height: 3vh;
+            background: #067d79;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
 
         .minute {
-            background: #555;
+            height: 1.8vh;
+            background: #6c42ea;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
         }
 
         .second {
+            height: 0.8vh;
             background: red;
-            height: 0.1vh;
+            box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
+
 
         .numbers {
             position: absolute;
@@ -79,70 +103,172 @@
             height: 100%;
             top: 0;
             left: 0;
+            transform: translateZ(5px);
+            z-index: 10;
         }
 
         .number {
             position: absolute;
-            font-size: 2vw;
-            font-weight: bold;
-            color: #222;
+            font-family: 'hyd', sans-serif;
+            font-size: 12vh;
+            color: #393705;
+            text-shadow: rgb(135, 55, 46) 1px 1px 1px);
             text-align: center;
-            transform: rotateX(-75deg);
-            /* cancel clock tilt */
-            transform-origin: center center;
+            transform: translate(-50%, -50%);
+            line-height: 1;
+        }
+
+
+        .bgimage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-repeat: repeat;
+            z-index: 1;
+        }
+
+        .title-container {
+            color: #2a2a26;
+            text-shadow: #b5ad9e 1px 0;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.1vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.7vh;
+            font-style: italic;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        /* Date container styles */
+        .date-container {
+            color: #fc4646;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
         }
     </style>
+
 </head>
 
 <body>
-    <div class="scene">
-        <div class="grid-plane"></div>
-        <div class="clock">
-            <div class="numbers" id="clock-numbers"></div>
-            <div class="hand hour" id="hour-hand"></div>
-            <div class="hand minute" id="minute-hand"></div>
-            <div class="hand second" id="second-hand"></div>
-        </div>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
     </div>
+    <div class="date-container">
+        <a href="../cheetah/" class="dates dateleft">05/12/25</a>
+        <a href="../index.html" class="clockname">Flat Clock</a>
+        <a href="../index.html" class="dates dateright">05/14/25</a>
+    </div>
+    </style>
+    </head>
 
-    <script>
-        // Update clock hands
-        function updateClock() {
-            const now = new Date();
-            const second = now.getSeconds();
-            const minute = now.getMinutes();
-            const hour = now.getHours() % 12;
+    <body>
+        <div class="scene">
+            <div class="grid-plane"></div>
+            <div class="clock">
+                <div class="numbers" id="clock-numbers"></div>
+                <div class="hand hour" id="hour-hand"></div>
+                <div class="hand minute" id="minute-hand"></div>
+                <div class="hand second" id="second-hand"></div>
+            </div>
+        </div>
 
-            const secDeg = second * 6;
-            const minDeg = minute * 6 + second * 0.1;
-            const hourDeg = hour * 30 + minute * 0.5;
+        <script>
+            // Update clock hands
+            function updateClock() {
+                const now = new Date();
+                const second = now.getSeconds();
+                const minute = now.getMinutes();
+                const hour = now.getHours() % 12;
 
-            document.getElementById('second-hand').style.transform = `rotate(${secDeg}deg)`;
-            document.getElementById('minute-hand').style.transform = `rotate(${minDeg}deg)`;
-            document.getElementById('hour-hand').style.transform = `rotate(${hourDeg}deg)`;
-        }
+                const secDeg = second * 6;
+                const minDeg = minute * 6 + second * 0.1;
+                const hourDeg = hour * 30 + minute * 0.5;
 
-        setInterval(updateClock, 1000);
-        updateClock();
+                document.getElementById('second-hand').style.transform = `rotate(${secDeg}deg)`;
+                document.getElementById('minute-hand').style.transform = `rotate(${minDeg}deg)`;
+                document.getElementById('hour-hand').style.transform = `rotate(${hourDeg}deg)`;
+            }
 
-        // Add numbers 1–12 around the clock
-        const numbersContainer = document.getElementById('clock-numbers');
-        for (let i = 1; i <= 12; i++) {
-            const numEl = document.createElement('div');
-            numEl.className = 'number';
-            numEl.textContent = i;
+            setInterval(updateClock, 1000);
+            updateClock();
 
-            const angle = (i * Math.PI * 2) / 12 - Math.PI / 2; // 12 at top
-            const radiusPercent = 42; // % of width/height
-            const x = 50 + radiusPercent * Math.cos(angle);
-            const y = 50 + radiusPercent * Math.sin(angle);
+            // Add numbers 1–12 around the clock
+            const numbersContainer = document.getElementById('clock-numbers');
+            for (let i = 1; i <= 12; i++) {
+                const numEl = document.createElement('div');
+                numEl.className = 'number';
+                numEl.textContent = i;
 
-            numEl.style.left = `${x}%`;
-            numEl.style.top = `${y}%`;
+                const angle = (i * Math.PI * 2) / 12 - Math.PI / 2; // 12 at top
+                const radiusPercent = 42; // Slightly inward for better fit
+                const x = 50 + radiusPercent * Math.cos(angle);
+                const y = 50 + radiusPercent * Math.sin(angle);
 
-            numbersContainer.appendChild(numEl);
-        }
-    </script>
-</body>
+                numEl.style.left = `${x}%`;
+                numEl.style.top = `${y}%`;
+
+                numbersContainer.appendChild(numEl);
+            }
+        </script>
+    </body>
 
 </html>
