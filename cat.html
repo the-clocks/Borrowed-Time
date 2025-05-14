@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smooth Cat</title>
+    <style>
+        body {
+            margin: 0;
+            background: black;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            perspective: 1000px;
+        }
+
+        #word {
+            display: flex;
+            font-size: 40vw;
+            font-weight: bold;
+            color: white;
+        }
+
+        .letter {
+            display: inline-block;
+            transform-style: preserve-3d;
+            transition: transform 3s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="word">
+        <span class="letter">c</span>
+        <span class="letter">a</span>
+        <span class="letter">t</span>
+    </div>
+
+    <script>
+        const letters = document.querySelectorAll('.letter');
+
+        letters.forEach((letter) => {
+            const rotX = Math.random() * 720 - 360;
+            const rotY = Math.random() * 720 - 360;
+            const rotZ = Math.random() * 720 - 360;
+            const scale = 2 + Math.random() * 2;
+            const xMove = (Math.random() - 0.5) * 200;
+            const yMove = (Math.random() - 0.5) * 200;
+
+            // Set the initial transformation using requestAnimationFrame
+            requestAnimationFrame(() => {
+                letter.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${scale}) translate(${xMove}px, ${yMove}px)`;
+
+                // Trigger the transition back to normal position after a brief moment
+                setTimeout(() => {
+                    letter.style.transform = 'none';
+                }, 50);
+            });
+        });
+    </script>
+</body>
+
+</html>
