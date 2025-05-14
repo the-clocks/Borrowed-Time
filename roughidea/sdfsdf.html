@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upward Flying Clock</title>
+    <style>
+        body {
+            margin: 0;
+            background: #111;
+            overflow: hidden;
+            font-family: monospace;
+        }
+
+        #clock {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .digit {
+            position: absolute;
+            will-change: transform;
+            white-space: pre;
+            pointer-events: none;
+            animation: fly-up 2s ease-out forwards;
+        }
+
+        @keyframes fly-up {
+            0% {
+                transform: translate(var(--x-start), 110vh) scale(var(--scale));
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--x-final), var(--y-final)) scale(var(--scale));
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="clock"></div>
+
+    <script>
+        const clock = document.getElementById("clock");
+
+        function getTimeDigits() {
+            const now = new Date();
+            return now.toLocaleTimeString('en-GB', { hour12: false }).split('');
+        }
+
+        function randomColor() {
+            return `hsl(${Math.random() * 360}, 100%, 60%)`;
+        }
+
+        function randomFontSize() {
+            return `${Math.floor(Math.random() * 40 + 30)}px`;
+        }
+
+        function randomScale() {
+            return (Math.random() * 0.5 + 0.75).toFixed(2);
+        }
+
+        function throwDigitsUp() {
+            const digits = getTimeDigits();
+            digits.forEach((char, index) => {
+                const span = document.createElement("span");
+                span.className = "digit";
+                span.textContent = char;
+
+                const xStart = `${Math.random() * 100}vw`;
+                const xOffset = index * 40 + window.innerWidth / 2 - (digits.length * 20);
+                const yFinal = `${window.innerHeight / 2}px`;
+                const scale = randomScale();
+
+                span.style.left = "0";
+                span.style.top = "0";
+                span.style.color = randomColor();
+                span.style.fontSize = randomFontSize();
+
+                span.style.setProperty('--x-start', xStart);
+                span.style.setProperty('--x-final', `${xOffset}px`);
+                span.style.setProperty('--y-final', yFinal);
+                span.style.setProperty('--scale', scale);
+
+                clock.appendChild(span);
+            });
+        }
+
+        throwDigitsUp();
+        setInterval(throwDigitsUp, 3000);
+    </script>
+</body>
+
+</html>
