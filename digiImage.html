@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Clock</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #clock {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 2vw;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .time-section {
+            display: flex;
+            gap: 0.5vw;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .time-section img {
+            height: 10vh;
+            width: auto;
+        }
+
+        @media (max-width: 768px) {
+            #clock {
+                flex-direction: column;
+            }
+
+            .time-section img {
+                height: 8vh;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="clock">
+        <div class="time-section" id="hours"></div>
+        <div class="time-section" id="minutes"></div>
+        <div class="time-section" id="seconds"></div>
+    </div>
+
+    <script>
+        function formatTimeComponent(value) {
+            return value.toString().split('');
+        }
+
+        function updateClock() {
+            const now = new Date();
+            let h = now.getHours();
+            h = h % 12 || 12; // Convert to 12-hour format
+
+            const m = now.getMinutes();
+            const s = now.getSeconds();
+
+            renderTimeComponent('hours', formatTimeComponent(h));
+            renderTimeComponent('minutes', formatTimeComponent(m));
+            renderTimeComponent('seconds', formatTimeComponent(s));
+        }
+
+        function renderTimeComponent(id, digits) {
+            const container = document.getElementById(id);
+            container.innerHTML = ''; // Clear previous digits
+
+            digits.forEach(d => {
+                const img = document.createElement('img');
+                img.src = `digits/${d}.png`;
+                img.alt = d;
+                container.appendChild(img);
+            });
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+
+</html>
