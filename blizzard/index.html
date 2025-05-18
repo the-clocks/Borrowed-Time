@@ -48,7 +48,7 @@
 
         .clock {
             position: relative;
-            font-size: 10vw;
+            font-size: 20vw;
             color: rgb(203, 203, 253);
             text-shadow: 3px -5px 15px rgba(236, 205, 252, 0.7), -3px -3px 15px rgb(187, 153, 221), 3px 5px 15px #afb9b7, -3px 2px 1px rgba(64, 42, 131, 0.7);
             font-family: "Amatic SC", serif;
@@ -263,7 +263,7 @@
     <script>
         function updateClock() {
             const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
+            const hours = now.getHours().toString().padStart(2);
             const minutes = now.getMinutes().toString().padStart(2, '0');
 
             document.getElementById('clock').innerHTML =
