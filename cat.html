@@ -2,64 +2,126 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smooth Cat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock</title>
     <style>
         body {
-            margin: 0;
-            background: black;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            perspective: 1000px;
+            margin: 0;
+            background-color: #f0f0f0;
+            overflow: hidden;
         }
 
-        #word {
-            display: flex;
-            font-size: 40vw;
+        .clock {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            background-color: #fff;
+            border: 10px solid #333;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .number {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 30px;
+            font-family: Arial, sans-serif;
             font-weight: bold;
-            color: white;
+            color: #000;
+            transform-origin: center;
         }
 
-        .letter {
-            display: inline-block;
-            transform-style: preserve-3d;
-            transition: transform 3s ease-in-out;
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background-color: #333;
+            border-radius: 4px;
+        }
+
+        .hour-hand {
+            width: 8px;
+            height: 150px;
+            transform: translateX(-50%);
+        }
+
+        .minute-hand {
+            width: 6px;
+            height: 200px;
+            transform: translateX(-50%);
+        }
+
+        .second-hand {
+            width: 4px;
+            height: 220px;
+            background-color: #f00;
+            transform: translateX(-50%);
+        }
+
+        .center {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
 
 <body>
-    <div id="word">
-        <span class="letter">c</span>
-        <span class="letter">a</span>
-        <span class="letter">t</span>
+    <div class="clock">
+        <div class="center"></div>
+        <div class="hand hour-hand"></div>
+        <div class="hand minute-hand"></div>
+        <div class="hand second-hand"></div>
     </div>
-
     <script>
-        const letters = document.querySelectorAll('.letter');
+        // Add numbers 1-12 around the clock
+        const clock = document.querySelector('.clock');
+        for (let i = 1; i <= 12; i++) {
+            const angle = (i * 30) * Math.PI / 180; // Convert to radians
+            const radius = 280; // Close to edge (600px diameter - border - padding)
+            const x = 300 + radius * Math.sin(angle) - 20; // Center at 300, adjust for number width
+            const y = 300 - radius * Math.cos(angle) - 20; // Center at 300, adjust for number height
+            const number = document.createElement('div');
+            number.className = 'number';
+            number.style.left = `${x}px`;
+            number.style.top = `${y}px`;
+            number.style.transform = `rotate(${i * 30}deg)`;
+            number.innerHTML = `<span style="display: inline-block; transform: rotate(${-i * 30}deg);">${i}</span>`;
+            clock.appendChild(number);
+        }
 
-        letters.forEach((letter) => {
-            const rotX = Math.random() * 720 - 360;
-            const rotY = Math.random() * 720 - 360;
-            const rotZ = Math.random() * 720 - 360;
-            const scale = 2 + Math.random() * 2;
-            const xMove = (Math.random() - 0.5) * 200;
-            const yMove = (Math.random() - 0.5) * 200;
+        // Update clock hands
+        function updateClock() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const minutes = now.getMinutes();
+            const hours = now.getHours() % 12;
 
-            // Set the initial transformation using requestAnimationFrame
-            requestAnimationFrame(() => {
-                letter.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) rotateZ(${rotZ}deg) scale(${scale}) translate(${xMove}px, ${yMove}px)`;
+            const secondDeg = seconds * 6; // 360/60
+            const minuteDeg = minutes * 6 + seconds / 10; // 360/60 + seconds/60*6
+            const hourDeg = hours * 30 + minutes / 2; // 360/12 + minutes/60*30
 
-                // Trigger the transition back to normal position after a brief moment
-                setTimeout(() => {
-                    letter.style.transform = 'none';
-                }, 50);
-            });
-        });
+            document.querySelector('.second-hand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+            document.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+            requestAnimationFrame(updateClock);
+        }
+
+        updateClock();
     </script>
 </body>
 
