@@ -35,7 +35,7 @@
             height: 100%;
             filter: saturate(1.6);
             /* border-radius: 50%; */
-            z-index: 9;
+            z-index: 6;
         }
 
         .hand {
@@ -46,7 +46,7 @@
             left: 0;
             transform-origin: center center;
             pointer-events: none;
-
+            z-index: 9;
         }
 
         .hand img {
@@ -165,8 +165,8 @@
             width: 110%;
             height: 110%;
             border-radius: 50%;
-            animation: rotateCounterClockwise 60s linear infinite;
-            z-index: ;
+            animation: rotateCounterClockwise 30s linear infinite;
+            z-index: 2;
         }
 
         .circle img {
@@ -186,8 +186,8 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            z-index: 1;
-            opacity: 0.6;
+            z-index: 6;
+            /* opacity: 0.6; */
             filter: saturate(300%);
             filter: alpha(opacity=50);
         }
@@ -202,9 +202,8 @@
             background-position: center;
             background-repeat: no-repeat;
             z-index: 2;
-            opacity: 0.4;
+            /* opacity: 0.4; */
             filter: saturate(200%);
-            filter: alpha(opacity=50);
         }
     </style>
 </head>
@@ -240,7 +239,7 @@
 
         </div>
     </div>
-    <img src="./images/8ecccf93eef66cc83c09655a94880c1c_w200.webp" class="full-page-image">
+    <img src="./images/conf.gif" class="full-page-image">
     <img src="./images/conf.jpg" class="full-page-image2">
     <script>
         const hourHand = document.querySelector('.hour');
