@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>align-items Clock - BorrowedTime</title>
+    <title>Ant Clock - BorrowedTime</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -22,6 +22,7 @@
             align-items: center;
             height: 95vh;
             margin: 0;
+            background-color: brown;
         }
 
         .clock {
@@ -43,15 +44,12 @@
             height: 100%;
             text-align: center;
             font-size: 18vh;
-            ;
         }
 
         .number span {
             display: inline-block;
             transform: translateY(-17.5vw);
-            /* width: 8vh; */
-            /* height: 12vw; */
-            /* line-height: 10vw; */
+            height: 12vw;
             text-align: center;
         }
 
@@ -61,32 +59,33 @@
             left: 50%;
             transform-origin: bottom;
             z-index: 10;
-            /* Below numbers */
+            transform: translateX(-50%);
         }
 
-        .hour-hand img {
-            width: 2vw;
-            /* Scales with clock */
-            /* color:blanchedalmond; */
+        .hour-hand {
+            width: 0.5vw;
             height: 29vw;
+            background-color: black;
             max-width: 8px;
             max-height: 80px;
             min-width: 4px;
             min-height: 40px;
         }
 
-        .minute-hand img {
-            width: 1.5vw;
+        .minute-hand {
+            width: 0.4vw;
             height: 25vw;
+            background-color: black;
             max-width: 6px;
             max-height: 100px;
             min-width: 3px;
             min-height: 50px;
         }
 
-        .second-hand img {
-            width: 1vw;
+        .second-hand {
+            width: 0.3vw;
             height: 30vw;
+            background-color: rgb(2, 2, 2);
             max-width: 4px;
             max-height: 120px;
             min-width: 2px;
@@ -94,27 +93,24 @@
         }
 
         .center {
-            width: 3vw;
-            /* Scales with clock */
-            height: 3vw;
-            max-width: 12px;
-            max-height: 12px;
-            min-width: 6px;
-            min-height: 6px;
-            background-color: rgb(237, 9, 9);
+            width: 1vw;
+            height: 1vw;
+            max-width: 2px;
+            max-height: 1px;
+            min-width: 2px;
+            min-height: 2px;
+            background-color: transparent;
             border-radius: 50%;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 20;
-            /* Below numbers, above hands */
         }
-
 
         .title-container {
             color: #fbf5f8;
-            text-shadow: #f90a0a 1px 0px;
+            text-shadow: #0b0202 1px 0px;
             position: absolute;
             top: 5px;
             left: 50%;
@@ -150,7 +146,6 @@
         a:hover {
             color: #e8ecec;
             background-color: rgb(21, 0, 255);
-            text-decoration: none;
         }
 
         .date-container {
@@ -195,21 +190,20 @@
             height: 100%;
             object-fit: cover;
             z-index: 1;
-
+            opacity: 0.9;
+            ;
         }
 
         .bgimage2 {
             position: fixed;
-            top: 0;
-            left: 0;
+            bottom: 0;
+            right: 0;
             width: 100%;
             height: 100%;
             background-image: url('./ants.gif');
-            /* fixed escape */
-            background-repeat: repeat-x;
-            /* tile horizontally only */
-            background-size: auto 100%;
-            /* keep original width, stretch height */
+            background-repeat: repeat;
+            background-size: 100px 200px;
+            /* smaller tiles */
             z-index: 2;
             pointer-events: none;
         }
@@ -224,9 +218,10 @@
 
     <div class="date-container">
         <a href="../blueprint/" class="dates dateleft">05/18/25</a>
-        <a href="../index.html" class="clockname">Ants</a>
+        <a href="../index.html" class="clockname">Ant</a>
         <a href="../index.html" class="dates dateright">05/20/25</a>
     </div>
+
     <div class="bgimage2"></div>
     <div class="clock" id="clock"></div>
     <img src="./ants-clipart-animation.gif" class="bgimage">
@@ -236,43 +231,31 @@
             const clock = document.getElementById('clock');
 
             for (let i = 1; i <= 12; i++) {
-                const angle = i * 30; // 30° per number
+                const angle = i * 30;
                 const number = document.createElement('div');
                 number.className = 'number';
 
                 const span = document.createElement('span');
                 span.textContent = i;
-                span.style.backgroundColor = i % 2 === 0 ? 'transparent' : 'transparent'; // Even = red, Odd = black
-                span.style.color = 'black'; // All numbers yellow
+                span.style.color = 'black';
 
                 number.appendChild(span);
                 number.style.transform = `rotate(${angle}deg)`;
                 clock.appendChild(number);
             }
 
-
-            // Create hands with placeholder images
-            const hands = [
-                { class: 'hour-hand', img: 'https://placehold.co/8x80/000000/000000/png' },
-                { class: 'minute-hand', img: 'https://placehold.co/6x100/000000/000000/png' },
-                { class: 'second-hand', img: 'https://placehold.co/4x120/FF0000/FF0000/png' }
-            ];
-            hands.forEach(hand => {
+            // Create hands as divs
+            const handClasses = ['hour-hand', 'minute-hand', 'second-hand'];
+            handClasses.forEach(handClass => {
                 const div = document.createElement('div');
-                div.className = `hand ${hand.class}`;
-                const img = document.createElement('img');
-                img.src = hand.img;
-                img.style.display = 'block';
-                div.appendChild(img);
+                div.className = `hand ${handClass}`;
                 clock.appendChild(div);
             });
 
-            // Create center dot
             const center = document.createElement('div');
             center.className = 'center';
             clock.appendChild(center);
         }
-
 
         function updateClock() {
             const now = new Date();
@@ -280,9 +263,9 @@
             const minutes = now.getMinutes();
             const seconds = now.getSeconds();
 
-            const hourDeg = (hours + minutes / 60) * 30; // 30° per hour
-            const minuteDeg = (minutes + seconds / 60) * 6; // 6° per minute
-            const secondDeg = seconds * 6; // 6° per second
+            const hourDeg = (hours + minutes / 60) * 30;
+            const minuteDeg = (minutes + seconds / 60) * 6;
+            const secondDeg = seconds * 6;
 
             document.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
             document.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
