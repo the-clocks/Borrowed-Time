@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Tetrahedron Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Stick&display=swap"
+        rel="stylesheet">
+    <style>
+        body,
+        html {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+            background: linear-gradient(135deg, #e8e89f, #763452);
+        }
+
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .time-container {
+            color: gainsboro;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 98%;
+            display: flex;
+            justify-content: space-around;
+            z-index: -1;
+            transition: transform 0.5s ease;
+            /* Smooth rotation transition */
+        }
+
+        .title-container {
+            color: #ecf3ef;
+            text-shadow: #705b11 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        .date-container {
+            color: rgb(179, 238, 194);
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../bandaid/" class="dates dateleft">04/25/25</a>
+        <a href="../index.html" class="clockname">Skew Clock</a>
+        <a href="../coin/" class="dates dateright">04/27/25</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Clock canvas texture
+        const clockCanvas = document.createElement('canvas');
+        clockCanvas.width = 512;
+        clockCanvas.height = 512;
+        const ctx = clockCanvas.getContext('2d');
+
+        function updateClockCanvas() {
+            const grad = ctx.createLinearGradient(0, 0, 512, 512);
+            grad.addColorStop(0, '#e11a33');
+            grad.addColorStop(1, '#665f91');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 512, 512);
+
+            ctx.shadowColor = 'red';
+            ctx.shadowBlur = 14;
+
+            ctx.font = 'bold 80px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#fff222';
+
+
+
+            const now = new Date();
+            const hours = now.getHours() % 12 || 12;
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const timeString = `${hours}:${minutes}`;
+            ctx.fillText(timeString, 256, 256);
+
+            clockTexture.needsUpdate = true;
+        }
+
+        const clockTexture = new THREE.CanvasTexture(clockCanvas);
+        clockTexture.minFilter = THREE.LinearFilter;
+
+        // Create multiple materials with different tints
+        const baseColor = 0xffffff;
+        const tints = [0xff8888, 0x88ff88, 0x8888ff, 0xffff88];
+        const materials = tints.map(tint => new THREE.MeshBasicMaterial({
+            map: clockTexture,
+            color: tint,
+            side: THREE.DoubleSide
+        }));
+
+        // Create tetrahedron geometry and convert to non-indexed
+        let geometry = new THREE.TetrahedronGeometry(1);
+        geometry = geometry.toNonIndexed(); // Separate each face
+        const faceCount = geometry.attributes.position.count / 3;
+
+        // Assign material indices to each face
+        const materialIndices = [];
+        for (let i = 0; i < faceCount; i++) {
+            materialIndices.push(i % materials.length);
+        }
+
+        // Add materialIndex attribute
+        const groups = [];
+        for (let i = 0; i < faceCount; i++) {
+            geometry.addGroup(i * 3, 3, materialIndices[i]);
+        }
+
+        const tetrahedron = new THREE.Mesh(geometry, materials);
+        tetrahedron.scale.set(2, 2, 2);
+        scene.add(tetrahedron);
+
+        camera.position.z = 4;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            tetrahedron.rotation.x += 0.001;
+            tetrahedron.rotation.y += 0.001;
+            updateClockCanvas();
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+
+</html>

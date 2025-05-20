@@ -2,141 +2,96 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Responsive Centered 12-Hour Clock</title>
+    <meta charset="UTF-8" />
+    <title>Tetrahedron with Digital Clock</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+            margin: 0;
+            background: #835858;
         }
 
-        .clock-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .group {
-            display: flex;
-        }
-
-        .digit-box {
-            width: 18vw;
-            height: 22vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22vh;
-            position: absolute;
-            opacity: 1;
-            pointer-events: none;
-        }
-
-        /* Special container for centering a single hour digit */
-        .group.center-single {
-            justify-content: center;
-        }
-
-        /* Animation for digits entering from a random position */
-        @keyframes enter {
-            0% {
-                transform: translate(calc(100vw * random() - 50%), calc(100vh * random() - 50%));
-            }
-
-            100% {
-                transform: translate(0, 0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .clock-container {
-                flex-direction: column;
-                gap: 1vh;
-            }
-
-            .digit-box {
-                width: 20vw;
-                height: 24vh;
-                font-size: 24vw;
-            }
+        canvas {
+            display: block;
         }
     </style>
 </head>
 
 <body>
-
-    <div class="clock-container">
-        <div class="group" id="hours-group"></div>
-        <div class="group" id="minutes-group"></div>
-        <div class="group" id="seconds-group"></div>
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.min.js"></script>
     <script>
-        // Function to generate a random number between min and max
-        function getRandomInt(min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-        function createDigitBoxes(value, container, pad = true) {
-            container.innerHTML = '';
-            let str = pad ? value.toString().padStart(2, '0') : value.toString();
-            for (let char of str) {
-                const div = document.createElement('div');
-                div.className = 'digit-box';
-                div.textContent = char;
+        // Add ambient light
+        const light = new THREE.AmbientLight(0xffffff);
+        scene.add(light);
 
-                // Randomize the starting position outside the viewport
-                const randomX = getRandomInt(-100, 100);
-                const randomY = getRandomInt(-100, 100);
+        // Create a canvas for the digital clock
+        const clockCanvas = document.createElement('canvas');
+        clockCanvas.width = 256;
+        clockCanvas.height = 256;
+        const ctx = clockCanvas.getContext('2d');
 
-                // Apply random position for each digit
-                div.style.animation = `enter 5s forwards`;
-                div.style.animationDelay = `${getRandomInt(0, 100)}ms`; // Add delay for some random stagger
-                div.style.left = `${randomX}vw`;
-                div.style.top = `${randomY}vh`;
+        // Function to draw the time on the canvas
+        function drawClock() {
+            ctx.clearRect(0, 0, clockCanvas.width, clockCanvas.height);
+            ctx.fillStyle = "#999";
+            ctx.fillRect(0, 0, clockCanvas.width, clockCanvas.height);
 
-                container.appendChild(div);
-            }
-        }
+            ctx.font = "bold 28px monospace";  // Smaller font size
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#00FF00";
 
-        function updateClock() {
             const now = new Date();
-            let hour = now.getHours();
-            hour = hour % 12 || 12;
+            const timeStr = now.toLocaleTimeString();
 
-            const minute = now.getMinutes();
-            const second = now.getSeconds();
-
-            const hourGroup = document.getElementById('hours-group');
-            const minuteGroup = document.getElementById('minutes-group');
-            const secondGroup = document.getElementById('seconds-group');
-
-            // Toggle centering class if hour is single digit
-            if (hour < 10) {
-                hourGroup.classList.add('center-single');
-            } else {
-                hourGroup.classList.remove('center-single');
-            }
-
-            createDigitBoxes(hour, hourGroup, false);
-            createDigitBoxes(minute, minuteGroup, true);
-            createDigitBoxes(second, secondGroup, true);
+            ctx.fillText(timeStr, clockCanvas.width / 2, clockCanvas.height / 2);
         }
 
-        updateClock();
-        setInterval(updateClock, 1000);
-    </script>
 
+
+
+        // Initial draw
+        drawClock();
+
+        // Create a texture from the canvas
+        const clockTexture = new THREE.CanvasTexture(clockCanvas);
+
+        // Create tetrahedron with the clock texture
+        const geometry = new THREE.TetrahedronGeometry(2);
+        const material = new THREE.MeshBasicMaterial({ map: clockTexture });
+        const tetrahedron = new THREE.Mesh(geometry, material);
+        scene.add(tetrahedron);
+
+        camera.position.z = 5;
+
+        // Animate rotation
+        function animate() {
+            requestAnimationFrame(animate);
+            tetrahedron.rotation.x += 0.003;
+            tetrahedron.rotation.y += 0.003;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Update the clock every second
+        setInterval(() => {
+            drawClock();
+            clockTexture.needsUpdate = true;
+        }, 1000);
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 
 </html>
