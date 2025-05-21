@@ -211,8 +211,8 @@
             // Smooth camera Z position animation
             const time = performance.now() / 1000; // Time in seconds
             const period = 15; // Full cycle (forward and back) in seconds
-            const zMin = 2;
-            const zMax = 1;
+            const zMin = 7;
+            const zMax = -1;
             const zRange = zMax - zMin;
             // Use sine for smooth oscillation, map to [0, 1] then to [zMin, zMax]
             camera.position.z = zMin + (zRange * (Math.sin((2 * Math.PI * time) / period) + 1) / 2);
