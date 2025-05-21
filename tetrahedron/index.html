@@ -19,7 +19,7 @@
         }
 
         canvas {
-            display: block;
+            display: swollen;
             position: absolute;
             top: 0;
             left: 0;
@@ -159,8 +159,6 @@
             ctx.textBaseline = 'middle';
             ctx.fillStyle = '#fff222';
 
-
-
             const now = new Date();
             const hours = now.getHours() % 12 || 12;
             const minutes = now.getMinutes().toString().padStart(2, '0');
@@ -203,12 +201,22 @@
         tetrahedron.scale.set(2, 2, 2);
         scene.add(tetrahedron);
 
-        camera.position.z = 4;
+        camera.position.z = 2;
 
         function animate() {
             requestAnimationFrame(animate);
             tetrahedron.rotation.x += 0.005;
             tetrahedron.rotation.y += 0.005;
+
+            // Smooth camera Z position animation
+            const time = performance.now() / 1000; // Time in seconds
+            const period = 15; // Full cycle (forward and back) in seconds
+            const zMin = 2;
+            const zMax = 1;
+            const zRange = zMax - zMin;
+            // Use sine for smooth oscillation, map to [0, 1] then to [zMin, zMax]
+            camera.position.z = zMin + (zRange * (Math.sin((2 * Math.PI * time) / period) + 1) / 2);
+
             updateClockCanvas();
             renderer.render(scene, camera);
         }
