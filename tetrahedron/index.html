@@ -164,9 +164,9 @@
             ctx.fillRect(0, 0, 512, 512);
 
             // Draw clock text
-            ctx.shadowColor = 'green';
-            ctx.shadowBlur = 14;
-            ctx.font = 'bold 80px "fla", Arial, sans-serif'; // Use custom fla font
+            ctx.shadowColor = 'black';
+            ctx.shadowBlur = 1;
+            ctx.font = '80px "fla", Arial, sans-serif'; // Use custom fla font
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = textColor; // Pure white
@@ -254,7 +254,7 @@
             // Smooth camera Z position animation
             const time = performance.now() / 1000; // Time in seconds
             const period = 15; // Full cycle (forward and back) in seconds
-            const zMin = -1;
+            const zMin = -2;
             const zMax = 33;
             const zRange = zMax - zMin;
             camera.position.z = zMin + (zRange * (Math.sin((2 * Math.PI * time) / period) + 1) / 2);
