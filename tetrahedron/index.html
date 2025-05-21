@@ -153,14 +153,14 @@
         const ctx = clockCanvas.getContext('2d');
 
         // Pure white text color
-        const textColor = '#FFFFFF'; // Pure white for all faces
+        const textColor = '#000000'; // Pure white for all faces
 
         function updateClockCanvas() {
             // Clear canvas
             ctx.clearRect(0, 0, 512, 512);
 
             // Solid background for face visibility
-            ctx.fillStyle = '#777777'; // Dark gray
+            ctx.fillStyle = '#ffffff'; // Dark gray
             ctx.fillRect(0, 0, 512, 512);
 
             // Draw clock text
@@ -227,7 +227,7 @@
 
         // Add wireframe for edge visibility
         const wireframeGeometry = new THREE.EdgesGeometry(geometry);
-        const wireframeMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff, linewidth: 2 });
+        const wireframeMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 });
         const wireframe = new THREE.LineSegments(wireframeGeometry, wireframeMaterial);
         wireframe.scale.set(4, 4, 4); // Match tetrahedron scale
         scene.add(wireframe);
