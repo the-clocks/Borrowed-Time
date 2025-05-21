@@ -7,19 +7,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Stick&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Roboto+Slab:wght@100..900&family=Stick&display=swap"
         rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'fla';
+            src: url('fla.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body,
         html {
             margin: 0;
             height: 100%;
             overflow: hidden;
-            background: linear-gradient(135deg, #e8e89f, #763452);
+            background: linear-gradient(135deg, #cf093a, #f86732);
         }
 
         canvas {
-            display: swollen;
+            display: block;
             position: absolute;
             top: 0;
             left: 0;
@@ -38,12 +45,11 @@
             justify-content: space-around;
             z-index: -1;
             transition: transform 0.5s ease;
-            /* Smooth rotation transition */
         }
 
         .title-container {
-            color: #ecf3ef;
-            text-shadow: #705b11 1px 0px;
+            color: #929e97;
+            text-shadow: #917307 1px 0px;
             position: absolute;
             top: 5px;
             left: 50%;
@@ -128,8 +134,10 @@
     <div class="date-container">
         <a href="../ants/" class="dates dateleft">04/27/25</a>
         <a href="../index.html" class="clockname">Tetrahedron</a>
-        <a href="../index.html" class="dates dateright">04/2725</a>
+        <a href="../index.html" class="dates dateright">04/27/25</a>
     </div>
+    <div class="fire-gradient"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
     <script>
         const scene = new THREE.Scene();
@@ -144,26 +152,29 @@
         clockCanvas.height = 512;
         const ctx = clockCanvas.getContext('2d');
 
+        // Pure white text color
+        const textColor = '#FFFFFF'; // Pure white for all faces
+
         function updateClockCanvas() {
-            const grad = ctx.createLinearGradient(0, 0, 512, 512);
-            grad.addColorStop(0, '#e11a33');
-            grad.addColorStop(1, '#665f91');
-            ctx.fillStyle = grad;
+            // Clear canvas
+            ctx.clearRect(0, 0, 512, 512);
+
+            // Solid background for face visibility
+            ctx.fillStyle = '#777777'; // Dark gray
             ctx.fillRect(0, 0, 512, 512);
 
-            ctx.shadowColor = 'red';
+            // Draw clock text
+            ctx.shadowColor = 'green';
             ctx.shadowBlur = 14;
-
-            ctx.font = 'bold 80px Arial';
+            ctx.font = 'bold 80px "fla", Arial, sans-serif'; // Use custom fla font
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillStyle = '#fff222';
-
+            ctx.fillStyle = textColor; // Pure white
             const now = new Date();
             const hours = now.getHours() % 12 || 12;
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const timeString = `${hours}:${minutes}`;
-            ctx.fillText(timeString, 256, 256);
+            ctx.fillText(timeString, 256, 366);
 
             clockTexture.needsUpdate = true;
         }
@@ -171,57 +182,86 @@
         const clockTexture = new THREE.CanvasTexture(clockCanvas);
         clockTexture.minFilter = THREE.LinearFilter;
 
-        // Create multiple materials with different tints
-        const baseColor = 0xffffff;
-        const tints = [0xff8888, 0x88ff88, 0x8888ff, 0xffff88];
-        const materials = tints.map(tint => new THREE.MeshBasicMaterial({
+        // Create materials with different colors for tetrahedron faces
+        const faceColors = [
+            0xff0000, // Amber
+            0xdb026b, // Orange
+            0xf76b07, // Magenta
+            0xb80404 // Red-orange
+        ];
+        const materials = faceColors.map(color => new THREE.MeshBasicMaterial({
             map: clockTexture,
-            color: tint,
-            side: THREE.DoubleSide
+            color: color,
+            side: THREE.DoubleSide,
+            transparent: false
         }));
 
-        // Create tetrahedron geometry and convert to non-indexed
+        // Create tetrahedron geometry
         let geometry = new THREE.TetrahedronGeometry(1);
         geometry = geometry.toNonIndexed(); // Separate each face
+
+        // Set UV coordinates for each face
+        const uvAttribute = new Float32Array(geometry.attributes.position.count * 2);
         const faceCount = geometry.attributes.position.count / 3;
 
-        // Assign material indices to each face
-        const materialIndices = [];
         for (let i = 0; i < faceCount; i++) {
-            materialIndices.push(i % materials.length);
+            const vertexIndex = i * 3;
+            uvAttribute[vertexIndex * 2] = 0.0; // Vertex 1: bottom-left
+            uvAttribute[vertexIndex * 2 + 1] = 0.0;
+            uvAttribute[vertexIndex * 2 + 2] = 1.0; // Vertex 2: bottom-right
+            uvAttribute[vertexIndex * 2 + 3] = 0.0;
+            uvAttribute[vertexIndex * 2 + 4] = 0.5; // Vertex 3: top-center
+            uvAttribute[vertexIndex * 2 + 5] = 1.0;
         }
 
-        // Add materialIndex attribute
-        const groups = [];
+        geometry.setAttribute('uv', new THREE.BufferAttribute(uvAttribute, 2));
+
+        // Assign materials to faces
         for (let i = 0; i < faceCount; i++) {
-            geometry.addGroup(i * 3, 3, materialIndices[i]);
+            geometry.addGroup(i * 3, 3, i % materials.length);
         }
 
         const tetrahedron = new THREE.Mesh(geometry, materials);
-        tetrahedron.scale.set(2, 2, 2);
+        tetrahedron.scale.set(4, 4, 4); // Larger size
         scene.add(tetrahedron);
 
-        camera.position.z = 2;
+        // Add wireframe for edge visibility
+        const wireframeGeometry = new THREE.EdgesGeometry(geometry);
+        const wireframeMaterial = new THREE.LineBasicMaterial({ color: 0xff0000, linewidth: 2 });
+        const wireframe = new THREE.LineSegments(wireframeGeometry, wireframeMaterial);
+        wireframe.scale.set(4, 4, 4); // Match tetrahedron scale
+        scene.add(wireframe);
+
+        camera.position.z = 4;
+
+        // Ensure font is loaded before starting
+        document.fonts.load('bold 80px "fla"').then(() => {
+            updateClockCanvas(); // Initial canvas update
+            animate();
+        }).catch((err) => {
+            console.warn('Font loading failed, using fallback:', err);
+            updateClockCanvas();
+            animate();
+        });
 
         function animate() {
             requestAnimationFrame(animate);
-            tetrahedron.rotation.x += 0.005;
-            tetrahedron.rotation.y += 0.005;
+            tetrahedron.rotation.x += 0.003;
+            tetrahedron.rotation.y += 0.003;
+            wireframe.rotation.x += 0.003;
+            wireframe.rotation.y += 0.003;
 
             // Smooth camera Z position animation
             const time = performance.now() / 1000; // Time in seconds
             const period = 15; // Full cycle (forward and back) in seconds
-            const zMin = 7;
-            const zMax = -1;
+            const zMin = -1;
+            const zMax = 33;
             const zRange = zMax - zMin;
-            // Use sine for smooth oscillation, map to [0, 1] then to [zMin, zMax]
             camera.position.z = zMin + (zRange * (Math.sin((2 * Math.PI * time) / period) + 1) / 2);
 
             updateClockCanvas();
             renderer.render(scene, camera);
         }
-
-        animate();
 
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
