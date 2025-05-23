@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+   
+        <title>Solar Transit Clock</title>
+    <style>
+        @font-face {
+            font-family: 'Dir';
+            src: url('./Dir.ttf') format('truetype');
+        }
+
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #000000;
+        }
+
+        .clock {
+            width: 90vmin;
+            height: 90vmin;
+            font-family: 'Dir', serif;   
+              color: rgb(172, 182, 220);
+           
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .number {
+            position: absolute;
+            font-size: 7vh;
+       
+            font-weight: bold;
+            transform-origin: center center;
+        }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background: #abe5f3;
+        }
+
+        .hour {
+            width: 2%;
+            height: 25%;
+        }
+
+        .minute {
+            width: 1%;
+            height: 35%;
+            background: #abe5f3;
+        }
+
+        .second {
+            width: 0.3%;
+            height: 190%;
+            background: #abe5f3;
+        }
+
+        .center-dot {
+            position: absolute;
+            width: 2%;
+            height: 2%;
+            background: #0b07f5;
+            border-radius: 50%;
+            top: 49%;
+            left: 49%;
+            z-index: 10;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        .date-container {
+            color: #580315;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #b46a21;
+            text-shadow: #0e3314 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.1vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.7vh;
+            font-style: italic;
+            letter-spacing: -0.1vh;
+        }
+
+        .bgimage-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bgimage {
+  max-width: 600px;
+  max-height: 600px;
+  z-index: 6;
+  filter: hue-rotate(322deg) contrast(180%) saturate(160%);
+}
+
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../semaphore/" class="dates dateleft">05/21/25</a>
+        <a href="../index.html" class="clockname">Solar Transit</a>
+        <a href="../index.html" class="dates dateright">05/23/25</a>
+    </div>
+ <div class="bgimage-wrapper">
+  <img src="./sun.gif" class="bgimage" />
+</div>
+
+
+
+    <div class="clock" id="clock">
+        <div class="hand hour" id="hour"></div>
+        <div class="hand minute" id="minute"></div>
+        <div class="hand second" id="second"></div>
+        <div class="center-dot"></div>
+    </div>
+
+    <script>
+        const romanNumerals = ["XII", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"];
+        const clock = document.getElementById("clock");
+
+        // Place Roman numerals
+        romanNumerals.forEach((num, i) => {
+            const angleDeg = i * 30; // 360 / 12
+            const angleRad = angleDeg * (Math.PI / 180);
+            const radius = 43; // percent from center
+
+            const x = 50 + radius * Math.sin(angleRad);
+            const y = 50 - radius * Math.cos(angleRad);
+
+            const el = document.createElement("div");
+            el.className = "number";
+            el.style.left = `${x}%`;
+            el.style.top = `${y}%`;
+            el.textContent = num;
+
+            // Rotate numeral so it's tangent to the circle
+            el.style.transform = `translate(-50%, -50%) rotate(${angleDeg}deg)`;
+
+            clock.appendChild(el);
+        });
+
+        function updateClock() {
+            const now = new Date();
+            const sec = now.getSeconds();
+            const min = now.getMinutes();
+            const hr = now.getHours();
+
+            const secondDeg = sec * 6;
+            const minuteDeg = min * 6 + sec * 0.1;
+            const hourDeg = ((hr % 12) * 30) + (min * 0.5);
+
+            document.getElementById("second").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+            document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
