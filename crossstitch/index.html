@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rainbow Clock</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+      <style>
+    @font-face {
+      font-family: 'Cross';
+      src: url('Cross.otf') format('opentype');
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 110%;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .clock {
+      font-family: "Cross", sans-serif;
+      display: flex;
+      flex-direction: row;
+      gap: 0.01rem;
+      font-size: 40vh;
+      z-index: 4;
+      align-items: center;
+    }
+
+    .unit {
+      display: flex;
+      gap: 0.1em;
+    }
+
+    .digit {
+      display: inline-block;
+      width: 0.4em;      /* Fixed width for each digit box */
+      text-align: center;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+
+    .am-pm {
+      font-size: 0.001em;
+      color: transparent;
+      align-self: flex-start;
+      margin-left: 0.002em;
+
+    }
+
+    /* Vertical layout on phones */
+    @media (max-width: 768px) {
+      .clock {
+        flex-direction: column;
+        font-size: 30vh;
+        line-height: 22vh;
+      }
+      .am-pm {
+        align-self: center;
+        margin-left: 0;
+        margin-top: 0.01em;
+          font-size: 0.001em;
+      color: transparent;
+      }
+    }
+
+    .bgimage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(0.9) brightness(80%);
+      z-index: 0;
+    }
+
+        .title-container {
+            color: #e7f308;
+            text-shadow: #910828 1px 0;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.1vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.7vh;
+            font-style: italic;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        /* Date container styles */
+        .date-container {
+            color: #8bf806;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+  </style>
+</head>
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../solartransit/" class="dates dateleft">05/22/25</a>
+        <a href="../index.html" class="clockname">Cross Stitch</a>
+               <a href="../index.html"class="dates dateright">05/24/25</a>
+    </div>
+  <img src="./blank.jpg" class="bgimage" />
+  <div class="clock" id="clock">
+    <div class="unit" id="hours"></div>
+   
+    <div class="unit" id="minutes"></div>
+   
+    <div class="unit" id="seconds"></div>
+    <div class="am-pm" id="ampm"></div>
+  </div>
+
+  <script>
+    function getRandomBrightColor() {
+      const hue = Math.floor(Math.random() * 360);
+      return `hsl(${hue}, 100%, 65%)`; // very bright color, increase lightness slightly
+    }
+
+    function updateClock() {
+      const now = new Date();
+
+      let hours = now.getHours();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+
+      hours = hours % 12;
+      if (hours === 0) hours = 12; // 12-hour format, no zero hour
+
+      // No leading zero, so convert hours to string directly
+      const parts = {
+        hours: String(hours),
+        minutes: String(now.getMinutes()).padStart(2, '0'),
+        seconds: String(now.getSeconds()).padStart(2, '0'),
+      };
+
+      for (let [unit, value] of Object.entries(parts)) {
+        const container = document.getElementById(unit);
+        container.innerHTML = '';
+        for (let char of value) {
+          const span = document.createElement('span');
+          span.textContent = char;
+          span.className = 'digit';
+          span.style.color = getRandomBrightColor();
+          container.appendChild(span);
+        }
+      }
+
+      document.getElementById('ampm').textContent = ampm;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SVG Morphing Clock</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    svg {
+      width: 600px;
+      height: 200px;
+    }
+
+    path {
+      fill: #0ff;
+      transition: fill 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <svg id="clock" viewBox="0 0 600 200"></svg>
+
+  <script src="https://unpkg.com/flubber"></script>
+  <script>
+    const digitPaths = {
+      "0": "M40,20 A20,20 0 1,1 40,180 A20,20 0 1,1 40,20 Z",
+      "1": "M60,30 L60,170",
+      "2": "M40,40 Q60,20 80,40 T60,80 Q40,100 80,160",
+      "3": "M40,40 Q60,20 80,40 Q60,80 80,100 Q60,120 40,100",
+      "4": "M80,100 L40,100 L60,40 L60,180",
+      "5": "M80,40 H40 V90 Q60,70 80,90 Q60,120 40,100",
+      "6": "M80,40 Q40,40 40,90 Q60,70 80,90 Q60,120 40,100 Q40,180 80,160",
+      "7": "M40,40 H80 L60,180",
+      "8": "M60,60 A20,20 0 1,1 60,100 A20,20 0 1,1 60,60 M60,100 A20,20 0 1,1 60,140 A20,20 0 1,1 60,100",
+      "9": "M80,140 Q40,140 40,90 Q60,110 80,90 Q60,60 40,80 Q40,20 80,40",
+      ":": "M60,70 A5,5 0 1,1 59,70 Z M60,130 A5,5 0 1,1 59,130 Z"
+    };
+
+    const clockEl = document.getElementById('clock');
+    const digits = [];
+
+    // Initial draw
+    for (let i = 0; i < 8; i++) {
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", digitPaths["0"]);
+      path.setAttribute("transform", `translate(${i * 70 + 20}, 0)`);
+      clockEl.appendChild(path);
+      digits.push(path);
+    }
+
+    let prevChars = Array(8).fill("0");
+
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('en-US', { hour12: false });
+      const chars = time.padStart(8, '0').split('');
+
+      chars.forEach((char, i) => {
+        if (digitPaths[char] && char !== prevChars[i]) {
+          const from = digitPaths[prevChars[i]];
+          const to = digitPaths[char];
+          const interpolator = flubber.interpolate(from, to);
+          let frame = 0;
+          const total = 15;
+
+          function animate() {
+            if (frame <= total) {
+              digits[i].setAttribute("d", interpolator(frame / total));
+              frame++;
+              requestAnimationFrame(animate);
+            }
+          }
+          animate();
+          prevChars[i] = char;
+        }
+      });
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>

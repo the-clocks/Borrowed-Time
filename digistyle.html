@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Digital Clock</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #111;
+      color: white;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .clock {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .time-row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .digit {
+      font-size: 10vw;
+      padding: 0 0.5vw;
+    }
+
+    /* Optional digit color styles */
+    .digit-0 { color: #ff3c38; }
+    .digit-1 { color: #ff8c42; }
+    .digit-2 { color: #f9c80e; }
+    .digit-3 { color: #a1ff0a; }
+    .digit-4 { color: #0aff99; }
+    .digit-5 { color: #0aefff; }
+    .digit-6 { color: #147df5; }
+    .digit-7 { color: #580aff; }
+    .digit-8 { color: #be0aff; }
+    .digit-9 { color: #ff0ac1; }
+
+    @media (min-width: 768px) {
+      .clock {
+        flex-direction: row;
+        gap: 1vw;
+      }
+
+      .time-row {
+        flex-direction: row;
+      }
+
+      .digit {
+        font-size: 10vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="clock" id="clock">
+    <div class="time-row" id="hours"></div>
+    <div class="time-row" id="minutes"></div>
+    <div class="time-row" id="seconds"></div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+
+      const hoursContainer = document.getElementById('hours');
+      const minutesContainer = document.getElementById('minutes');
+      const secondsContainer = document.getElementById('seconds');
+
+      // Clear previous digits
+      [hoursContainer, minutesContainer, secondsContainer].forEach(el => el.innerHTML = '');
+
+      // Render digits
+      for (let digit of hours) {
+        const span = document.createElement('span');
+        span.className = `digit digit-${digit}`;
+        span.textContent = digit;
+        hoursContainer.appendChild(span);
+      }
+
+      for (let digit of minutes) {
+        const span = document.createElement('span');
+        span.className = `digit digit-${digit}`;
+        span.textContent = digit;
+        minutesContainer.appendChild(span);
+      }
+
+      for (let digit of seconds) {
+        const span = document.createElement('span');
+        span.className = `digit digit-${digit}`;
+        span.textContent = digit;
+        secondsContainer.appendChild(span);
+      }
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>

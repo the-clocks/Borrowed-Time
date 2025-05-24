@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Free Placement Digital Clock</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: monospace;
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #clock {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .digit, .colon {
+      position: absolute;
+      font-size: 10vw;
+      text-align: center;
+    }
+
+    /* Default digit positions (desktop) */
+    .h1 { top: 10vh; left: 10vw; color: red; }
+    .h2 { top: 10vh; left: 20vw; color: orange; }
+    .colon1 { top: 10vh; left: 30vw; color: white; }
+    .m1 { top: 10vh; left: 40vw; color: yellow; }
+    .m2 { top: 10vh; left: 50vw; color: green; }
+    .colon2 { top: 10vh; left: 60vw; color: white; }
+    .s1 { top: 10vh; left: 70vw; color: cyan; }
+    .s2 { top: 10vh; left: 80vw; color: violet; }
+
+    /* Mobile override - stack vertically and hide colons */
+    @media (max-width: 768px) {
+      .h1 { top: 10vh; left: 40vw; }
+      .h2 { top: 20vh; left: 40vw; }
+      .colon1 { display: none; }
+      .m1 { top: 35vh; left: 40vw; }
+      .m2 { top: 45vh; left: 40vw; }
+      .colon2 { display: none; }
+      .s1 { top: 60vh; left: 40vw; }
+      .s2 { top: 70vh; left: 40vw; }
+    }
+  </style>
+</head>
+<body>
+  <div id="clock">
+    <span class="digit h1">0</span>
+    <span class="digit h2">0</span>
+    <span class="colon colon1">:</span>
+    <span class="digit m1">0</span>
+    <span class="digit m2">0</span>
+    <span class="colon colon2">:</span>
+    <span class="digit s1">0</span>
+    <span class="digit s2">0</span>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+
+      document.querySelector('.h1').textContent = h[0];
+      document.querySelector('.h2').textContent = h[1];
+      document.querySelector('.m1').textContent = m[0];
+      document.querySelector('.m2').textContent = m[1];
+      document.querySelector('.s1').textContent = s[0];
+      document.querySelector('.s2').textContent = s[1];
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>

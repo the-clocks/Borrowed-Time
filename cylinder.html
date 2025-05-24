@@ -1,89 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Responsive Text Cylinder</title>
   <style>
-    @font-face {
-      font-family: 'Inconsolata';
-      src: url('https://ggayane.github.io/css-experiments/Inconsolata-VF.ttf');
-      font-weight: 275 900;
-      font-stretch: 50% 200%;
-    }
-
     body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
+      background: rgba(10, 20, 40, 1);
       height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: black;
-      color: white;
-      font-family: 'Inconsolata';
       overflow: hidden;
-    }
-
-    main {
-      white-space: nowrap;
       display: flex;
-      flex-direction: row;
       justify-content: center;
       align-items: center;
-      gap: 0.2em;
-      font-size: 8vw;
-      transform-origin: center;
-      transition: all 0.5s ease;
+      perspective: 500px;
     }
 
-    .static {
-      font-size: 3vw;
-      font-variation-settings: "wght"900, "wdth"200;
+    #ui {
+      transform-style: preserve-3d;
+      position: relative;
     }
 
-    .variable {
-      display: flex;
-      font-variation-settings: "wght"275, "wdth"50;
-      animation: swapthings 3s infinite both cubic-bezier(0.17, 0.04, 0.04, 0.99);
+    .text {
+      position: absolute;
+      font-size: 15rem;
+      color: #fff;
+      line-height: 15rem;
+      font-family: 'Anton', sans-serif;
+      padding: 20px 0;
+      mix-blend-mode: screen;
+      transform-style: preserve-3d;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
 
-    .work {
-      animation: swapthings2 3s infinite both cubic-bezier(0.17, 0.04, 0.04, 0.99);
-    }
-
-    @keyframes swapthings {
-      0%   { font-variation-settings: "wght"275, "wdth"50; }
-      50%  { font-variation-settings: "wght"900, "wdth"200; }
-      100% { font-variation-settings: "wght"275, "wdth"50; }
-    }
-
-    @keyframes swapthings2 {
-      0%   { font-variation-settings: "wght"900, "wdth"200; }
-      50%  { font-variation-settings: "wght"275, "wdth"50; }
-      100% { font-variation-settings: "wght"900, "wdth"200; }
-    }
-
-    /* 🔁 Media Query: Rotate on phones (portrait) */
-    @media (max-width: 768px), (orientation: portrait) {
-      main {
-        transform: rotate(-90deg);
-        font-size: 10vw;
-        flex-direction: column;
+    @keyframes wave {
+      0% {
+        transform: translate(-50%, -50%) scale(0.9) rotateX(20deg) rotateY(20deg) rotateZ(0deg);
+        color: rgba(0, 30, 100, 1);
       }
-
-      .static {
-        font-size: 5vw;
+      100% {
+        transform: translate(-50%, -50%) scale(1.1) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+        color: rgba(50, 230, 255, 1);
       }
     }
   </style>
 </head>
 <body>
-  <main>
-    <div class="variable">
-      <span class="work">WORK</span>LIFE
-    </div>
-    <div class="static">BALANCE</div>
-  </main>
+  <div id="ui"></div>
+
+  <script>
+    const text = "ocean";
+    const ui = document.getElementById("ui");
+
+    for (let i = 0; i < 26; i++) {
+      const span = document.createElement("div");
+      span.className = "text";
+      span.textContent = text;
+      span.style.animation = `wave 2s ease-in-out infinite alternate`;
+      span.style.animationDelay = `${i * 0.2 - 10}s`;
+
+      // Optional: create slight cylinder-like spacing
+      span.style.transform = `translate(-50%, -50%) rotateY(${i * 14}deg) translateZ(200px)`;
+      ui.appendChild(span);
+    }
+  </script>
 </body>
 </html>
