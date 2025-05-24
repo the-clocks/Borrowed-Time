@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Rolling Cylinder with Pause</title>
+  <style>
+    body {
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      perspective: 1000px;
+    }
+
+    .cylinder {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      transform-style: preserve-3d;
+      animation: rotatePause 6s infinite;
+    }
+
+    .text-strip {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: center center -100px;
+      font-size: 24px;
+      font-family: sans-serif;
+      color: #0ff;
+      white-space: nowrap;
+    }
+
+    @keyframes rotatePause {
+      0%   { transform: rotateY(0deg); }
+      40%  { transform: rotateY(180deg); }
+      50%  { transform: rotateY(180deg); }  /* pause at 180° */
+      90%  { transform: rotateY(360deg); }
+      100% { transform: rotateY(360deg); }  /* pause at 360° */
+    }
+  </style>
+</head>
+<body>
+  <div class="cylinder" id="cylinder"></div>
+
+  <script>
+    const cylinder = document.getElementById('cylinder');
+    const text = 'Rolling Text Cylinder ';
+    const segments = 12;
+
+    for (let i = 0; i < segments; i++) {
+      const strip = document.createElement('div');
+      strip.className = 'text-strip';
+      strip.style.transform = `rotateY(${(360 / segments) * i}deg) translateZ(100px)`;
+      strip.textContent = text;
+      cylinder.appendChild(strip);
+    }
+  </script>
+</body>
+</html>
