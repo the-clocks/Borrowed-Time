@@ -27,6 +27,7 @@
     }
 
     .letter {
+       z-index: 2;
       font-family: 'speed', Arial, sans-serif;
       position: absolute;
       pointer-events: none;
@@ -172,7 +173,7 @@
     hours = hours ? hours : 12;
     const timeString = `${hours}${minutes.toString().padStart(2, '0')}`;
     const CUSTOM_LETTERS = timeString;
-    const numLetters = 200;
+    const numLetters = 100;
 
     let centerX = window.innerWidth / 2;
     window.addEventListener('resize', () => {
