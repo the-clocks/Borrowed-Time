@@ -1,102 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Upward Flying Clock</title>
-    <style>
-        body {
-            margin: 0;
-            background: #111;
-            overflow: hidden;
-            font-family: monospace;
-        }
+  <meta charset="UTF-8">
+  <title>Custom Tornado Letters</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, #73a34e 0%, #37604a 100%);
+      height: 100vh;
+      font-family: sans-serif;
+    }
 
-        #clock {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        .digit {
-            position: absolute;
-            will-change: transform;
-            white-space: pre;
-            pointer-events: none;
-            animation: fly-up 2s ease-out forwards;
-        }
-
-        @keyframes fly-up {
-            0% {
-                transform: translate(var(--x-start), 110vh) scale(var(--scale));
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translate(var(--x-final), var(--y-final)) scale(var(--scale));
-                opacity: 1;
-            }
-        }
-    </style>
+    .letter {
+      position: absolute;
+      color: rgb(11, 11, 11);
+      font-size: 24px;
+      pointer-events: none;
+      will-change: transform;
+    }
+  </style>
 </head>
-
 <body>
-    <div id="clock"></div>
+<script>
+  // 🎯 Time: 12-hour, no leading zero, no colon, no AM/PM
+  const now = new Date();
+  let hours = now.getHours();
+  const minutes = now.getMinutes();
+  hours = hours % 12;
+  hours = hours ? hours : 12; // convert 0 to 12
 
-    <script>
-        const clock = document.getElementById("clock");
+  const timeString = `${hours}${minutes.toString().padStart(2, '0')}`;
+  const CUSTOM_LETTERS = timeString;
 
-        function getTimeDigits() {
-            const now = new Date();
-            return now.toLocaleTimeString('en-GB', { hour12: false }).split('');
-        }
+  const numLetters = 300;
+  const centerX = window.innerWidth / 2;
 
-        function randomColor() {
-            return `hsl(${Math.random() * 360}, 100%, 60%)`;
-        }
+  function randomLetter() {
+    return CUSTOM_LETTERS[Math.floor(Math.random() * CUSTOM_LETTERS.length)];
+  }
 
-        function randomFontSize() {
-            return `${Math.floor(Math.random() * 40 + 30)}px`;
-        }
+  function createLetter() {
+    const span = document.createElement('span');
+    span.className = 'letter';
+    span.textContent = randomLetter();
+    document.body.appendChild(span);
+    return span;
+  }
 
-        function randomScale() {
-            return (Math.random() * 0.5 + 0.75).toFixed(2);
-        }
+  // Initialize particles with varied heights, speeds, and wobble parameters
+  const particles = Array.from({ length: numLetters }, (_, index) => {
+    const el = createLetter();
+    return {
+      el,
+      angle: Math.random() * 2 * Math.PI,
+      baseHeight: (index / numLetters) * window.innerHeight,
+      speed: Math.random() * 0.8 + 0.2,
+      wobblePhase: Math.random() * 2 * Math.PI,
+      wobbleFreq: Math.random() * 0.15 + 0.1,
+      wobbleAmp: Math.random() * 40 + 20,
+      secondaryWobblePhase: Math.random() * 2 * Math.PI,
+      secondaryWobbleFreq: Math.random() * 0.2 + 0.05
+    };
+  });
 
-        function throwDigitsUp() {
-            const digits = getTimeDigits();
-            digits.forEach((char, index) => {
-                const span = document.createElement("span");
-                span.className = "digit";
-                span.textContent = char;
+  let time = 0;
 
-                const xStart = `${Math.random() * 100}vw`;
-                const xOffset = index * 40 + window.innerWidth / 2 - (digits.length * 20);
-                const yFinal = `${window.innerHeight / 2}px`;
-                const scale = randomScale();
+  function animate() {
+    requestAnimationFrame(animate);
+    time += 0.01;
+    const swayOffset = Math.sin(time) * 50;
 
-                span.style.left = "0";
-                span.style.top = "0";
-                span.style.color = randomColor();
-                span.style.fontSize = randomFontSize();
+    particles.forEach(p => {
+      p.angle += p.speed * 0.05;
+      p.baseHeight -= p.speed + Math.sin(time + p.wobblePhase) * 0.2;
+      if (p.baseHeight < -50) {
+        p.baseHeight = window.innerHeight + 50;
+        p.el.textContent = randomLetter();
+        p.angle = Math.random() * 2 * Math.PI;
+        p.wobblePhase = Math.random() * 2 * Math.PI;
+        p.secondaryWobblePhase = Math.random() * 2 * Math.PI;
+      }
 
-                span.style.setProperty('--x-start', xStart);
-                span.style.setProperty('--x-final', `${xOffset}px`);
-                span.style.setProperty('--y-final', yFinal);
-                span.style.setProperty('--scale', scale);
+      const normalizedHeight = 1 - (p.baseHeight / window.innerHeight);
+      const baseRadius = 30 + normalizedHeight * 200;
+      const radiusVariation = Math.sin(time + p.wobblePhase) * 15;
+      const radius = baseRadius + radiusVariation;
 
-                clock.appendChild(span);
-            });
-        }
+      const wobble = Math.sin(time * p.wobbleFreq + p.wobblePhase) * p.wobbleAmp +
+                     Math.cos(time * p.secondaryWobbleFreq + p.secondaryWobblePhase) * (p.wobbleAmp * 0.5);
+      const x = centerX + swayOffset + Math.cos(p.angle) * radius + wobble;
+      const y = p.baseHeight;
 
-        throwDigitsUp();
-        setInterval(throwDigitsUp, 3000);
-    </script>
+      // Base scale based on height (smaller at top, larger at bottom)
+      const baseScale = 0.3 + (p.baseHeight / window.innerHeight) * 2.2; // Amplified range: 0.3 to 2.5
+      // Adjust scale based on z-depth (front/back of tornado)
+      const zDepthScale = 1 + Math.cos(p.angle) * 0.3; // +0.3 at front, -0.3 at back
+      const scale = baseScale * zDepthScale;
+
+      const rotation = p.angle * 50;
+
+      p.el.style.transform = `translate(${x}px, ${y}px) scale(${scale}) rotate(${rotation}deg)`;
+      p.el.style.zIndex = Math.floor(scale * 100);
+    });
+  }
+
+  animate();
+</script>
 </body>
-
 </html>
