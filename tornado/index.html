@@ -293,7 +293,7 @@
     }
 
     function randomFlashLoop() {
-      const nextDelay = Math.random() * 8000 + 2000; // every 2s–10s
+      const nextDelay = Math.random() * 2000 + 1000; // every 2s–10s
       setTimeout(() => {
         const color = Math.random() < 0.5 ? 'white' : 'black';
         triggerFlash(color);
