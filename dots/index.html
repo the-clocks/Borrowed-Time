@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digital Clock</title>
+  <style>
+    @font-face {
+      font-family: 'dots';
+      src: url('./dots.otf') format('opentype');
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #0a0256;
+      color: rgb(224, 176, 224);
+      font-family: 'dots', monospace;
+    }
+
+    .clock {
+      display: flex;
+      flex-direction: row;
+      gap: 0.1rem;
+      font-size: 10rem;
+      text-align: center;
+    }
+
+    .time-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .digits {
+      display: flex;
+      gap: 0.3rem;
+    }
+
+    .box {
+      width: 8rem;
+      /* height: 1.5em; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 0.3em;
+      position: relative;
+      overflow: hidden;
+      transition: width 0.3s ease, margin 0.3s ease;
+    }
+
+    .box.hidden {
+      width: 0;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      visibility: hidden;
+    }
+
+    .box span {
+      display: inline-block;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50%);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .clock {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="clock" role="timer" aria-live="polite">
+    <div class="time-unit">
+      <div class="digits">
+        <div class="box" id="hourTens"></div>
+        <div class="box" id="hourUnits">0</div>
+      </div>
+    </div>
+    <div class="time-unit">
+      <div class="digits">
+        <div class="box" id="minuteTens">0</div>
+        <div class="box" id="minuteUnits">0</div>
+      </div>
+    </div>
+    <div class="time-unit">
+      <div class="digits">
+        <div class="box" id="secondTens">0</div>
+        <div class="box" id="secondUnits">0</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateDigit(id, value) {
+      const el = document.getElementById(id);
+      if (el.textContent !== value) {
+        el.innerHTML = `<span>${value}</span>`;
+      }
+    }
+
+    function updateClock() {
+      const now = new Date();
+      let hour = now.getHours() % 12;
+      hour = hour === 0 ? 12 : hour;
+
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+
+      const hourStr = String(hour);
+      const hourTens = document.getElementById('hourTens');
+      const hourUnits = document.getElementById('hourUnits');
+
+      if (hourStr.length === 1) {
+        hourTens.classList.add('hidden');
+        updateDigit('hourUnits', hourStr[0]);
+      } else {
+        hourTens.classList.remove('hidden');
+        updateDigit('hourTens', hourStr[0]);
+        updateDigit('hourUnits', hourStr[1]);
+      }
+
+      updateDigit('minuteTens', minutes[0]);
+      updateDigit('minuteUnits', minutes[1]);
+
+      updateDigit('secondTens', seconds[0]);
+      updateDigit('secondUnits', seconds[1]);
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
