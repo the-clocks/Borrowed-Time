@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Digital Clock</title>
+    <style>
+        @font-face {
+            font-family: 'watch';
+            src: url('./watch.ttf') format('truetype'); 
+        }
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #eee6e6;
+            color: rgb(34, 3, 3);
+            margin: 0;
+        }
+
+        .clock {
+            font-family: 'watch', sans-serif;
+            display: flex;
+            gap: 1rem;
+            font-size: 4rem;
+            text-align: center;
+        }
+
+        .unit {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            font-size: 1rem;
+            color: #888;
+        }
+
+        @media (max-width: 600px) {
+            .clock {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock">
+        <div class="unit" id="hours">
+            <div class="value"></div>
+        </div>
+        <div class="unit" id="minutes">
+            <div class="value"></div>
+        </div>
+        <div class="unit" id="seconds">
+            <div class="value"></div>
+        </div>
+    </div>
+
+    <script>
+        // Custom digit substitution map
+        const charMap = {
+            '0': 'zero',
+            '1': 'one',
+            '2': 'two',
+            '3': 'three',
+            '4': 'four',
+            '5': 'five',
+            '6': 'six',
+            '7': 'seven',
+            '8': 'eight',
+            '9': 'nine'
+        };
+
+        function substituteDigit(str) {
+            return str.split('').map(d => charMap[d] || d).join('');
+        }
+
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            // Convert to 12-hour format without leading zeros
+            hours = hours % 12 || 12;
+
+            document.querySelector('#hours .value').textContent = substituteDigit(String(hours));
+            document.querySelector('#minutes .value').textContent = substituteDigit(String(minutes).padStart(2, '0'));
+            document.querySelector('#seconds .value').textContent = substituteDigit(String(seconds).padStart(2, '0'));
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
