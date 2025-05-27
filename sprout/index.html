@@ -32,10 +32,10 @@
       align-items: center;
       flex-direction: column;
       background-image: 
-        url('./sprou.gif'),   /* Tiled background */
-        url('./sprout.gif'); /* Cover background */
+        url('./spr.gif'),   /* Tiled background */
+        url('./sprout.gif'); Cover background
       background-repeat: repeat, no-repeat;
-      background-size: 88px 88px, cover;
+      background-size: 23px 23px, cover;
       background-position: center center, center center;
     }
 
@@ -61,6 +61,7 @@
 
     .digit {
         color: rgb(184, 244, 172);
+        text-shadow: #d8225c 1px 0px;
       font-family: 'sprout', monospace;
       padding: 0.1vh 0.1vw;
       font-size: 20vh;
@@ -68,18 +69,64 @@
       text-align: center;
     }
 
+    .bgimage,
+.bgimage2,
+.bgimage3,
+.bgimage4,
+.bgimage5 {
+  position: fixed; /* stays in viewport */
+  z-index: 12;
+  
+  /* Size of the div — controls the area the background occupies */
+  width: 100vh; /* change this */
+  height: 110vh; /* change this */
+
+  /* Center or place anywhere */
+  top: 50%;      /* change to any %, px, etc. */
+  left: 50%;     /* change to any %, px, etc. */
+  transform: translate(-50%, -50%); /* keeps it centered — remove if not needed */
+
+  /* Background control */
+  background-image: url('./your-image.png'); /* set your image */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain; /* OR: cover / auto / 200px 300px */
+  
+  /* Optional: opacity or blending */
+  /* opacity: 0.8; */
+}
+
+
+
  .bgimage {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background-position: top left; /* or center, depending on preference */
-  background-repeat: repeat;
-  filter: brightness(130%);
-  z-index: 4;
-  /* opacity: 0.5; */
 }
 
+ .bgimage2 {
+  position: fixed;
+  top: 50%;
+  left: 10%;
+}
+
+ .bgimage3 {
+  position: fixed;
+  top: 50%;
+  left: 90%;
+}
+
+ .bgimage4 {
+  position: fixed;
+  top: 70%;
+  left: 70%;
+}
+
+ .bgimage5 {
+  position: fixed;
+  top: 70%;
+  left: 30%;
+}
 
 
         a {
@@ -129,7 +176,7 @@
         }
 
         .title-container {
-              color: #c1f579;
+              color: #b8cb9d;
             text-shadow: #201e1f 1px 0px;
             position: absolute;
             top: 5px;
@@ -158,11 +205,43 @@
             letter-spacing: -0.1vh;
         }
 
+.bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* behind everything */
+  pointer-events: none; /* so it's not interactive */
+}
+
+.bg-layer.tiled {
+  background-image: url('./spr.gif');
+  background-repeat: repeat;
+  background-size: 23px 23px;
+  /* opacity: 0.5; adjust opacity here */
+}
+
+.bg-layer.cover {
+  background-image: url('./sprout.gif');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  opacity: 0.4; adjust opacity here
+}
+
+.content {
+  position: relative;
+  z-index: 1; /* in front of background layers */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
   </style>
 </head>
 <body>
-
-
 
     <div class="title-container">
         <div class="chltitle">Cubist Heart Laboratories</div>
@@ -174,14 +253,30 @@
         <a href="../index.html" class="clockname">Sprout</a>
         <a href="../index.html" class="dates dateright">05/27/25</a>
     </div>
-  <img src="spr.gif" class="bgimage" alt="Background Image" />
+ <div class="bg-layer tiled"></div>
+  <div class="bg-layer cover"></div>
+  <!-- Your actual content -->
+  <div class="content">
+
+  <img src="sprou.gif" class="bgimage" alt="Background Image" />
+
+  <img src="sprou.gif" class="bgimage2" alt="Background Image" />
+
+  <img src="sprou.gif" class="bgimage3" alt="Background Image" />
+ 
+
+  <img src="sprou.gif" class="bgimage4" alt="Background Image" />
+ 
+   <img src="sprou.gif" class="bgimage5" alt="Background Image" />
+ 
+ 
   <div class="clock">
     <div class="time-row" id="hours"></div>
     <div class="time-row" id="minutes"></div>
     <div class="time-row" id="seconds"></div>
     <div class="time-row" id="milliseconds"></div>
   </div>
-
+ </div>
   <script>
     function updateClock() {
       const now = new Date();
