@@ -80,14 +80,10 @@
   /* Size of the div — controls the area the background occupies */
   width: 100vh; /* change this */
   height: 110vh; /* change this */
-
   /* Center or place anywhere */
   top: 50%;      /* change to any %, px, etc. */
   left: 50%;     /* change to any %, px, etc. */
   transform: translate(-50%, -50%); /* keeps it centered — remove if not needed */
-
-  /* Background control */
-  background-image: url('./your-image.png'); /* set your image */
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain; /* OR: cover / auto / 200px 300px */
@@ -118,13 +114,19 @@
 
  .bgimage4 {
   position: fixed;
-  top: 70%;
+
+   transform: translate(-50%, -50%) scaleY(-1);
+  -webkit-transform: translate(-50%, -50%) scaleY(-1);
+
+  top: 40%;
   left: 70%;
 }
 
  .bgimage5 {
-  position: fixed;
-  top: 70%;
+    position: fixed;
+   transform: translate(-50%, -50%) scaleY(-1);
+  -webkit-transform: translate(-50%, -50%) scaleY(-1);
+  top: 40%;
   left: 30%;
 }
 
