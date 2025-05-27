@@ -21,11 +21,8 @@
       align-items: center;
       height: 100vh;
       margin: 0;
-      background-color: #0f0f11;
-      color: rgb(240, 232, 211);
-      font-family: 'dots', monospace;
-      text-shadow:  #121802 -3px 0px 0px,   #daeab4 3px 0px 0px,   #f6320b -1px -1px 0px, #94f00b -2px 3px 20px, #f72808 2px -3px 20px, #a5f507 -2px -3px 20px;
-    }
+      background-color: #e7e7ee;
+         }
 
     .clock {
       display: flex;
@@ -33,7 +30,9 @@
       gap: 0.1rem;
       font-size: 10rem;
       text-align: center;
-      opacity: 0.6;
+       font-family: 'dots', monospace;
+      text-shadow:  #121802 -3px 0px 0px,   #daeab4 3px 0px 0px,   #f6320b -1px -1px 0px, #94f00b -2px 3px 20px, #f72808 2px -3px 20px, #a5f507 -2px -3px 20px;
+      /* opacity: 0.6; */
     }
 
     .time-unit {
@@ -53,7 +52,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: rgba(3, 81, 78, 0.7);
+      background-color: rgba(239, 246, 246, 0.5);
       border-radius: 0.3em;
       position: relative;
       overflow: hidden;
@@ -91,8 +90,8 @@
       }
     }
         .title-container {
-            color: #f38d07;
-            text-shadow: #2e3030 1px 0px;
+            color: #080807;
+            text-shadow: #de8f06 1px 0px;
             position: absolute;
             top: 5px;
             left: 50%;
@@ -122,15 +121,7 @@
             letter-spacing: -0.1vh;
         }
 
-        .easteregg {
-            font-family: "Libre Baskerville", serif;
-            color: transparent;
-            font-size: 0.4rem;
-            z-index: 11;
-            position: absolute;
-            right: 12px;
-            top: 35px;
-        }
+     
 
         a {
             color: inherit;
@@ -144,7 +135,6 @@
         }
 
         .date-container {
-            color: #1f020e;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -160,7 +150,6 @@
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            font-family: "Oxanium", serif;
             font-size: 4vh;
             line-height: 4vh;
         }
@@ -182,26 +171,29 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 140%;
+            height: 130%;
             object-fit: cover;
             z-index: -1;
-            filter: contrast(70%) hue-rotate(-90deg) invert(0.99);
+            filter: contrast(90%) hue-rotate(-190deg);
         }
     </style>
 </head>
 
 <body>
   <img src="./dot.jpg" class="bgimage">
-    <div class="title-container">
+   
+  <div class="title-container">
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
+
      <div class="date-container">
         <a href="../sprout/" class="dates dateleft">05/26/25</a>
         <a href="../index.html" class="clockname">Dots</a>
           <a href="../index.html" class="dates dateright">05/28/25</a>
     </div>
+  </div>
 
     
 
