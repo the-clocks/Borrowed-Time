@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rainbow Clock</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+      
+  <style>
+  
+    :root {
+      --clock-size: 100vh; /* Single variable to control clock size */
+    } 
+     @font-face {
+      font-family: 'circle';
+      src: url('./circle.ttf') format('truetype');
+    }
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #564529, #4d3a56); /* blue gradient */
+      height: 100vh;
+      position: relative;
+    }
+    .clock {
+      font-family: "circle", sans-serif;
+      position: absolute;
+      width: var(--clock-size);
+      height: var(--clock-size);
+      max-width: calc(var(--clock-size) * 1);
+      max-height: calc(var(--clock-size) * 1);
+    }
+    #clock1 {
+      top: -98vh;
+      left: -98vh;
+      transform: translate(calc(var(--clock-size) / 2), calc(var(--clock-size) / 2));
+    }
+    #clock2 {
+      top: -98vh;
+      right: -98vh;
+      transform: translate(calc(var(--clock-size) / -2), calc(var(--clock-size) / 2));
+    }
+    #clock3 {
+      bottom: -98vh;
+      left: -98vh;
+      transform: translate(calc(var(--clock-size) / 2), calc(var(--clock-size) / -2));
+    }
+    #clock4 {
+      bottom: -98vh;
+      right: -98vh;
+      transform: translate(calc(var(--clock-size) / -2), calc(var(--clock-size) / -2));
+    }
+    svg {
+        overflow: visible;
+      width: 100%;
+      height: 100%;
+    }
+    .clock-face {
+       stroke:#9de2ac;
+      stroke-width: calc(var(--clock-size) * 0.0005); /* Scaled relative to clock size */
+      fill: transparent
+    }
+    .hour-hand, .minute-hand, .second-hand {
+      stroke-linecap: round;
+    }
+    .hour-hand {
+      stroke: #f9d63a;
+      stroke-width: calc(var(--clock-size) * 0.015);
+    }
+    .minute-hand {
+      stroke: #1147ea;
+      stroke-width: calc(var(--clock-size) * 0.01);
+    }
+    .second-hand {
+      stroke: #f00;
+      stroke-width: calc(var(--clock-size) * 0.002);
+    }
+    .tick {
+      stroke:#9de2ac;
+      stroke-width: calc(var(--clock-size) * 0.0005);
+    }
+    .number {
+      font-size: calc(var(--clock-size) * 0.02);
+      fill: #9de2ac;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #def2f9;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+
+        .title-container {
+            color: #564529;
+            text-shadow: #bebfb9 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="full-page-image3"></div>
+
+    <div class="date-container">
+        <a href="../dots/" class="dates dateleft">05/27/25</a>
+        <a href="../index.html" class="clockname">Corner</a>
+         <a href="../index.html"class="dates dateright">045/29/25</a>
+    </div>
+
+  <div id="clock1" class="clock">
+    <svg viewBox="0 0 100 100">
+      <circle class="clock-face" cx="50" cy="50" r="45"/>
+      <!-- Hour ticks with numbers -->
+      <g transform="rotate(0 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">12</text>
+      </g>
+      <g transform="rotate(30 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">1</text>
+      </g>
+      <g transform="rotate(60 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">2</text>
+      </g>
+      <g transform="rotate(90 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">3</text>
+      </g>
+      <g transform="rotate(120 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">4</text>
+      </g>
+      <g transform="rotate(150 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">5</text>
+      </g>
+      <g transform="rotate(180 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">6</text>
+      </g>
+      <g transform="rotate(210 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">7</text>
+      </g>
+      <g transform="rotate(240 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">8</text>
+      </g>
+      <g transform="rotate(270 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">9</text>
+      </g>
+      <g transform="rotate(300 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">10</text>
+      </g>
+      <g transform="rotate(330 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">11</text>
+      </g>
+      <!-- Hands -->
+      <line class="hour-hand" x1="50" y1="50" x2="50" y2="22" id="hour1"/>
+      <line class="minute-hand" x1="50" y1="50" x2="50" y2="9" id="minute1"/>
+      <line class="second-hand" x1="50" y1="50" x2="50" y2="-500" id="second1"/>
+      <circle cx="50" cy="50" r="2" fill="#333"/>
+    </svg>
+  </div>
+
+
+  <div id="clock2" class="clock">
+    <svg viewBox="0 0 100 100">
+      <circle class="clock-face" cx="50" cy="50" r="45"/>
+      <g transform="rotate(0 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">12</text>
+      </g>
+      <g transform="rotate(30 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">1</text>
+      </g>
+      <g transform="rotate(60 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">2</text>
+      </g>
+      <g transform="rotate(90 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">3</text>
+      </g>
+      <g transform="rotate(120 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">4</text>
+      </g>
+      <g transform="rotate(150 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">5</text>
+      </g>
+      <g transform="rotate(180 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">6</text>
+      </g>
+      <g transform="rotate(210 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">7</text>
+      </g>
+      <g transform="rotate(240 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">8</text>
+      </g>
+      <g transform="rotate(270 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">9</text>
+      </g>
+      <g transform="rotate(300 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">10</text>
+      </g>
+      <g transform="rotate(330 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">11</text>
+      </g>
+      <line class="hour-hand" x1="50" y1="50" x2="50" y2="22" id="hour2"/>
+      <line class="minute-hand" x1="50" y1="50" x2="50" y2="9" id="minute2"/>
+      <line class="second-hand" x1="50" y1="50" x2="50" y2="-500" id="second2"/>
+      <circle cx="50" cy="50" r="2" fill="#333"/>
+    </svg>
+  </div>
+
+
+  <div id="clock3" class="clock">
+    <svg viewBox="0 0 100 100">
+      <circle class="clock-face" cx="50" cy="50" r="45"/>
+      <g transform="rotate(0 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">12</text>
+      </g>
+      <g transform="rotate(30 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">1</text>
+      </g>
+      <g transform="rotate(60 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">2</text>
+      </g>
+      <g transform="rotate(90 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">3</text>
+      </g>
+      <g transform="rotate(120 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">4</text>
+      </g>
+      <g transform="rotate(150 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">5</text>
+      </g>
+      <g transform="rotate(180 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">6</text>
+      </g>
+      <g transform="rotate(210 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">7</text>
+      </g>
+      <g transform="rotate(240 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">8</text>
+      </g>
+      <g transform="rotate(270 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">9</text>
+      </g>
+      <g transform="rotate(300 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">10</text>
+      </g>
+      <g transform="rotate(330 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">11</text>
+      </g>
+      <line class="hour-hand" x1="50" y1="50" x2="50" y2="22" id="hour3"/>
+      <line class="minute-hand" x1="50" y1="50" x2="50" y2="9" id="minute3"/>
+      <line class="second-hand" x1="50" y1="50" x2="50" y2="-500" id="second3"/>
+      <circle cx="50" cy="50" r="2" fill="#333"/>
+    </svg>
+  </div>
+
+
+  <div id="clock4" class="clock">
+    <svg viewBox="0 0 100 100">
+      <circle class="clock-face" cx="50" cy="50" r="45"/>
+      <g transform="rotate(0 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">12</text>
+      </g>
+      <g transform="rotate(30 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">1</text>
+      </g>
+      <g transform="rotate(60 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">2</text>
+      </g>
+      <g transform="rotate(90 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">3</text>
+      </g>
+      <g transform="rotate(120 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">4</text>
+      </g>
+      <g transform="rotate(150 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">5</text>
+      </g>
+      <g transform="rotate(180 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">6</text>
+      </g>
+      <g transform="rotate(210 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">7</text>
+      </g>
+      <g transform="rotate(240 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">8</text>
+      </g>
+      <g transform="rotate(270 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">9</text>
+      </g>
+      <g transform="rotate(300 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">10</text>
+      </g>
+      <g transform="rotate(330 50 50)">
+        <line class="tick" x1="50" y1="5" x2="50" y2="10"/>
+        <text class="number" x="50" y="15">11</text>
+      </g>
+      <line class="hour-hand" x1="50" y1="50" x2="50" y2="22" id="hour4"/>
+      <line class="minute-hand" x1="50" y1="50" x2="50" y2="9" id="minute4"/>
+      <line class="second-hand" x1="50" y1="50" x2="50" y2="-500" id="second4"/>
+      <circle cx="50" cy="50" r="2" fill="#333"/>
+    </svg>
+  </div>
+  <script>
+  function updateClock(clockIdPrefix) {
+    const now = new Date();
+    const hour = now.getHours() % 12;
+    const minute = now.getMinutes();
+    const second = now.getSeconds();
+
+    const hourAngle = (hour + minute / 60) * 30;
+    const minuteAngle = (minute + second / 60) * 6;
+    const secondAngle = second * 6;
+
+    document.getElementById(`hour${clockIdPrefix}`).setAttribute("transform", `rotate(${hourAngle} 50 50)`);
+    document.getElementById(`minute${clockIdPrefix}`).setAttribute("transform", `rotate(${minuteAngle} 50 50)`);
+    document.getElementById(`second${clockIdPrefix}`).setAttribute("transform", `rotate(${secondAngle} 50 50)`);
+  }
+
+  function updateAllClocks() {
+    updateClock(1);
+    updateClock(2);
+    updateClock(3);
+    updateClock(4);
+  }
+
+  setInterval(updateAllClocks, 1000);
+  updateAllClocks(); // initial call
+</script>
+
+</body>
+</html>
