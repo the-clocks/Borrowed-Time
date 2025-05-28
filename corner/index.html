@@ -421,31 +421,38 @@
     </svg>
   </div>
   <script>
-  function updateClock(clockIdPrefix) {
-    const now = new Date();
-    const hour = now.getHours() % 12;
-    const minute = now.getMinutes();
-    const second = now.getSeconds();
+function updateClocks() {
+  const now = new Date();
 
-    const hourAngle = (hour + minute / 60) * 30;
-    const minuteAngle = (minute + second / 60) * 6;
-    const secondAngle = second * 6;
+  const milliseconds = now.getMilliseconds();
+  const seconds = now.getSeconds() + milliseconds / 1000;
+  const minutes = now.getMinutes() + seconds / 60;
+  const hours = now.getHours() % 12 + minutes / 60;
 
-    document.getElementById(`hour${clockIdPrefix}`).setAttribute("transform", `rotate(${hourAngle} 50 50)`);
-    document.getElementById(`minute${clockIdPrefix}`).setAttribute("transform", `rotate(${minuteAngle} 50 50)`);
-    document.getElementById(`second${clockIdPrefix}`).setAttribute("transform", `rotate(${secondAngle} 50 50)`);
+  const hourAngle = hours * 30;         // 360 / 12
+  const minuteAngle = minutes * 6;      // 360 / 60
+  const secondAngle = seconds * 6;      // 360 / 60
+
+  for (let i = 1; i <= 4; i++) {
+    const h = document.getElementById(`hour${i}`);
+    const m = document.getElementById(`minute${i}`);
+    const s = document.getElementById(`second${i}`);
+
+    h.setAttribute("transform", `rotate(${hourAngle} 50 50)`);
+    m.setAttribute("transform", `rotate(${minuteAngle} 50 50)`);
+    s.setAttribute("transform", `rotate(${secondAngle} 50 50)`);
   }
 
-  function updateAllClocks() {
-    updateClock(1);
-    updateClock(2);
-    updateClock(3);
-    updateClock(4);
-  }
+  requestAnimationFrame(updateClocks);
+}
 
-  setInterval(updateAllClocks, 1000);
-  updateAllClocks(); // initial call
+updateClocks();
 </script>
+
 
 </body>
 </html>
+
+
+
+
