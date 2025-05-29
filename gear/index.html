@@ -22,18 +22,17 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: #e5ebd3;
+            background: #63788e;
             margin: 0;
         }
 
         .clock {
             font-family: 'watch', sans-serif;
-             color: rgb(29, 2, 84);
-            text-shadow: rgb(238, 87, 5) 1px 1px 0px;
-    display: flex;
-        flex-direction: column;
-            gap: 2.0rem;
-            font-size: 4rem;
+         color: rgb(29, 2, 84);
+            text-shadow: rgb(238, 87, 5) 1px 1px 0px, white -1px 0px 0px;    
+            display: flex;
+            flex-direction: column;
+            font-size: 5rem;
             text-align: center;
             z-index: 10;
         }
@@ -44,19 +43,20 @@
             /* For the label, we will add it later if you want */
         }
 
-        .value {
-            display: flex;
-            gap: 7.5rem; /* spacing between digit boxes */
-            justify-content: center;
-        }
+    .value {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 
         /* Each digit box */
         .digit-box {
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            width: 1.0rem;  /* fixed width */
-            height: 4.5rem; /* fixed height */
+            /* width: 1.0rem;  */
+            height: 3.0rem; fixed height
             user-select: none;
         }
 
@@ -176,6 +176,17 @@
             position: absolute;
             right: 0;
         }
+        .divider {
+    height: 1px;
+    width: 30vw;
+    background-color: rgb(52, 1, 77);
+    margin: 0 auto;
+}
+
+ color: rgb(29, 2, 84);
+            text-shadow: rgb(238, 87, 5) 1px 1px 0px, white -1px 0px 0px;    
+        
+
     </style>
 </head>
 
@@ -193,18 +204,23 @@
     <div class="full-page-image"></div>
     <div class="full-page-image2"></div>
     <div class="full-page-image3"></div>
-
-    <div class="clock">
-        <div class="unit" id="hours">
-            <div class="value"></div>
-        </div>
-        <div class="unit" id="minutes">
-            <div class="value"></div>
-        </div>
-        <div class="unit" id="seconds">
-            <div class="value"></div>
-        </div>
+<div class="clock">
+    <div class="unit" id="hours">
+        <div class="value"></div>
     </div>
+
+    <div class="divider"></div> <!-- ⬅️ Divider -->
+
+    <div class="unit" id="minutes">
+        <div class="value"></div>
+    </div>
+
+    <div class="divider"></div> <!-- ⬅️ Divider -->
+
+    <div class="unit" id="seconds">
+        <div class="value"></div>
+    </div>
+</div>
 
     
     <script>
