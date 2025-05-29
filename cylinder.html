@@ -1,68 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Responsive Text Cylinder</title>
-  <style>
-    body {
-      background: rgba(10, 20, 40, 1);
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      perspective: 500px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Text Cylinder Animation</title>
+<style>
+  body {
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    perspective: 800px;
+  }
 
-    #ui {
-      transform-style: preserve-3d;
-      position: relative;
-    }
+  .cylinder {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    transform-style: preserve-3d;
+    animation: rotateCylinder 8s linear infinite;
+  }
 
-    .text {
-      position: absolute;
-      font-size: 15rem;
-      color: #fff;
-      line-height: 15rem;
-      font-family: 'Anton', sans-serif;
-      padding: 20px 0;
-      mix-blend-mode: screen;
-      transform-style: preserve-3d;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
+  .cylinder span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: 0 0 100px; /* Radius of the cylinder */
+    color: #0ff;
+    font-weight: bold;
+    font-size: 24px;
+    white-space: nowrap;
+  }
 
-    @keyframes wave {
-      0% {
-        transform: translate(-50%, -50%) scale(0.9) rotateX(20deg) rotateY(20deg) rotateZ(0deg);
-        color: rgba(0, 30, 100, 1);
-      }
-      100% {
-        transform: translate(-50%, -50%) scale(1.1) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-        color: rgba(50, 230, 255, 1);
-      }
+  /* Position 12 spans evenly around the cylinder */
+  .cylinder span:nth-child(1)  { transform: rotateY(0deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(2)  { transform: rotateY(30deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(3)  { transform: rotateY(60deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(4)  { transform: rotateY(90deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(5)  { transform: rotateY(120deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(6)  { transform: rotateY(150deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(7)  { transform: rotateY(180deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(8)  { transform: rotateY(210deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(9)  { transform: rotateY(240deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(10) { transform: rotateY(270deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(11) { transform: rotateY(300deg) translateX(100px) translateY(-50%); }
+  .cylinder span:nth-child(12) { transform: rotateY(330deg) translateX(100px) translateY(-50%); }
+
+  @keyframes rotateCylinder {
+    from {
+      transform: rotateY(0deg);
     }
-  </style>
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+</style>
 </head>
 <body>
-  <div id="ui"></div>
 
-  <script>
-    const text = "ocean";
-    const ui = document.getElementById("ui");
+<div class="cylinder">
+  <span>HELLO</span>
+  <span>WORLD</span>
+  <span>CSS</span>
+  <span>3D</span>
+  <span>TEXT</span>
+  <span>ANIMATION</span>
+  <span>CYLINDER</span>
+  <span>ROTATE</span>
+  <span>HTML</span>
+  <span>JAVASCRIPT</span>
+  <span>FRONTEND</span>
+  <span>DESIGN</span>
+</div>
 
-    for (let i = 0; i < 26; i++) {
-      const span = document.createElement("div");
-      span.className = "text";
-      span.textContent = text;
-      span.style.animation = `wave 2s ease-in-out infinite alternate`;
-      span.style.animationDelay = `${i * 0.2 - 10}s`;
-
-      // Optional: create slight cylinder-like spacing
-      span.style.transform = `translate(-50%, -50%) rotateY(${i * 14}deg) translateZ(200px)`;
-      ui.appendChild(span);
-    }
-  </script>
 </body>
 </html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gear Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+   <style>
+        @font-face {
+            font-family: 'watch';
+            src: url('./watch.ttf') format('truetype');
+        }
+
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #e5ebd3;
+            margin: 0;
+        }
+
+        .clock {
+            font-family: 'watch', sans-serif;
+             color: rgb(29, 2, 84);
+            text-shadow: rgb(238, 87, 5) 1px 1px 0px;
+
+    display: flex;
+        flex-direction: column;
+            gap: 2.0rem;
+            font-size: 8rem;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .unit {
+            display: flex;
+            flex-direction: column;
+            /* For the label, we will add it later if you want */
+        }
+
+        .value {
+            display: flex;
+            gap: 7.5rem; /* spacing between digit boxes */
+            justify-content: center;
+        }
+
+        /* Each digit box */
+        .digit-box {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 7.0rem;  /* fixed width */
+            height: 4.5rem; /* fixed height */
+            user-select: none;
+        }
+
+        @media (max-width: 600px) {
+            .clock {
+                flex-direction: column;
+            }
+        }
+
+        .full-page-image,
+        .full-page-image2,
+        .full-page-image3 {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: url("gears-13950_128.gif");
+            background-repeat: repeat;
+            background-position: center;
+            pointer-events: none;
+        }
+
+        .full-page-image {
+            background-size: 22vw 18vw;
+            opacity: 0.3;
+            z-index: 5;
+        }
+
+        .full-page-image2 {
+            background-size: 21vw 17vw;
+            opacity: 0.35;
+            z-index: 4;
+        }
+
+        .full-page-image3 {
+            background-size: 20vw 16vw;
+            opacity: 0.4;
+            z-index: 3;
+        }
+        .title-container {
+            color: #f38d07;
+            text-shadow: #2e3030 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #1f020e;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+     <div class="date-container">
+        <a href="../corner/" class="dates dateleft">05/28/25</a>
+        <a href="../index.html" class="clockname">Gears</a>
+        <a href="../index.html"class="dates dateright">05/30/25</a>
+    </div>
+
+    <div class="full-page-image"></div>
+    <div class="full-page-image2"></div>
+    <div class="full-page-image3"></div>
+
+    <div class="clock">
+        <div class="unit" id="hours">
+            <div class="value"></div>
+        </div>
+        <div class="unit" id="minutes">
+            <div class="value"></div>
+        </div>
+        <div class="unit" id="seconds">
+            <div class="value"></div>
+        </div>
+    </div>
+
+    
+    <script>
+        // Custom digit substitution map
+        const charMap = {
+            '0': 'zero',
+            '1': 'one',
+            '2': 'two',
+            '3': 'three',
+            '4': 'four',
+            '5': 'five',
+            '6': 'six',
+            '7': 'seven',
+            '8': 'eight',
+            '9': 'nine'
+        };
+
+        function substituteDigit(str) {
+            return str.split('').map(d => charMap[d] || d);
+        }
+
+        // Create digit boxes with substituted digits
+        function createDigitBoxes(digitsArray) {
+            return digitsArray.map(digitName => {
+                const box = document.createElement('span');
+                box.className = 'digit-box';
+                box.textContent = digitName;
+                return box;
+            });
+        }
+
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            hours = hours % 12 || 12;
+
+            // Get substituted digit arrays
+            const hoursDigits = substituteDigit(String(hours));
+            const minutesDigits = substituteDigit(String(minutes).padStart(2, '0'));
+            const secondsDigits = substituteDigit(String(seconds).padStart(2, '0'));
+
+            // Clear previous digits and add new digit boxes
+            const hoursValue = document.querySelector('#hours .value');
+            hoursValue.innerHTML = '';
+            createDigitBoxes(hoursDigits).forEach(box => hoursValue.appendChild(box));
+
+            const minutesValue = document.querySelector('#minutes .value');
+            minutesValue.innerHTML = '';
+            createDigitBoxes(minutesDigits).forEach(box => minutesValue.appendChild(box));
+
+            const secondsValue = document.querySelector('#seconds .value');
+            secondsValue.innerHTML = '';
+            createDigitBoxes(secondsDigits).forEach(box => secondsValue.appendChild(box));
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>
