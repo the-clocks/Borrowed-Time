@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elephant Clock - BorrowedTime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+   <style>
+    @font-face {
+      font-family: 'fat';
+      src: url(./fat.otf) format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      background: #7e7c79;
+      font-family: 'ClockFont', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .clock-wrapper {
+      width: 100vmin;
+      height: 100vmin;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translateX(-1vw);
+    }
+
+    .clock {
+      position: relative;
+      width: 80vmin;
+      height: 80vmin;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .number {
+      font-family: 'fat';
+      position: absolute;
+      width: 10%;
+      text-align: center;
+      transform: translate(-50%, -50%);
+      font-size: 15vh;
+      color: #949393;
+      text-shadow: #0a0909 -1px 0px 0px;
+    }
+
+    .hand {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transform-origin: center center;
+    }
+
+    .hand img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: translate(-50%, -100%);
+    }
+
+    #hour-hand img {
+      height: 45%;
+      z-index: 4;
+      filter: saturate(60%);
+    }
+
+    #minute-hand img {
+      height: 65%;
+      z-index: 3;
+      filter: saturate(130%);
+    }
+
+    #second-hand img {
+      height: 85%;
+      z-index: 5;
+      filter: saturate(20%) contrast(70%);
+    }
+
+    .full-page-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: saturate(300%);
+    }
+
+    #orbiting-image {
+      position: absolute;
+      width: 20vmin;
+      height: 20vmin;
+      transform: translate(-50%, -50%);
+      z-index: 6;
+    }
+        .title-container {
+            color: #bebcba;
+            text-shadow: #4d4b4b 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #faf6f6;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+        .divider {
+    height: 1px;
+    width: 30vw;
+    background-color: rgb(52, 1, 77);
+    margin: 0 auto;
+}
+    </style>
+</head>
+
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+     <div class="date-container">
+        <a href="../iss/" class="dates dateleft">05/30/25</a>
+        <a href="../index.html" class="clockname">Elephant</a>
+        <a href="../index.html" class="dates dateright">06/01/25</a>
+    </div>
+  <img src="./el.webp" class="full-page-image" alt="Background Image" />
+  <div class="clock-wrapper">
+    <div class="clock" id="clock">
+      <script>
+        const ellipseWidth = 80;
+        const ellipseHeight = 60;
+        for (let i = 1; i <= 12; i++) {
+          const angle = (i * 30) * Math.PI / 180;
+          const x = 50 + 40 * Math.sin(angle) * (ellipseWidth / ellipseHeight);
+          const y = 50 - 40 * Math.cos(angle);
+          document.write(`<div class="number" style="left:${x}%; top:${y}%;">${i}</div>`);
+        }
+      </script>
+
+      <div class="hand" id="hour-hand">
+        <img src="./el2.png" alt="Hour Hand" />
+      </div>
+      <div class="hand" id="minute-hand">
+        <img src="./el1.png" alt="Minute Hand" />
+      </div>
+      <div class="hand" id="second-hand">
+        <img src="./el3.png" alt="Second Hand" />
+      </div>
+
+      <img src="./ele.gif" id="orbiting-image" alt="Orbiting" />
+    </div>
+  </div>
+
+  <script>
+    const hourHand = document.getElementById('hour-hand').querySelector('img');
+    const minuteHand = document.getElementById('minute-hand').querySelector('img');
+    const secondHand = document.getElementById('second-hand').querySelector('img');
+    const orbitingImage = document.getElementById('orbiting-image');
+
+    let hourSway = { amplitude: 0, frequency: 0, nextUpdate: 0 };
+    let minuteSway = { amplitude: 0, frequency: 0, nextUpdate: 0 };
+
+    function randomizeSway(sway) {
+      sway.amplitude = Math.random() * 5;
+      sway.frequency = 0.001 + Math.random() * 0.003;
+      sway.nextUpdate = Date.now() + 3000 + Math.random() * 5000;
+    }
+
+    randomizeSway(hourSway);
+    randomizeSway(minuteSway);
+
+    let orbitAngle = 0;
+    const orbitRadius = 50;
+
+    function updateClock() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+      const t = Date.now();
+
+      const secondDeg = seconds * 6 + 20 * Math.sin(t / 100);
+      const minuteDegBase = minutes * 6 + seconds * 0.1;
+      const hourDegBase = (hours % 12) * 30 + minutes * 0.5;
+
+      if (t > hourSway.nextUpdate) randomizeSway(hourSway);
+      if (t > minuteSway.nextUpdate) randomizeSway(minuteSway);
+
+      const hourSwayOffset = hourSway.amplitude * Math.sin(t * hourSway.frequency);
+      const minuteSwayOffset = minuteSway.amplitude * Math.sin(t * minuteSway.frequency);
+
+      const hourDeg = hourDegBase + hourSwayOffset;
+      const minuteDeg = minuteDegBase + minuteSwayOffset;
+
+      hourHand.style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
+      minuteHand.style.transform = `translate(-50%, -100%) rotate(${minuteDeg}deg)`;
+      secondHand.style.transform = `translate(-50%, -100%) rotate(${secondDeg}deg)`;
+
+      // Orbiting image logic
+      orbitAngle -= 0.12;
+      const rad = orbitAngle * Math.PI / 180;
+      const centerX = 50;
+      const centerY = 50;
+      const x = centerX + orbitRadius * Math.cos(rad);
+      const y = centerY + orbitRadius * Math.sin(rad);
+      orbitingImage.style.left = `${x}%`;
+      orbitingImage.style.top = `${y}%`;
+      orbitingImage.style.transform = `translate(-50%, -50%) rotate(${orbitAngle + 90}deg)`;
+
+      requestAnimationFrame(updateClock);
+    }
+
+    updateClock();
+  </script>
+</body>
+</html>
