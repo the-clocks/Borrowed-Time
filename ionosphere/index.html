@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bidirectional Digital Clocks</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      font-family: monospace;
+    }
+
+    .clock {
+      position: absolute;
+      padding: 10px 20px;
+      border-radius: 10px;
+      white-space: nowrap;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    @keyframes drift-right {
+      0%   { transform: translateX(-120%); }
+      100% { transform: translateX(120vw); }
+    }
+
+    @keyframes drift-left {
+      0%   { transform: translateX(120vw); }
+      100% { transform: translateX(-120%); }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // === CONFIGURATION ===
+    const CLOCK_COLOR = '#00ffff';
+    const CLOCK_BACKGROUND = 'rgba(0, 255, 255, 0.1)';
+    const FONT_SIZE = '1.4rem';
+    const CLOCK_COUNT_PER_DIRECTION = 5;
+    const MIN_DURATION = 12; // seconds
+    const MAX_DURATION = 18;
+
+    function createClock(direction) {
+      const clock = document.createElement('div');
+      clock.className = 'clock';
+      clock.textContent = new Date().toLocaleTimeString();
+
+      // Style
+      const duration = MIN_DURATION + Math.random() * (MAX_DURATION - MIN_DURATION);
+      const y = Math.random() * (window.innerHeight - 40);
+
+      Object.assign(clock.style, {
+        top: `${y}px`,
+        color: CLOCK_COLOR,
+        background: CLOCK_BACKGROUND,
+        border: `1px solid ${CLOCK_COLOR}`,
+        fontSize: FONT_SIZE,
+        boxShadow: `0 0 10px ${CLOCK_COLOR}`,
+        animation: `drift-${direction} ${duration}s linear forwards`,
+        left: '0'
+      });
+
+      document.body.appendChild(clock);
+
+      // Clean up after it's fully offscreen
+      setTimeout(() => clock.remove(), duration * 1000);
+    }
+
+    // Maintain fixed number of clocks per direction
+    setInterval(() => {
+      const allClocks = document.querySelectorAll('.clock');
+      const leftClocks = Array.from(allClocks).filter(c => c.style.animation.includes('drift-left'));
+      const rightClocks = Array.from(allClocks).filter(c => c.style.animation.includes('drift-right'));
+
+      if (leftClocks.length < CLOCK_COUNT_PER_DIRECTION) {
+        createClock('left');
+      }
+
+      if (rightClocks.length < CLOCK_COUNT_PER_DIRECTION) {
+        createClock('right');
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
