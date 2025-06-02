@@ -210,22 +210,32 @@
     const minuteHand = document.getElementById('minute-hand');
     const secondHand = document.getElementById('second-hand');
 
-    function updateClock() {
-      const now = new Date();
-      const seconds = now.getSeconds() + now.getMilliseconds() / 1000;
-      const minutes = now.getMinutes() + seconds / 60;
-      const hours = now.getHours() % 12 + minutes / 60;
 
-      const secondsDeg = seconds * 6; // 360° / 60 seconds
-      const minutesDeg = minutes * 6; // 360° / 60 minutes
-      const hoursDeg = hours * 30; // 360° / 12 hours
 
-      secondHand.style.transform = `rotate(${secondsDeg}deg)`;
-      minuteHand.style.transform = `rotate(${minutesDeg}deg)`;
-      hourHand.style.transform = `rotate(${hoursDeg}deg)`;
 
-      requestAnimationFrame(updateClock);
-    }
+
+
+
+function updateClock() {
+  const now = new Date();
+  const seconds = now.getSeconds() + now.getMilliseconds() / 1000;
+  const minutes = now.getMinutes() + seconds / 60;
+  const hours = now.getHours() % 12 + minutes / 60;
+
+  const secondsDeg = seconds * 6 - 90; // Subtract 90°
+  const minutesDeg = minutes * 6 - 90; // Subtract 90°
+  const hoursDeg = hours * 30 - 90;    // Subtract 90°
+
+  secondHand.style.transform = `rotate(${secondsDeg}deg)`;
+  minuteHand.style.transform = `rotate(${minutesDeg}deg)`;
+  hourHand.style.transform = `rotate(${hoursDeg}deg)`;
+
+  requestAnimationFrame(updateClock);
+}
+
+
+
+
 
     updateClock(); // Start the clock
   </script>
