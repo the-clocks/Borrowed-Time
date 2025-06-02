@@ -85,6 +85,17 @@
   z-index: 2
 }
 
+    .meter3 {
+  position: absolute;     /* or 'fixed' */
+  width: 50vw;
+  height: 36vh;
+  top: 29vh;              /* vertical position stays as is */
+  left: 50%;              /* move to center horizontally */
+  transform: translateX(-50%); /* pull back by half its width */
+  z-index: 3;
+  /* opacity: 0.8; Slightly transparent for better visibility */
+}
+
     .meter2 {
   position: absolute;     /* or 'fixed' */
   width: 50vw;
@@ -92,9 +103,8 @@
   top: 29vh;              /* vertical position stays as is */
   left: 50%;              /* move to center horizontally */
   transform: translateX(-50%); /* pull back by half its width */
-  z-index: 3;
-  
-  opacity: 0.8; Slightly transparent for better visibility
+  z-index: 4;
+  /* opacity: 0.8; Slightly transparent for better visibility */
 }
     .parts {
   position: absolute;     /* or 'fixed' */
@@ -116,6 +126,7 @@
   z-index: 0
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
+  z-index: 2;
 }
 
         .title-container {
@@ -209,6 +220,7 @@
 <img src="./wwarnn.png" class="parts">  
 <img src="./wwz.gif" class="meter" alt="Background Effect">
 
+<img src="./da.webp" class="meter3" alt="Background Effect">
 <img src="./dash.webp" class="meter2" alt="Background Effect">
   <div class="clock">
     
