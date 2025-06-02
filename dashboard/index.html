@@ -13,7 +13,7 @@
   <style>
     body {
       margin: 0;
-      background: #457989;
+      background: #034861;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -22,7 +22,7 @@
 
     .clock {
       position: relative;
-      width: 90vh;
+      width: 80vh;
       height: 90vh;
       z-index: 8;
       /* opacity: 0.9; */
@@ -31,6 +31,7 @@
 
     .number {
       position: absolute;
+      text-shadow: #fcc7ea 1px 4px;
       width: 75px;
       height: 75px;
       transform: translate(-50%, -50%);
@@ -114,7 +115,8 @@
   /* top: 20vh;              vertical position stays as is */
   left: 50%;              /* move to center horizontally */
   transform: translateX(-50%); /* pull back by half its width */
-  z-index: 1
+  z-index: 1;
+  opacity: 0.4; /* Slightly transparent for better visibility */
 }
 
     .parts2 {
@@ -128,6 +130,8 @@
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
   z-index: 2;
+  opacity: 0.4; /* Slightly transparent for better visibility */
+  
 }
 
         .title-container {
