@@ -13,7 +13,7 @@
   <style>
     body {
       margin: 0;
-      background: #000000;
+      background: #457989;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -56,7 +56,8 @@
       transform-origin: 0% 50%; /* Rotation point at left end of hand */
       transform: rotate(0deg);
       filter: saturate(4.5) contrast(7.2);
-      opacity: 0.7; /* Slightly transparent for better visibility */
+      z-index: 8;
+      /* opacity: 0.7; Slightly transparent for better visibility */
     }
 
     .hour {
@@ -84,6 +85,17 @@
   z-index: 2
 }
 
+    .meter2 {
+  position: absolute;     /* or 'fixed' */
+  width: 50vw;
+  height: 50vh;
+  top: 29vh;              /* vertical position stays as is */
+  left: 50%;              /* move to center horizontally */
+  transform: translateX(-50%); /* pull back by half its width */
+  z-index: 3;
+  
+  opacity: 0.8; Slightly transparent for better visibility
+}
     .parts {
   position: absolute;     /* or 'fixed' */
   width: 100vw;
@@ -92,6 +104,18 @@
   left: 50%;              /* move to center horizontally */
   transform: translateX(-50%); /* pull back by half its width */
   z-index: 1
+}
+
+    .parts2 {
+  position: absolute;     /* or 'fixed' */
+  width: 100vw;
+  height: 100vh;
+  /* top: 20vh;              vertical position stays as is */
+  /* left: 50%;              move to center horizontally */
+  transform: translateX(-50%); pull back by half its width
+  z-index: 0
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
         .title-container {
@@ -181,8 +205,11 @@
         <a href="../index.html" class="clockname">Dashboard</a>
        <a href="../index.html" class="dates dateright">06/03/25</a>
     </div>
+<img src="./wwarnn.png" class="parts2">  
+<img src="./wwarnn.png" class="parts">  
+<img src="./wwz.gif" class="meter" alt="Background Effect">
 
-<img src="./wwarnn.png" class="parts">  <img src="./wwz.gif" class="meter" alt="Background Effect">
+<img src="./dash.webp" class="meter2" alt="Background Effect">
   <div class="clock">
     
     <img class="number" data-num="1" src="./werer-ezgif.com-gif-maker.webp" alt="1">
