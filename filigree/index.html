@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Filigree Clock</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet"><style>
+    @font-face {
+      font-family: 'cyl';
+      src: url('./cyl.ttf') format('truetype');
+    } 
+
+    :root {
+      /* --white: #ffffff; */
+      /* --shadow: rgba(0, 0, 0, 0.8); */
+      --font: 'cyl', sans-serif;
+      /* --digit-size: 16;v */
+      --digit-spacing: 1rem;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font);
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #dd9eda;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+  
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .box {
+      transform-style: preserve-3d;
+      animation: rotate 123s linear infinite;
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .box .face {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      display: flex;
+      gap: var(--digit-spacing);
+      transform-style: preserve-3d;
+      transform: translate(-50%, -50%) rotateX(calc(var(--i) * 22.5deg)) translateZ(150px);
+    }
+
+    .digit {
+      color: #2b2626;
+      text-shadow: #d2e5f3 1px 1px 0px;
+      position: relative;
+      width: var(--digit-size);
+      height: var(--digit-size);
+      transform-style: preserve-3d;
+      transform: rotateY(0deg);
+    }
+
+    .digit .face-front,
+    .digit .face-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: var(--font);
+      font-size: 4.8rem;
+    }
+
+    .digit .face-front {
+      color: var(--white);
+      /* background-color: rgba(174, 23, 23); */
+    }
+
+    .digit .face-back {
+      transform: rotateY(180deg);
+      color: #cbcef3;
+      text-shadow: #0a0a0a 2px 2px 0px;
+      background-color: rgba(27, 5, 117, 0.2);
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: perspective(600px) rotateX(0deg) rotate(22deg);
+      }
+      100% {
+        transform: perspective(600px) rotateX(360deg) rotate(22deg);
+      }
+    }
+
+
+        .title-container {
+            color: #080808;
+            text-shadow: #f5f2f3 1px 0;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.1vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.7vh;
+            font-style: italic;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        /* Date container styles */
+        .date-container {
+            color: #000000;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+  </style>
+</head>
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../dashboard/" class="dates dateleft">06/02/25</a>
+        <a href="../index.html" class="clockname">Filigree</a>
+                    <a href="../index.html" class="dates dateright">06/04/25</a>
+    </div>
+ <div class="container">
+    <div class="box" id="clockBox"></div>
+  </div>
+
+  <script>
+    const box = document.getElementById('clockBox');
+
+    function getTimeDigits() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('en-GB');
+      return time.replace(/:/g, '').split('');
+    }
+
+    function initializeClock() {
+      box.innerHTML = '';
+      for (let i = 0; i < 16; i++) {
+        const face = document.createElement('div');
+        face.className = 'face';
+        face.style.setProperty('--i', i + 1);
+
+        for (let j = 0; j < 6; j++) {
+          const digitDiv = document.createElement('div');
+          digitDiv.className = 'digit';
+
+          const front = document.createElement('div');
+          front.className = 'face-front';
+          front.dataset.digitIndex = j;
+
+          const back = document.createElement('div');
+          back.className = 'face-back';
+          back.dataset.digitIndex = j;
+
+          digitDiv.appendChild(front);
+          digitDiv.appendChild(back);
+          face.appendChild(digitDiv);
+        }
+
+        box.appendChild(face);
+      }
+    }
+
+    function updateClockFaces() {
+      const digits = getTimeDigits();
+      const faces = document.querySelectorAll('.face');
+      faces.forEach(face => {
+        const frontDigits = face.querySelectorAll('.face-front');
+        const backDigits = face.querySelectorAll('.face-back');
+        digits.forEach((d, index) => {
+          frontDigits[index].textContent = d;
+          backDigits[index].textContent = d;
+          
+        });
+      });
+    }
+
+    initializeClock();
+    updateClockFaces();
+    setInterval(updateClockFaces, 1000);
+  </script>
+</body>
+</html>
