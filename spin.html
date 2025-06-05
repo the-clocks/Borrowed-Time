@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centered Spinning Image</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background-color: black;
+    }
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .spinner {
+      width: 200px; /* Adjust size as needed */
+      height: 200px;
+      animation: spinCCW 10s linear infinite;
+    }
+
+    @keyframes spinCCW {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(-360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="./angler/images/spin.gif" alt="Spinning Image" class="spin
