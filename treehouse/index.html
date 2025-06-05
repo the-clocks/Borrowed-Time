@@ -45,20 +45,12 @@ background: linear-gradient(180deg, rgb(142, 183, 243) 0%, rgb(108, 164, 197) 80
         text-align: center;
         }
 
-         .tree1 {
-         position: absolute;
-    left: 55%;
-     top: 50%;
-    height: 100vh;
-    transform: translate(-50%, -50%);    
-    z-index: 3;  
-    opacity: 0.2;
-        } 
+
          .tree1a {
          position: absolute;
     left: 50%;
      top: 50%;
-    height: 100vh;
+    height: 92vh;
         transform: translate(-50%, -50%) scaleX(-1);    
     z-index: 7;  
     opacity: 0.6;
@@ -68,7 +60,7 @@ background: linear-gradient(180deg, rgb(142, 183, 243) 0%, rgb(108, 164, 197) 80
         position: absolute;
     left: 52%;
      top: 50%;
-    height: 100vh;
+    height: 93vh;
 
     transform: translate(-50%, -50%);       z-index: 2;  
      opacity: 0.6;
@@ -78,33 +70,11 @@ background: linear-gradient(180deg, rgb(142, 183, 243) 0%, rgb(108, 164, 197) 80
     position: absolute;
     left: 44%;
     top: 50%;
-    height: 100vh;
+    height: 94vh;
     transform: translate(-50%, -50%) scaleX(-1);  
     z-index: 5;  
     opacity: 0.6;
 }
-
-
-         .tree3 {
-          position: absolute;
-    left: 52%;
-     top: 50%;
-    height: 100vh;
-    transform: translate(-50%, -50%);    
-    z-index: 1; 
-     opacity: 0.6; 
-        } 
-
-    .tree4 {
-    position: absolute;
-    left: 54%;
-     top: 50%;
-    height: 90vh;
-    transform: translate(-50%, -50%);    
-    z-index: 1; 
-     opacity: 0.6; 
-        } 
-
 
         a {
             color: inherit;
@@ -196,15 +166,10 @@ background: linear-gradient(180deg, rgb(142, 183, 243) 0%, rgb(108, 164, 197) 80
     <div class="date-container">
         <a href="../coffee" class="dates dateleft">06/04/25</a>
         <a href="../index.html" class="clockname">Treehouse</a>
-       <a href="../index.html"  class="dates dateright">06/06/25</a>
-    </div>
-     <!-- <img src="./tree3.gif" class="tree3" alt="Tree 3">  -->
-     <!-- <img src="./tree_1.gif" class="tree4" alt="Tree 4">  -->
-    <img src="./tree1.webp" class="tree1a" alt="tree1">
-  
-     <!-- <img src="./tree1.webp" class="tree1" alt="tree1"> -->
-    <img src="./tree2.webp" class="tree2" alt="tree2">
-  
+        <a href="../index.html"  class="dates dateright">06/06/25</a>
+    </div>  
+     <img src="./tree1.webp" class="tree1a" alt="tree1">
+    <img src="./tree2.webp" class="tree2" alt="tree2">  
    <img src="./tree2.webp" class="tree2a" alt="tree2">
     <div class="clock">
         <div class="digit" id="hourTens">0</div>
@@ -217,25 +182,21 @@ background: linear-gradient(180deg, rgb(142, 183, 243) 0%, rgb(108, 164, 197) 80
     <script>
         function updateClock() {
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2);
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
+           
 
             // Extract digits
             const hourTens = hours[0];
             const hourUnits = hours[1];
             const minuteTens = minutes[0];
             const minuteUnits = minutes[1];
-            const secondTens = seconds[0];
-            const secondUnits = seconds[1];
 
             // Update the clock display
             document.getElementById('hourTens').textContent = hourTens;
             document.getElementById('hourUnits').textContent = hourUnits;
             document.getElementById('minuteTens').textContent = minuteTens;
             document.getElementById('minuteUnits').textContent = minuteUnits;
-            document.getElementById('secondTens').textContent = secondTens;
-            document.getElementById('secondUnits').textContent = secondUnits;
         }
 
         // Update the clock every second
