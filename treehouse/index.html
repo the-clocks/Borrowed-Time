@@ -18,12 +18,16 @@
         font-style: normal;
        }
 
-        body {
+        body { 
+  background-image: url('./'); /* Replace with your image path */
+  background-repeat: repeat;               /* Tiling */
+  background-size: 100px 100px;            /* Set tile size: width height */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #b8c2d9;
+          background: #0f6bf5;
+background: linear-gradient(180deg, rgb(142, 183, 243) 0%, rgb(108, 164, 197) 80%);
         }
 
         .clock {
@@ -33,8 +37,8 @@
         }
 
         .digit {
-            color: rgb(194, 177, 124);
-            text-shadow: red 0.2px 0px 1px, rgb(1, 16, 1) 0px 1px 1px, rgb(175, 192, 24) 0px 0px 20px;
+            color: rgb(224, 200, 127);
+            text-shadow: red 0.4px 0px 1px, rgb(1, 16, 1) 0px -1px 1px, rgb(175, 192, 24) 0px 0px 10px;
             font-size: 3rem;
             font-family: 'tree.ttf', sans-serif;
             width: 0.9ch;
@@ -55,7 +59,7 @@
     left: 50%;
      top: 50%;
     height: 100vh;
-    transform: translate(-50%, -50%);    
+        transform: translate(-50%, -50%) scaleX(-1);    
     z-index: 7;  
     opacity: 0.6;
         } 
@@ -66,8 +70,7 @@
      top: 50%;
     height: 100vh;
 
-    transform: translate(-50%, -50%) scaleX(-1);  
-     z-index: 2;  
+    transform: translate(-50%, -50%);       z-index: 2;  
      opacity: 0.6;
         } 
         
@@ -115,7 +118,7 @@
         }
 
         .date-container {
-            color: #ecd8ac;
+            color: #181517;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -195,11 +198,11 @@
         <a href="../index.html" class="clockname">Treehouse</a>
        <a href="../index.html"  class="dates dateright">06/06/25</a>
     </div>
-     <img src="./tree3.gif" class="tree3" alt="Tree 3"> 
-     <img src="./tree_1.gif" class="tree4" alt="Tree 4"> 
+     <!-- <img src="./tree3.gif" class="tree3" alt="Tree 3">  -->
+     <!-- <img src="./tree_1.gif" class="tree4" alt="Tree 4">  -->
     <img src="./tree1.webp" class="tree1a" alt="tree1">
   
-     <img src="./tree1.webp" class="tree1" alt="tree1">
+     <!-- <img src="./tree1.webp" class="tree1" alt="tree1"> -->
     <img src="./tree2.webp" class="tree2" alt="tree2">
   
    <img src="./tree2.webp" class="tree2a" alt="tree2">
