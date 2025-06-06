@@ -11,75 +11,6 @@
         href="https://fonts.googleapis.com/css2?family=Metamorphous&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
     <style>
-        @font-face {
-            font-family: 'Shiny';
-            src: url('fonts/Shiny.ttf') format('truetype');
-        }
-
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-        }
-
-        .frame {
-            position: relative;
-            width: 70%;
-            height: 70%;
-            border: 1px solid white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
-            box-shadow: 0 0 10px rgba(237, 200, 18, 0.5);
-
-        }
-
-        .clock {
-            font-family: 'Shiny';
-            color: #f8e9be;
-            text-shadow: rgb(213, 102, 80) 1px 1px 1px;
-            display: flex;
-            /* gap: 5vw; */
-            font-size: 18vw;
-            line-height: 21vw;
-            text-align: center;
-            z-index: 3;
-        }
-
-        .time-unit {
-            width: 20vw;
-        }
-
-        @media (max-width: 600px) {
-            .clock {
-                flex-direction: column;
-                /* font-size: 10vw; */
-            }
-
-            .time-unit {
-                width: 100%;
-            }
-        }
-
-        .bgimage {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 1;
-            filter: brightness(120%);
-            -webkit-transform: scaleX(-1);
-            transform: scaleX(-1);
-        }
-
         a {
             color: inherit;
             text-decoration: none;
@@ -92,7 +23,7 @@
         }
 
         .date-container {
-            color: #e3d7f9;
+            color: #f8e081;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -130,7 +61,7 @@
 
         .title-container {
             color: #dbe3e8;
-            text-shadow: #e90f46 1px 0px;
+            text-shadow: #eecad3 1px 0px;
             position: absolute;
             top: 5px;
             left: 50%;
@@ -159,164 +90,232 @@
             letter-spacing: -0.1vh;
         }
 
-        .light {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 9vh;
-            height: 5vh;
-            margin: -100px 0 0 -100px;
-            background: #f4ebac;
-            box-shadow:
-                0 0 80px 30px rgb(247, 247, 169),
-                0 0 40px 20px rgb(248, 245, 160);
+    @font-face {
+      font-family: 'Shiny';
+      src: url('fonts/Shiny.ttf') format('truetype');
+    }
 
-            animation: lightwander 20s infinite ease-in-out,
-                lightbright 10s alternate infinite linear;
-            border-radius: 9999px;
-            opacity: 0.7;
-        }
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      background: black;
+    }
 
-        .flare {
-            position: absolute;
-            border-radius: 9999px;
-            animation: flarewander 25s infinite ease-in-out;
-        }
+    .bgimage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      filter: brightness(120%);
+      transform: scaleX(-1);
+    }
 
-        .flare.one {
-            color: blue;
-            margin: -100px 0 0 -100px;
-            width: 200px;
-            height: 200px;
-            box-shadow:
-                inset 0 0 60px 10px rgba(230, 230, 244, 0.2),
-                0 0 40px 10px rgba(200, 200, 255, 0.2);
-        }
+    .frame {
+      position: relative;
+      width: 70%;
+      height: 70%;
+      border: 1px solid white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 10px rgba(237, 200, 18, 0.5);
+      z-index: 1;
+    }
 
-        .flare.two {
-            margin: -150px 0 0 -150px;
-            width: 300px;
-            height: 300px;
-            box-shadow:
-                inset 0 0 120px 10px rgba(180, 255, 180, 0.15),
-                0 0 40px 5px rgba(180, 255, 180, 0.15);
-        }
+    .clock {
+      font-family: 'Shiny';
+      color: #f8e9be;
+      text-shadow: rgb(213, 102, 80) 1px 1px 1px;
+      display: flex;
+      font-size: 4rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
 
-        .flare.three {
-            margin: -400px 0 0 -400px;
-            width: 800px;
-            height: 800px;
-            box-shadow:
-                inset 0 0 80px 10px rgba(255, 60, 60, 0.3),
-                0 0 40px 10px rgba(255, 60, 60, 0.3);
-        }
+    .time-unit {
+      width: 6rem;
+      height: 6rem;
+    }
 
-        .flare.four {
-            margin: 10% 0 0 10%;
-            width: 200px;
-            height: 200px;
-            box-shadow:
-                inset 0 0 160px 5px rgba(50, 255, 50, 0.25),
-                0 0 60px 10px rgba(50, 255, 50, 0.25);
-        }
+    @media (max-width: 600px) {
+      .clock {
+        flex-direction: column;
+      }
 
-        .flare.five {
-            margin: -5% 0 0 -5%;
-            width: 120px;
-            height: 120px;
-            box-shadow:
-                inset 0 0 160px 5px rgba(255, 255, 100, 0.3),
-                0 0 50px 10px rgba(255, 255, 100, 0.3);
-        }
+      .time-unit {
+        width: 100%;
+      }
+    }
 
-        .flare.six {
-            margin: 15% 0 0 15%;
-            width: 50px;
-            height: 50px;
-            box-shadow:
-                inset 0 0 30px 10px rgba(100, 255, 255, 0.3),
-                0 0 15px 3px rgba(100, 255, 255, 0.3);
-        }
+    .light {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1vh;
+      height: 1vh;
+      margin: -100px 0 0 -100px;
+      background: #f4ebac;
+      box-shadow:
+        0 0 80px 30px rgb(247, 247, 169),
+        0 0 40px 20px rgb(248, 245, 160);
+      animation: lightwander 20s infinite ease-in-out,
+      lightbright 10s alternate infinite linear;
+      border-radius: 9999px;
+      z-index: 10;
+      filter: brightness(200%);
+    }
 
-        @keyframes lightwander {
-            0% {
-                top: 50%;
-                left: 50%;
-            }
+    .flare {
+      position: absolute;
+      border-radius: 9999px;
+      animation: flarewander 25s infinite ease-in-out;
+      z-index: 11;
+    }
 
-            20% {
-                top: 55%;
-                left: 45%;
-            }
+    .flare.one {
+      margin: -100px 0 0 -100px;
+      width: 200px;
+      height: 200px;
+      box-shadow:
+        inset 0 0 60px 10px rgba(230, 230, 244, 0.2),
+        0 0 40px 10px rgba(200, 200, 255, 0.2);
+    }
 
-            40% {
-                top: 52%;
-                left: 60%;
-            }
+    .flare.two {
+      margin: -150px 0 0 -150px;
+      width: 300px;
+      height: 300px;
+      box-shadow:
+        inset 0 0 120px 10px rgba(180, 255, 180, 0.15),
+        0 0 40px 5px rgba(180, 255, 180, 0.15);
+    }
 
-            60% {
-                top: 48%;
-                left: 40%;
-            }
+    .flare.three {
+      margin: -400px 0 0 -400px;
+      width: 800px;
+      height: 800px;
+      box-shadow:
+        inset 0 0 80px 10px rgba(255, 60, 60, 0.3),
+        0 0 40px 10px rgba(255, 60, 60, 0.3);
+    }
 
-            80% {
-                top: 53%;
-                left: 50%;
-            }
+    .flare.four {
+      margin: 10% 0 0 10%;
+      width: 200px;
+      height: 200px;
+      box-shadow:
+        inset 0 0 160px 5px rgba(50, 255, 50, 0.25),
+        0 0 60px 10px rgba(50, 255, 50, 0.25);
+    }
 
-            100% {
-                top: 50%;
-                left: 50%;
-            }
-        }
+    .flare.five {
+      margin: -5% 0 0 -5%;
+      width: 120px;
+      height: 120px;
+      box-shadow:
+        inset 0 0 160px 5px rgba(255, 255, 100, 0.3),
+        0 0 50px 10px rgba(255, 255, 100, 0.3);
+    }
 
-        @keyframes flarewander {
-            0% {
-                top: 70%;
-                left: 70%;
-            }
+    .flare.six {
+      margin: 15% 0 0 15%;
+      width: 50px;
+      height: 50px;
+      box-shadow:
+        inset 0 0 30px 10px rgba(100, 255, 255, 0.3),
+        0 0 15px 3px rgba(100, 255, 255, 0.3);
+    }
 
-            25% {
-                top: 60%;
-                left: 80%;
-            }
+    @keyframes lightwander {
+      0% {
+        top: 50%;
+        left: 50%;
+      }
 
-            50% {
-                top: 75%;
-                left: 60%;
-            }
+      20% {
+        top: 55%;
+        left: 45%;
+      }
 
-            75% {
-                top: 65%;
-                left: 75%;
-            }
+      40% {
+        top: 52%;
+        left: 60%;
+      }
 
-            100% {
-                top: 70%;
-                left: 70%;
-            }
-        }
+      60% {
+        top: 48%;
+        left: 40%;
+      }
 
-        @keyframes lightbright {
-            0% {
-                box-shadow:
-                    0 0 80px 30px rgba(255, 255, 220, 1),
-                    0 0 40px 20px rgba(255, 255, 255, 1);
-            }
+      80% {
+        top: 53%;
+        left: 50%;
+      }
 
-            50% {
-                box-shadow:
-                    0 0 100px 40px rgba(255, 255, 240, 1),
-                    0 0 60px 30px rgba(255, 255, 255, 1);
-            }
+      100% {
+        top: 50%;
+        left: 50%;
+      }
+    }
 
-            100% {
-                box-shadow:
-                    0 0 90px 35px rgba(255, 255, 230, 1),
-                    0 0 50px 25px rgba(255, 255, 255, 1);
-            }
-        }
-    </style>
+    @keyframes flarewander {
+      0% {
+        top: 70%;
+        left: 70%;
+      }
+
+      25% {
+        top: 60%;
+        left: 80%;
+      }
+
+      50% {
+        top: 75%;
+        left: 60%;
+      }
+
+      75% {
+        top: 65%;
+        left: 75%;
+      }
+
+      100% {
+        top: 70%;
+        left: 70%;
+      }
+    }
+
+    @keyframes lightbright {
+      0% {
+        box-shadow:
+          0 0 80px 30px rgba(255, 255, 220, 1),
+          0 0 40px 20px rgba(255, 255, 255, 1);
+      }
+
+      50% {
+        box-shadow:
+          0 0 100px 40px rgba(255, 255, 240, 1),
+          0 0 60px 30px rgba(255, 255, 255, 1);
+      }
+
+      100% {
+        box-shadow:
+          0 0 90px 35px rgba(255, 255, 230, 1),
+          0 0 50px 25px rgba(255, 255, 255, 1);
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -324,44 +323,43 @@
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
-
-    <img src="./images/d7e781b32269a8a82b500c1a9dc97733-ezgif.com-optimize.gif" class="bgimage">
-
-
-    <div class="frame">
-        <div class="clock">
-            <div class="time-unit" id="hours">00</div>
-            <div class="time-unit" id="minutes">00</div>
-        </div>
-    </div>
-    <!-- 
-    <div class="light">
-        <div class="flare one">
-            <div class="flare two">
-                <div class="flare five"></div>
-                <div class="flare six"></div>
-                <div class="flare three">
-                    <div class="flare four"></div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <div class="date-container">
+   <div class="date-container">
         <a href="../radar/" class="dates dateleft">05/07/25</a>
         <a href="../index.html" class="clockname">Golden Hour</a>
         <a href="../whirlpool/" class="dates dateright">05/09/25</a>
     </div>
-    <script>
-        function updateClock() {
-            const now = new Date();
-            const pad = n => String(n).padStart(2, '0');
-            document.getElementById('hours').textContent = pad(now.getHours());
-            document.getElementById('minutes').textContent = pad(now.getMinutes());
-        }
+  <img src="./images/d7e781b32269a8a82b500c1a9dc97733-ezgif.com-optimize.gif" class="bgimage" />
 
-        setInterval(updateClock, 1000);
-        updateClock();
-    </script>
+  <div class="frame">
+    <div class="clock">
+      <div class="time-unit" id="hours">00</div>
+      <div class="time-unit" id="minutes">00</div>
+    </div>
+  </div>
+
+  <div class="light">
+    <div class="flare one">
+      <div class="flare two">
+        <div class="flare five"></div>
+        <div class="flare six"></div>
+        <div class="flare three">
+          <div class="flare four"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      document.getElementById('hours').textContent = pad(now.getHours());
+      document.getElementById('minutes').textContent = pad(now.getMinutes());
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
 </body>
 
 </html>
