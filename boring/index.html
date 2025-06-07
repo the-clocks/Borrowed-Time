@@ -110,56 +110,6 @@
             z-index: -3;
         }
 
-        .fade-overlay1 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 110%;
-            filter: saturate(20%) contrast(150%) brightness(60%);
-            -webkit-transform: scaleX(-1);
-            transform: scaleX(-1);
-            background: url('images/boring.webp') center/cover no-repeat;
-            animation: fadeOut 12s ease-out forwards;
-            z-index: 10;
-            /* opacity: 0.9; */
-        }
-
-        /* .fade-overlay2 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            filter: contrast(100%) brightness(40%);
-            -webkit-transform: scaleX(-1);
-            transform: scaleX(-1);
-            width: 100%;
-            height: 110%;
-            background: url('images/bigbore.webp') center/cover no-repeat;
-            animation: fadeOut 26s ease-out forwards;
-            z-index: 22;
-            opacity: 0.3;
-        } */
-
-        @keyframes fadeOut {
-            0% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-
-        .easteregg {
-            font-family: "Libre Baskerville", serif;
-            color: transparent;
-            font-size: 0.4rem;
-            z-index: 11;
-            position: relative;
-            right: 33px;
-        }
-
         a {
             color: inherit;
             text-decoration: none;
@@ -235,13 +185,7 @@
         <img src="images/hand1.webp" class="hand hour-hand">
         <img src="images/hand3.webp" class="hand min-hand">
     </div>
-    <a href="#" onclick="openEgg(); return false;" class="easteregg">
-        our heads
-        are <br>round so our thoughts<br> can
-        change direction
-    </a>
-
-
+  
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const secondHand = document.querySelector('.second-hand');
@@ -270,11 +214,7 @@
             updateClock();
         });
     </script>
-    <script>
-        function openEgg() {
-            window.open("https://upload.wikimedia.org/wikipedia/en/b/be/Duchamp_LargeGlass.jpg", "_blank", "width = 300, height = 400");
-        }
-    </script>
+  
 
 </body>
 
