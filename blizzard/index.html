@@ -41,7 +41,10 @@
             height: 100%;
             background-color: rgb(19, 83, 162);
             background-image: url(./images/birds.gif);
-            border-collapse: collapse;
+            background-repeat: repeat;                   /* Tile it */
+      background-size: 20px 20px;                  /* Set tile size */
+      border-collapse: collapse;
+         border-collapse: collapse;
             border: 2vh solid #c29274;
             background-repeat: repeat;
         }
@@ -49,7 +52,7 @@
         .clock {
             position: relative;
             font-size: 20vw;
-            color: rgb(203, 203, 253);
+            color: rgb(219, 219, 246);
             text-shadow: 3px -5px 15px rgba(236, 205, 252, 0.7), -3px -3px 15px rgb(187, 153, 221), 3px 5px 15px #afb9b7, -3px 2px 1px rgba(64, 42, 131, 0.7);
             font-family: "Amatic SC", serif;
             text-align: center;
@@ -93,19 +96,19 @@
         }
 
         .a1 {
-            background-image: url(./images/sg-snow.gif), url(./images/6595b5_be855e40c2df466b9b66fe3059709f08~mv2-1903038339.gif);
+            background-image: url(./images/sg-snow.gif), url(./images/659.gif);
             background-position: top top;
             background-repeat: repeat, no-repeat;
         }
 
         .a2 {
-            background-image: url(./images/6595b5_be855e40c2df466b9b66fe3059709f08~mv2-1903038339.gif), url(./images/flakes.gif);
+            background-image: url(./images/659.gif), url(./images/flakes.gif);
             background-position: top left;
             background-repeat: no-repeat, repeat;
         }
 
         .a3 {
-            background-image: url(./images/snow-gif-7.gif), url(./images/6595b5_be855e40c2df466b9b66fe3059709f08~mv2-1903038339.gif);
+            background-image: url(./images/snow-gif-7.gif), url(./images/659.gif);
             background-position: top, top;
             background-repeat: repeat, no-repeat;
         }
@@ -240,19 +243,19 @@
         <table>
             <tr>
                 <td class="a1">&nbsp;</td>
-                <td class="a2"></td>
-                <td class="a3"></td>
+                <td class="a2">&nbsp;</td>
+                <td class="a3">&nbsp;</td>
             </tr>
             <tr>
-                <td class="b1"></td>
+                <td class="b1">&nbsp;</td>
                 <td class="b2">
                     <div class="clock" id="clock"></div>
                 </td>
-                <td class="b3"></td>
+                <td class="b3">&nbsp;</td>
             </tr>
             <tr>
-                <td class="c1"></td>
-                <td class="c2"></td>
+                <td class="c1">&nbsp;</td>
+                <td class="c2">&nbsp;</td>
                 <td class="c3">&nbsp;</td>
             </tr>
         </table>
