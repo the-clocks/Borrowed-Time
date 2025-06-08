@@ -28,7 +28,6 @@
       overflow: hidden;
       background-repeat: repeat;
       position: relative;
-      font-family: 'Oxanium', sans-serif;
     }
 
     .bgimage {
@@ -41,7 +40,7 @@
       transform: translate(-50%, -50%);
       filter: invert(1.0) contrast(0.1);
       z-index: -1;
-      animation: slow-rotate 160s linear infinite;
+      animation: slow-rotate 360s linear infinite;
       transform-origin: center center;
     }
 
@@ -50,7 +49,7 @@
         transform: translate(-50%, -50%) rotate(0deg) scale(1.5);
       }
       100% {
-        transform: translate(-50%, -50%) rotate(-360deg) scale(1.5);
+        transform: translate(-50%, -50%) rotate(360deg) scale(1.5);
       }
     }
 
@@ -169,7 +168,6 @@
 
         .date-container {
           color: #eaead9;
-          
             position: absolute;
             bottom: 5px;
             left: 50%;
