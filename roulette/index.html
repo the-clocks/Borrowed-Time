@@ -46,6 +46,7 @@
             height: 100%;
             font-family: "Lora", serif;
             font-optical-sizing: auto;
+            color: yellow;
             font-weight: 700;
             text-align: center;
             font-size: 6.5vh;
@@ -54,14 +55,10 @@
         .number span {
             display: inline-block;
             transform: translateY(-17.5vw);
-            /* 70px at 40vw (70/400 * 40vw) */
-            background-color: rgb(241, 243, 211);
             width: 7vh;
             height: 12vw;
             line-height: 11vw;
             text-align: center;
-            /* font-size: min(4.5vh, 18px); */
-            /* Responsive font size */
         }
 
         .hand {
@@ -103,24 +100,6 @@
             min-height: 60px;
         }
 
-        .center {
-            width: 3vw;
-            /* Scales with clock */
-            height: 3vw;
-            max-width: 12px;
-            max-height: 12px;
-            min-width: 6px;
-            min-height: 6px;
-            background-color: rgb(237, 9, 9);
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 20;
-            /* Below numbers, above hands */
-        }
-
         .bgimage {
             position: fixed;
             /* Use fixed for full-page background */
@@ -131,10 +110,9 @@
             min-width: 110%;
             object-fit: cover;
             transform: translate(-50%, -50%);
-            filter: saturate(900%) brightness(70%);
-
+            filter: saturate(9000%) brightness(70%) contrast(200%);
             z-index: 3;
-            opacity: 0.9;
+            opacity: 0.4;
             /* Make sure it's behind content */
         }
 
@@ -148,8 +126,8 @@
             min-width: 80%;
             object-fit: cover;
             transform: translate(-50%, -50%);
-            filter: saturate(200%) brightness(140%) contrast(140%);
-            opacity: 0.6;
+            filter: saturate(550%) brightness(60%) contrast(640%);
+            opacity: 0.3;
             z-index: 2;
             /* Make sure it's behind content */
         }
@@ -164,7 +142,7 @@
             min-width: 105%;
             object-fit: cover;
             transform: translate(-50%, -50%);
-            filter: saturate(190%) brightness(120%) contrast(200%);
+            filter: saturate(20%) brightness(70%) contrast(600%);
             /* opacity: 0.6; */
             z-index: 1;
             /* Make sure it's behind content */
@@ -212,7 +190,7 @@
         }
 
         .date-container {
-            color: #ffffff;
+            color: #ece0e0;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -275,7 +253,7 @@
 
                 const span = document.createElement('span');
                 span.textContent = i;
-                span.style.backgroundColor = i % 2 === 0 ? 'red' : 'black'; // Even = red, Odd = black
+                span.style.backgroundColor = i % 2 === 0 ? 'crimson' : 'black'; // Even = red, Odd = black
                 span.style.color = 'white'; // All numbers yellow
 
                 number.appendChild(span);
