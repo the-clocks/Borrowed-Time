@@ -2,307 +2,265 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Roulette Clock - BorrowedTime</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
-        rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            /* background-color: #467047; */
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roulette Clock - BorrowedTime</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
 
-        .clock {
-            width: 45vh;
-            height: 45vh;
-            max-width: 400px;
-            max-height: 400px;
-            min-width: 200px;
-            min-height: 200px;
-            border-radius: 50%;
-            position: relative;
-            background-image: url('./roul.gif');
-            background-size: cover;
-            /* Zooms in to fill the circle */
-            background-repeat: no-repeat;
-            background-position: center;
-            /* background-color: #a6b4a7; */
-            aspect-ratio: 1 / 1;
-            box-sizing: border-box;
-            z-index: 6;
-        }
+    .clock {
+      width: 45vh;
+      height: 45vh;
+      max-width: 400px;
+      max-height: 400px;
+      min-width: 200px;
+      min-height: 200px;
+      border-radius: 50%;
+      position: relative;
+      background-image: url('./roul.gif');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      aspect-ratio: 1 / 1;
+      box-sizing: border-box;
+      z-index: 6;
+    }
 
-        .number {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            font-family: "Lora", serif;
-            font-optical-sizing: auto;
-            color: yellow;
-            font-weight: 700;
-            text-align: center;
-            font-size: 6.5vh;
-        }
+    .number {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      font-family: "Lora", serif;
+      font-weight: 700;
+      text-align: center;
+      font-size: 6.5vh;
+    }
 
-        .number span {
-            display: inline-block;
-            transform: translateY(-17.5vw);
-            width: 7vh;
-            height: 12vw;
-            line-height: 11vw;
-            text-align: center;
-        }
+    .number span {
+      display: inline-block;
+      transform: translateY(-17.5vw);
+      width: 8vh;
+      height: 13vh;
+      line-height: 13vh;
+      text-align: center;
+    }
 
-        .hand {
-            background-color: aliceblue;
-            position: absolute;
-            bottom: 50%;
-            left: 50%;
-            transform-origin: bottom;
-            z-index: 10;
-            /* Below numbers */
-        }
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom;
+      transform: translateX(-50%);
+      z-index: 10;
+      border-radius: 2px;
+    }
 
-        .hour-hand img {
-            width: 2vw;
-            /* Scales with clock */
-            /* color:blanchedalmond; */
-            height: 29vw;
-            max-width: 8px;
-            max-height: 80px;
-            min-width: 4px;
-            min-height: 40px;
-        }
+    .hour-hand {
+      width: 4vh;
+      height: 14vh;
+      background-color: rgb(240, 210, 10);
+    }
 
-        .minute-hand img {
-            width: 1.5vw;
-            height: 25vw;
-            max-width: 6px;
-            max-height: 100px;
-            min-width: 3px;
-            min-height: 50px;
-        }
+    .minute-hand {
+      width: 2.3vh;
+      height: 22vh;
+      background-color:rgb(240, 210, 10);
 
-        .second-hand img {
-            width: 1vw;
-            height: 30vw;
-            max-width: 4px;
-            max-height: 120px;
-            min-width: 2px;
-            min-height: 60px;
-        }
+    }
 
-        .bgimage {
-            position: fixed;
-            /* Use fixed for full-page background */
-            top: 50%;
-            left: 50%;
-            width: auto;
-            height: 130%;
-            min-width: 110%;
-            object-fit: cover;
-            transform: translate(-50%, -50%);
-            filter: saturate(100%) brightness(70%) contrast(200%);
-            z-index: 3;
-            opacity: 0.4;
-            /* Make sure it's behind content */
-        }
+    .second-hand {
+      width: 0.5vh;
+      height: 40vh;
+      background-color: rgb(240, 210, 10);
+    }
 
-        .bgimage2 {
-            position: fixed;
-            /* Use fixed for full-page background */
-            top: 50%;
-            left: 50%;
-            width: auto;
-            height: 80%;
-            min-width: 80%;
-            object-fit: cover;
-            transform: translate(-50%, -50%);
-            filter: saturate(100%) brightness(90%) contrast(140%);
-            opacity: 0.3;
-            z-index: 2;
-            /* Make sure it's behind content */
-        }
+    .bgimage,
+    .bgimage2,
+    .bgimage3 {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
 
-        .bgimage3 {
-            position: fixed;
-            /* Use fixed for full-page background */
-            top: 50%;
-            left: 50%;
-            width: 200%;
-            height: 200%;
-            min-width: 105%;
-            object-fit: cover;
-            transform: translate(-50%, -50%);
-            filter: saturate(20%) brightness(70%) contrast(600%);
-            /* opacity: 0.6; */
-            z-index: 1;
-            /* Make sure it's behind content */
-        }
+    .bgimage {
+      height: 130%;
+      min-width: 110%;
+      filter: saturate(100%) brightness(70%) contrast(200%);
+      opacity: 0.4;
+      z-index: 3;
+    }
 
-        .title-container {
-            color: #fbf5f8;
-            text-shadow: #f90a0a 1px 0px;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
+    .bgimage2 {
+      height: 80%;
+      min-width: 80%;
+      filter: saturate(100%) brightness(90%) contrast(140%);
+      opacity: 0.3;
+      z-index: 2;
+    }
 
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.1vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
+    .bgimage3 {
+      width: 200%;
+      height: 200%;
+      min-width: 105%;
+      filter: saturate(20%) brightness(70%) contrast(600%);
+    }
 
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.7vh;
-            font-style: italic;
-            letter-spacing: -0.1vh;
-        }
+    .title-container {
+      color: #fbf5f8;
+      text-shadow: #f90a0a 1px 0px;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.1vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      letter-spacing: 0.1vh;
+    }
 
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-            text-decoration: none;
-        }
+    .bttitle {
+      position: relative;
+      left: 0;
+      font-family: "Oxanium", serif;
+      font-size: 2.7vh;
+      font-style: italic;
+      letter-spacing: -0.1vh;
+    }
 
-        .date-container {
-            color: #ece0e0;
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 60;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        .clockname {
-            font-family: "Oxanium", serif;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 3.5vh;
-            line-height: 4vh;
-        }
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+    }
 
-        .dateleft {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: relative;
-            left: 0;
-        }
+    .date-container {
+      color: #ece0e0;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 60;
+    }
 
-        .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: absolute;
-            right: 0;
-        }
-    </style>
+    .clockname {
+      font-family: "Oxanium", serif;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3.5vh;
+      line-height: 4vh;
+    }
+
+    .dateleft,
+    .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+    }
+
+    .dateleft {
+      position: relative;
+      left: 0;
+    }
+
+    .dateright {
+      position: absolute;
+      right: 0;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="title-container">
-        <div class="chltitle">Cubist Heart Laboratories</div>
-        <div class="bttitle">BorrowedTime</div>
-    </div>
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
 
-    <div class="date-container">
-        <a href="../roughidea/" class="dates dateleft">05/14/25</a>
-        <a href="../index.html" class="clockname">Roulette</a>
-        <a href="../braille/" class="dates dateright">05/16/25</a>
-    </div>
-    <div class="clock" id="clock"></div>
-    <img src="./roule.gif" class="bgimage">
-    <img src="./roulette-spin.gif" class="bgimage2">
-    <img src="./Roulette_french.svg" class="bgimage3">
+  <div class="date-container">
+    <a href="../roughidea/" class="dates dateleft">05/14/25</a>
+    <a href="../index.html" class="clockname">Roulette</a>
+    <a href="../braille/" class="dates dateright">05/16/25</a>
+  </div>
 
-    <script>
-        function createClock() {
-            const clock = document.getElementById('clock');
+  <div class="clock" id="clock"></div>
+  <img src="./roule.gif" class="bgimage">
+  <img src="./roulette-spin.gif" class="bgimage2">
+  <img src="./Roulette_french.svg" class="bgimage3">
 
-            // Create numbers 1 to 12
-            for (let i = 1; i <= 12; i++) {
-                const angle = i * 30; // 30° per number
-                const number = document.createElement('div');
-                number.className = 'number';
+  <script>
+    function createClock() {
+      const clock = document.getElementById('clock');
 
-                const span = document.createElement('span');
-                span.textContent = i;
-                span.style.backgroundColor = i % 2 === 0 ? 'crimson' : 'black'; // Even = red, Odd = black
-                span.style.color = 'white'; // All numbers yellow
+      // Numbers 1 to 12
+      for (let i = 1; i <= 12; i++) {
+        const angle = i * 30;
+        const number = document.createElement('div');
+        number.className = 'number';
 
-                number.appendChild(span);
-                number.style.transform = `rotate(${angle}deg)`;
-                clock.appendChild(number);
-            }
+        const span = document.createElement('span');
+        span.textContent = i;
+        span.style.backgroundColor = i % 2 === 0 ? 'crimson' : 'black';
+        span.style.color = 'white';
 
-            // Create hands with placeholder images
-            const hands = [
-                { class: 'hour-hand', img: 'https://placehold.co/8x80/000000/000000/png' },
-                { class: 'minute-hand', img: 'https://placehold.co/6x100/000000/000000/png' },
-                { class: 'second-hand', img: 'https://placehold.co/4x120/FF0000/FF0000/png' }
-            ];
-            hands.forEach(hand => {
-                const div = document.createElement('div');
-                div.className = `hand ${hand.class}`;
-                const img = document.createElement('img');
-                img.src = hand.img;
-                img.style.display = 'block';
-                div.appendChild(img);
-                clock.appendChild(div);
-            });
+        number.appendChild(span);
+        number.style.transform = `rotate(${angle}deg)`;
+        clock.appendChild(number);
+      }
 
-            // Create center dot
-            const center = document.createElement('div');
-            center.className = 'center';
-            clock.appendChild(center);
-        }
+      // Create colored hands
+      ['hour-hand', 'minute-hand', 'second-hand'].forEach(cls => {
+        const div = document.createElement('div');
+        div.className = `hand ${cls}`;
+        clock.appendChild(div);
+      });
+    }
 
+    function updateClock() {
+      const now = new Date();
+      const h = now.getHours() % 12;
+      const m = now.getMinutes();
+      const s = now.getSeconds();
 
-        function updateClock() {
-            const now = new Date();
-            const hours = now.getHours() % 12;
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
+      const hourDeg = (h + m / 60) * 30;
+      const minuteDeg = (m + s / 60) * 6;
+      const secondDeg = s * 6;
 
-            const hourDeg = (hours + minutes / 60) * 30; // 30° per hour
-            const minuteDeg = (minutes + seconds / 60) * 6; // 6° per minute
-            const secondDeg = seconds * 6; // 6° per second
+      document.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+      document.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+      document.querySelector('.second-hand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+    }
 
-            document.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
-            document.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
-            document.querySelector('.second-hand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
-        }
-
-        createClock();
-        updateClock();
-        setInterval(updateClock, 1000);
-    </script>
+    createClock();
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
 </body>
 
 </html>
