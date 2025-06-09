@@ -121,7 +121,7 @@
     }
 
     .clock {
-        z-index: 6;
+      z-index: 6;
       font-family: 'ion', monospace;
       display: inline-block;
       transform-style: preserve-3d;
@@ -160,7 +160,7 @@
       top: 0;
       left: 0;
       width: 100vw;
-      height: 110vh;
+      height: 100vh;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -180,7 +180,7 @@
       background-repeat: no-repeat;
       filter: contrast(90%) saturate(90%);
       z-index: 2;
-      opacity:  0.3;
+      opacity:  0.5;
       pointer-events: none;
     }
 
@@ -208,8 +208,8 @@
      <script>
     const CLOCK_BACKGROUND = 'rgba(0, 255, 255, 0.0)';
     const CLOCK_COUNT_PER_DIRECTION = 1;
-    const MIN_DURATION = 0.1;
-    const MAX_DURATION = 20;
+    const MIN_DURATION = 0.01;
+    const MAX_DURATION = 10;
     const CLOCK_SPREAD_Y_PADDING = 200;
 
     let globalCharIndex = 0;
@@ -260,7 +260,7 @@
         clock.appendChild(span);
       }
 
-      const fontSize = `${Math.random() * 2}rem`;
+      const fontSize = `${Math.random() * 4}rem`;
       const y = Math.random() * window.innerHeight;
       wrapper.style.top = `${y}px`;
       wrapper.style.left = '0';
