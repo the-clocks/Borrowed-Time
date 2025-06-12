@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cattle Brand Clock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+  
+  <style>
+    @font-face {
+      font-family: 'cattle';
+      src: url('cattle.ttf') format('truetype');
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .clock {
+        position: relative;
+        left: 25%;
+        bottom: -10%;
+        /* top: 30% */
+      font-size: 5rem; /* 80px */
+      display: flex;
+      font-family: 'cattle';
+      align-items: baseline;
+      color: #331a00; 
+      text-shadow:
+        0 0 0.0625rem #000,
+        0 0 0.1875rem #2b1a00,
+        0.0625rem 0.0625rem 0 rgba(255, 180, 100, 0.2),
+        -0.0625rem -0.0625rem 0 rgba(255, 180, 100, 0.2),
+        0 0 0.625rem rgba(50, 30, 10, 0.8);
+      z-index: 2;
+    }
+
+    .hours {
+      /* reserved for future rem-based adjustments */
+    }
+
+    .minutes {
+      display: flex;
+    }
+
+    .minute-digit {
+      text-align: center;
+    }
+
+.minute-digit.tens {
+  position: relative;
+  top: -1.3rem;   /* ~-35px */
+  right: -0.5rem;  /* ~10px */
+  transform: rotate(90deg);
+  transform-origin: center; /* Optional: Adjust origin if needed */
+}
+
+
+    .minute-digit.ones {
+      position: relative;
+      top: 1.5rem;   /* 35px */
+      right: 2.6rem;  /* 50px */
+       transform: rotate(45deg);
+  transform-origin: center; /* Optional: Adjust origin if needed */
+
+    }
+
+    .bgimage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-repeat: repeat;
+      z-index: 1;
+    }
+
+        /* Title container styles */
+        .title-container {
+            color: #c26c09;
+            text-shadow: #f5f5f0 1px 0;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.1vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.7vh;
+            font-style: italic;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        /* Date container styles */
+        .date-container {
+            color: #f0c172;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+  </style>
+</head>
+
+
+
+<body>
+
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../banana/" class="dates dateleft">06/11/25</a>
+        <a href="../index.html" class="clockname">Cattle Brand</a>
+     <a href="../index.html"  class="dates dateright">06/13/25</a>
+    </div>
+  <img src="./auth.jpg" class="bgimage">
+  <div class="clock">
+    <div class="hours" id="hours">12</div>
+    <div class="minutes">
+      <div class="minute-digit tens" id="minTens">0</div>
+      <div class="minute-digit ones" id="minOnes">0</div>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+
+      // Convert to 12-hour format and strip leading zero on hour
+      hours = hours % 12 || 12;
+
+      const minStr = minutes.toString().padStart(2, '0');
+
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minTens").textContent = minStr[0];
+      document.getElementById("minOnes").textContent = minStr[1];
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>

@@ -9,7 +9,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
     rel="stylesheet">
-    
+
   <style>
     @font-face {
       font-family: 'Ban';
@@ -21,9 +21,13 @@
       padding: 0;
       width: 100vw;
       height: 100vh;
-      position: relative;
       overflow: hidden;
       background-color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      font-family: sans-serif;
     }
 
     .tile-container {
@@ -44,14 +48,35 @@
       object-fit: cover;
     }
 
+    .title-container {
+      color: #7c9c50;
+      text-shadow: #f5f2f3 1px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      padding: 1vh 2vw;
+      z-index: 6;
+    }
+
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.2vh;
+      letter-spacing: 0.1vh;
+    }
+
+    .bttitle {
+      font-family: "Oxanium", serif;
+      font-size: 2.8vh;
+      font-style: italic;
+      letter-spacing: -0.1vh;
+    }
+
     .clock {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 70vw;
-      height: 70vh;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
+      position: relative;
+      width: 70vmin;
+      height: 70vmin;
+      z-index: 1;
     }
 
     .hand {
@@ -60,27 +85,23 @@
       left: 50%;
       transform-origin: 50% 100%;
       transform: rotate(0deg);
-      z-index: 3;
     }
 
     .hour-hand {
       width: 25%;
       height: 20%;
-      z-index: 3;
       filter: brightness(160%);
     }
 
     .minute-hand {
       width: 28%;
       height: 40%;
-      z-index: 2;
       filter: contrast(150%);
     }
 
     .second-hand {
       width: 22%;
       height: 50%;
-      z-index: 4;
     }
 
     .number {
@@ -118,53 +139,19 @@
       }
     }
 
-        .title-container {
-            color: #7c9c50;
-            text-shadow: #f5f2f3 1px 0;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
-
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.1vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
-
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.7vh;
-            font-style: italic;
-            letter-spacing: -0.1vh;
-        }
     .date-container {
       color: #0d1201;
-      position: absolute;
-      bottom: 2vh;
-      left: 50%;
-      transform: translateX(-50%);
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      width: 90%;
-      max-width: 1000px;
-      z-index: 60;
+      gap: 3vw;
+      padding-bottom: 2vh;
+      z-index: 6;
     }
 
     .dateleft, .dateright, .clockname {
       font-size: 3vh;
       font-family: "Nanum Gothic Coding", monospace;
-      margin: 0 1vw;
     }
 
     .clockname {
@@ -186,18 +173,12 @@
 </head>
 <body>
 
+  <div class="tile-container" id="tileContainer"></div>
+
   <div class="title-container">
     <div class="chltitle">Cubist Heart Laboratories</div>
     <div class="bttitle">BorrowedTime</div>
   </div>
-
-  <div class="date-container">
-    <a href="../shapes/" class="dates dateleft">06/10/25</a>
-    <a href="../index.html" class="clockname">Banana</a>
-    <a href="../index.html" class="dates dateright">05/20/25</a>
-  </div>
-
-  <div class="tile-container" id="tileContainer"></div>
 
   <div class="clock">
     <img src="./yellow-spinning-banana.gif" class="bgimage" alt="Rotating banana">
@@ -218,6 +199,12 @@
     <div class="number" style="top: 50%; left: 8%;">9</div>
     <div class="number" style="top: 36%; left: 13%;">10</div>
     <div class="number" style="top: 19%; left: 27%;">11</div>
+  </div>
+
+  <div class="date-container">
+    <a href="../shapes/" class="dates dateleft">06/10/25</a>
+    <a href="../index.html" class="clockname">Banana</a>
+    <a href="../cattlebrand/" class="dates dateright">06/12/25</a>
   </div>
 
   <script>
