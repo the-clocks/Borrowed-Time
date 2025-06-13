@@ -78,10 +78,12 @@
     top: 120vh;
     opacity: 1;
   }
-  
-  40%, 60% {
+  59% {
+    opacity:1;
+  }
+  60% {
     top: 50%;
-    opacity: 1;
+    opacity: 0;
   }
   70% {
     opacity: 0;
@@ -118,8 +120,9 @@
         opacity: 0;
       }
     }
-    .bgimage {position: fixed;
-            top: -12vh;
+    .bgimage {
+            position: fixed;
+            /* top: -12vh; */
             left: 0;
             /* width: 100vw; */
             height: 150vh;
@@ -128,16 +131,6 @@
             opacity: 0.7;
             filter: brightness(60%);
         }
-    .bgimage2 {position: fixed;
-            top: -12vh;
-            left: 0;
-            /* width: 100vw; */
-            height: 150vh;
-            background-repeat: repeat;
-            z-index: 1;
-            /* opacity: 0.4; */
-        }
-
 
         a {
             color: inherit;
@@ -232,7 +225,6 @@
     </div>
   
     <img src="./clll.webp" class="bgimage">
-    <!-- <img src="./cl.webp" class="bgimage"> -->
   <div class="horizon"></div>
   <div class="moon" id="moon">
     <div class="clock" id="clock">12:00</div>
