@@ -27,25 +27,24 @@
       align-items: center;
       justify-content: center;
     }
-
-    .clock {
-        position: relative;
-        left: 25%;
-        bottom: -10%;
-        /* top: 30% */
-      font-size: 5rem; /* 80px */
-      display: flex;
-      font-family: 'cattle';
-      align-items: baseline;
-      color: #331a00; 
-      text-shadow:
+.clock {
+    position: relative;
+    left: 25%;
+    bottom: -10%;
+    font-size: 5rem; /* 80px */
+    display: flex;
+    font-family: 'cattle';
+    align-items: baseline;
+    color: #331a00; 
+    text-shadow:
         0 0 0.0625rem #000,
         0 0 0.1875rem #2b1a00,
         0.0625rem 0.0625rem 0 rgba(255, 180, 100, 0.2),
         -0.0625rem -0.0625rem 0 rgba(255, 180, 100, 0.2),
         0 0 0.625rem rgba(50, 30, 10, 0.8);
-      z-index: 2;
-    }
+    z-index: 2;
+    transform: rotate(-8deg); /* Added rotation */
+}
 
     .hours {
       /* reserved for future rem-based adjustments */
