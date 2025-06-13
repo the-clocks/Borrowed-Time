@@ -70,10 +70,7 @@
   background-position: center;
   animation: cloudSweep 20s infinite ease-in-out;
   z-index: 10;
-  filter: brightness(50%) contrast(300%) sepia(1) hue-rotate(190deg) saturate(2);
-
-
-
+  filter: brightness(40%) contrast(300%) sepia(1) hue-rotate(190deg) saturate(2);
   opacity: 0.7;
 }
 
@@ -132,8 +129,18 @@
             /* width: 100vw; */
             height: 150vh;
             background-repeat: repeat;
+            z-index: 2;
+            opacity: 0.7;
+            filter: brightness(60%);
+        }
+    .bgimage2 {position: fixed;
+            top: -12vh;
+            left: 0;
+            /* width: 100vw; */
+            height: 150vh;
+            background-repeat: repeat;
             z-index: 1;
-            opacity: 0.4;
+            /* opacity: 0.4; */
         }
 
 
@@ -149,7 +156,7 @@
         }
 
         .date-container {
-            color: #ecd8ac;
+            color: #ebf9fb;
             position: absolute;
             bottom: 5px;
             left: 50%;
@@ -185,8 +192,8 @@
         }
 
         .title-container {
-            color: #808184;
-            text-shadow: #deb50f 1px 0px;
+            color: #7e7f84;
+            text-shadow: #100f0f 1px 0px;
             position: absolute;
             top: 5px;
             left: 50%;
@@ -229,7 +236,8 @@
        <a href="../index.html"  class="dates dateright">06/14/25</a>
     </div>
   
-    <img src="./cl.webp" class="bgimage">
+    <img src="./clll.webp" class="bgimage">
+    <!-- <img src="./cl.webp" class="bgimage"> -->
   <div class="horizon"></div>
   <div class="moon" id="moon">
     <div class="clock" id="clock">12:00</div>
