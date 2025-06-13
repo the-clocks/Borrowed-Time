@@ -32,11 +32,10 @@
       height: 20%;
       background: linear-gradient(to top, #1c241f, transparent);
     }
-    
-.moon {
+    .moon {
   position: absolute;
   left: 50%;
-  top: 100%; /* Start below the viewport */
+  top: 120vh; /* start well below viewport */
   width: 180px;
   height: 180px;
   background-image: url('./cmoon.webp');
@@ -46,7 +45,8 @@
   justify-content: center;
   align-items: center;
   transform: translate(-50%, -50%);
-  animation: moonRise 15s infinite ease-in-out;
+  animation: moonRise 15s infinite;
+  animation-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
   z-index: 5;
 }
 
@@ -73,26 +73,21 @@
   filter: brightness(40%) contrast(300%) sepia(1) hue-rotate(190deg) saturate(2);
   /* opacity: 0.7; */
 }
-
 @keyframes moonRise {
   0% {
-    top: 100%;
-    opacity: 0.0;
+    top: 120vh;
+    opacity: 1;
   }
-  25% {
+  
+  40%, 60% {
     top: 50%;
     opacity: 1;
   }
-  50% {
-    top: 50%;
-    opacity: 1;
-  }
-  60% {
-    top: 50%;
+  70% {
     opacity: 0;
   }
   100% {
-    top: 100%;
+    top: 120vh;
     opacity: 0;
   }
 }
