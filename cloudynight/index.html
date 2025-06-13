@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cloudy Night Clock</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+ <style>
+    @font-face {
+      font-family: 'cloudy';
+      src: url('cloudy.ttf') format('truetype');
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #1a1a3d, #1b1082);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .horizon {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 20%;
+      background: linear-gradient(to top, #1c241f, transparent);
+    }
+    
+.moon {
+  position: absolute;
+  left: 50%;
+  top: 100%; /* Start below the viewport */
+  width: 180px;
+  height: 180px;
+  background-image: url('./cmoon.webp');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(-50%, -50%);
+  animation: moonRise 20s infinite ease-in-out;
+  z-index: 5;
+}
+
+.clock {
+  font-family: 'cloudy', sans-serif;
+  font-size: 4rem;
+  color: #f9f6c2;
+  text-shadow: 1px 1px 2px rgba(69, 73, 52, 0.9);
+  line-height: 1;
+  text-align: center;
+  transform: translateY(2%); /* slight vertical tweak if needed */
+}
+
+
+ .cloud {
+  position: absolute;
+  width: 600px;
+  height: 400px;
+  background-image: url('./clou.gif');
+  background-size: cover;
+  background-position: center;
+  animation: cloudSweep 20s infinite ease-in-out;
+  z-index: 10;
+  filter: brightness(50%) contrast(300%) sepia(1) hue-rotate(190deg) saturate(2);
+
+
+
+  opacity: 0.7;
+}
+
+@keyframes moonRise {
+  0% {
+    top: 100%;
+    opacity: 0.1;
+  }
+  25% {
+    top: 50%;
+    opacity: 1;
+  }
+  50% {
+    top: 50%;
+    opacity: 1;
+  }
+  60% {
+    top: 50%;
+    opacity: 0;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+    @keyframes cloudSweep {
+      0% {
+        transform: translateX(-700px);
+        opacity: 1;
+      }
+      40% {
+        transform: translateX(-700px);
+        opacity: 1;
+      }
+      50% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      65% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      80% {
+        transform: translateX(700px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateX(700px);
+        opacity: 0;
+      }
+    }
+    .bgimage {position: fixed;
+            top: -12vh;
+            left: 0;
+            /* width: 100vw; */
+            height: 150vh;
+            background-repeat: repeat;
+            z-index: 1;
+            opacity: 0.4;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #ecd8ac;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #808184;
+            text-shadow: #deb50f 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.1vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.7vh;
+            font-style: italic;
+            letter-spacing: -0.1vh;
+        }
+
+  </style>
+</head>
+<body>
+
+    <div class=" title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../cattlebrand/" class="dates dateleft">06/012/25</a>
+        <a href="../index.html" class="clockname">Cloudy Night</a>
+       <a href="../index.html"  class="dates dateright">06/14/25</a>
+    </div>
+  
+    <img src="./cl.webp" class="bgimage">
+  <div class="horizon"></div>
+  <div class="moon" id="moon">
+    <div class="clock" id="clock">12:00</div>
+  </div>
+  <div class="cloud"></div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours() % 12;
+      hours = hours ? hours : 12; // Convert 0 to 12
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${hours}:${minutes}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
