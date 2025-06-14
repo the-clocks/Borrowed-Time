@@ -120,7 +120,8 @@
             font-size: 14vh;
             color: #0adb26;
             text-shadow: #f98e85f4 -9px -9px,  #ed5ad2ea 9px 9px ;
-            opacity: 0.8;
+            opacity: 0.7;
+            z-index: 5;
             text-align: center;
             transform-origin: center;
 
@@ -155,26 +156,30 @@
             bottom: 50%;
             left: 50%;
             transform-origin: bottom;
-            background: #72ed72;
+            /* background: #ed72e1; */
             border-radius: 8px;
-            opacity: 0.6;
+            opacity: 0.9;
+            z-index: 6;
         }
 
         .hour-hand {
-            width: 14px;
-            height: 50px;
+            background: #ed72e1ac;
+            width: 4rem;
+            height: 7rem;
             transform: translateX(-50%) rotate(0deg);
         }
 
         .minute-hand {
-            width: 5px;
-            height: 90px;
+                background: #f5c1b7b0;
+            width: 2rem;
+            height: 9rem;
             transform: translateX(-50%) rotate(0deg);
         }
 
         .second-hand {
-            width: 2px;
-            height: 120px;
+               background: #34f504a2;
+            width: 0.2rem;
+            height: 16rem;
             transform: translateX(-50%) rotate(0deg);
         }
 
@@ -185,6 +190,7 @@
             height: 70px;
             object-fit: cover;
             border-radius: 10px;
+            z-index: 7;
             pointer-events: none;
         }
 
@@ -210,7 +216,8 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 0;
+            z-index: 3;
+              opacity: 0.8;
             filter: brightness(120%);
             transform: scaleX(-1);
         }
@@ -221,8 +228,9 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 0;
-            filter: brightness(120%);
+            z-index: 1;
+            opacity: 0.8;
+            filter: brightness(150%);
             background-image: url('./hmm.gif');
             background-repeat: repeat;
             background-size: auto;
@@ -235,8 +243,9 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 0;
-            filter: brightness(120%);
+            z-index: 2;
+              opacity: 0.8;
+            filter: brightness(150%);
             background-image: url('./hmm.gif');
             background-repeat: repeat;
             background-size: auto;
