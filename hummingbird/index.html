@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ionosphere Clock - BorrowedTime</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
-            overflow: hidden;
-            position: relative;
             height: 100vh;
+            overflow: hidden;
+            background: #ef8ce0;
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
         }
 
         .date-container {
@@ -102,23 +100,10 @@
             src: url('humm.ttf') format('truetype');
         }
 
-
-        body {
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-            background: #86bb7b;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
         /* Clock Styles */
         .clock {
             width: 90vh;
             height: 90vh;
-            /* background: #fff; */
             border-radius: 50%;
             position: relative;
         }
@@ -131,14 +116,37 @@
 
         .number {
             position: absolute;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            font-family: 'humm', sans-serif;         
-            font-size: 33vh;
-            color: #3ddc50;
-            text-shadow: #fad2d2 -1px -1px ;
+            font-family: 'humm', sans-serif;
+            font-size: 14vh;
+            color: #0adb26;
+            text-shadow: #f18e8e -5px -6px,  #ed5ad2 2px 3px ;
             opacity: 0.9;
+            text-align: center;
+            transform-origin: center;
+        }
+
+        .number.twelve {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .number.three {
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .number.six {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(180deg);
+        }
+
+        .number.nine {
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%) rotate(270deg);
         }
 
         .hand {
@@ -147,25 +155,25 @@
             left: 50%;
             transform-origin: bottom;
             background: #72ed72;
-            border-radius: 3px;
+            border-radius: 8px;
+            opacity: 0.6;
         }
 
         .hour-hand {
-            width: 8px;
-            height: 80px;
+            width: 14px;
+            height: 50px;
             transform: translateX(-50%) rotate(0deg);
         }
 
         .minute-hand {
-            width: 6px;
-            height: 100px;
+            width: 5px;
+            height: 90px;
             transform: translateX(-50%) rotate(0deg);
         }
 
         .second-hand {
             width: 2px;
             height: 120px;
-            /* background: #a5c099; */
             transform: translateX(-50%) rotate(0deg);
         }
 
@@ -179,7 +187,7 @@
             pointer-events: none;
         }
 
-        /* Vibration keyframes with different intensities */
+        /* Vibration keyframes */
         @keyframes vibrate-low {
             0% { transform: translate(0, 0); }
             100% { transform: translate(1px, 1px); }
@@ -194,88 +202,79 @@
             0% { transform: translate(0, 0); }
             100% { transform: translate(4px, 4px); }
         }
+
         .bgimage {
-             position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      filter: brightness(120%);
-      transform: scaleX(-1);
-        } 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            filter: brightness(120%);
+            transform: scaleX(-1);
+        }
 
+        .bgimage2 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            filter: brightness(120%);
+            background-image: url('./hmm.gif');
+            background-repeat: repeat;
+            background-size: auto;
+            transform-origin: center center;
+        }
 
-    .bgimage2 {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  filter: brightness(120%);
-  background-image: url('your-image.jpg');
-  background-repeat: repeat;
-  background-size: auto;
-  /* transform: scaleX(-1) rotate(90deg); */
-  transform-origin: center center;
-}
-
-
- .bgimage3 {
-position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  filter: brightness(120%);
-  background-image: url('./hmm.gif');
-  background-repeat: repeat;
-  background-size: auto;
-  transform: scaleX(-1) rotate(90deg);
-  transform-origin: center center;
-}
-
-
+        .bgimage3 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            filter: brightness(120%);
+            background-image: url('./hmm.gif');
+            background-repeat: repeat;
+            background-size: auto;
+            transform: scaleX(-1) rotate(90deg);
+            transform-origin: center center;
+        }
     </style>
 </head>
 <body>
-<img src="./hmm.gif" class ="bgimage2">
-
-<div class ="bgimage3"></div>div>
+    <img src="./hmm.gif" class="bgimage2">
+    <div class="bgimage3"></div>
     <div class="title-container">
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
     </div>
-
     <div class="date-container">
         <a href="../facecard/" class="dates dateleft">06/13/25</a>
         <a href="../index.html" class="clockname">Hummingbird</a>
         <a href="../shapes/" class="dates dateright">06/15/25</a>
     </div>
-
     <img src="./humm.png" class="bgimage">
     <div class="clock">
         <div class="clock-face">
-            <div class="number" style="transform: rotate(0deg); top: 10px;">12</div>
-            <div class="number" style="transform: rotate(90deg); right: 10px;">3</div>
-            <div class="number" style="transform: rotate(180deg); bottom: 10px;">6</div>
-            <div class="number" style="transform: rotate(270deg); left: 10px;">9</div>
+            <div class="number twelve">twelve</div>
+            <div class="number three">three</div>
+            <div class="number six">six</div>
+            <div class="number nine">nine</div>
             <div class="hand hour-hand"></div>
             <div class="hand minute-hand"></div>
             <div class="hand second-hand"></div>
         </div>
     </div>
-
     <img class="floating-image" src="./hum1.webp" alt="Image 1" data-vibration="low">
     <img class="floating-image" src="./hum2.webp" alt="Image 2" data-vibration="low">
     <img class="floating-image" src="./hum3.webp" alt="Image 3" data-vibration="medium">
     <img class="floating-image" src="./hum4.gif" alt="Image 4" data-vibration="medium">
     <img class="floating-image" src="./hum8.gif" alt="Image 6" data-vibration="high">
     <img class="floating-image" src="./hum7.webp" alt="Image 7" data-vibration="high">
-    <img class="floating-image" src="./hum9.webp" alt="Image 7" data-vibration="high">
-
+    <img class="floating-image" src="./hum9.webp" alt="Image 8" data-vibration="high">
     <script>
         // Clock functionality
         function updateClock() {
@@ -283,22 +282,17 @@ position: fixed;
             const seconds = now.getSeconds();
             const minutes = now.getMinutes();
             const hours = now.getHours() % 12;
-
             const secondDeg = seconds * 6; // 360deg / 60s
             const minuteDeg = minutes * 6 + seconds / 10; // 360deg / 60min
             const hourDeg = hours * 30 + minutes / 2; // 360deg / 12h
-
             document.querySelector('.second-hand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
             document.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
             document.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
         }
-
         setInterval(updateClock, 1000);
         updateClock();
-
         // Floating images functionality
         const images = document.querySelectorAll('.floating-image');
-
         function applyVibration(image) {
             const vibrationType = image.getAttribute('data-vibration');
             let animation = '';
@@ -309,38 +303,30 @@ position: fixed;
             } else if (vibrationType === 'high') {
                 animation = 'vibrate-high 0.2s infinite alternate';
             }
-
-            // Randomly toggle vibration on/off
             if (Math.random() > 0.5) {
                 image.style.animation = animation;
             } else {
                 image.style.animation = 'none';
             }
         }
-
         function moveImage(image) {
             const maxX = window.innerWidth - 50;
             const maxY = window.innerHeight - 50;
             const newX = Math.random() * maxX;
             const newY = Math.random() * maxY;
             const duration = Math.random() * 3000 + 2000; // 2-5s travel time
-
             image.style.transition = `all ${duration}ms ease-in-out`;
             image.style.left = `${newX}px`;
             image.style.top = `${newY}px`;
-
             setTimeout(() => {
-                image.style.transition = 'none'; // Pause for hover
-                applyVibration(image); // Apply vibration randomly
-                setTimeout(() => moveImage(image), 3000); // Hover for 3s, then move again
+                image.style.transition = 'none';
+                applyVibration(image);
+                setTimeout(() => moveImage(image), 3000);
             }, duration);
         }
-
         images.forEach((image, index) => {
-            // Initial random position
             image.style.left = `${Math.random() * (window.innerWidth - 50)}px`;
             image.style.top = `${Math.random() * (window.innerHeight - 50)}px`;
-            // Start movement and vibration after staggered delay
             setTimeout(() => {
                 applyVibration(image);
                 moveImage(image);
