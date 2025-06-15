@@ -7,7 +7,6 @@
    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
-    <style>
   
   <style>
     @font-face {
@@ -18,7 +17,6 @@
     body {
       margin: 0;
       background: #d7d2d2;
-      font-family: 'ZombieStitch', monospace;
       overflow: hidden;
     }
 
@@ -30,7 +28,7 @@
       width: 100vw;
       height: 100vh;
       z-index: 0;
-      /* filter: brightness(130%) saturate(50%); */
+      filter: brightness(120%) hue-rotate(18deg) saturate(20%);
       background-image: url('./stin.webp');
       /* background-repeat: repeat; */
       background-size: auto;
@@ -49,11 +47,14 @@
     .digit {
       /* width: 10vw; */
       /* height: 12vh; */
+      font-family: 'ZombieStitch';
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 29vh;
-      color: #343131;
+      color: #1f1d52;
+      text-shadow: red -1px 1px 5px, rgba(255, 255, 255, 0.758) 0.5px -0.5px 0px;
+
       /* border-radius: 0.2em; */
       /* box-sizing: border-box; */
     }
@@ -94,8 +95,8 @@
         }
 
         .title-container {
-            color: #94cd86;
-            text-shadow: #406125 1px 0px;
+            color: #f7c7dc;
+            text-shadow: #777875 1px 0px;
             position: absolute;
             top: 5px;
             left: 50%;
