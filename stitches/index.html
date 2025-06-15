@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stitches Clock</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+  
+  <style>
+    @font-face {
+      font-family: 'ZombieStitch';
+      src: url('./ZombieStitch.ttf') format('truetype');
+    }
+
+    body {
+      margin: 0;
+      background: #d7d2d2;
+      font-family: 'ZombieStitch', monospace;
+      overflow: hidden;
+    }
+
+
+    .bgimage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      /* filter: brightness(130%) saturate(50%); */
+      background-image: url('./stin.webp');
+      /* background-repeat: repeat; */
+      background-size: auto;
+    }
+
+    .clock-row {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      /* gap: 1vw; */
+      z-index: 2;
+    }
+
+    .digit {
+      /* width: 10vw; */
+      /* height: 12vh; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 29vh;
+      color: #343131;
+      /* border-radius: 0.2em; */
+      /* box-sizing: border-box; */
+    }
+
+
+        .date-container {
+            color: #17010c;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #94cd86;
+            text-shadow: #406125 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+
+  </style>
+</head>
+<body>
+   <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../cloudynight/" class="dates dateleft">06/14/25</a>
+        <a href="../index.html" class="clockname">Stitches</a>
+      <a href="../index.html"  class="dates dateright">06/16/25</a>
+    </div>
+  <img src="./stit.jpeg" class="bgimage" alt="background" />
+  <div class="clock-row" id="clockRow"></div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      let h = now.getHours();
+      const m = now.getMinutes();
+      const ampm = h >= 12 ? 'PM' : 'AM';
+
+      h = h % 12;
+      h = h === 0 ? 12 : h;
+
+      const hStr = String(h); // no leading zero
+      const mStr = String(m).padStart(2, '0');
+
+      const allChars = hStr + mStr + ampm;
+
+      const container = document.getElementById('clockRow');
+      container.innerHTML = '';
+
+      for (let i = 0; i < allChars.length; i++) {
+        const ch = allChars[i];
+        const span = document.createElement('span');
+        span.className = 'digit';
+        span.textContent = ch;
+        container.appendChild(span);
+      }
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000 * 10); // Update every 10s since seconds are hidden
+  </script>
+</body>
+</html>
