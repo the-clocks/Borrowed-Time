@@ -4,15 +4,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Curved Roman Numeral Clock</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klaxon Clock - BorrowedTime</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Permanent+Marker&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+    
     <style>
         @font-face {
-            font-family: 'Steam';
-            src: url('./Steam.ttf') format('truetype');
+            font-family: 'klax';
+            src: url('klax.ttf') format('truetype');
         }
-
 
         body {
             margin: 0;
@@ -20,25 +24,46 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: #b57676;
+            background: #0c0c0c;
         }
 
         .clock {
-            width: 90vmin;
-            height: 90vmin;
-            font-family: 'Steam', serif;
-            /* background: #fff;
-            border: 10px solid #333; */
+            width: 80vmin;
+            height: 80vmin;
+            font-family: 'klax', serif;
+            color: rgb(241, 231, 244);
             border-radius: 50%;
             position: relative;
-            /* box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); */
         }
 
         .number {
             position: absolute;
-            font-size: 11vh;
+            font-size: 29.5vh;
             font-weight: bold;
             transform-origin: center center;
+            z-index: 6;
+            opacity: 0.8;
+        }
+
+        .flash-red {
+            animation: flash 0.01s ease-in-out alternate infinite;
+                
+        }
+
+        @keyframes flash {
+            from {
+                color: rgb(233, 6, 120);
+            }
+            to {
+                color: rgb(247, 46, 6);
+                text-shadow: 
+    
+                0 0 10px rgb(11, 237, 211), 
+                0 0 20px rgb(237, 11, 11), 
+                0 0 50px rgb(238, 8, 54),
+                 0 0 50px rgb(238, 8, 85)
+                ;
+            }
         }
 
         .hand {
@@ -48,75 +73,153 @@
             transform-origin: bottom;
             transform: translateX(-50%);
             pointer-events: none;
+            z-index: 7;
+            opacity: 0.8;
         }
 
         .hour {
-            height: 28%;
+            height: 35%;
             width: auto;
+            filter: sepia(100%) saturate(150%) hue-rotate(-10deg) brightness(90%) contrast(120%);
         }
 
         .minute {
-            height: 35%;
+            height: 45%;
             width: auto;
         }
 
         .second {
-            height: 50%;
+            height: 55%;
             width: auto;
         }
 
-        .center-dot {
-            position: absolute;
-            width: 2%;
-            height: 2%;
-            background: #0b07f5;
-            border-radius: 50%;
-            top: 49%;
-            left: 49%;
-            z-index: 10;
-        }
-
-        body {
-            /* Top to bottom: overlay, middle, base */
-            background-image: url('./m'), url('middle-layer.png'), url('bottom-layer.jpg');
-
-            /* Each image repeats (tiles) */
-            background-repeat: repeat, repeat, repeat;
-
-            /* Each image maintains aspect ratio */
-            background-size: 50px auto, 100px auto, 200px auto;
-
-            /* Alignment of each layer (optional) */
-            background-position: top left, top left, top left;
-
-            /* Optional scroll or fixed behavior */
-            background-attachment: scroll, scroll, scroll;
-
+        .bgimage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
             height: 100vh;
-            margin: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(50%);
+            z-index: 1;
+            pointer-events: none;
         }
+
+        .date-container {
+            color: #dde0dd;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+              
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #818080;
+            text-shadow: #6c696a 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+
     </style>
 </head>
 
 <body>
-    <div class="tiled-background" alt="Tiled Background"></div>
+
+
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../stitches/" class="dates dateleft">06/15/25</a>
+        <a href="../index.html" class="clockname">Klaxon</div>a>
+        <a href="../index.html"  class="dates dateright">06/18/25</a>
+    </div>
+
+
+    <img src="./kla.webp" class="bgimage">
     <div class="clock" id="clock">
         <img src="./klax.png" class="hand hour" id="hour" alt="Hour Hand" />
         <img src="./klaxon.png" class="hand minute" id="minute" alt="Minute Hand" />
         <img src="./kla.png" class="hand second" id="second" alt="Second Hand" />
-        <div class="center-dot"></div>
     </div>
 
-
     <script>
-        const romanNumerals = ["XII", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"];
+        const romanNumerals = ["xii", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x", "xi"];
         const clock = document.getElementById("clock");
 
-        // Place Roman numerals
+        // Place Roman numerals and store their angles
+        const numberElements = [];
         romanNumerals.forEach((num, i) => {
-            const angleDeg = i * 30; // 360 / 12
+            const angleDeg = i * 30;
             const angleRad = angleDeg * (Math.PI / 180);
-            const radius = 43; // percent from center
+            const radius = 43;
 
             const x = 50 + radius * Math.sin(angleRad);
             const y = 50 - radius * Math.cos(angleRad);
@@ -126,30 +229,44 @@
             el.style.left = `${x}%`;
             el.style.top = `${y}%`;
             el.textContent = num;
-
-            // Rotate numeral so it's tangent to the circle
             el.style.transform = `translate(-50%, -50%) rotate(${angleDeg}deg)`;
-
+            el.dataset.angle = angleDeg; // Store the angle for comparison
+            numberElements.push(el);
             clock.appendChild(el);
         });
 
         function updateClock() {
             const now = new Date();
-            const sec = now.getSeconds();
+            const ms = now.getMilliseconds();
+            const sec = now.getSeconds() + ms / 1000; // Include milliseconds for smooth movement
             const min = now.getMinutes();
             const hr = now.getHours();
 
-            const secondDeg = sec * 6;
+            const secondDeg = sec * 6; // 360 / 60 = 6 degrees per second
             const minuteDeg = min * 6 + sec * 0.1;
             const hourDeg = ((hr % 12) * 30) + (min * 0.5);
 
             document.getElementById("second").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
             document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
             document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+            // Check if second hand is close to any number
+            numberElements.forEach((el) => {
+                const numAngle = parseFloat(el.dataset.angle);
+                const angleDiff = Math.abs((secondDeg % 360) - numAngle);
+                const threshold = 3; // Degrees of tolerance
+
+                if (angleDiff < threshold || angleDiff > 360 - threshold) {
+                    el.classList.add("flash-red");
+                } else {
+                    el.classList.remove("flash-red");
+                }
+            });
+
+            requestAnimationFrame(updateClock); // Continue the animation loop
         }
 
-        setInterval(updateClock, 1000);
-        updateClock();
+        requestAnimationFrame(updateClock); // Start the animation loop
     </script>
 </body>
 
