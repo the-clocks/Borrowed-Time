@@ -20,8 +20,8 @@
     body {
       margin: 0;
       padding: 0;
-      background-image: linear-gradient(70deg, #c28e34 10%, #e56a0b 10%, #f29838 50%, #ed9d0a 50%, #c27434 60%, #f2386d 60%, #f46404 100%);
-      background-size: 5.77px 10.00px;
+      background-image: linear-gradient(24deg, #211408 6.25%, #f3a64e 6.25%, #ea8007 25%, #fff 25%, #f9c2c2 31.25%, #e3630d 31.25%, #e3630d 50%, #211408 50%, #0b30ea 56.25%, #ed8917 56.25%, #ed8917 75%, #f60808 75%, #fff 81.25%, #e3630d 81.25%, #e3630d 100%);
+      background-size: 19.67px 8.76px;
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -29,7 +29,7 @@
       overflow: hidden;
     }
     .wrapper {
-      transform: rotate(-21deg) translateX(5vw);
+      transform: translateX(25vw);
       transform-origin: center center;
       display: flex;
       flex-direction: column;
@@ -37,7 +37,27 @@
       justify-content: center;
       width: 100%;
       height: 100%;
+      animation: rotateClock 10s ease-in-out infinite;
     }
+  @keyframes rotateClock {
+  0% {
+    transform: translateX(25vw) rotate(0deg);
+  }
+   20% {
+    transform: translateX(25vw) rotate(0deg);
+  }
+   50% {
+    transform: translateX(25vw) rotate(26deg);
+  }
+   97% {
+    transform: translateX(25vw) rotate(26deg);
+  }
+
+  
+  100% {
+    transform: translateX(25vw) rotate(360deg);
+  }
+}
     .clock {
       font-family: 'back', monospace;
       display: flex;
@@ -56,7 +76,8 @@
       display: flex;
       align-items: center;
       font-size: 3.5rem;
-      color: rgb(1, 55, 88);
+      color: rgb(4, 95, 151);
+      text-shadow: #f24e07 2px 2px 0px;
       transition: transform 0.4s linear;
       white-space: nowrap;
     }
@@ -68,8 +89,8 @@
       user-select: none;
     }
     .digit-train span.active {
-      color: rgb(91, 39, 5);
-      text-shadow: #eff0f4 -2px -1px 0px;
+      color: rgb(24, 11, 2);
+      text-shadow: #f5ee67 -2px -1px 3px;
     }
     @keyframes rollLeftFadeOut {
       0% {
@@ -160,11 +181,14 @@
         animation: none;
         opacity: 0;
       }
+      .wrapper {
+        animation: none;
+        transform: translateX(25vw) rotate(26deg);
+      }
     }
   </style>
 </head>
 <body>
-
     <div class="title-container">
       <div class="chltitle">Cubist Heart Laboratories</div>
       <div class="bttitle">BorrowedTime</div>
@@ -174,16 +198,16 @@
       <a href="../index.html" class="clockname">Backslant</a>
       <a href="../index.html" class="dates dateright">06/19/25</a>
     </div>
-      <div class="wrapper">
-    <div class="clock" role="timer" aria-label="Digital clock displaying current time">
-      <div class="clock-row"><div class="digit-train" id="h0train"></div></div>
-      <div class="clock-row"><div class="digit-train" id="h1train"></div></div>
-      <div class="clock-row"><div class="digit-train" id="m0train"></div></div>
-      <div class="clock-row"><div class="digit-train" id="m1train"></div></div>
-      <div class="clock-row"><div class="digit-train" id="s0train"></div></div>
-      <div class="clock-row"><div class="digit-train" id="s1train"></div></div>
+    <div class="wrapper">
+      <div class="clock" role="timer" aria-label="Digital clock displaying current time">
+        <div class="clock-row"><div class="digit-train" id="h0train"></div></div>
+        <div class="clock-row"><div class="digit-train" id="h1train"></div></div>
+        <div class="clock-row"><div class="digit-train" id="m0train"></div></div>
+        <div class="clock-row"><div class="digit-train" id="m1train"></div></div>
+        <div class="clock-row"><div class="digit-train" id="s0train"></div></div>
+        <div class="clock-row"><div class="digit-train" id="s1train"></div></div>
+      </div>
     </div>
-  </div>
   <script>
     const ids = ['h0', 'h1', 'm0', 'm1', 's0', 's1'];
 
