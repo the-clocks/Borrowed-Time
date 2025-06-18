@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Backslant Clock </title>
+  <title>Backslant Clock</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -20,50 +20,57 @@
     body {
       margin: 0;
       padding: 0;
-background-image: linear-gradient(70deg, #c28e34 10%, #e56a0b 10%, #f29838 50%, #ed9d0a 50%, #c27434 60%, #f2386d 60%, #f46404 100%);
-background-size: 5.77px 10.00px;
-      height: 95vh;
+      background-image: linear-gradient(70deg, #c28e34 10%, #e56a0b 10%, #f29838 50%, #ed9d0a 50%, #c27434 60%, #f2386d 60%, #f46404 100%);
+      background-size: 5.77px 10.00px;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
+    }
+    .wrapper {
+      transform: rotate(-9deg);
+      transform-origin: center center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
     }
     .clock {
-      font-family: 'back';
+      font-family: 'back', monospace;
       display: flex;
       flex-direction: column;
     }
     .clock-row {
-  display: flex;
-  align-items: center;
-  height: 3rem;
-  width: 100vw; /* full viewport width */
-  padding: 0 1rem; /* some horizontal padding to prevent clipping */
-  box-sizing: border-box; /* include padding in width */
-  overflow: hidden;
-  position: relative;
-}
-
+      display: flex;
+      align-items: center;
+      height: 3rem;
+      width: 100vw;
+      padding: 0 1rem;
+      box-sizing: border-box;
+      position: relative;
+    }
     .digit-train {
       display: flex;
       align-items: center;
       font-size: 3.5rem;
       color: rgb(1, 55, 88);
-      transition: transform 0.4s ease-out;
+      transition: transform 0.4s linear;
       white-space: nowrap;
     }
     .digit-train span {
       width: 1.7rem;
       text-align: center;
       flex-shrink: 0;
-      position: relative; /* needed for leaving animation */
+      position: relative;
       user-select: none;
     }
     .digit-train span.active {
       color: rgb(248, 184, 141);
       text-shadow: #03186c -2px -1px 0px;
     }
-
-    /* Roll left and fade out with counterclockwise rotation */
     @keyframes rollLeftFadeOut {
       0% {
         opacity: 1;
@@ -74,12 +81,10 @@ background-size: 5.77px 10.00px;
         transform: translateX(-50px) rotate(-90deg);
       }
     }
-
     .digit-train span.leaving {
       animation: rollLeftFadeOut 0.4s forwards;
-      z-index: 10; /* on top during animation */
+      z-index: 10;
     }
-
     .title-container {
       color: #838380;
       text-shadow: #de070e 1px 0px;
@@ -91,7 +96,6 @@ background-size: 5.77px 10.00px;
       display: flex;
       z-index: 6;
     }
-
     .chltitle {
       font-family: "Roboto Slab", serif;
       font-size: 2.8vh;
@@ -100,7 +104,6 @@ background-size: 5.77px 10.00px;
       right: 1px;
       letter-spacing: 0.1vh;
     }
-
     .bttitle {
       position: relative;
       left: 0;
@@ -110,18 +113,15 @@ background-size: 5.77px 10.00px;
       z-index: 15;
       letter-spacing: -0.1vh;
     }
-
     a {
       color: inherit;
       text-decoration: none;
     }
-
     a:hover {
       color: #e8ecec;
       background-color: rgb(21, 0, 255);
       text-decoration: none;
     }
-
     .date-container {
       color: #4e3d0f;
       position: absolute;
@@ -132,7 +132,6 @@ background-size: 5.77px 10.00px;
       display: flex;
       z-index: 6;
     }
-
     .clockname {
       font-family: "Oxanium", serif;
       position: fixed;
@@ -141,50 +140,56 @@ background-size: 5.77px 10.00px;
       font-size: 4vh;
       line-height: 4vh;
     }
-
     .dateleft {
       font-size: 3vh;
       font-family: "Nanum Gothic Coding", monospace;
       position: relative;
       left: 0;
     }
-
     .dateright {
       font-size: 3vh;
       font-family: "Nanum Gothic Coding", monospace;
       position: absolute;
       right: 0;
     }
+    @media (prefers-reduced-motion: reduce) {
+      .digit-train {
+        transition: none;
+      }
+      .digit-train span.leaving {
+        animation: none;
+        opacity: 0;
+      }
+    }
   </style>
 </head>
-
 <body>
-  <div class="title-container">
-    <div class="chltitle">Cubist Heart Laboratories</div>
-    <div class="bttitle">BorrowedTime</div>
-  </div>
 
-  <div class="date-container">
-    <a href="../klaxon/" class="dates dateleft">06/17/25</a>
-    <a href="../index.html" class="clockname">Backslant Clock</a>
-    <a href="../index.html" class="dates dateright">06/19/25</a>
+    <div class="title-container">
+      <div class="chltitle">Cubist Heart Laboratories</div>
+      <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+      <a href="../klaxon/" class="dates dateleft">06/17/25</a>
+      <a href="../index.html" class="clockname">Backslant</a>
+      <a href="../index.html" class="dates dateright">06/19/25</a>
+    </div>
+      <div class="wrapper">
+    <div class="clock" role="timer" aria-label="Digital clock displaying current time">
+      <div class="clock-row"><div class="digit-train" id="h0train"></div></div>
+      <div class="clock-row"><div class="digit-train" id="h1train"></div></div>
+      <div class="clock-row"><div class="digit-train" id="m0train"></div></div>
+      <div class="clock-row"><div class="digit-train" id="m1train"></div></div>
+      <div class="clock-row"><div class="digit-train" id="s0train"></div></div>
+      <div class="clock-row"><div class="digit-train" id="s1train"></div></div>
+    </div>
   </div>
-
-  <div class="clock">
-    <div class="clock-row"><div class="digit-train" id="h0train"></div></div>
-    <div class="clock-row"><div class="digit-train" id="h1train"></div></div>
-    <div class="clock-row"><div class="digit-train" id="m0train"></div></div>
-    <div class="clock-row"><div class="digit-train" id="m1train"></div></div>
-    <div class="clock-row"><div class="digit-train" id="s0train"></div></div>
-    <div class="clock-row"><div class="digit-train" id="s1train"></div></div>
-  </div>
-
   <script>
     const ids = ['h0', 'h1', 'm0', 'm1', 's0', 's1'];
 
     function createDigitLine() {
       const digits = document.createDocumentFragment();
-      for (let i = 0; i < 100; i++) { // Long train for smooth scrolling
+      for (let i = 0; i < 50; i++) {
         const span = document.createElement('span');
         span.textContent = i % 10;
         digits.appendChild(span);
@@ -195,6 +200,8 @@ background-size: 5.77px 10.00px;
     const trains = {};
     const positions = {};
     const lastDigits = {};
+    const targetOffsets = {};
+    const currentOffsets = {};
 
     ids.forEach(id => {
       const trainEl = document.getElementById(id + 'train');
@@ -202,7 +209,13 @@ background-size: 5.77px 10.00px;
       trains[id] = trainEl;
       positions[id] = 0;
       lastDigits[id] = null;
+      targetOffsets[id] = 0;
+      currentOffsets[id] = 0;
     });
+
+    function lerp(start, end, factor) {
+      return start + (end - start) * factor;
+    }
 
     function updateClock() {
       const now = new Date();
@@ -216,45 +229,49 @@ background-size: 5.77px 10.00px;
         const id = ids[i];
         const train = trains[id];
 
-        // Find old active digit span
-        const oldActiveSpan = train.querySelector('span.active');
-
         if (digit !== lastDigits[id]) {
-          if (oldActiveSpan) {
-            // Add leaving animation class
-            oldActiveSpan.classList.add('leaving');
+          // Clear all active classes, except for leaving spans
+          Array.from(train.children).forEach(span => {
+            if (!span.classList.contains('leaving')) {
+              span.classList.remove('active');
+            }
+          });
 
-            // Remove leaving class after animation finishes
+          // Apply leaving animation to the previously active digit
+          const oldActiveSpan = train.querySelector('span.active');
+          if (oldActiveSpan) {
+            oldActiveSpan.classList.add('leaving');
             oldActiveSpan.addEventListener(
               'animationend',
               () => {
-                oldActiveSpan.classList.remove('leaving');
+                oldActiveSpan.classList.remove('leaving', 'active');
               },
               { once: true }
             );
           }
 
-          // Update position for sliding train
+          // Update position and target offset
           positions[id] = getNextPosition(id, digit);
           const spanWidth = train.children[0].offsetWidth || 0;
-          const offset = positions[id] * spanWidth;
-          train.style.transform = `translateX(-${offset}px)`;
+          targetOffsets[id] = positions[id] * spanWidth;
           lastDigits[id] = digit;
-        }
 
-        // Clear old active classes (except the leaving one)
-        Array.from(train.children).forEach(span => {
-          if (!span.classList.contains('leaving')) {
-            span.classList.remove('active');
+          // Set new active digit
+          const activeIndex = positions[id];
+          if (train.children[activeIndex]) {
+            train.children[activeIndex].classList.add('active');
           }
-        });
-
-        // Highlight current digit
-        const activeIndex = positions[id];
-        if (train.children[activeIndex]) {
-          train.children[activeIndex].classList.add('active');
         }
       });
+
+      // Smoothly interpolate offsets
+      ids.forEach(id => {
+        const train = trains[id];
+        currentOffsets[id] = lerp(currentOffsets[id], targetOffsets[id], 0.1);
+        train.style.transform = `translateX(-${currentOffsets[id]}px)`;
+      });
+
+      requestAnimationFrame(updateClock);
     }
 
     function getNextPosition(id, digit) {
@@ -267,12 +284,31 @@ background-size: 5.77px 10.00px;
           return i;
         }
       }
-      return currentPos; // fallback
+      for (let i = 0; i <= currentPos; i++) {
+        if (children[i].textContent === digit) {
+          return i;
+        }
+      }
+      return currentPos;
+    }
+
+    function updateDates() {
+      const now = new Date();
+      const prevDay = new Date(now);
+      prevDay.setDate(now.getDate() - 1);
+      const nextDay = new Date(now);
+      nextDay.setDate(now.getDate() + 1);
+
+      const formatDate = (date) =>
+        `${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}/${String(date.getFullYear()).slice(-2)}`;
+
+      document.querySelector('.dateleft').textContent = formatDate(prevDay);
+      document.querySelector('.dateright').textContent = formatDate(nextDay);
     }
 
     window.onload = () => {
+      updateDates();
       updateClock();
-      setInterval(updateClock, 1000);
     };
   </script>
 </body>
