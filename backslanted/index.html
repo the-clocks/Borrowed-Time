@@ -29,7 +29,7 @@
       overflow: hidden;
     }
     .wrapper {
-      transform: rotate(-9deg);
+      transform: rotate(-21deg) translateX(5vw);
       transform-origin: center center;
       display: flex;
       flex-direction: column;
@@ -69,7 +69,7 @@
     }
     .digit-train span.active {
       color: rgb(248, 184, 141);
-      /* text-shadow: #03186c -2px -1px 0px; */
+      text-shadow: #03186c -2px -1px 0px;
     }
     @keyframes rollLeftFadeOut {
       0% {
@@ -87,7 +87,7 @@
     }
     .title-container {
       color: #838380;
-      text-shadow: #de070e 1px 0px;
+      text-shadow: #de4007 1px 0px;
       position: absolute;
       top: 5px;
       left: 50%;
@@ -164,7 +164,7 @@
   </style>
 </head>
 <body>
-
+  <div class="wrapper">
     <div class="title-container">
       <div class="chltitle">Cubist Heart Laboratories</div>
       <div class="bttitle">BorrowedTime</div>
@@ -174,7 +174,6 @@
       <a href="../index.html" class="clockname">Backslant</a>
       <a href="../index.html" class="dates dateright">06/19/25</a>
     </div>
-      <div class="wrapper">
     <div class="clock" role="timer" aria-label="Digital clock displaying current time">
       <div class="clock-row"><div class="digit-train" id="h0train"></div></div>
       <div class="clock-row"><div class="digit-train" id="h1train"></div></div>
