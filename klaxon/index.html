@@ -52,7 +52,7 @@
 
         @keyframes flash {
             from {
-                color: rgb(233, 6, 120);
+                color: rgb(246, 14, 37);
             }
             to {
                 color: rgb(247, 46, 6);
@@ -199,7 +199,7 @@
     <div class="date-container">
         <a href="../stitches/" class="dates dateleft">06/15/25</a>
         <a href="../index.html" class="clockname">Klaxon</div>a>
-        <a href="../index.html"  class="dates dateright">06/18/25</a>
+        <a href="../backslanted/"  class="dates dateright">06/18/25</a>
     </div>
 
 
@@ -209,65 +209,104 @@
         <img src="./klaxon.png" class="hand minute" id="minute" alt="Minute Hand" />
         <img src="./kla.png" class="hand second" id="second" alt="Second Hand" />
     </div>
+<script>
+  const romanNumerals = ["xii", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x", "xi"];
+  const clock = document.getElementById("clock");
 
-    <script>
-        const romanNumerals = ["xii", "i", "ii", "iii", "iv", "v", "vi", "vii", "viii", "ix", "x", "xi"];
-        const clock = document.getElementById("clock");
+  // Place Roman numerals and store their angles
+  const numberElements = [];
+  romanNumerals.forEach((num, i) => {
+    const angleDeg = i * 30;
+    const angleRad = angleDeg * (Math.PI / 180);
+    const radius = 43;
 
-        // Place Roman numerals and store their angles
-        const numberElements = [];
-        romanNumerals.forEach((num, i) => {
-            const angleDeg = i * 30;
-            const angleRad = angleDeg * (Math.PI / 180);
-            const radius = 43;
+    const x = 50 + radius * Math.sin(angleRad);
+    const y = 50 - radius * Math.cos(angleRad);
 
-            const x = 50 + radius * Math.sin(angleRad);
-            const y = 50 - radius * Math.cos(angleRad);
+    const el = document.createElement("div");
+    el.className = "number";
+    el.style.left = `${x}%`;
+    el.style.top = `${y}%`;
+    el.textContent = num;
+    el.style.transform = `translate(-50%, -50%) rotate(${angleDeg}deg)`;
+    el.dataset.angle = angleDeg; // Store the angle for comparison
+    el.isFlashing = false;       // Track if currently flashing
+    el.lastPassedTime = 0;       // Timestamp when second hand left flashing zone
+    numberElements.push(el);
+    clock.appendChild(el);
+  });
 
-            const el = document.createElement("div");
-            el.className = "number";
-            el.style.left = `${x}%`;
-            el.style.top = `${y}%`;
-            el.textContent = num;
-            el.style.transform = `translate(-50%, -50%) rotate(${angleDeg}deg)`;
-            el.dataset.angle = angleDeg; // Store the angle for comparison
-            numberElements.push(el);
-            clock.appendChild(el);
-        });
+  const lingerDuration = 300; // ms to keep flashing after passing
 
-        function updateClock() {
-            const now = new Date();
-            const ms = now.getMilliseconds();
-            const sec = now.getSeconds() + ms / 1000; // Include milliseconds for smooth movement
-            const min = now.getMinutes();
-            const hr = now.getHours();
+  function angleDifference(a, b) {
+    // Minimal difference between two angles in degrees (0-180)
+    let diff = Math.abs(a - b) % 360;
+    return diff > 180 ? 360 - diff : diff;
+  }
 
-            const secondDeg = sec * 6; // 360 / 60 = 6 degrees per second
-            const minuteDeg = min * 6 + sec * 0.1;
-            const hourDeg = ((hr % 12) * 30) + (min * 0.5);
+  function updateClock(timestamp) {
+    const now = new Date();
+    const ms = now.getMilliseconds();
+    const sec = now.getSeconds() + ms / 1000; // smooth seconds
+    const min = now.getMinutes();
+    const hr = now.getHours();
 
-            document.getElementById("second").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
-            document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
-            document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+    const secondDeg = sec * 6; // 360/60=6 deg per second
+    const minuteDeg = min * 6 + sec * 0.1;
+    const hourDeg = ((hr % 12) * 30) + (min * 0.5);
 
-            // Check if second hand is close to any number
-            numberElements.forEach((el) => {
-                const numAngle = parseFloat(el.dataset.angle);
-                const angleDiff = Math.abs((secondDeg % 360) - numAngle);
-                const threshold = 3; // Degrees of tolerance
+    document.getElementById("second").style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+    document.getElementById("minute").style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+    document.getElementById("hour").style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
 
-                if (angleDiff < threshold || angleDiff > 360 - threshold) {
-                    el.classList.add("flash-red");
-                } else {
-                    el.classList.remove("flash-red");
-                }
-            });
+    // Flash zone: Start flashing 6 degrees before the numeral angle
+    // and keep flashing until 6 degrees after it, plus linger
+    const flashStartOffset = 6;  // degrees before numeral
+    const flashEndOffset = 6;    // degrees after numeral
 
-            requestAnimationFrame(updateClock); // Continue the animation loop
+    numberElements.forEach(el => {
+      const numAngle = parseFloat(el.dataset.angle);
+      // Normalize angles to 0-360
+      const normalizedSecond = secondDeg % 360;
+
+      // Calculate flashing zone bounds
+      let startAngle = (numAngle - flashStartOffset + 360) % 360;
+      let endAngle = (numAngle + flashEndOffset) % 360;
+
+      // Check if current secondDeg is inside flashing zone (handle wrap around)
+      let insideZone = false;
+      if (startAngle < endAngle) {
+        insideZone = normalizedSecond >= startAngle && normalizedSecond <= endAngle;
+      } else {
+        // Wrap-around case, e.g. start=350, end=10
+        insideZone = normalizedSecond >= startAngle || normalizedSecond <= endAngle;
+      }
+
+      if (insideZone) {
+        // Inside flashing zone, start or continue flashing
+        el.isFlashing = true;
+        el.lastPassedTime = performance.now();
+        el.classList.add("flash-red");
+      } else {
+        // Outside flashing zone: check linger time
+        const nowTime = performance.now();
+        if (el.isFlashing && nowTime - el.lastPassedTime < lingerDuration) {
+          // Still within linger duration, keep flashing
+          el.classList.add("flash-red");
+        } else {
+          // Stop flashing
+          el.isFlashing = false;
+          el.classList.remove("flash-red");
         }
+      }
+    });
 
-        requestAnimationFrame(updateClock); // Start the animation loop
-    </script>
+    requestAnimationFrame(updateClock);
+  }
+
+  requestAnimationFrame(updateClock);
+</script>
+
 </body>
 
 </html>

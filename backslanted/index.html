@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Backslant Clock </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ 
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+ <style>
+    @font-face {
+      font-family: 'back';
+      src: url('back.ttf') format('truetype');
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #f87c4b;
+      height: 95vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .clock {
+      font-family: 'back';
+      display: flex;
+      flex-direction: column;
+      /* gap: 1rem; */
+    }
+    .clock-row {
+      display: flex;
+      align-items: center;
+      height: 3rem;
+      width: 90vw; Give the row enough horizontal room
+      overflow: hidden;
+      position: relative;
+    }
+    .digit-train {
+      display: flex;
+      align-items: center;
+      font-size: 3.5rem;
+      color: rgb(33, 2, 16);
+      transition: transform 0.4s ease-out;
+      white-space: nowrap;
+    }
+    .digit-train span {
+      width: 1.7rem;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .digit-train span.active {
+      color: rgb(248, 184, 141);
+     text-shadow: #1c1817 -1px -1px 0px;
+    }
+
+        .title-container {
+            color: #838380;
+            text-shadow: #de070e 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #4e3d0f;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../klaxon/" class="dates dateleft">06/17/25</a>
+        <a href="../index.html" class="clockname">Backslant Clock</a>
+      <a href="../index.html"class="dates dateright">06/19/25</a>
+    </div>
+
+
+  <div class="clock">
+    <div class="clock-row"><div class="digit-train" id="h0train"></div></div>
+    <div class="clock-row"><div class="digit-train" id="h1train"></div></div>
+    <div class="clock-row"><div class="digit-train" id="m0train"></div></div>
+    <div class="clock-row"><div class="digit-train" id="m1train"></div></div>
+    <div class="clock-row"><div class="digit-train" id="s0train"></div></div>
+    <div class="clock-row"><div class="digit-train" id="s1train"></div></div>
+  </div>
+
+  <script>
+    const ids = ['h0', 'h1', 'm0', 'm1', 's0', 's1'];
+
+    function createDigitLine() {
+      const digits = document.createDocumentFragment();
+      for (let i = 0; i < 100; i++) { // Long train for smooth scrolling
+        const span = document.createElement('span');
+        span.textContent = i % 10;
+        digits.appendChild(span);
+      }
+      return digits;
+    }
+
+    const trains = {};
+    const positions = {};
+    const lastDigits = {};
+
+    ids.forEach(id => {
+      const trainEl = document.getElementById(id + 'train');
+      trainEl.appendChild(createDigitLine());
+      trains[id] = trainEl;
+      positions[id] = 0;
+      lastDigits[id] = null;
+    });
+
+    function updateClock() {
+      const now = new Date();
+      const timeDigits = [
+        ...now.getHours().toString().padStart(2, '0'),
+        ...now.getMinutes().toString().padStart(2, '0'),
+        ...now.getSeconds().toString().padStart(2, '0'),
+      ];
+
+      timeDigits.forEach((digit, i) => {
+        const id = ids[i];
+        const train = trains[id];
+
+        if (digit !== lastDigits[id]) {
+          positions[id] = getNextPosition(id, digit);
+          const spanWidth = train.children[0].offsetWidth || 0;
+          const offset = positions[id] * spanWidth;
+          train.style.transform = `translateX(-${offset}px)`;
+          lastDigits[id] = digit;
+        }
+
+        // Clear old active classes
+        Array.from(train.children).forEach(span => span.classList.remove('active'));
+
+        // Highlight current digit
+        const activeIndex = positions[id];
+        if (train.children[activeIndex]) {
+          train.children[activeIndex].classList.add('active');
+        }
+      });
+    }
+
+    function getNextPosition(id, digit) {
+      const train = trains[id];
+      const currentPos = positions[id];
+      const children = Array.from(train.children);
+
+      for (let i = currentPos + 1; i < children.length; i++) {
+        if (children[i].textContent === digit) {
+          return i;
+        }
+      }
+      return currentPos; // fallback
+    }
+
+    window.onload = () => {
+      updateClock();
+      setInterval(updateClock, 1000);
+    };
+  </script>
+</body>
+</html>
