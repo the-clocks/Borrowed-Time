@@ -7,26 +7,46 @@
   <style>
     body {
       margin: 0;
-      background: #dcd1d1;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ce54);
+      background-size: 400%;
+      animation: backgroundGradient 15s ease infinite;
+    }
+
+    @keyframes backgroundGradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     svg {
-      width: 600px;
-      height: 600px;
+      width: 90vw;
+      max-width: 800px;
+      height: auto;
     }
 
     path {
-      fill: rgb(33, 101, 101);
       transition: fill 0.3s;
     }
   </style>
 </head>
 <body>
-  <svg id="clock" viewBox="0 0 600 200"></svg>
+  <svg id="clock" viewBox="0 0 800 200">
+    <defs>
+      <linearGradient id="digitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ff9f43">
+          <animate attributeName="stop-color" values="#ff9f43; #4834d4; #eb3b5a; #6ab04c; #ff9f43" dur="12s" repeatCount="indefinite"/>
+        </stop>
+        <stop offset="100%" style="stop-color:#4834d4">
+          <animate attributeName="stop-color" values="#4834d4; #eb3b5a; #6ab04c; #ff9f43; #4834d4" dur="12s" repeatCount="indefinite"/>
+        </stop>
+      </linearGradient>
+    </defs>
+    <g id="digitGroup" transform="translate(100, 0)"></g>
+  </svg>
 
   <script src="https://unpkg.com/flubber"></script>
   <script>
@@ -44,14 +64,14 @@
       ":": "M60,70 A5,5 0 1,1 59,70 Z M60,130 A5,5 0 1,1 59,130 Z"
     };
 
-    const clockEl = document.getElementById('clock');
+    const clockEl = document.getElementById('digitGroup');
     const digits = [];
 
-    // Initial draw
     for (let i = 0; i < 8; i++) {
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path.setAttribute("d", digitPaths["0"]);
-      path.setAttribute("transform", `translate(${i * 70 + 20}, 0)`);
+      path.setAttribute("fill", "url(#digitGradient)");
+      path.setAttribute("transform", `translate(${i * 70}, 0)`);
       clockEl.appendChild(path);
       digits.push(path);
     }
