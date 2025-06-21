@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock - Image Sectors</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        .clock {
+            width: 500vw;
+            height: 500vh;
+            position: relative;
+            background-color: transparent;
+            border: none;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom;
+            background-color: #868484;
+            z-index: 2;
+        }
+        .hour-hand {
+            width: 12px;
+            height: 30vh; /* Shortened for better visibility */
+            transform: translateX(-50%);
+        }
+        .minute-hand {
+            width: 6px;
+            height: 40vh; /* Shortened for better visibility */
+            transform: translateX(-50%);
+        }
+        .second-hand {
+            width: 2px;
+            height: 45vh; /* Shortened for better visibility */
+            background-color: #ff0000; /* Red for visibility */
+            transform: translateX(-50%);
+        }
+        .center {
+            width: 25px;
+            height: 25px;
+            background-color: #868484;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <canvas id="clockCanvas"></canvas>
+        <div class="hand hour-hand"></div>
+        <div class="hand minute-hand"></div>
+        <div class="hand second-hand"></div>
+        <div class="center"></div>
+    </div>
+    <script type="text/javascript">
+        const canvas = document.getElementById('clockCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            centerX = canvas.width / 2;
+            centerY = canvas.height / 2;
+            radius = Math.min(canvas.width, canvas.height) / 2; // Adjusted for visibility
+        });
+
+        let centerX = canvas.width / 2;
+        let centerY = canvas.height / 2;
+        let radius = Math.min(canvas.width, canvas.height) / 2;
+
+        // Define images and fallback colors
+        const sectors = [
+            { img: new Image(), src: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', fallback: '#ffcccc' },
+            { img: new Image(), src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba', fallback: '#ccffcc' },
+            { img: new Image(), src: 'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1', fallback: '#ccccff' }
+        ];
+
+        // Load images
+        let imagesLoaded = 0;
+        sectors.forEach(sector => {
+            sector.img.crossOrigin = 'Anonymous'; // Handle CORS for Unsplash images
+            sector.img.src = sector.src;
+            sector.img.onload = () => {
+                imagesLoaded++;
+                if (imagesLoaded === sectors.length) {
+                    requestAnimationFrame(updateClock);
+                }
+            };
+            sector.img.onerror = () => {
+                console.error('Failed to load image:', sector.src);
+                sector.pattern = sector.fallback; // Use fallback color
+                imagesLoaded++;
+                if (imagesLoaded === sectors.length) {
+                    requestAnimationFrame(updateClock);
+                }
+            };
+        });
+
+        function updateClock() {
+            const now = new Date();
+            const milliseconds = now.getMilliseconds();
+            const seconds = now.getSeconds() + milliseconds / 1000;
+            const minutes = now.getMinutes() + seconds / 60;
+            const hours = now.getHours() % 12 + minutes / 60;
+
+            const secondDeg = (seconds / 60) * 360;
+            const minuteDeg = (minutes / 60) * 360;
+            const hourDeg = (hours / 12) * 360;
+
+            const secondRad = (secondDeg - 90) * (Math.PI / 180);
+            const minuteRad = (minuteDeg - 90) * (Math.PI / 180);
+            const hourRad = (hourDeg - 90) * (Math.PI / 180);
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Normalize and sort angles
+            let angles = [secondRad, minuteRad, hourRad].map(angle => {
+                while (angle < 0) angle += 2 * Math.PI;
+                while (angle >= 2 * Math.PI) angle -= 2 * Math.PI;
+                return angle;
+            }).sort((a, b) => a - b);
+
+            // Create patterns or use fallback
+            sectors.forEach((sector, i) => {
+                if (!sector.pattern && sector.img.complete && sector.img.naturalWidth !== 0) {
+                    sector.pattern = ctx.createPattern(sector.img, 'repeat');
+                }
+            });
+
+            // Draw sectors
+            for (let i = 0; i < 3; i++) {
+                const startAngle = angles[i];
+                const endAngle = angles[(i + 1) % 3];
+                const adjustedEndAngle = endAngle <= startAngle ? endAngle + 2 * Math.PI : endAngle;
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, adjustedEndAngle);
+                ctx.lineTo(centerX, centerY);
+                ctx.fillStyle = sectors[i].pattern || sectors[i].fallback;
+                ctx.fill();
+            }
+
+            // Update hand positions
+            document.querySelector('.second-hand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+            document.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+            document.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+            requestAnimationFrame(updateClock);
+        }
+
+        // Start clock only after images load
+        if (imagesLoaded === sectors.length) {
+            requestAnimationFrame(updateClock);
+        }
+    </script>
+</body>
+</html>
