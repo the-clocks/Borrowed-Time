@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+    <title>Indecisive Clock</title>
+<style>
+  
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Liu+Jian+Mao+Cao&display=swap');
+
+    body {
+      margin: 0;
+    
+  background-color: #111e0f;
+opacity: 0.9;
+background-image:  linear-gradient(30deg, #21351a 12%, transparent 12.5%, transparent 87%, #21351a 87.5%, #21351a), linear-gradient(150deg, #21351a 12%, transparent 12.5%, transparent 87%, #21351a 87.5%, #21351a), linear-gradient(30deg, #21351a 12%, transparent 12.5%, transparent 87%, #21351a 87.5%, #21351a), linear-gradient(150deg, #21351a 12%, transparent 12.5%, transparent 87%, #21351a 87.5%, #21351a), linear-gradient(60deg, #21351a77 25%, transparent 25.5%, transparent 75%, #21351a77 75%, #21351a77), linear-gradient(60deg, #21351a77 25%, transparent 25.5%, transparent 75%, #21351a77 75%, #21351a77);
+background-size: 24px 42px;
+background-position: 0 0, 0 0, 12px 21px, 12px 21px, 0 0, 12px 21px;      overflow: hidden;
+    }
+
+    #container {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 100vw;
+      height: 5rem;
+      filter: url(#threshold) blur(0.6px);
+    }
+
+    #text1, #text2 {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      user-select: none;
+      transition: opacity 0.8s ease, filter 0.8s ease;
+    }
+
+    #text1 {
+      font-family: "Liu Jian Mao Cao", cursive;
+      color: rgb(250, 212, 212);
+      font-size: 6rem;
+
+      z-index: 2;
+    }
+
+    #text2 {
+      font-family: "Black Han Sans", sans-serif;
+      color: rgb(251, 224, 224);
+            line-height: 100pt;
+      z-index: 1;
+    font-size: 3rem;
+    }
+        .date-container {
+            color: rgb(168, 154, 154);
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #535151;
+            text-shadow: #9c8d93 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+  </style>
+</head>
+<body>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../facecard/" class="dates dateleft">06/08/25</a>
+        <a href="../index.html" class="clockname">Indecisive</a>
+        <a href="../mercury/" class="dates dateright">06/21/25</a>
+    </div>
+  <div id="container">
+    <span id="text1"></span>
+    <span id="text2"></span>
+  </div>
+
+  <svg id="filters">
+    <defs>
+      <filter id="threshold">
+        <feColorMatrix in="SourceGraphic" type="matrix"
+          values="1 0 0 0 0
+                  0 1 0 0 0
+                  0 0 1 0 0
+                  0 0 0 255 -140"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <script>
+    const text1 = document.getElementById('text1');
+    const text2 = document.getElementById('text2');
+
+    let showFirst = true;
+
+    function getTimeString() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2);
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      return `${h}:${m}:${s}`;
+    }
+
+    function updateClock() {
+      const timeStr = getTimeString();
+
+      if (showFirst) {
+        text1.textContent = timeStr;
+        text1.style.opacity = '1';
+        text1.style.filter = 'blur(0px)';
+        text2.style.opacity = '0';
+        text2.style.filter = 'blur(8px)';
+      } else {
+        text2.textContent = timeStr;
+        text2.style.opacity = '1';
+        text2.style.filter = 'blur(0px)';
+        text1.style.opacity = '0';
+        text1.style.filter = 'blur(8px)';
+      }
+
+      showFirst = !showFirst;
+    }
+
+    // Update every second
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>

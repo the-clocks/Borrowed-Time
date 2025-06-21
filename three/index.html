@@ -1,184 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analog Clock - Image Sectors</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-            overflow: hidden;
-        }
-        .clock {
-            width: 500vw;
-            height: 500vh;
-            position: relative;
-            background-color: transparent;
-            border: none;
-        }
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        .hand {
-            position: absolute;
-            bottom: 50%;
-            left: 50%;
-            transform-origin: bottom;
-            background-color: #868484;
-            z-index: 2;
-        }
-        .hour-hand {
-            width: 12px;
-            height: 30vh; /* Shortened for better visibility */
-            transform: translateX(-50%);
-        }
-        .minute-hand {
-            width: 6px;
-            height: 40vh; /* Shortened for better visibility */
-            transform: translateX(-50%);
-        }
-        .second-hand {
-            width: 2px;
-            height: 45vh; /* Shortened for better visibility */
-            background-color: #ff0000; /* Red for visibility */
-            transform: translateX(-50%);
-        }
-        .center {
-            width: 25px;
-            height: 25px;
-            background-color: #868484;
-            border-radius: 50%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 3;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CMYK Clock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: black;
+    }
+
+    .clock {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom;
+      background-color: rgb(6, 0, 0);
+      z-index: 2;
+    }
+
+    .hour-hand {
+      width: 1rem;
+      height: 100vh;
+    }
+
+    .minute-hand {
+      width: 0.6rem;
+      height: 100vh;
+    }
+
+    .second-hand {
+      width: 0.3rem;
+      height: 100vh;
+    }
+
+    .date-container {
+      color: rgb(168, 154, 154);
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
+
+    .clockname {
+      font-family: "Oxanium", serif;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 4vh;
+      line-height: 4vh;
+    }
+
+    .dateleft, .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+    }
+
+    .dateleft {
+      position: relative;
+      left: 0;
+    }
+
+    .dateright {
+      position: absolute;
+      right: 0;
+    }
+
+    .title-container {
+      color: #b4b1b1;
+      text-shadow: #908d8e 1px 0px;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
+
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.8vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      letter-spacing: 0.1vh;
+    }
+
+    .bttitle {
+      position: relative;
+      left: 0;
+      font-family: "Oxanium", serif;
+      font-size: 2.8vh;
+      font-style: italic;
+      z-index: 15;
+      letter-spacing: -0.1vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+    }
+  </style>
 </head>
 <body>
-    <div class="clock">
-        <canvas id="clockCanvas"></canvas>
-        <div class="hand hour-hand"></div>
-        <div class="hand minute-hand"></div>
-        <div class="hand second-hand"></div>
-        <div class="center"></div>
-    </div>
-    <script type="text/javascript">
-        const canvas = document.getElementById('clockCanvas');
-        const ctx = canvas.getContext('2d');
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            centerX = canvas.width / 2;
-            centerY = canvas.height / 2;
-            radius = Math.min(canvas.width, canvas.height) / 2; // Adjusted for visibility
-        });
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
 
-        let centerX = canvas.width / 2;
-        let centerY = canvas.height / 2;
-        let radius = Math.min(canvas.width, canvas.height) / 2;
+  <div class="date-container">
+    <a href="../cistercian/" class="dates dateleft">06/19/25</a>
+    <a href="../index.html" class="clockname">CMYK</a>
+    <a href="../indecisive/" class="dates dateright">06/21/25</a>
+  </div>
 
-        // Define images and fallback colors
-        const sectors = [
-            { img: new Image(), src: 'https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', fallback: '#ffcccc' },
-            { img: new Image(), src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba', fallback: '#ccffcc' },
-            { img: new Image(), src: 'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1', fallback: '#ccccff' }
-        ];
+  <div class="clock">
+    <canvas id="clockCanvas"></canvas>
+    <div class="hand hour-hand"></div>
+    <div class="hand minute-hand"></div>
+    <div class="hand second-hand"></div>
+  </div>
 
-        // Load images
-        let imagesLoaded = 0;
-        sectors.forEach(sector => {
-            sector.img.crossOrigin = 'Anonymous'; // Handle CORS for Unsplash images
-            sector.img.src = sector.src;
-            sector.img.onload = () => {
-                imagesLoaded++;
-                if (imagesLoaded === sectors.length) {
-                    requestAnimationFrame(updateClock);
-                }
-            };
-            sector.img.onerror = () => {
-                console.error('Failed to load image:', sector.src);
-                sector.pattern = sector.fallback; // Use fallback color
-                imagesLoaded++;
-                if (imagesLoaded === sectors.length) {
-                    requestAnimationFrame(updateClock);
-                }
-            };
-        });
+  <script>
+    const canvas = document.getElementById('clockCanvas');
+    const ctx = canvas.getContext('2d');
 
-        function updateClock() {
-            const now = new Date();
-            const milliseconds = now.getMilliseconds();
-            const seconds = now.getSeconds() + milliseconds / 1000;
-            const minutes = now.getMinutes() + seconds / 60;
-            const hours = now.getHours() % 12 + minutes / 60;
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-            const secondDeg = (seconds / 60) * 360;
-            const minuteDeg = (minutes / 60) * 360;
-            const hourDeg = (hours / 12) * 360;
+    const sectors = ['cyan', 'magenta', 'yellow'];
 
-            const secondRad = (secondDeg - 90) * (Math.PI / 180);
-            const minuteRad = (minuteDeg - 90) * (Math.PI / 180);
-            const hourRad = (hourDeg - 90) * (Math.PI / 180);
+    function updateClock() {
+      const now = new Date();
+      const milliseconds = now.getMilliseconds();
+      const seconds = now.getSeconds() + milliseconds / 1000;
+      const minutes = now.getMinutes() + seconds / 60;
+      const hours = now.getHours() % 12 + minutes / 60;
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const secondDeg = (seconds / 60) * 360;
+      const minuteDeg = (minutes / 60) * 360;
+      const hourDeg = (hours / 12) * 360;
 
-            // Normalize and sort angles
-            let angles = [secondRad, minuteRad, hourRad].map(angle => {
-                while (angle < 0) angle += 2 * Math.PI;
-                while (angle >= 2 * Math.PI) angle -= 2 * Math.PI;
-                return angle;
-            }).sort((a, b) => a - b);
+      const secondRad = (secondDeg - 90) * Math.PI / 180;
+      const minuteRad = (minuteDeg - 90) * Math.PI / 180;
+      const hourRad = (hourDeg - 90) * Math.PI / 180;
 
-            // Create patterns or use fallback
-            sectors.forEach((sector, i) => {
-                if (!sector.pattern && sector.img.complete && sector.img.naturalWidth !== 0) {
-                    sector.pattern = ctx.createPattern(sector.img, 'repeat');
-                }
-            });
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = Math.max(canvas.width, canvas.height) * 0.7;
 
-            // Draw sectors
-            for (let i = 0; i < 3; i++) {
-                const startAngle = angles[i];
-                const endAngle = angles[(i + 1) % 3];
-                const adjustedEndAngle = endAngle <= startAngle ? endAngle + 2 * Math.PI : endAngle;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                ctx.beginPath();
-                ctx.moveTo(centerX, centerY);
-                ctx.arc(centerX, centerY, radius, startAngle, adjustedEndAngle);
-                ctx.lineTo(centerX, centerY);
-                ctx.fillStyle = sectors[i].pattern || sectors[i].fallback;
-                ctx.fill();
-            }
+      let angles = [secondRad, minuteRad, hourRad]
+        .map(a => (a + 2 * Math.PI) % (2 * Math.PI))
+        .sort((a, b) => a - b);
 
-            // Update hand positions
-            document.querySelector('.second-hand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
-            document.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
-            document.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+      for (let i = 0; i < 3; i++) {
+        const start = angles[i];
+        const end = angles[(i + 1) % 3] <= start ? angles[(i + 1) % 3] + 2 * Math.PI : angles[(i + 1) % 3];
 
-            requestAnimationFrame(updateClock);
-        }
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.arc(centerX, centerY, radius, start, end);
+        ctx.closePath();
+        ctx.fillStyle = sectors[i];
+        ctx.fill();
+      }
 
-        // Start clock only after images load
-        if (imagesLoaded === sectors.length) {
-            requestAnimationFrame(updateClock);
-        }
-    </script>
+      document.querySelector('.second-hand').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+      document.querySelector('.minute-hand').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+      document.querySelector('.hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+      requestAnimationFrame(updateClock);
+    }
+
+    requestAnimationFrame(updateClock);
+  </script>
 </body>
 </html>
