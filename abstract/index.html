@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SVG Morphing Clock</title>
+  <title>SVG Morphing Clock (12-Hour)</title>
   <style>
     body {
       margin: 0;
@@ -48,7 +48,7 @@
     <g id="digitGroup" transform="translate(100, 0)"></g>
   </svg>
 
-  <script src="https://unpkg.com/flubber"></script>
+  <script src="https://unpkg.com/flubber@0.4.2"></script>
   <script>
     const digitPaths = {
       "0": "M40,20 A20,20 0 1,1 40,180 A20,20 0 1,1 40,20 Z",
@@ -61,45 +61,67 @@
       "7": "M40,40 H80 L60,180",
       "8": "M60,60 A20,20 0 1,1 60,100 A20,20 0 1,1 60,60 M60,100 A20,20 0 1,1 60,140 A20,20 0 1,1 60,100",
       "9": "M80,140 Q40,140 40,90 Q60,110 80,90 Q60,60 40,80 Q40,20 80,40",
-      ":": "M60,70 A5,5 0 1,1 59,70 Z M60,130 A5,5 0 1,1 59,130 Z"
+      ":": "M60,70 A5,5 0 1,1 59,70 Z M60,130 A5,5 0 1,1 59,130 Z",
+      "A": "M40,180 L60,40 L80,180 M50,120 H70",
+      "M": "M40,180 L50,40 L60,180 M70,40 L80,180",
+      "P": "M40,180 L40,40 H80 Q80,80 40,80"
     };
 
     const clockEl = document.getElementById('digitGroup');
     const digits = [];
 
-    for (let i = 0; i < 8; i++) {
+    const MAX_DIGITS = 11; // Increased to handle "HH:MM:SS AM/PM"
+    const DIGIT_SPACING = 91;
+
+    // Create reusable digit paths
+    for (let i = 0; i < MAX_DIGITS; i++) {
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path.setAttribute("d", digitPaths["0"]);
       path.setAttribute("fill", "url(#digitGradient)");
-      path.setAttribute("transform", `translate(${i * 70}, 0)`);
       clockEl.appendChild(path);
       digits.push(path);
     }
 
-    let prevChars = Array(8).fill("0");
+    let prevChars = Array(MAX_DIGITS).fill("");
 
     function updateClock() {
       const now = new Date();
-      const time = now.toLocaleTimeString('en-US', { hour12: false });
-      const chars = time.padStart(8, '0').split('');
+      let time = now.toLocaleTimeString('en-US', { hour12: true }); // Changed to 12-hour format
+      time = time.replace(/^0/, ""); // Remove leading 0 for hours (e.g., "01:23:45 PM" -> "1:23:45 PM")
+      const chars = time.split('');
+      const len = chars.length;
 
-      chars.forEach((char, i) => {
-        if (digitPaths[char] && char !== prevChars[i]) {
-          const from = digitPaths[prevChars[i]];
-          const to = digitPaths[char];
-          const interpolator = flubber.interpolate(from, to);
-          let frame = 0;
-          const total = 15;
+      // Center digit group dynamically
+      const totalWidth = (len - 1) * DIGIT_SPACING;
+      clockEl.setAttribute("transform", `translate(${(800 - totalWidth) / 2}, 0)`);
 
-          function animate() {
-            if (frame <= total) {
-              digits[i].setAttribute("d", interpolator(frame / total));
-              frame++;
-              requestAnimationFrame(animate);
+      digits.forEach((digit, i) => {
+        if (i < len) {
+          const char = chars[i];
+          if (digitPaths[char] && char !== prevChars[i]) {
+            const from = digitPaths[prevChars[i]] || digitPaths["0"];
+            const to = digitPaths[char];
+            const interpolator = flubber.interpolate(from, to);
+            let frame = 0;
+            const total = 15;
+
+            function animate() {
+              if (frame <= total) {
+                digit.setAttribute("d", interpolator(frame / total));
+                frame++;
+                requestAnimationFrame(animate);
+              }
             }
+            animate();
+            prevChars[i] = char;
           }
-          animate();
-          prevChars[i] = char;
+
+          // Make sure digit is visible and positioned
+          digit.setAttribute("transform", `translate(${i * DIGIT_SPACING}, 0)`);
+          digit.style.display = "inline";
+        } else {
+          digit.style.display = "none"; // Hide unused digits
+          prevChars[i] = "";
         }
       });
     }

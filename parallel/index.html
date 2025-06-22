@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parallel Line Clock</title>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+ 
+  <style>
+    body {
+      margin: 0;
+     background-image: repeating-linear-gradient(to right, #f5e8af, #FAF7E9 5px, transparent 5px, transparent);
+	background-size: 10px 20px;
+	background-color: #7f0626;;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .clock {
+      display: flex;
+      align-items: center;
+      gap: -40px;
+      z-index: -1;
+    }
+
+    .digit {
+      width: 40px;
+      height: 360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      fill: #7f0626;
+    }
+        .title-container {
+            color: #9c9c98;
+            text-shadow: #827f77 1px 0;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.1vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.7vh;
+            font-style: italic;
+            letter-spacing: -0.1vh;
+        }
+
+
+
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #909392;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+    
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+  </style>
+</head>
+<body>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../mercury/" class="dates dateleft">06/21/25</a>
+        <a href="../index.html" class="clockname">Parallel Line</a>
+      <a href="../index.html" class="dates dateright">06/23/25</a>
+    </div>
+  <div class="clock" id="clock">
+    <div class="digit" id="h1"></div>
+    <div class="digit" id="h2" style="display: none;"></div>
+    <div class="digit" id="m1"></div>
+    <div class="digit" id="m2"></div>
+    <div class="digit" id="s1"></div>
+    <div class="digit" id="s2"></div>
+  </div>
+
+  <script>
+    const width = 10, height = 60;
+    const lineLen = 50;  // Line width in pixels
+    const lineThick = 5; // Line height in pixels
+    const gapY = 5;      // Vertical gap between lines
+    const digits = [];
+
+    const x = (width - lineLen) / 2;
+
+    // 0 = center circle
+    digits[0] = `<svg viewBox="0 0 ${width} ${height}">
+                   <circle cx="${width / 2}" cy="${height / 2}" r="3" />
+                 </svg>`;
+
+    // 1–9 = horizontal bars using <rect>
+    for (let i = 1; i <= 9; i++) {
+      let lines = '';
+      const totalHeight = i * lineThick + (i - 1) * gapY;
+      const startY = (height - totalHeight) / 2;
+      for (let j = 0; j < i; j++) {
+        const y = startY + j * (lineThick + gapY);
+        lines += `<rect x="${x}" y="${y}" width="${lineLen}" height="${lineThick}" rx="1" ry="1"/>`;
+      }
+      digits[i] = `<svg viewBox="0 0 ${width} ${height}">${lines}</svg>`;
+    }
+
+    function updateClock() {
+      const now = new Date();
+      let h = now.getHours() % 12 || 12;
+      const m = now.getMinutes().toString().padStart(2, '0');
+      const s = now.getSeconds().toString().padStart(2, '0');
+
+      const hStr = h.toString();
+      const h1 = document.getElementById('h1');
+      const h2 = document.getElementById('h2');
+
+      if (hStr.length === 1) {
+        h1.innerHTML = digits[hStr[0]];
+        h2.style.display = 'none';
+      } else {
+        h1.innerHTML = digits[hStr[0]];
+        h2.innerHTML = digits[hStr[1]];
+        h2.style.display = 'flex';
+      }
+
+      document.getElementById('m1').innerHTML = digits[m[0]];
+      document.getElementById('m2').innerHTML = digits[m[1]];
+      document.getElementById('s1').innerHTML = digits[s[0]];
+      document.getElementById('s2').innerHTML = digits[s[1]];
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
