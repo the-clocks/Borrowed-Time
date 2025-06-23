@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+         <title>Squiggling Analog Clock</title>
+  <style>
+    @font-face {
+      font-family: 'squ';
+      src: url('./squ.ttf') format('truetype');
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
+      background-color: #565454;
+    }
+    canvas {
+      margin-bottom: 20px;
+    }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        .date-container {
+            color: rgb(184, 244, 172);
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+              color: #b8cb9d;
+            text-shadow: #201e1f 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.1vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.7vh;
+            font-style: italic;
+            letter-spacing: -0.1vh;
+        }
+  </style>
+</head>
+<body>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../parallel/" class="dates dateleft">06/222/25</a>
+        <a href="../index.html" class="clockname">Squiggle</a>
+            <a href="../index.html"class="dates dateright">06/24/25</a>
+    </div>
+
+  <canvas id="clockCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const canvas = document.getElementById('clockCanvas');
+    const ctx = canvas.getContext('2d');
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 230;
+    let distortionPhase = 0;
+    const distortionSpeed = 0.03; // Fixed speed
+
+    function drawClock() {
+      const now = new Date();
+      const hours = now.getHours() % 12 + now.getMinutes() / 60;
+      const minutes = now.getMinutes() + now.getSeconds() / 60;
+      const seconds = now.getSeconds() + now.getMilliseconds() / 1000;
+
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = canvas.width;
+      offCanvas.height = canvas.height;
+      const offCtx = offCanvas.getContext('2d');
+
+      offCtx.fillStyle = '#423E42FF';
+      offCtx.beginPath();
+      offCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      offCtx.fill();
+
+      // Numbers
+      offCtx.fillStyle = '#F5DA6DFF';
+      offCtx.font = '80px squ';
+      offCtx.textAlign = 'center';
+      offCtx.textBaseline = 'middle';
+      for (let i = 0; i < 12; i++) {
+        const angle = (i * 30 - 90) * Math.PI / 180;
+        const numberX = centerX + (radius - 40) * Math.cos(angle);
+        const numberY = centerY + (radius - 40) * Math.sin(angle);
+        offCtx.fillText(i === 0 ? 12 : i, numberX, numberY);
+      }
+
+      // Hour hand
+      offCtx.save();
+      offCtx.translate(centerX, centerY);
+      offCtx.fillStyle = '#AFF3ACFF';
+      offCtx.rotate(hours * 30 * Math.PI / 180);
+      offCtx.fillRect(-5, -radius * 0.5, 10, radius * 0.5);
+      offCtx.restore();
+
+      // Minute hand
+      offCtx.save();
+      offCtx.translate(centerX, centerY);
+      offCtx.fillStyle = '#BEB2EAFF';
+      offCtx.rotate(minutes * 6 * Math.PI / 180);
+      offCtx.fillRect(-3, -radius * 0.7, 6, radius * 0.7);
+      offCtx.restore();
+
+      // Second hand
+      offCtx.save();
+      offCtx.translate(centerX, centerY);
+      offCtx.fillStyle = '#EF1444FF';
+      offCtx.rotate(seconds * 6 * Math.PI / 180);
+      offCtx.fillRect(-2, -radius * 0.9, 4, radius * 0.9);
+      offCtx.restore();
+
+      // Apply distortion
+      const amplitude = 20;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const imageData = offCtx.getImageData(0, 0, canvas.width, canvas.height);
+      const distortedData = ctx.createImageData(canvas.width, canvas.height);
+
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          const offset = Math.sin(y / 20 + distortionPhase) * amplitude;
+          const srcX = Math.floor(x + offset);
+          if (srcX >= 0 && srcX < canvas.width) {
+            const srcIdx = (y * canvas.width + srcX) * 4;
+            const dstIdx = (y * canvas.width + x) * 4;
+            for (let i = 0; i < 4; i++) {
+              distortedData.data[dstIdx + i] = imageData.data[srcIdx + i];
+            }
+          }
+        }
+      }
+
+      ctx.putImageData(distortedData, 0, 0);
+      distortionPhase += distortionSpeed;
+    }
+
+    function animate() {
+      drawClock();
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
