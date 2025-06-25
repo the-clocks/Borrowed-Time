@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analog Clock with Image Hands</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .clock {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 10px solid #fff;
+      border-radius: 50%;
+      background: #222;
+    }
+
+    .clock::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+
+    .hand-img {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: translateX(-50%) rotate(0deg);
+      pointer-events: none;
+    }
+
+    #hour {
+      height: 70px;
+      z-index: 3;
+    }
+
+    #minute {
+      height: 100px;
+      z-index: 2;
+    }
+
+    #second {
+      height: 120px;
+      z-index: 1;
+    }
+
+    .number {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .number span {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      font-size: 1rem;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock">
+    <!-- Image Hands -->
+    <img src="hour.png" class="hand-img" id="hour" alt="hour hand">
+    <img src="minute.png" class="hand-img" id="minute" alt="minute hand">
+    <img src="second.png" class="hand-img" id="second" alt="second hand">
+
+    <!-- Numbers -->
+    <div class="number"><span style="top: 10%; left: 50%;">12</span></div>
+    <div class="number"><span style="top: 20%; left: 85%;">1</span></div>
+    <div class="number"><span style="top: 38%; left: 95%;">2</span></div>
+    <div class="number"><span style="top: 57%; left: 92%;">3</span></div>
+    <div class="number"><span style="top: 75%; left: 82%;">4</span></div>
+    <div class="number"><span style="top: 88%; left: 65%;">5</span></div>
+    <div class="number"><span style="top: 92%; left: 50%;">6</span></div>
+    <div class="number"><span style="top: 88%; left: 35%;">7</span></div>
+    <div class="number"><span style="top: 75%; left: 18%;">8</span></div>
+    <div class="number"><span style="top: 57%; left: 8%;">9</span></div>
+    <div class="number"><span style="top: 38%; left: 5%;">10</span></div>
+    <div class="number"><span style="top: 20%; left: 15%;">11</span></div>
+  </div>
+
+  <script>
+    const hourHand = document.getElementById('hour');
+    const minuteHand = document.getElementById('minute');
+    const secondHand = document.getElementById('second');
+
+    function updateClock() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+
+      const secondDeg = seconds * 6;
+      const minuteDeg = minutes * 6 + seconds * 0.1;
+      const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+
+      secondHand.style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+      minuteHand.style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+      hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock(); // initial call
+  </script>
+</body>
+</html>
