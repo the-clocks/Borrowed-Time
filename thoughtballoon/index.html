@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Clock</title>
-    <style>
-      
-      @font-face {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digital Clock</title>
+  <style>
+    @font-face {
       font-family: 'squ';
       src: url('./squ.ttf') format('truetype');
     }
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 90vh;
-            background-color: #1c3f8a;
-            color:  #1c3f8a;
-            font-size: 3rem;
-        }
 
-        .clock {
-            z-index: 1;
-            display: flex;
-            align-items: center;
-        }
+    body {
+      margin: 0;
+      padding: 0;
+      height: 90vh;
+      background-color: #6d6d74;
+      background-image: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%231a0c52' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+      font-size: 3rem;
+      position: relative;
+    }
 
-        .digit {
-            font-family: 'squ';
-            width: 1ch;
-            text-align: center;
-        }
-        .bgImage {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: contrast(100%);
-            z-index: 1;
-            /* opacity: 0.5; */
-            filter: alpha(opacity=50);
-            pointer-events: none;
-        }
+    .clock-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .clock {
+      font-family: 'squ';
+      z-index: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .digit {
+      min-width: 1ch;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .bgImage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: contrast(100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
     a {
       color: inherit;
       text-decoration: none;
@@ -125,7 +136,6 @@
   </style>
 </head>
 <body>
-
   <div class="title-container">
     <div class="chltitle">Cubist Heart Laboratories</div>
     <div class="bttitle">BorrowedTime</div>
@@ -134,49 +144,45 @@
   <div class="date-container">
     <a href="../parallel/" class="dates dateleft">06/23/25</a>
     <a href="../index.html" class="clockname">Thought Balloon</a>
-     <a href="../index.html"  class="dates dateright">06/25/25</a>
+    <a href="../index.html" class="dates dateright">06/25/25</a>
   </div>
-    <img src="./tho.webp" class="bgImage">    
-     <div class="clock">
-        <div class="digit" id="hourTens">0</div>
-        <div class="digit" id="hourUnits">0</div>
-        <span>:</span>
-        <div class="digit" id="minuteTens">0</div>
-        <div class="digit" id="minuteUnits">0</div>
-        <span>:</span>
-        <div class="digit" id="secondTens">0</div>
-        <div class="digit" id="secondUnits">0</div>
+
+  <img src="./tho.webp" class="bgImage">
+
+  <div class="clock-wrapper">
+    <div class="clock">
+      <div class="digit" id="hourTens"></div>
+      <div class="digit" id="hourUnits"></div>
+      <span>:</span>
+      <div class="digit" id="minuteTens">0</div>
+      <div class="digit" id="minuteUnits">0</div>
+       <span>&nbsp;</span>
+      <span id="ampm">AM</span>
     </div>
-    <script>
-        function updateClock() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2);
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
+  </div>
 
-            // Extract digits
-            const hourTens = hours[0];
-            const hourUnits = hours[1];
-            const minuteTens = minutes[0];
-            const minuteUnits = minutes[1];
-            const secondTens = seconds[0];
-            const secondUnits = seconds[1];
+  <script>
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
 
-            // Update the clock display
-            document.getElementById('hourTens').textContent = hourTens;
-            document.getElementById('hourUnits').textContent = hourUnits;
-            document.getElementById('minuteTens').textContent = minuteTens;
-            document.getElementById('minuteUnits').textContent = minuteUnits;
-            document.getElementById('secondTens').textContent = secondTens;
-            document.getElementById('secondUnits').textContent = secondUnits;
-        }
+      hours = hours % 12;
+      hours = hours === 0 ? 12 : hours;
 
-        // Update the clock every second
-        setInterval(updateClock, 1000);
+      const hourStr = String(hours); // no leading zeros
+      const minuteStr = String(minutes).padStart(2, '0');
 
-        // Initialize the clock immediately
-        updateClock();
-    </script>
+      document.getElementById('hourTens').textContent = hourStr.length === 2 ? hourStr[0] : '';
+      document.getElementById('hourUnits').textContent = hourStr.length === 2 ? hourStr[1] : hourStr[0];
+      document.getElementById('minuteTens').textContent = minuteStr[0];
+      document.getElementById('minuteUnits').textContent = minuteStr[1];
+      document.getElementById('ampm').textContent = ampm;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
 </body>
-
 </html>
