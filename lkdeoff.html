@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-device-width, initial-scale=1.0">
+    <title>Joan of Arc Abstract Digital Clock</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap');
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: radial-gradient(circle at center, #1c2526, #0a0f14);
+            overflow: hidden;
+        }
+        .clock {
+            display: flex;
+            gap: 6px;
+            background: rgba(10, 15, 20, 0.7);
+            padding: 25px;
+            border-radius: 15px;
+            border: 3px solid #b8860b;
+            box-shadow: 0 0 30px rgba(184, 134, 11, 0.3);
+            position: relative;
+        }
+        .clock::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/0/0c/Fleur-de-lis-3d.png') no-repeat center;
+            background-size: contain;
+            opacity: 0.3;
+            filter: drop-shadow(0 0 10px #b8860b);
+        }
+        .digit {
+            width: 55px;
+            height: 75px;
+            position: relative;
+            background: #0a0f14;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(184, 134, 11, 0.2);
+        }
+        .segment {
+            position: absolute;
+            background: linear-gradient(135deg, #483d8b, #9932cc);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.3s;
+            border-radius: 50%;
+        }
+        .segment.on {
+            opacity: 0.9;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(153, 50, 204, 0.6);
+            animation: pulse 2s infinite alternate;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1.1); }
+            100% { transform: scale(1.15); }
+        }
+        /* Highly abstract segment shapes */
+        .seg-a { top: 5%; left: 20%; width: 60%; height: 15%; transform: rotate(15deg) skewX(20deg); clip-path: polygon(0 0, 80% 20%, 100% 80%, 20% 100%); }
+        .seg-b { top: 20%; right: 5%; width: 15%; height: 25%; transform: rotate(-20deg); clip-path: circle(50% at 50% 50%); }
+        .seg-c { bottom: 20%; right: 5%; width: 15%; height: 25%; transform: rotate(20deg); clip-path: polygon(30% 0, 100% 30%, 70% 100%, 0 70%); }
+        .seg-d { bottom: 5%; left: 20%; width: 60%; height: 15%; transform: rotate(-15deg) skewX(-20deg); clip-path: polygon(20% 0, 100% 20%, 80% 100%, 0 80%); }
+        .seg-e { bottom: 20%; left: 5%; width: 15%; height: 25%; transform: rotate(-25deg); clip-path: circle(50% at 50% 50%); }
+        .seg-f { top: 20%; left: 5%; width: 15%; height: 25%; transform: rotate(25deg); clip-path: polygon(0 30%, 70% 0, 100% 70%, 30% 100%); }
+        .seg-g { top: 40%; left: 15%; width: 70%; height: 12%; transform: skewX(30deg); clip-path: ellipse(50% 40% at 50% 50%); }
+        .colon {
+            color: #b8860b;
+            font-size: 50px;
+            line-height: 75px;
+            text-shadow: 0 0 10px #9932cc;
+            animation: flicker 3s infinite;
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+    </style>
+</head>
+<body>
+    <div class="clock" id="clock">
+        <div class="digit" id="h1"><div class="segment seg-a"></div><div class="segment seg-b"></div><div class="segment seg-c"></div><div class="segment seg-d"></div><div class="segment seg-e"></div><div class="segment seg-f"></div><div class="segment seg-g"></div></div>
+        <div class="digit" id="h2"><div class="segment seg-a"></div><div class="segment seg-b"></div><div class="segment seg-c"></div><div class="segment seg-d"></div><div class="segment seg-e"></div><div class="segment seg-f"></div><div class="segment seg-g"></div></div>
+        <div class="colon">:</div>
+        <div class="digit" id="m1"><div class="segment seg-a"></div><div class="segment seg-b"></div><div class="segment seg-c"></div><div class="segment seg-d"></div><div class="segment seg-e"></div><div class="segment seg-f"></div><div class="segment seg-g"></div></div>
+        <div class="digit" id="m2"><div class="segment seg-a"></div><div class="segment seg-b"></div><div class="segment seg-c"></div><div class="segment seg-d"></div><div class="segment seg-e"></div><div class="segment seg-f"></div><div class="segment seg-g"></div></div>
+        <div class="colon">:</div>
+        <div class="digit" id="s1"><div class="segment seg-a"></div><div class="segment seg-b"></div><div class="segment seg-c"></div><div class="segment seg-d"></div><div class="segment seg-e"></div><div class="segment seg-f"></div><div class="segment seg-g"></div></div>
+        <div class="digit" id="s2"><div class="segment seg-a"></div><div class="segment seg-b"></div><div class="segment seg-c"></div><div class="segment seg-d"></div><div class="segment seg-e"></div><div class="segment seg-f"></div><div class="segment seg-g"></div></div>
+    </div>
+    <script>
+        const segmentMap = {
+            0: ['a', 'b', 'c', 'd', 'e', 'f'],
+            1: ['b', 'c'],
+            2: ['a', 'b', 'd', 'e', 'g'],
+            3: ['a', 'b', 'c', 'd', 'g'],
+            4: ['b', 'c', 'f', 'g'],
+            5: ['a', 'c', 'd', 'f', 'g'],
+            6: ['a', 'c', 'd', 'e', 'f', 'g'],
+            7: ['a', 'b', 'c'],
+            8: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
+            9: ['a', 'b', 'c', 'd', 'f', 'g']
+        };
+
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            updateDigit('h1', hours[0]);
+            updateDigit('h2', hours[1]);
+            updateDigit('m1', minutes[0]);
+            updateDigit('m2', minutes[1]);
+            updateDigit('s1', seconds[0]);
+            updateDigit('s2', seconds[1]);
+        }
+
+        function updateDigit(id, num) {
+            const digit = document.getElementById(id);
+            const segments = digit.querySelectorAll('.segment');
+            segments.forEach(seg => seg.classList.remove('on'));
+            if (segmentMap[num]) {
+                segmentMap[num].forEach(seg => {
+                    digit.querySelector(`.seg-${seg}`).classList.add('on');
+                });
+            }
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
