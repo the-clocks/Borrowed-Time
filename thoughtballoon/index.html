@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thought Bubble Clock - BorrowedTime</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
-        rel="stylesheet">
- 
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+
   <style>
     @font-face {
       font-family: 'squ';
@@ -19,41 +17,18 @@
     body {
       margin: 0;
       padding: 0;
-      height: 90vh;
+      height: 100vh;
       background-color: #6d6d74;
       background-image: url("data:image/svg+xml,%3Csvg width='20' height='12' viewBox='0 0 20 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 12c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 10 12c1.67 0 3.182-.683 4.27-1.785A5.998 5.998 0 0 0 14 12h2a4 4 0 0 1 4-4V6c-1.67 0-3.182.683-4.27 1.785C15.905 7.22 16 6.622 16 6c0-.622-.095-1.221-.27-1.785A5.982 5.982 0 0 0 20 6V4a4 4 0 0 1-4-4h-2c0 .622.095 1.221.27 1.785A5.982 5.982 0 0 0 10 0C8.33 0 6.818.683 5.73 1.785 5.905 1.22 6 .622 6 0H4a4 4 0 0 1-4 4v2c1.67 0 3.182.683 4.27 1.785A5.998 5.998 0 0 1 4 6c0-.622.095-1.221.27-1.785A5.982 5.982 0 0 1 0 6v2a4 4 0 0 1 4 4h2zm-4 0a2 2 0 0 0-2-2v2h2zm16 0a2 2 0 0 1 2-2v2h-2zM0 2a2 2 0 0 0 2-2H0v2zm20 0a2 2 0 0 1-2-2h2v2zm-10 8a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z' fill='%231a0c52' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
-      font-size: 4rem;
+      font-size: 3rem;
       position: relative;
-    }
-
-    .clock-wrapper {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .clock {
-      font-family: 'squ';
-      z-index: 1;
-      display: flex;
-      align-items: center;
-    }
-
-    .digit {
-      min-width: 1ch;
-      text-align: center;
-      display: inline-block;
     }
 
     .bgImage {
       position: fixed;
       top: 0;
-      left: 0;
+      left: 50%;
+      transform: translateX(-50%);
       width: 100vw;
       height: 100vh;
       background-size: cover;
@@ -63,94 +38,118 @@
       z-index: 1;
       pointer-events: none;
     }
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
 
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-            text-decoration: none;
-        }
+    .clock-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
 
-        .date-container {
-       color: rgb(247, 247, 245);
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 11;
-        }
+    .clock {
+      color: #442958;
+      font-family: 'squ';
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
 
-        .clockname {
-            font-family: "Oxanium", serif;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 4vh;
-            line-height: 4vh;
-        }
+    .digit {
+      text-align: center;
+      display: inline-block;
+    }
 
+    .title-container {
+      color: #c1c2c4;
+      text-shadow: #f8f7f4 1px 0px;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
 
-        .dateleft {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: relative;
-            left: 0;
-        }
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.1vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      letter-spacing: 0.1vh;
+    }
 
-        .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: absolute;
-            right: 0;
-        }
+    .bttitle {
+      position: relative;
+      left: 0;
+      font-family: "Oxanium", serif;
+      font-size: 2.7vh;
+      font-style: italic;
+      letter-spacing: -0.1vh;
+    }
 
-        .title-container {
-            color: #c1c2c4;
-            text-shadow: #f8f7f4 1px 0px;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            /* justify-content: space-between; */
-            z-index: 6;
-        }
+    .date-container {
+      color: rgb(247, 247, 245);
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 11;
+    }
 
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.1vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
+    .clockname {
+      font-family: "Oxanium", serif;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 4vh;
+      line-height: 4vh;
+    }
 
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.7vh;
-            font-style: italic;
-            letter-spacing: -0.1vh;
-        }
+    .dateleft, .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+    }
 
+    .dateleft {
+      position: relative;
+      left: 0;
+    }
+
+    .dateright {
+      position: absolute;
+      right: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+      text-decoration: none;
+    }
   </style>
 </head>
+
 <body>
   <div class="title-container">
     <div class="chltitle">Cubist Heart Laboratories</div>
     <div class="bttitle">BorrowedTime</div>
   </div>
 
-
-
-  <img src="./tho.webp" class="bgImage">
+  <img src="./tho.webp" class="bgImage" />
 
   <div class="clock-wrapper">
     <div class="clock">
@@ -159,15 +158,17 @@
       <span>:</span>
       <div class="digit" id="minuteTens">0</div>
       <div class="digit" id="minuteUnits">0</div>
-       <span>&nbsp;</span>
+      <span>&nbsp;</span>
       <span id="ampm">AM</span>
     </div>
   </div>
+
   <div class="date-container">
     <a href="../squiggle/" class="dates dateleft">06/23/25</a>
     <a href="../index.html" class="clockname">Thought Balloon</a>
-    <a href="../index.html" class="dates dateright">06/25/25</a>
+    <a href="../bone/" class="dates dateright">06/25/25</a>
   </div>
+
   <script>
     function updateClock() {
       const now = new Date();
