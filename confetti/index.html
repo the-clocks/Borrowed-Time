@@ -10,7 +10,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
         rel="stylesheet">
-    <style>
+    <style>  @font-face {
+      font-family: 'conf';
+      src: url('conf.ttf') format('truetype');
+    }
         body {
             margin: 0;
             overflow: hidden;
@@ -24,7 +27,7 @@
         }
 
         .number {
-            font-family: "Bubblegum Sans", sans-serif;
+           font-family: "conf", sans-serif;
             position: absolute;
             color: rgb(251, 2, 160);
             font-size: 22vh;
@@ -34,19 +37,7 @@
             animation-timing-function: linear;
         }
 
-        /* .full-page-image2 {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-image: url('./images/conf.gif');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: 6;
-            filter: alpha(opacity=50);
-        } */
+      
 
         .full-page-image3 {
             position: fixed;

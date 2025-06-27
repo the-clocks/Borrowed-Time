@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotating Background Images</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .background-image-counterclockwise {
+            width: 200%;
+            height: 200%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            animation: rotate-counterclockwise 20s linear infinite reverse;
+            opacity: 0.6; /* Slightly higher opacity for visibility */
+            z-index: 1;
+        }
+        .background-image-clockwise {
+            width: 200%;
+            height: 200%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            animation: rotate-clockwise 20s linear infinite;
+            opacity: 0.4; /* Lower opacity to differentiate */
+            z-index: 2;
+            filter: brightness(80%); /* Subtle filter to distinguish */
+        }
+        @keyframes rotate-counterclockwise {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+        @keyframes rotate-clockwise {
+            from {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            to {
+                transform: translate(-50%, -50%) rotate(-360deg);
+            }
+        }
+     
+    </style>
+</head>
+<body>
+    <!-- <div class="background-container"> -->
+        <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0" alt="Counterclockwise Background" class="background-image-counterclockwise">
+        <img src="https://images.unsplash.com/photo-1448375240586-882707db888b" alt="Clockwise Background" class="background-image-clockwise">
+   
+</body>
+</html>
