@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vertical Digital Clock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dense Top Sagging Lines Clock</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
   <style>
     @font-face {
       font-family: 'morse';
@@ -18,9 +23,9 @@
       background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
       position: relative;
       overflow: hidden;
-      display: flex; /* Add flexbox to body */
-      justify-content: center; /* Center horizontally */
-      align-items: center; /* Center vertically */
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .background-svg {
@@ -41,33 +46,124 @@
     }
 
     .digit-box {
-      width: 100%; Restored from original
-      height: 8rem;
-      margin: 1px 0;
+      width: 110vw;
+      height: 2rem;
+      margin: 0.5rem 0;
       background-color: #b87333;
       color: #b90404;
-      text-shadow: 0px -2px 0px rgba(0, 0, 0), -2px 0px 0px rgba(0, 0, 0), 2px 0px 0px rgba(0, 0, 0), 0px 2px 0px rgba(0, 0, 0);
+      text-shadow: 
+        0px -2px 0px rgb(250, 247, 247), 
+        -2px 0px 0px rgba(0, 0, 0), 
+        2px 0px 0px rgba(0, 0, 0), 
+        0px 2px 0px rgba(0, 0, 0),
+        0px -1px 0px rgb(248, 241, 241), 
+        -1px 0px 0px rgba(0, 0, 0), 
+        1px 0px 0px rgba(0, 0, 0), 
+        0px 1px 0px rgba(0, 0, 0);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 3rem;
+      font-size: 6rem;
       border-radius: 75px;
       z-index: 4;
       font-family: 'morse', Arial, sans-serif;
+      box-shadow: 
+        4px -4px 0px #9db4a0,
+        -4px 4px 0px #9db4a0;
     }
+
+        .title-container {
+            color: #ebf0ea;
+            text-shadow: #686666 1px 0;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.1vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.7vh;
+            font-style: italic;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        /* Date container styles */
+        .date-container {
+            color: #3a3838;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
   </style>
 </head>
 <body>
-  <svg class="background-svg">
-    <path d="M0 50 Q500 150 1000 50" stroke="#c0c6c7" stroke-width="2" fill="none"/>
-    <path d="M0 100 Q500 200 1000 100" stroke="#99a3a3" stroke-width="2" fill="none"/>
-    <path d="M0 150 Q500 250 1000 150" stroke="#B3A9A1" stroke-width="2" fill="none"/>
-    <path d="M0 200 Q500 300 1000 200" stroke="#66615C" stroke-width="2" fill="none"/>
-    <path d="M0 250 Q500 350 1000 250" stroke="#c0c6c7" stroke-width="2" fill="none"/>
-    <path d="M0 300 Q500 400 1000 300" stroke="#99a3a3" stroke-width="2" fill="none"/>
-    <path d="M0 350 Q500 450 1000 350" stroke="#B3A9A1" stroke-width="2" fill="none"/>
-    <path d="M0 400 Q500 500 1000 400" stroke="#66615C" stroke-width="2" fill="none"/>
+
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
+
+  <div class="date-container">
+    <a href="../cosmicwheels/" class="dates dateleft">06/26/25</a>
+    <a href="../index.html" class="clockname">Morse Code</a>
+ <a href="../index.html"  class="dates dateright">06/28/25</a>
+  </div>
+  <svg class="background-svg" viewBox="0 0 1000 500" preserveAspectRatio="none" id="wires-svg">
+    <!-- Lines generated by JS -->
   </svg>
+
   <div class="clock">
     <div class="digit-box" id="hour1">0</div>
     <div class="digit-box" id="hour2">0</div>
@@ -94,6 +190,70 @@
 
     setInterval(updateClock, 1000);
     updateClock();
+
+    const svg = document.getElementById('wires-svg');
+
+    const colors = [
+      "#c0c6c7",
+      "#99a3a3",
+      "#B7410E",
+      "#66615C",
+      "#c0c6c7",
+      "#99a3a3",
+      "#B7410E",
+      "#66615C",
+      "#c0c6c7",
+      "#99a3a3",
+      "#999999",
+      "#b0b0b0",
+      "#a0522d",
+      "#666666",
+      "#333333",
+      "#777777",
+      "#444444",
+      "#999999",
+      "#888888",
+      "#aaaaaa",
+      "#bbbbbb",
+      "#66615C",
+      "#c0c6c7",
+      "#99a3a3",
+      "#B7410E"
+    ];
+
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const totalLines = 70;
+    const width = 1000;
+    const height = 500;
+
+    // Cubic easing scaled to top 40% of height for tight clustering near top
+    function denseTopY(index, total) {
+      const t = index / (total - 1);
+      return height * 0.4 * (t * t * t);
+    }
+
+    for (let i = 0; i < totalLines; i++) {
+      const startY = denseTopY(i, totalLines) + randomInt(-7, 7);
+      const controlX = randomInt(width * 0.4, width * 0.6);
+      const controlY = startY + randomInt(30, 110);
+      const endY = startY + randomInt(-12, 12);
+
+      const d = `M0 ${startY} Q${controlX} ${controlY} ${width} ${endY}`;
+
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", d);
+
+      const color = colors[i % colors.length];
+      path.setAttribute("stroke", color);
+
+      path.setAttribute("stroke-width", 1 + (i % 3) * 0.5);
+      path.setAttribute("fill", "none");
+
+      svg.appendChild(path);
+    }
   </script>
 </body>
 </html>
