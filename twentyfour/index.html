@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>24-Hour Analog Clock with Pie Sections</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Permanent+Marker&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+ 
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&family=Roboto+Slab:wght@100..900&family=Stick&display=swap" rel="stylesheet">
+ <style>
+    @font-face {
+        font-family: 'twenty';
+        src: url('./twenty.otf') format('truetype');
+    }
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .clock {  
+      z-index: 3;
+      font-family: 'twenty', sans-serif;
+      position: relative;
+      width: 90vmin;
+      height: 90vmin;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .pie-section {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(50% 50%, 50% 0%, 100% 0%);
+      transform-origin: 50% 50%;
+      /* background: rgba(228, 11, 11, 0.1); */
+    }
+
+    .pie-section:nth-child(odd) {
+      background: rgba(1, 24, 24, 0.2);
+    }
+
+    .number {
+      position: absolute;
+      font-size: 3.5rem;
+      text-align: center;
+      transform-origin: center center;
+    }
+
+    .number-even {
+      color: rgb(252, 250, 250);
+    }
+
+    .number-odd {
+      color: rgb(9, 9, 9);
+    }
+
+    .hand {
+      z-index: 9;
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: translateX(-50%) rotate(0deg);
+    }
+.hour {
+  width: 6.8%;
+  height: 20%;
+  background: repeating-linear-gradient(
+    to bottom,
+    black,
+    black 2px,
+    white 2px,
+    white 9px
+  );
+}
+
+.minute {
+  width: 3.11%;
+  height: 40%;
+  background: repeating-linear-gradient(
+    to bottom,
+    black,
+    black 2px,
+    white 2px,
+    white 4px
+  );
+}
+
+.second {
+  width: 1.7%;
+  height: 50%;
+  background: repeating-linear-gradient(
+    to bottom,
+    black,
+    black 1px,
+    white 2px,
+    white 1px
+  );
+}
+
+    .center {
+      position: absolute;
+      width: 2%;
+      height: 2%;
+      background: rgb(227, 196, 23);
+      border-radius: 50%;
+      top: 49%;
+      left: 49%;
+      z-index: 10;
+    }
+
+        .time-container {
+            color: rgb(199, 193, 193);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 98%;
+            display: flex;
+            justify-content: space-around;
+            z-index: -1;
+            transition: transform 0.5s ease;
+        }
+
+        .title-container {
+            color: #837c17;
+            text-shadow: #aaaaa0 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        .date-container {
+            color: rgb(237, 251, 241);
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 22;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+            z-index: 9;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+
+.bgImage,
+.bgImage2 {
+      background-size: cover;
+      background-position: center;
+      position: absolute;
+      height: 100vh;
+      width: 100vw;
+      filter: saturate(3.5);
+}
+
+    .bgImage {
+      z-index: 1;
+      opacity: 0.5;
+    }
+     .bgImage2 {
+      transform: scaleX(-1);
+      z-index: 2;
+      opacity: 0.4;
+   
+    }
+  </style>
+</head>
+<body>
+<img src="./twen.webp" class="bgImage">
+<img src="./twen.webp" class="bgImage2">
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../crossstitch/" class="dates dateleft">06/27/25</a>
+        <a href="../index.html" class="clockname">Twenty-Four</a>
+        <a href="../index.html" class="dates dateright">06/29/25</a>
+    </div>
+  <div class="clock" id="clock">
+    <div class="hand hour" id="hourHand"></div>
+    <div class="hand minute" id="minuteHand"></div>
+    <div class="hand second" id="secondHand"></div>
+    <div class="center"></div>
+  </div>
+
+  <script>
+    const clock = document.getElementById("clock");
+
+    // Create 24 pie sections
+    for (let i = 0; i < 24; i++) {
+      const angle = (i / 24) * 360;
+      const section = document.createElement("div");
+      section.className = "pie-section";
+      section.style.transform = `rotate(${angle}deg)`;
+      clock.appendChild(section);
+    }
+
+    // Place 24 hour numbers (1-24), in clockwise order, with 24 at the top (0°) and 12 at 180°
+    for (let i = 0; i < 24; i++) {
+      const hour = (i) % 24 || 24; // Maps i=0->24, i=1->1, i=2->2, ..., i=11->11, i=12->12, ..., i=23->23
+      const angle = (i / 24) * 360; // 0° for 24, 15° for 1, 30° for 2, ..., 180° for 12
+      const radius = 42;
+      const x = 50 + radius * Math.sin(angle * Math.PI / 180);
+      const y = 50 - radius * Math.cos(angle * Math.PI / 180);
+      const number = document.createElement("div");
+      number.className = `number ${hour % 2 === 0 ? 'number-even' : 'number-odd'}`;
+      number.style.left = `${x}%`;
+      number.style.top = `${y}%`;
+      number.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+      number.textContent = hour;
+      clock.appendChild(number);
+    }
+
+    const hourHand = document.getElementById("hourHand");
+    const minuteHand = document.getElementById("minuteHand");
+    const secondHand = document.getElementById("secondHand");
+
+    let lastTime = performance.now();
+
+    function updateClock(currentTime) {
+      const now = new Date();
+      const h = now.getHours();
+      const m = now.getMinutes();
+      const s = now.getSeconds();
+      const ms = now.getMilliseconds();
+
+      const hourDeg = ((h % 24) + m / 60 + s / 3600) * (360 / 24);
+      const minuteDeg = (m + s / 60) * 6;
+      const secondDeg = (s + ms / 1000) * 6; // Smooth second hand with millisecond precision
+
+      hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+      minuteHand.style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+      secondHand.style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+
+      requestAnimationFrame(updateClock);
+    }
+
+    requestAnimationFrame(updateClock);
+  </script>
+</body>
+</html>
