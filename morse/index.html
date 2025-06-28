@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vertical Digital Clock</title>
+  <style>
+    @font-face {
+      font-family: 'morse';
+      src: url('morse.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex; /* Add flexbox to body */
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+    }
+
+    .background-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .clock {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 4;
+    }
+
+    .digit-box {
+      width: 100%; Restored from original
+      height: 8rem;
+      margin: 1px 0;
+      background-color: #b87333;
+      color: #b90404;
+      text-shadow: 0px -2px 0px rgba(0, 0, 0), -2px 0px 0px rgba(0, 0, 0), 2px 0px 0px rgba(0, 0, 0), 0px 2px 0px rgba(0, 0, 0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      border-radius: 75px;
+      z-index: 4;
+      font-family: 'morse', Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <svg class="background-svg">
+    <path d="M0 50 Q500 150 1000 50" stroke="#c0c6c7" stroke-width="2" fill="none"/>
+    <path d="M0 100 Q500 200 1000 100" stroke="#99a3a3" stroke-width="2" fill="none"/>
+    <path d="M0 150 Q500 250 1000 150" stroke="#B3A9A1" stroke-width="2" fill="none"/>
+    <path d="M0 200 Q500 300 1000 200" stroke="#66615C" stroke-width="2" fill="none"/>
+    <path d="M0 250 Q500 350 1000 250" stroke="#c0c6c7" stroke-width="2" fill="none"/>
+    <path d="M0 300 Q500 400 1000 300" stroke="#99a3a3" stroke-width="2" fill="none"/>
+    <path d="M0 350 Q500 450 1000 350" stroke="#B3A9A1" stroke-width="2" fill="none"/>
+    <path d="M0 400 Q500 500 1000 400" stroke="#66615C" stroke-width="2" fill="none"/>
+  </svg>
+  <div class="clock">
+    <div class="digit-box" id="hour1">0</div>
+    <div class="digit-box" id="hour2">0</div>
+    <div class="digit-box" id="minute1">0</div>
+    <div class="digit-box" id="minute2">0</div>
+    <div class="digit-box" id="second1">0</div>
+    <div class="digit-box" id="second2">0</div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+
+      document.getElementById('hour1').textContent = hours[0];
+      document.getElementById('hour2').textContent = hours[1];
+      document.getElementById('minute1').textContent = minutes[0];
+      document.getElementById('minute2').textContent = minutes[1];
+      document.getElementById('second1').textContent = seconds[0];
+      document.getElementById('second2').textContent = seconds[1];
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
