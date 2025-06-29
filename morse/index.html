@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Morse Code Clock</title>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
-        rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+      href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+      rel="stylesheet">
   <style>
     @font-face {
       font-family: 'morse';
@@ -51,15 +51,6 @@
       margin: 0.9rem 0;
       background-color: #b87333;
       color: #b90404;
-      text-shadow: 
-        0px -2px 0px rgb(250, 247, 247), 
-        -2px 0px 0px rgb(247, 242, 242), 
-        2px 0px 0px rgba(0, 0, 0), 
-        0px 2px 0px rgba(0, 0, 0),
-        0px -1px 0px rgb(248, 241, 241), 
-        -1px 0px 0px rgba(0, 0, 0), 
-        1px 0px 0px rgba(0, 0, 0), 
-        0px 1px 0px rgba(0, 0, 0);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -69,87 +60,123 @@
       font-family: 'morse', Arial, sans-serif;
       box-shadow: 
         0px -8px 0px #9db4a0,
-        -0px 8px 0px #9db4a0;
+        0px 8px 0px #9db4a0,
+        0px -10px 5px #ecf1c6,
+        0px 9px 2px #1a1b1a;
     }
 
-        .title-container {
-            color: #ebf0ea;
-            text-shadow: #686666 1px 0;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
+    .digit-text {
+      text-shadow: 
+        0px -2px 0px rgb(250, 247, 247), 
+        -2px 0px 0px rgb(247, 242, 242), 
+        2px 0px 0px rgba(0, 0, 0), 
+        0px 2px 0px rgba(0, 0, 0),
+        0px -1px 0px rgb(248, 241, 241), 
+        -1px 0px 0px rgba(0, 0, 0), 
+        1px 0px 0px rgba(0, 0, 0), 
+        0px 1px 0px rgba(0, 0, 0);
+      transition: opacity 0.3s ease-in-out;
+      opacity: 1;
+    }
 
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.1vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
+    .digit-text.changing {
+      opacity: 0.3;
+    }
 
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.7vh;
-            font-style: italic;
-            letter-spacing: -0.1vh;
-        }
+    .title-container {
+      color: #ebf0ea;
+      text-shadow: #686666 1px 0;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.1vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      letter-spacing: 0.1vh;
+    }
 
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-        }
+    .bttitle {
+      position: relative;
+      left: 0;
+      font-family: "Oxanium", serif;
+      font-size: 2.7vh;
+      font-style: italic;
+      letter-spacing: -0.1vh;
+    }
 
-        /* Date container styles */
-        .date-container {
-            color: #3a3838;
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        .clockname {
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: "Oxanium", serif;
-            font-size: 4vh;
-            line-height: 4vh;
-        }
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+    }
 
-        .dateleft {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: relative;
-            left: 0;
-        }
+    .date-container {
+      color: #3a3838;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
 
-        .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: absolute;
-            right: 0;
-        }
+    .clockname {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "Oxanium", serif;
+ действие: translateX(-50%);
+      font-family: "Oxanium", serif;
+      font-size: 4vh;
+      line-height: 4vh;
+    }
+
+    .dateleft {
+      font-size: 3vh; /* Corrected from 36vh */
+      font-family: "Nanum Gothic Coding", monospace;
+      position: relative;
+      left: 0;
+    }
+
+    .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: absolute;
+      right: 0;
+    }
+
+    .bgimage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    .wire {
+      transition: d 0.5s ease-in-out;
+    }
   </style>
 </head>
 <body>
-
+  <img src="./birds.gif" class="bgimage">
   <div class="title-container">
     <div class="chltitle">Cubist Heart Laboratories</div>
     <div class="bttitle">BorrowedTime</div>
@@ -165,65 +192,93 @@
   </svg>
 
   <div class="clock">
-    <div class="digit-box" id="hour1">0</div>
-    <div class="digit-box" id="hour2">0</div>
-    <div class="digit-box" id="minute1">0</div>
-    <div class="digit-box" id="minute2">0</div>
-    <div class="digit-box" id="second1">0</div>
-    <div class="digit-box" id="second2">0</div>
+    <div class="digit-box" id="hour1"><span class="digit-text">0</span></div>
+    <div class="digit-box" id="hour2"><span class="digit-text">0</span></div>
+    <div class="digit-box" id="minute1"><span class="digit-text">0</span></div>
+    <div class="digit-box" id="minute2"><span class="digit-text">0</span></div>
+    <div class="digit-box" id="second1"><span class="digit-text">0</span></div>
+    <div class="digit-box" id="second2"><span class="digit-text">0</span></div>
   </div>
 
   <script>
     const svg = document.getElementById('wires-svg');
     const colors = [
-      "#c0c6c7", "#99a3a3", "#B7410E", "#666666", "#333333", "#777777",
+      "#c0c6c7", "#99a3a3", "#96431FFF", "#666666", "#333333", "#777777",
       "#444444", "#999999", "#888888", "#aaaaaa", "#bbbbbb", "#66615C",
-      "#c0c6c7", "#99a3a3", "#B7410E", "#a0522d"
+      "#c0c6c7", "#99a3a3", "#894528FF", "#7E4930FF"
     ];
 
     function randomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-function drawLines() {
-  // Clear previous lines
-  svg.innerHTML = '';
 
-  const totalLines = 150; // Increased to accommodate new lines
-  const width = 1000;
-  const height = 500;
+    let lastLineUpdate = 0;
+    const lineUpdateInterval = 5000; // Update lines every 5 seconds
 
-  // Distribute lines: 33% at top (0-20%), 33% in middle (40-60%), 33% at 3/4 (70-80%)
-  for (let i = 0; i < totalLines; i++) {
-    let startY, endY, controlY;
-    if (i < totalLines / 3) {
-      // Top lines (0-20% of height)
-      startY = randomInt(0, height * 0.2);
-      endY = startY + randomInt(-12, 12);
-      controlY = startY + randomInt(20, 80);
-    } else if (i < (2 * totalLines) / 3) {
-      // Middle lines (40-60% of height)
-      startY = randomInt(height * 0.2, height * 0.6);
-      endY = startY + randomInt(-12, 12);
-      controlY = startY + randomInt(20, 80);
-    } else {
-      // 3/4 lines (70-80% of height)
-      startY = randomInt(height * 0.5, height * 0.4);
-      endY = startY + randomInt(-12, 12);
-      controlY = startY + randomInt(20, 80);
+    function drawLines() {
+      const now = Date.now();
+      if (now - lastLineUpdate < lineUpdateInterval && svg.children.length > 0) {
+        // Subtle position adjustments for existing lines
+        Array.from(svg.children).forEach((path, i) => {
+          let startY, endY, controlY;
+          const height = 500;
+          const width = 1000;
+          if (i < 50) {
+            startY = randomInt(0, height * 0.2);
+            endY = startY + randomInt(-6, 6);
+            controlY = startY + randomInt(10, 40);
+          } else if (i < 100) {
+            startY = randomInt(height * 0.4, height * 0.6);
+            endY = startY + randomInt(-6, 6);
+            controlY = startY + randomInt(10, 40);
+          } else {
+            startY = randomInt(height * 0.2, height * 0.6); // 3/4 lines
+            endY = startY + randomInt(-6, 6);
+            controlY = startY + randomInt(10, 40);
+          }
+          const controlX = randomInt(width * 0.4, width * 0.6);
+          const d = `M0 ${startY} Q${controlX} ${controlY} ${width} ${endY}`;
+          path.setAttribute("d", d);
+        });
+        return;
+      }
+
+      // Full redraw only after interval
+      svg.innerHTML = '';
+      const totalLines = 150;
+      const width = 1000;
+      const height = 500;
+
+      for (let i = 0; i < totalLines; i++) {
+        let startY, endY, controlY;
+        if (i < totalLines / 3) {
+          startY = randomInt(0, height * 0.2);
+          endY = startY + randomInt(-6, 6);
+          controlY = startY + randomInt(10, 40);
+        } else if (i < (2 * totalLines) / 3) {
+          startY = randomInt(height * 0.4, height * 0.6);
+          endY = startY + randomInt(-6, 6);
+          controlY = startY + randomInt(10, 40);
+        } else {
+          startY = randomInt(height * 0.2, height * 0.6); // 3/4 lines
+          endY = startY + randomInt(-6, 6);
+          controlY = startY + randomInt(10, 40);
+        }
+
+        const controlX = randomInt(width * 0.4, width * 0.6);
+        const d = `M0 ${startY} Q${controlX} ${controlY} ${width} ${endY}`;
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", d);
+        path.setAttribute("stroke", colors[i % colors.length]);
+        path.setAttribute("stroke-width", 1 + (i % 3) * 0.5);
+        path.setAttribute("fill", "none");
+        path.classList.add("wire");
+
+        svg.appendChild(path);
+      }
+      lastLineUpdate = now;
     }
-
-    const controlX = randomInt(width * 0.4, width * 0.6);
-    const d = `M0 ${startY} Q${controlX} ${controlY} ${width} ${endY}`;
-
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", d);
-    path.setAttribute("stroke", colors[i % colors.length]);
-    path.setAttribute("stroke-width", 1 + (i % 3) * 0.5);
-    path.setAttribute("fill", "none");
-
-    svg.appendChild(path);
-  }
-}
 
     function updateClock() {
       const now = new Date();
@@ -231,14 +286,28 @@ function drawLines() {
       const minutes = now.getMinutes().toString().padStart(2, '0');
       const seconds = now.getSeconds().toString().padStart(2, '0');
 
-      document.getElementById('hour1').textContent = hours[0];
-      document.getElementById('hour2').textContent = hours[1];
-      document.getElementById('minute1').textContent = minutes[0];
-      document.getElementById('minute2').textContent = minutes[1];
-      document.getElementById('second1').textContent = seconds[0];
-      document.getElementById('second2').textContent = seconds[1];
+      const digitBoxes = [
+        { id: 'hour1', value: hours[0] },
+        { id: 'hour2', value: hours[1] },
+        { id: 'minute1', value: minutes[0] },
+        { id: 'minute2', value: minutes[1] },
+        { id: 'second1', value: seconds[0] },
+        { id: 'second2', value: seconds[1] }
+      ];
 
-      drawLines(); // Redraw lines every second
+      digitBoxes.forEach(({ id, value }) => {
+        const element = document.getElementById(id);
+        const digitText = element.querySelector('.digit-text');
+        if (digitText.textContent !== value) {
+          digitText.classList.add('changing');
+          setTimeout(() => {
+            digitText.textContent = value;
+            setTimeout(() => digitText.classList.remove('changing'), 300);
+          }, 150); // Halfway through transition
+        }
+      });
+
+      drawLines(); // Update lines (subtle adjustments or full redraw if needed)
     }
 
     setInterval(updateClock, 1000);
