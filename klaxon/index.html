@@ -43,7 +43,7 @@
             font-size: 29.5vh;
             font-weight: bold;
             transform-origin: center center;
-            z-index: 6;
+            z-index: 5;
             opacity: 0.8;
         }
 
@@ -72,22 +72,24 @@
             transform-origin: bottom;
             transform: translateX(-50%);
             pointer-events: none;
-            z-index: 7;
             /* opacity: 0.8; */
         }
 
         .hour {
-            height: 35%;
+            height: 45%;
+            z-index: 8;
             width: auto;
             filter: sepia(100%) saturate(150%) hue-rotate(-10deg) brightness(90%) contrast(120%);
         }
 
         .minute {
-            height: 45%;
+            height: 55%;
             width: auto;
+            z-index: 6;
         }
 
         .second {
+            z-index: 9;
             height: 55%;
             width: auto;
         }
