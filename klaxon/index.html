@@ -32,12 +32,14 @@
             height: 80vmin;
             font-family: 'klax', serif;
             color: rgb(241, 231, 244);
+            
             border-radius: 50%;
             position: relative;
         }
 
         .number {
             position: absolute;
+            text-shadow: #1b032b 4px 4px 0px;
             font-size: 29.5vh;
             font-weight: bold;
             transform-origin: center center;
@@ -47,6 +49,7 @@
 
         .flash-red {
             animation: flash 0.01s ease-in-out alternate infinite;
+            text-shadow: #f64606 4px 4px 0px,#f64606 -4px -4px 0px ;
                 
         }
 
@@ -57,11 +60,7 @@
             to {
                 color: rgb(247, 46, 6);
                 text-shadow: 
-    
-                0 0 10px rgb(11, 237, 211), 
-                0 0 20px rgb(237, 11, 11), 
-                0 0 50px rgb(238, 8, 54),
-                 0 0 50px rgb(238, 8, 85)
+                 0 0 50px rgb(238, 8, 85) 
                 ;
             }
         }
@@ -102,10 +101,27 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: brightness(50%);
+            filter: brightness(100%);
             z-index: 1;
             pointer-events: none;
         }
+    .bgimage2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(150%);
+    z-index: 2;
+    opacity: 0.4;
+    pointer-events: none;
+    transform: scale(1.9); /* Increase the scale to zoom in */
+    transform-origin: center center; /* Keep zoom centered */
+}
+
 
         .date-container {
             color: #dde0dd;
@@ -190,7 +206,7 @@
 <body>
 
 
-
+<img src="./klax.webp" class="bgimage2">
     <div class="title-container">
         <div class="chltitle">Cubist Heart Laboratories</div>
         <div class="bttitle">BorrowedTime</div>
