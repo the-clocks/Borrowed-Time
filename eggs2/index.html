@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Image Analog Clock</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      font-size: 1rem;
+    }
+
+    .bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background-image: url('./clock-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      animation: rotateBg 120s linear infinite;
+    }
+
+    @keyframes rotateBg {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .clock {
+      position: absolute;
+      top: 50vh;
+      left: 50vw;
+      transform: translate(-50%, -50%);
+      height: 40vh;
+      width: 40vh;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .number {
+      position: absolute;
+      height: 3rem;
+      width: 3rem;
+      transform: translate(-50%, -50%);
+    }
+
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom;
+      background: black;
+      border-radius: 0.5rem;
+    }
+
+    .hour {
+      height: 8vh;
+      width: 0.8rem;
+      z-index: 2;
+    }
+
+    .minute {
+      height: 12vh;
+      width: 0.5rem;
+      z-index: 1;
+      background: #333;
+    }
+
+    .second {
+      height: 14vh;
+      width: 0.2rem;
+      background: red;
+      z-index: 3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg"></div>
+
+  <div class="clock">
+    <!-- Number images -->
+    <img src="./num1.png"  class="number" style="top: 15%; left: 73%;" />
+    <img src="./num2.png"  class="number" style="top: 27%; left: 85%;" />
+    <img src="./num3.png"  class="number" style="top: 50%; left: 90%;" />
+    <img src="./num4.png"  class="number" style="top: 73%; left: 85%;" />
+    <img src="./num5.png"  class="number" style="top: 85%; left: 73%;" />
+    <img src="./num6.png"  class="number" style="top: 90%; left: 50%;" />
+    <img src="./num7.png"  class="number" style="top: 85%; left: 27%;" />
+    <img src="./num8.png"  class="number" style="top: 73%; left: 15%;" />
+    <img src="./num9.png"  class="number" style="top: 50%; left: 10%;" />
+    <img src="./num10.png" class="number" style="top: 27%; left: 15%;" />
+    <img src="./num11.png" class="number" style="top: 15%; left: 27%;" />
+    <img src="./num12.png" class="number" style="top: 10%; left: 50%;" />
+
+    <!-- Clock hands -->
+    <div class="hand hour" id="hour"></div>
+    <div class="hand minute" id="minute"></div>
+    <div class="hand second" id="second"></div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const second = now.getSeconds();
+      const minute = now.getMinutes();
+      const hour = now.getHours() % 12;
+
+      const secondDeg = second * 6;
+      const minuteDeg = minute * 6 + second * 0.1;
+      const hourDeg = hour * 30 + minute * 0.5;
+
+      document.getElementById('second').style.transform = `translate(-50%, 0%) rotate(${secondDeg}deg)`;
+      document.getElementById('minute').style.transform = `translate(-50%, 0%) rotate(${minuteDeg}deg)`;
+      document.getElementById('hour').style.transform   = `translate(-50%, 0%) rotate(${hourDeg}deg)`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
