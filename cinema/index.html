@@ -7,7 +7,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
-    rel="stylesheet"> <title>Cinema Clock</title>
+    rel="stylesheet"> 
+  <title>Cinema Clock</title>
   <style>
       @font-face {
       font-family: 'mult';
@@ -44,10 +45,8 @@
         background-repeat: no-repeat;
         filter: contrast(100%);
         z-index: 1;
-        /* opacity: 0.5; */
         filter: alpha(opacity=50);
         pointer-events: none;
-   
     }   
 
     .title-container {
@@ -114,7 +113,6 @@
     .divider {
       height: 1px;
       width: 30vw;
-      /* background-color: rgb(52, 1, 77); */
       margin: 0 auto;
     }
   </style>
@@ -142,7 +140,7 @@
     hours = hours % 12;
     hours = hours ? hours : 12;
 
-    const hourStr = hours < 10 ? '0' + hours : hours;
+    const hourStr = hours; // Display hours without leading zero
     const minuteStr = minutes < 10 ? '0' + minutes : minutes;
 
     document.getElementById('clock').textContent = `${hourStr}${minuteStr}`;
