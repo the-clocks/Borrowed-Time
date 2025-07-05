@@ -1,616 +1,287 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>BorrowedTime - Cubist Heart Laboratories </title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kaleidoscope Clock</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Oxanium:wght@200..800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Rock+3D&display=swap"
         rel="stylesheet">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            height: auto;
-            overflow-x: hidden;
-            overflow-y: auto;
-            font-family: "Noto Sans", sans-serif;
-            animation: colorFade 90s infinite;
-            transition: background-color 5s ease;
+        <style>
+         @font-face {
+            font-family: 'kal';
+            src: url('kal.ttf') format('truetype');
         }
 
-        @keyframes colorFade {
-            0% {
-                background-color: rgb(255, 255, 255);
-            }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      height: 100vh;
+    }
 
-            14% {
-                background-color: rgb(231, 229, 225);
-            }
+    .kaleidoscope {
+      z-index: 1;
+      font-family: 'kal';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.7;
+    }
 
-            28% {
-                background-color: rgb(242, 242, 221);
-            }
+    .spin-cw {
+      animation: spin-cw 60s linear infinite;
+    }
 
-            42% {
-                background-color: rgb(213, 235, 213);
-            }
+    .spin-ccw {
+      animation: spin-ccw 60s linear infinite;
+    }
 
-            57% {
-                background-color: rgb(229, 229, 249);
-            }
+    .ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: preserve-3d;
+    }
 
-            71% {
-                background-color: rgb(230, 221, 236);
-            }
+    .segment {
+    
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      transition: color 1s;
+      font-size: 9vmin;
+    }
 
-            85% {
-                background-color: rgb(239, 215, 239);
-            }
+    .hour {
+      transform-origin: 0 0;
+    }
 
-            100% {
-                background-color: rgb(255, 255, 255);
-            }
+    .minute {
+      transform-origin: 0 0;
+      font-size:7vmin;
+    }
+
+    .second {
+      transform-origin: 0 0;
+      font-size: 5.5vmin;
+    }
+
+    @keyframes spin-cw {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes spin-ccw {
+      from { transform: rotate(360deg); }
+      to   { transform: rotate(0deg); }
+    }
+
+        .date-container {
+            color: #bec2be;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
         }
 
-        .full-page-image,
-        .full-page-image2,
-        .full-page-image3 {
+        .clockname {
+            font-family: "Oxanium", serif;
             position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
             left: 0;
-            background-image: url("images/gears-13950_128.gif");
-            background-repeat: repeat;
-            background-position: center;
-            pointer-events: none;
+        }
+              
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
         }
 
-        .full-page-image {
-            background-size: 22vw 18vw;
-            opacity: 0.15;
-            z-index: 5;
-        }
-
-        .full-page-image2 {
-            background-size: 21vw 17vw;
-            opacity: 0.1;
-            z-index: 4;
-        }
-
-        .full-page-image3 {
-            background-size: 20vw 16vw;
-            opacity: 0.1;
-            z-index: 3;
-        }
-
-        .motto {
-            font-family: "Cinzel", serif;
-            color: rgba(150, 118, 29, 0.877);
-            font-size: 1.3vh;
-            letter-spacing: 0.5vh;
-            text-align: center;
-            background-color: #eadfc2;
+        .title-container {
+            color: #bebcbc;
+            text-shadow: #141314 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
         }
 
         .chltitle {
-            font-family: "Noto Sans", sans-serif;
-            color: rgb(125, 157, 131);
+            font-family: "Roboto Slab", serif;
             font-size: 2.8vh;
-            line-height: 3.5vh;
-            background-color: #d9dad9;
+            position: absolute;
+            top: 1px;
+            right: 1px;
             letter-spacing: 0.1vh;
-            text-align: left;
         }
 
         .bttitle {
-            font-family: "Oxanium", sans-serif;
-            color: #140431;
-            text-shadow: #bb1a1a 0.2vh 0vh 0px, #b6e548 -0.25vh -0.0vh 0px;
-            font-size: 9vh;
-            line-height: 8vh;
-            text-align: center;
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
             font-style: italic;
-            letter-spacing: -0.6vh;
-
-        }
-
-        .bt_newclockeveryday {
-            font-size: 2vh;
-            line-height: 2.7vh;
-            font-weight: lighter;
-            color: #802d3b;
-            letter-spacing: 0.2vh;
-            text-align: center;
-            font-style: italic;
-        }
-
-        .todaysclockis {
-            color: rgb(73, 86, 52);
-            font-size: 2.5vh;
-            line-height: 2.7vh;
-            text-align: center;
+            z-index: 15;
+            letter-spacing: -0.1vh;
         }
 
         a {
+            color: inherit;
             text-decoration: none;
-            color: #3c09bc;
         }
 
         a:hover {
-            background-color: rgb(56, 1, 74);
-            color: #edf4bf;
-            text-decoration: underline;
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
         }
 
-        .clocklist {
-            font-size: 3vh;
-            margin-top: 2vh;
+  .bgimage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* background-size: cover; */
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(50%);
+            z-index: 1;
+            pointer-events: none;
         }
-
-        .aboutthis {
-            margin: 1vh;
-            font-size: 2vh;
-            line-height: 2vh;
-        }
-
-        .clocklistdate {
-            letter-spacing: 0.2vh;
-        }
-
-        .copyright {
-            font-size: 1.5vh;
-            color: rgb(173, 169, 169);
-            text-align: right;
-            margin-top: 4vh;
-        }
-    </style>
+  </style>
 </head>
-
 <body>
-    <div class="full-page-image"></div>
-    <div class="full-page-image2"></div>
-    <div class="full-page-image3"></div>
-
-
-    <div class="motto">
-        PLUS⬩ARS⬩CITIUS⬩OMNI⬩TEMPORE⬩NAM⬩QUISQUE*
+<img src="./7ZAx.webp" class="bgimage">
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
     </div>
 
-    <div class="chltitle">
-        &nbsp;Cubist Heart Laboratories
+    <div class="date-container">
+        <a href="../launchpad/" class="dates dateleft">07/03/25</a>
+        <a href="../index.html" class="clockname">Kaleidoscope</a>
+               <a href="../index.html" class="dates dateright">07/05/25</a>
     </div>
 
-    <div class="bttitle">
-        BorrowedTime
-    </div>
 
-    <div class="bt_newclockeveryday">
-        a computationally intensive new clock, each day
-    </div>
+  <!-- Clockwise Kaleidoscope -->
+  <div class="kaleidoscope spin-cw">
+    <div class="ring" id="hourRing1"></div>
+    <div class="ring" id="minuteRing1"></div>
+    <div class="ring" id="secondRing1"></div>
+  </div>
 
-    <div class="clocklist">
-        <div class="todaysclockis">
-            Today is <span id="current-date"></span>.
-        </div>
+  <!-- Counter-Clockwise Kaleidoscope -->
+  <div class="kaleidoscope spin-ccw">
+    <div class="ring" id="hourRing2"></div>
+    <div class="ring" id="minuteRing2"></div>
+    <div class="ring" id="secondRing2"></div>
+  </div>
 
-        <center>
-            <table cellpadding="2" cellspacing="0">
-               
-                    <tr>
-                    <td class="clocklistdate">07/01/25</td>
-                    <td><a href="/cinema">Cinema Clock</a></td>
-                </tr>   
-                    <tr>
-                    <td class="clocklistdate">06/30/25</td>
-                    <td><a href="/eggs2">Egg Clock</a></td>
-                </tr>    
-               <tr>
-                    <td class="clocklistdate">06/29/25</td>
-                    <td><a href="/stretch/">Stretch Clock</a></td>
-                </tr>    
-                    <tr>
-                    <td class="clocklistdate">06/28/25</td>
-                    <td><a href="/twentyfour/">Twenty-Four Clock</a></td>
-                </tr>    
-                    <tr>
-                    <td class="clocklistdate">06/27/25</td>
-                    <td><a href="/morse/">Morse Code Clock</a></td>
-                </tr>    
-                <tr>
-                    <td class="clocklistdate">06/26/25</td>
-                    <td><a href="/cosmicwheels/">Cosmic Wheels Clock</a></td>
-                </tr>    
-                <tr>
-                    <td class="clocklistdate">06/25/25</td>
-                    <td><a href="/bone">Bone Clock</a></td>
-                </tr>    
-                    <tr>
-                    <td class="clocklistdate">06/24/25</td>
-                    <td><a href="/thoughtballoon/">Thought Balloon Clock</a></td>
-                </tr>    
-                    <tr>
-                    <td class="clocklistdate">06/23/25</td>
-                    <td><a href="/squiggle/">Squiggle Clock</a></td>
-                </tr>    
-                <tr>
-                    <td class="clocklistdate">06/22/25</td>
-                    <td><a href="/parallel">Parallel Clock</a></td>
-                </tr>    
-                 <tr>
-                    <td class="clocklistdate">06/21/25</td>
-                    <td><a href="/mercury/">Mercury Clock</a></td>
-                </tr>   
-                   <tr>
-                    <td class="clocklistdate">06/20/25</td>
-                    <td><a href="/indecisive/">Indecisive Clock</a></td>
-                </tr>   
-                 <tr>
-                    <td class="clocklistdate">06/19/25</td>
-                    <td><a href="/cmyk/">CMYK Clock</a></td>
-                </tr>   
-                 <tr>
-                    <td class="clocklistdate">06/18/25</td>
-                    <td><a href="/cistercian/">Cistercian Clock</a></td>
-                </tr>   
-                   <tr>
-                    <td class="clocklistdate">06/17/25</td>
-                    <td><a href="/backslanted/">Backslant Clock</a></td>
-                </tr>  
-                   <tr>
-                    <td class="clocklistdate">06/16/25</td>
-                    <td><a href="/klaxon/">Klaxon Clock</a></td>
-                </tr>  
-                <tr>
-                    <td class="clocklistdate">06/15/25</td>
-                    <td><a href="/stitches/">Stitches Clock</a></td>
-                </tr>  
-                 <tr>
-                    <td class="clocklistdate">06/14/25</td>
-                    <td><a href="/hummingbird/">Hummingbird Clock</a></td>
-                 </tr> 
-                  <tr>
-                    <td class="clocklistdate">06/13/25</td>
-                    <td><a href="/cloudynight/">Cloudy Night Clock</a></td>
-                </tr> 
-                 <tr>
-                    <td class="clocklistdate">06/12/25</td>
-                    <td><a href="/cattlebrand/">Cattle Brand Clock</a></td>
-                </tr> 
-                 <tr>
-                    <td class="clocklistdate">06/11/25</td>
-                    <td><a href="/banana/">Banana Clock</a></td>
-                </tr> 
-                  <tr>
-                    <td class="clocklistdate">06/10/25</td>
-                    <td><a href="/shapes/">Shapes Clock</a></td>
-                </tr> 
-                 <tr>
-                    <td class="clocklistdate">06/09/25</td>
-                    <td><a href="/ionosphere/">Ionosphere Clock</a></td>
-                </tr> 
-                <tr>
-                    <td class="clocklistdate">06/08/25</td>
-                    <td><a href="/facecard/">Face Card Clock</a></td>
-                </tr> 
-                <tr>
-                    <td class="clocklistdate">06/07/25</td>
-                    <td><a href="/blizzard/">Blizzard Clock</a></td>
-                </tr> 
-                 <tr>
-                    <td class="clocklistdate">06/06/25</td>
-                    <td><a href="/rolling/">Rolling Clock</a></td>
-                </tr> 
-                <tr>
-                    <td class="clocklistdate">06/05/25</td>
-                    <td><a href="/treehouse/">Treehouse Clock</a></td>
-                </tr> 
+  <script>
+    const SEGMENTS = 12;
+    const colors = ['#ff0040', '#00ffff', '#ffff00', '#00ff00', '#ff8000', '#ff00ff', '#00bfff', '#ffffff', '#ffcc00', '#ff66cc', '#33ff33', '#3399ff'];
 
-                <tr>
-                    <td class="clocklistdate">06/04/25</td>
-                    <td><a href="/coffee/">Coffee Clock</a></td>
-                </tr> 
-                <tr>
-                    <td class="clocklistdate">06/03/25</td>
-                    <td><a href="/filigree/">Filigree Clock</a></td>
-                </tr> 
-                <tr>
-                    <td class="clocklistdate">06/02/25</td>
-                    <td><a href="/dashboard/">Dashboard Clock</a></td>
-                </tr> 
-                <tr>
-                    <td class="clocklistdate">06/01/25</td>
-                    <td><a href="/airmail/">Air Mail Clock</a></td>
-                </tr> 
-                <tr>
-                    <td class="clocklistdate">05/31/25</td>
-                    <td><a href="/elephant/">Elephant Clock</a></td>
-                </tr> 
-                 <tr>
-                    <td class="clocklistdate">05/30/25</td>
-                    <td><a href="/iss/">ISS Clock</a></td>
-                </tr> 
-                 <tr>
-                    <td class="clocklistdate">05/29/25</td>
-                    <td><a href="/gear/">Gear Clock</a></td>
-                </tr> 
-                 <tr>
-                    <td class="clocklistdate">05/28/25</td>
-                    <td><a href="/corner/">Corner Clock</a></td>
-                </tr> 
-            <tr>
-                    <td class="clocklistdate">05/27/25</td>
-                    <td><a href="/dots/">Dot Clock</a></td>
-                </tr> 
-                <tr>
-                    <td class="clocklistdate">05/26/25</td>
-                    <td><a href="/sprout/">Sprout Clock</a></td>
-                </tr> 
-                 <tr>
-                    <td class="clocklistdate">05/25/25</td>
-                    <td><a href="/roboticarm/">Robotic Arm Clock</a></td>
-                </tr> 
-                  <tr>
-                    <td class="clocklistdate">05/24/25</td>
-                    <td><a href="/tornado/">Tornado Clock</a></td>
-                </tr> 
-                <tr>
-                    <td class="clocklistdate">05/23/25</td>
-                    <td><a href="/crossstitch/">Cross Stitch Clock</a></td>
-                </tr> 
-                <tr>
-                    <td class="clocklistdate">05/22/25</td>
-                    <td><a href="/solartransit/">Solar Transit Clock</a></td>
-                </tr>
+    const rings = [
+      {
+        hour: document.getElementById('hourRing1'),
+        minute: document.getElementById('minuteRing1'),
+        second: document.getElementById('secondRing1'),
+        hours: [], minutes: [], seconds: [],
+        colorOffset: 0,
+      },
+      {
+        hour: document.getElementById('hourRing2'),
+        minute: document.getElementById('minuteRing2'),
+        second: document.getElementById('secondRing2'),
+        hours: [], minutes: [], seconds: [],
+        colorOffset: 6,
+      }
+    ];
 
+    for (const set of rings) {
+      for (let i = 0; i < SEGMENTS; i++) {
+        const angle = i * (360 / SEGMENTS);
 
-                <tr>
-                    <td class="clocklistdate">05/21/25</td>
-                    <td><a href="/semaphore/">Semaphore Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/20/25</td>
-                    <td><a href="/tetrahedron/">Tetrahedron Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/19/25</td>
-                    <td><a href="/ants/">Ant Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/18/25</td>
-                    <td><a href="/blueprint/">Blueprint Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/17/25</td>
-                    <td><a href="/primary/">Primary Color Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/16/25</td>
-                    <td><a href="/braille/">Braille Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/15/25</td>
-                    <td><a href="/roulette/">Roulette Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/14/25</td>
-                    <td><a href="/roughidea/">Rough Idea Clock</a></td>
-                </tr>
+        const hour = document.createElement('div');
+        hour.className = 'segment hour';
+        hour.style.transform = `rotate(${angle}deg) translate(30vmin)`;
+        set.hour.appendChild(hour);
+        set.hours.push(hour);
 
-                <tr>
-                    <td class="clocklistdate">05/13/25</td>
-                    <td><a href="/flat/">Flat Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/12/25</td>
-                    <td><a href="/cheetah/">Cheetah Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/11/25</td>
-                    <td><a href="/aquarium/">Aquarium Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/10/25</td>
-                    <td><a href="/toss/">Number Toss Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/09/25</td>
-                    <td><a href="/whirlpool/">Whirlpool Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/08/25</td>
-                    <td><a href="/golden/">Golden Hour Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/07/25</td>
-                    <td><a href="/radar/">Radar Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/06/25</td>
-                    <td><a href="/unruly/">Unruly Clock</a></td>
+        const minute = document.createElement('div');
+        minute.className = 'segment minute';
+        minute.style.transform = `rotate(${angle}deg) translate(20vmin)`;
+        set.minute.appendChild(minute);
+        set.minutes.push(minute);
 
-                <tr>
-                    <td class="clocklistdate">05/05/25</td>
-                    <td><a href="/warhol/">Warhol GraveCam Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/04/25</td>
-                    <td><a href="/phenak/">Phénakisticope Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/03/25</td>
-                    <td><a href="/petal/">Flying Petals Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/02/25</td>
-                    <td><a href="/scorpion/">Scorpion Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">05/01/25</td>
-                    <td><a href="/slowlightning/">Slow Lightning Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/30/25</td>
-                    <td><a href="/bounce/">Bounce Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/29/25</td>
-                    <td><a href="/fireworks/">Fireworks Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/28/25</td>
-                    <td><a href="/pollock/">Jackson Pollock Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/27/25</td>
-                    <td><a href="/coin/">Spinning Coin Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/26/25</td>
-                    <td><a href="/skew/">Skew Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/25/25</td>
-                    <td><a href="/bandaid/">Band Aid Clock</a></td>
-                </tr>
+        const second = document.createElement('div');
+        second.className = 'segment second';
+        second.style.transform = `rotate(${angle}deg) translate(10vmin)`;
+        set.second.appendChild(second);
+        set.seconds.push(second);
+      }
+    }
 
-                <tr>
-                    <td class="clocklistdate">04/24/25</td>
-                    <td><a href="/lava/">Lava Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/23/25</td>
-                    <td><a href="/pirate/">Pirate Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/22/25</td>
-                    <td><a href="/bouncingcube/">Bouncing Cube Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/21/25</td>
-                    <td><a href="/peacock/">Peacock Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/20/25</td>
-                    <td><a href="/cloud/">Cloud Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/19/25</td>
-                    <td><a href="/spheredrop/">Sphere Drop Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/18/25</td>
-                    <td><a href="/antartica/">Antarctica Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/17/25</td>
-                    <td><a href="/stripe/">Stripe Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/16/25</td>
-                    <td><a href="/birthdaycake/">Birthday Cake Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/15/25</td>
-                    <td><a href="/horizon/">Horizon Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/14/25</td>
-                    <td><a href="/bluebrick/">Blue Brick Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/13/25</td>
-                    <td><a href="/pizza/">Pepperoni Pizza Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/12/25</td>
-                    <td><a href="/magenta/">Magenta Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/11/25</td>
-                    <td><a href="/heartbeat/">Heartbeat Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/10/25</td>
-                    <td><a href="/angler/">Anglerfish Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/09/25</td>
-                    <td><a href="/room/">Empty Room Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/08/25</td>
-                    <td><a href="/triplecactus/">Triple Cactus Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/07/25</td>
-                    <td><a href="/solar/">Solar System Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/06/25</td>
-                    <td><a href="/confetti/">Confetti Clock</a></td>
-                </tr>
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours() % 12 || 12;
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
 
+      const hourText = hours.toString().padStart(2, '0');
+      const minuteText = minutes.toString().padStart(2, '0');
+      const secondText = seconds.toString().padStart(2, '0');
 
-                <tr>
-                    <td class="clocklistdate">04/05/25</td>
-                    <td><a href="/tall/">Tall Clock Clock</a></td>
-                </tr>
+      for (const [index, set] of rings.entries()) {
+        for (let i = 0; i < SEGMENTS; i++) {
+          const colorIndex = (i + seconds + set.colorOffset) % colors.length;
 
-                <tr>
-                    <td class="clocklistdate">04/04/25</td>
-                    <td><a href="/digitalroman/">Digital Roman Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/03/25</td>
-                    <td><a href="/boring/">Boring Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/02/25</td>
-                    <td><a href="/mobydick/">Moby Dick Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">04/01/25</td>
-                    <td><a href="/bargraph/">Bar Graph Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">03/31/25</td>
-                    <td><a href="/deepspace/">Deep Space Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">03/30/25</td>
-                    <td><a href="/random/">Random Color Clock</a></td>
-                </tr>
-                <tr>
-                    <td class="clocklistdate">03/29/25</td>
-                    <td><a href="/neon/">Neon Clock</a></td>
-                </tr>
-            </table>
-        </center>
-    </div>
+          set.hours[i].textContent = hourText;
+          set.hours[i].style.color = colors[(colorIndex + 2) % colors.length];
 
-    <div class="copyright">
-        *More Art Faster All The Time For Everyone<br>
-        ©2025 Cubist Heart Laboratories. All rights reserved.
-    </div>
+          set.minutes[i].textContent = minuteText;
+          set.minutes[i].style.color = colors[(colorIndex + 4) % colors.length];
 
-    <script>
-        function updateDate() {
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const today = new Date().toLocaleDateString('en-US', options);
-            document.getElementById("current-date").textContent = today;
+          set.seconds[i].textContent = secondText;
+          set.seconds[i].style.color = colors[(colorIndex + 6) % colors.length];
         }
+      }
 
-        window.onload = updateDate;
-    </script>
+      requestAnimationFrame(updateClock);
+    }
+
+    updateClock();
+  </script>
 </body>
-
 </html>
