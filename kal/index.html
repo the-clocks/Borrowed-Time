@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kaleidoscope Clock</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Rock+3D&display=swap"
+        rel="stylesheet">
+        <style>
+         @font-face {
+            font-family: 'kal';
+            src: url('kal.ttf') format('truetype');
+        }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .kaleidoscope {
+      z-index: 1;
+      font-family: 'kal';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.7;
+    }
+
+    .spin-cw {
+      animation: spin-cw 60s linear infinite;
+    }
+
+    .spin-ccw {
+      animation: spin-ccw 60s linear infinite;
+    }
+
+    .ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: preserve-3d;
+    }
+
+    .segment {
+    
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      transition: color 1s;
+      font-size: 9vmin;
+    }
+
+    .hour {
+      transform-origin: 0 0;
+    }
+
+    .minute {
+      transform-origin: 0 0;
+      font-size:7vmin;
+    }
+
+    .second {
+      transform-origin: 0 0;
+      font-size: 5.5vmin;
+    }
+
+    @keyframes spin-cw {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes spin-ccw {
+      from { transform: rotate(360deg); }
+      to   { transform: rotate(0deg); }
+    }
+
+        .date-container {
+            color: #bec2be;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+              
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #bebcbc;
+            text-shadow: #141314 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+  .bgimage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* background-size: cover; */
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+  </style>
+</head>
+<body>
+<img src="./7ZAx.webp" class="bgimage">
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../launchpad/" class="dates dateleft">07/03/25</a>
+        <a href="../index.html" class="clockname">Kaleidoscope</a>
+               <a href="../index.html" class="dates dateright">07/05/25</a>
+    </div>
+
+
+  <!-- Clockwise Kaleidoscope -->
+  <div class="kaleidoscope spin-cw">
+    <div class="ring" id="hourRing1"></div>
+    <div class="ring" id="minuteRing1"></div>
+    <div class="ring" id="secondRing1"></div>
+  </div>
+
+  <!-- Counter-Clockwise Kaleidoscope -->
+  <div class="kaleidoscope spin-ccw">
+    <div class="ring" id="hourRing2"></div>
+    <div class="ring" id="minuteRing2"></div>
+    <div class="ring" id="secondRing2"></div>
+  </div>
+
+  <script>
+    const SEGMENTS = 12;
+    const colors = ['#ff0040', '#00ffff', '#ffff00', '#00ff00', '#ff8000', '#ff00ff', '#00bfff', '#ffffff', '#ffcc00', '#ff66cc', '#33ff33', '#3399ff'];
+
+    const rings = [
+      {
+        hour: document.getElementById('hourRing1'),
+        minute: document.getElementById('minuteRing1'),
+        second: document.getElementById('secondRing1'),
+        hours: [], minutes: [], seconds: [],
+        colorOffset: 0,
+      },
+      {
+        hour: document.getElementById('hourRing2'),
+        minute: document.getElementById('minuteRing2'),
+        second: document.getElementById('secondRing2'),
+        hours: [], minutes: [], seconds: [],
+        colorOffset: 6,
+      }
+    ];
+
+    for (const set of rings) {
+      for (let i = 0; i < SEGMENTS; i++) {
+        const angle = i * (360 / SEGMENTS);
+
+        const hour = document.createElement('div');
+        hour.className = 'segment hour';
+        hour.style.transform = `rotate(${angle}deg) translate(30vmin)`;
+        set.hour.appendChild(hour);
+        set.hours.push(hour);
+
+        const minute = document.createElement('div');
+        minute.className = 'segment minute';
+        minute.style.transform = `rotate(${angle}deg) translate(20vmin)`;
+        set.minute.appendChild(minute);
+        set.minutes.push(minute);
+
+        const second = document.createElement('div');
+        second.className = 'segment second';
+        second.style.transform = `rotate(${angle}deg) translate(10vmin)`;
+        set.second.appendChild(second);
+        set.seconds.push(second);
+      }
+    }
+
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours() % 12 || 12;
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+
+      const hourText = hours.toString().padStart(2, '0');
+      const minuteText = minutes.toString().padStart(2, '0');
+      const secondText = seconds.toString().padStart(2, '0');
+
+      for (const [index, set] of rings.entries()) {
+        for (let i = 0; i < SEGMENTS; i++) {
+          const colorIndex = (i + seconds + set.colorOffset) % colors.length;
+
+          set.hours[i].textContent = hourText;
+          set.hours[i].style.color = colors[(colorIndex + 2) % colors.length];
+
+          set.minutes[i].textContent = minuteText;
+          set.minutes[i].style.color = colors[(colorIndex + 4) % colors.length];
+
+          set.seconds[i].textContent = secondText;
+          set.seconds[i].style.color = colors[(colorIndex + 6) % colors.length];
+        }
+      }
+
+      requestAnimationFrame(updateClock);
+    }
+
+    updateClock();
+  </script>
+</body>
+</html>
