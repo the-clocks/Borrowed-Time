@@ -34,7 +34,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      opacity: 0.7;
     }
 
     .spin-cw {
@@ -42,6 +41,7 @@
     }
 
     .spin-ccw {
+      opacity: 0.8;
       animation: spin-ccw 60s linear infinite;
     }
 
@@ -170,10 +170,10 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            /* background-size: cover; */
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: brightness(50%);
+            filter: brightness(210%) saturate(400%) hue-rotate(-190deg) blur(4px);
             z-index: 1;
             pointer-events: none;
         }
@@ -209,7 +209,7 @@
 
   <script>
     const SEGMENTS = 12;
-    const colors = ['#ff0040', '#00ffff', '#ffff00', '#00ff00', '#ff8000', '#ff00ff', '#00bfff', '#ffffff', '#ffcc00', '#ff66cc', '#33ff33', '#3399ff'];
+    const colors = ['#ff0040', '#045DF7FF', '#F9D108FF', '#00ff00', '#FB920AFF', '#ff00ff', '#00bfff', '#ffffff', '#ffcc00', '#F603E6FF', '#33ff33', '#12F5DBFF'];
 
     const rings = [
       {
