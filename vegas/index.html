@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vegas Clock - BorrowedTime</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Permanent+Marker&family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet" />
+
+  <style>
+    @font-face {
+      font-family: 'vegas';
+      src: url('vegas.ttf') format('truetype');
+    }
+
+    iframe {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .clock-container {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2vmin;
+      white-space: nowrap;
+    }
+
+    .digit-group {
+      font-family: 'vegas', sans-serif;
+      display: flex;
+      gap: 0.5vmin;
+    }
+
+    .digit-box {
+      color: #edcb0b;
+      text-shadow: #c406fe 0px 2px, #f84802 0px -2px, #48d9e9 2px 0px, #f84802 -2px 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28vmin;
+      width: 16vmin;
+      height: 28vmin;
+      min-width: 16vmin;
+      text-align: center;
+      box-sizing: border-box;
+      z-index: 19;
+    }
+
+    .digit-box:empty {
+      visibility: hidden;
+    }
+
+    .title-container {
+      color: #efa2c4;
+      text-shadow: #b5137f 1px 0px;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
+
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.1vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      letter-spacing: 0.1vh;
+    }
+
+    .bttitle {
+      position: relative;
+      left: 0;
+      font-family: "Oxanium", serif;
+      font-size: 2.7vh;
+      font-style: italic;
+      letter-spacing: -0.1vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+    }
+
+    .date-container {
+      color: #f307b0;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
+
+    .clockname {
+      font-family: "Oxanium", serif;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3.5vh;
+      line-height: 4vh;
+    }
+
+    .dateleft,
+    .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+    }
+
+    .dateleft { position: relative; left: 0; }
+    .dateright { position: absolute; right: 0; }
+  </style>
+</head>
+<body>
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
+
+  <div class="date-container">
+    <a href="../kal/" class="dates dateleft">07/04/25</a>
+    <a href="../index.html" class="clockname">Vegas</a>
+    <a href="../index.html" class="dates dateright">07/06/25</a>
+  </div>
+
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/jtvmwjzZY0c?si=TNdQG5g7_q2UBXa-&autoplay=1&mute=1" title="YouTube video player" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+  <div class="wrapper">
+    <div class="clock-container" id="clock">
+      <div class="digit-group">
+        <div class="digit-box" id="hour1"></div>
+        <div class="digit-box" id="hour2"></div>
+      </div>
+      <div class="digit-group">
+        <div class="digit-box" id="minute1"></div>
+        <div class="digit-box" id="minute2"></div>
+      </div>
+      <div class="digit-group">
+        <div class="digit-box" id="second1"></div>
+        <div class="digit-box" id="second2"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+
+      // 12-hour conversion without leading zero:
+      hours = hours % 12 || 12;
+      const hourStr = String(hours);
+
+      document.getElementById('hour1').textContent = hourStr.length === 2 ? hourStr[0] : '';
+      document.getElementById('hour2').textContent = hourStr[hourStr.length - 1];
+      document.getElementById('minute1').textContent = minutes[0];
+      document.getElementById('minute2').textContent = minutes[1];
+      document.getElementById('second1').textContent = seconds[0];
+      document.getElementById('second2').textContent = seconds[1];
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
