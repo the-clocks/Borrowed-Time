@@ -31,7 +31,8 @@
 
     .bgimage {
   position: absolute;
-  /* top: 50%; */
+  filter: brightness(100%) saturate(900%);
+  /* top: 1%; */
   /* left: 50%; */
   width: 60%;
   height: 60%;
@@ -44,7 +45,9 @@
 
     .clock {
       position: relative;
-      width: 80vmin;
+      left: -3px;
+      top: 3px;
+      width: 88vmin;
       height: 80vmin;
       border-radius: 50%;
       z-index: 2;
@@ -61,23 +64,23 @@
     }
 
     .hour-hand {
-      width: 0.2rem;
+      width: 0.3rem;
       height: 30%;
-      background-color: #697fad;
-      border-radius: 0.5rem;
+      background-color: #b4b6bc;
+      border-radius: 4.8rem;
     }
 
     .minute-hand {
-      width: 0.1rem;
-      height: 44%;
-      background-color: #788fb4;
-      border-radius: 0.3rem;
+      width: 0.2rem;
+      height: 45%;
+      background-color: #c9d7f4;
+      border-radius: 4.3rem;
     }
 
    .number {
   position: absolute;
   font-family: 'pol';
-  font-size: 2.2rem;
+  font-size: 3.2rem;
   color: rgb(42, 71, 161);
   text-shadow: #aeb3b3 -1px 0px;
   width: 2.2rem;
