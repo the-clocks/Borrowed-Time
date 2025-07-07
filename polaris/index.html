@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Analog Clock with Image Hands and Numbers</title>
+  <style>
+       @font-face {
+            font-family: 'pol';
+            src: url('./pol.otf') format('opentype');
+        }
+
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: rgb(11, 11, 139);
+    }
+
+    @keyframes slow-rotate {
+      0% {
+        transform: rotate(0deg) scale(1.5);
+      }
+      100% {
+        transform: rotate(360deg) scale(1.5);
+      }
+    }
+
+    .bgimage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: invert(0.9);
+      z-index: -1;
+      animation: slow-rotate 60s linear infinite;
+      transform-origin: center center;
+    }
+
+    .clock {
+      position: relative;
+      width: 80vmin; /* Changed to vmin to ensure consistent sizing */
+      height: 80vmin;
+      background: url('clock-face.png') no-repeat center center;
+      background-size: cover;
+      border-radius: 50%;
+      z-index: 2;
+      margin: auto; /* Added to reinforce centering */
+    }
+
+    .hand {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      transform-origin: center center;
+      pointer-events: none;
+    }
+
+    .hour-hand {
+      background: url('') no-repeat center center;
+      background-size: contain;
+    }
+
+    .minute-hand {
+      background: url('minute-hand.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    .second-hand {
+      background: url('second-hand.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    .number {
+      position: absolute;
+      font-family: 'pol';
+      width: 2rem;
+      height: 2rem;
+      color: rgb(95, 128, 225);
+      font-size: 1.2rem;
+      text-align: center;
+      line-height: 2rem;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <img src="./polaris.gif" class="bgimage">
+  <div class="clock">
+    <div class="hand hour-hand"></div>
+    <div class="hand minute-hand"></div>
+    <div class="hand second-hand"></div>
+
+    <!-- Clock Numbers -->
+    <div class="number" style="top: 10%; left: 50%;">12</div>
+    <div class="number" style="top: 18%; left: 76%;">1</div>
+    <div class="number" style="top: 34%; left: 89%;">2</div>
+    <div class="number" style="top: 50%; left: 94%;">3</div>
+    <div class="number" style="top: 66%; left: 89%;">4</div>
+    <div class="number" style="top: 82%; left: 76%;">5</div>
+    <div class="number" style="top: 90%; left: 50%;">6</div>
+    <div class="number" style="top: 82%; left: 24%;">7</div>
+    <div class="number" style="top: 66%; left: 11%;">8</div>
+    <div class="number" style="top: 50%; left: 6%;">9</div>
+    <div class="number" style="top: 34%; left: 11%;">10</div>
+    <div class="number" style="top: 18%; left: 24%;">11</div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+
+      const secDeg = seconds * 6;
+      const minDeg = minutes * 6 + seconds * 0.1;
+      const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+
+      document.querySelector('.second-hand').style.transform = `rotate(${secDeg}deg)`;
+      document.querySelector('.minute-hand').style.transform = `rotate(${minDeg}deg)`;
+      document.querySelector('.hour-hand').style.transform = `rotate(${hourDeg}deg)`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
