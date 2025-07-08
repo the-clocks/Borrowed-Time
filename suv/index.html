@@ -28,22 +28,24 @@
       box-sizing: border-box;
     }
 
-    #clock {
-      position: relative;
-      right: 30px;
-      top: 50%;
-      color: rgb(214, 210, 212);
-      text-shadow: #090802 1px 1px, #f3f3ee -1px 0px;
-      display: flex;
-      font-size: 0.8rem;
-      text-align: left;
-      z-index: 2;
-      font-variant-numeric: tabular-nums;
-      font-feature-settings: 'tnum';
-      line-height: 1;
-      opacity: 0.8;
-      gap: 0;
-    }
+  #clock {
+  position: fixed; /* or 'absolute' depending on your layout */
+  right: 150px;
+  top: 50%;
+  transform: translateY(-50%); /* vertically center it */
+  color: rgb(214, 210, 212);
+  text-shadow: #090802 1px 1px, #f3f3ee -1px 0px;
+  display: flex;
+  font-size: 0.8rem;
+  text-align: left;
+  z-index: 2;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+  line-height: 1;
+  opacity: 0.8;
+  gap: 0;
+}
+
 
     #clock span {
       display: block;
