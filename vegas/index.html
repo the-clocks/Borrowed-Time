@@ -248,8 +248,8 @@
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    function setFlicker() {
-      const element = document.getElementById('minute2');
+    function setFlicker(elementId, minInterval, maxInterval) {
+      const element = document.getElementById(elementId);
       
       // Remove any existing flicker
       flickerClasses.forEach(cls => element.classList.remove(cls));
@@ -267,7 +267,7 @@
       }, duration);
 
       // Schedule next flicker
-      setTimeout(setFlicker, getRandomInt(1000, 3000));
+      setTimeout(() => setFlicker(elementId, minInterval, maxInterval), getRandomInt(minInterval, maxInterval));
     }
 
     function updateClock() {
@@ -290,7 +290,8 @@
 
     updateClock();
     setInterval(updateClock, 1000);
-    setTimeout(setFlicker, 2000); // Start flickering after 2 seconds
+    setTimeout(() => setFlicker('minute2', 1000, 3000), 2000); // Start minute2 flickering after 2 seconds
+    setTimeout(() => setFlicker('hour1', 4000, 12000), 2000); // Start hour1 flickering after 2 seconds
   </script>
 </body>
 </html>
