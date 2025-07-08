@@ -12,7 +12,7 @@
         <style>
          @font-face {
             font-family: 'kal';
-            src: url('kal.ttf') format('truetype');
+            src: url('kal.otf') format('truetype');
         }
 
     html, body {
@@ -37,12 +37,13 @@
     }
 
     .spin-cw {
-      animation: spin-cw 60s linear infinite;
+       opacity: 0.9;
+      animation: spin-cw 45s linear infinite;
     }
 
     .spin-ccw {
-      opacity: 0.8;
-      animation: spin-ccw 60s linear infinite;
+      opacity: 0.7;
+      animation: spin-ccw 90s linear infinite;
     }
 
     .ring {
@@ -61,7 +62,7 @@
       pointer-events: none;
       mix-blend-mode: screen;
       transition: color 1s;
-      font-size: 9vmin;
+      font-size: 4.5rem;
     }
 
     .hour {
@@ -70,12 +71,20 @@
 
     .minute {
       transform-origin: 0 0;
-      font-size:7vmin;
+      font-size: 2.4rem;
     }
 
-    .second {
+ .second {
+  transform-origin: 0 0;
+  font-size: 2.4rem;
+
+}
+
+    
+
+    .ampm {
       transform-origin: 0 0;
-      font-size: 5.5vmin;
+      font-size: 0.8rem;
     }
 
     @keyframes spin-cw {
@@ -192,12 +201,12 @@
                <a href="../vegas/" class="dates dateright">07/05/25</a>
     </div>
 
-
   <!-- Clockwise Kaleidoscope -->
   <div class="kaleidoscope spin-cw">
     <div class="ring" id="hourRing1"></div>
     <div class="ring" id="minuteRing1"></div>
     <div class="ring" id="secondRing1"></div>
+    <div class="ring" id="ampmRing1"></div>
   </div>
 
   <!-- Counter-Clockwise Kaleidoscope -->
@@ -205,25 +214,28 @@
     <div class="ring" id="hourRing2"></div>
     <div class="ring" id="minuteRing2"></div>
     <div class="ring" id="secondRing2"></div>
+    <div class="ring" id="ampmRing2"></div>
   </div>
 
   <script>
     const SEGMENTS = 12;
-    const colors = ['#ff0040', '#045DF7FF', '#F9D108FF', '#00ff00', '#FB920AFF', '#ff00ff', '#00bfff', '#ffffff', '#ffcc00', '#F603E6FF', '#33ff33', '#12F5DBFF'];
+    const colors = ['#ff0040', '#045DF7FF', '#F9D108FF', '#00ff00', '#FC7B02FF', '#ff00ff', '#00bfff', '#ffffff', '#D0FF00FF', '#C12FFBFF', '#F6E901FF', '#12F5DBFF'];
 
     const rings = [
       {
         hour: document.getElementById('hourRing1'),
         minute: document.getElementById('minuteRing1'),
         second: document.getElementById('secondRing1'),
-        hours: [], minutes: [], seconds: [],
+        ampm: document.getElementById('ampmRing1'),
+        hours: [], minutes: [], seconds: [], ampms: [],
         colorOffset: 0,
       },
       {
         hour: document.getElementById('hourRing2'),
         minute: document.getElementById('minuteRing2'),
         second: document.getElementById('secondRing2'),
-        hours: [], minutes: [], seconds: [],
+        ampm: document.getElementById('ampmRing2'),
+        hours: [], minutes: [], seconds: [], ampms: [],
         colorOffset: 6,
       }
     ];
@@ -249,6 +261,12 @@
         second.style.transform = `rotate(${angle}deg) translate(10vmin)`;
         set.second.appendChild(second);
         set.seconds.push(second);
+
+        const ampm = document.createElement('div');
+        ampm.className = 'segment ampm';
+        ampm.style.transform = `rotate(${angle}deg) translate(5vmin)`;
+        set.ampm.appendChild(ampm);
+        set.ampms.push(ampm);
       }
     }
 
@@ -257,6 +275,7 @@
       let hours = now.getHours() % 12 || 12;
       const minutes = now.getMinutes();
       const seconds = now.getSeconds();
+      const ampmText = now.getHours() >= 12 ? 'PM' : 'AM';
 
       const hourText = hours.toString().padStart(2, '0');
       const minuteText = minutes.toString().padStart(2, '0');
@@ -274,6 +293,9 @@
 
           set.seconds[i].textContent = secondText;
           set.seconds[i].style.color = colors[(colorIndex + 6) % colors.length];
+
+          set.ampms[i].textContent = ampmText;
+          set.ampms[i].style.color = colors[(colorIndex + 8) % colors.length];
         }
       }
 
