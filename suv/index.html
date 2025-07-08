@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SUV Clock</title>
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Rock+3D&display=swap"
-        rel="stylesheet">
-         <style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Rock+3D&display=swap"
+    rel="stylesheet">
+  <style>
     @font-face {
       font-family: 'suv';
       src: url('./suv.ttf') format('truetype');
@@ -21,24 +21,23 @@
       display: flex;
       justify-content: flex-start;
       align-items: flex-start;
-      background: #670a53;
+      background: #369871;
       font-family: 'suv', sans-serif;
       font-size: 10vw;
-      padding: 2vw;
+      padding: 0vw;
       box-sizing: border-box;
     }
 
     #clock {
-        position: relative;
-        left: 60%;
-        top: 48%;
-            color: rgb(234, 235, 233);
-            text-shadow: #090802 1px 1px;
+      position: relative;
+      left: 30%;
+      top: 50%;
+      color: rgb(214, 210, 212);
+      text-shadow: #090802 1px 1px, #f3f3ee -1px 0px;
       display: flex;
-      font-size: 1.0rem;
+      font-size: 0.8rem;
       text-align: left;
       z-index: 2;
-      /* border-radius: 5px; */
       font-variant-numeric: tabular-nums;
       font-feature-settings: 'tnum';
       line-height: 1;
@@ -48,134 +47,139 @@
 
     #clock span {
       display: block;
-      /* width: 2ch; */
       text-align: left;
     }
 
-  .bgimage {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: brightness(160%) saturate(90%) hue-rotate(30deg);
-  z-index: 2;
-  pointer-events: none;
-  transform: scaleX(-1); /* Flip horizontally */
-}
+    #ampm {
+      margin-left: 0.0vw;
+      font-size: 0.8em;
+      align-self: flex-end;
+    }
 
-  .bgimage2 {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: brightness(300%) saturate(30%) hue-rotate(30deg);
-  z-index: 1;
-  pointer-events: none;
-  transform: scaleX(-1); /* Flip horizontally */
-}
+    .bgimage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-position: left;
+      background-repeat: no-repeat;
+      filter: brightness(160%) saturate(90%) hue-rotate(30deg);
+      z-index: 2;
+      pointer-events: none;
+      transform: scaleX(-1);
+    }
 
-        .date-container {
-            color: #056c03;
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
+    .bgimage2 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: brightness(300%) saturate(30%) hue-rotate(30deg);
+      z-index: 1;
+      pointer-events: none;
+      transform: scaleX(-1);
+    }
 
-        .clockname {
-            font-family: "Oxanium", serif;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 4vh;
-            line-height: 4vh;
-        }
+    .date-container {
+      color: #056c03;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
 
-        .dateleft {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: relative;
-            left: 0;
-        }
-              
-        .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: absolute;
-            right: 0;
-        }
+    .clockname {
+      font-family: "Oxanium", serif;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 4vh;
+      line-height: 4vh;
+    }
 
-        .title-container {
-            color: #bebcbc;
-            text-shadow: #141314 1px 0px;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
+    .dateleft {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: relative;
+      left: 0;
+    }
 
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.8vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
+    .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: absolute;
+      right: 0;
+    }
 
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.8vh;
-            font-style: italic;
-            z-index: 15;
-            letter-spacing: -0.1vh;
-        }
+    .title-container {
+      color: #bebcbc;
+      text-shadow: #141314 1px 0px;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.8vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      letter-spacing: 0.1vh;
+    }
 
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-            text-decoration: none;
-        }
+    .bttitle {
+      position: relative;
+      left: 0;
+      font-family: "Oxanium", serif;
+      font-size: 2.8vh;
+      font-style: italic;
+      z-index: 15;
+      letter-spacing: -0.1vh;
+    }
 
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
 
-      <div class="title-container">
-        <div class="chltitle">Cubist Heart Laboratories</div>
-        <div class="bttitle">BorrowedTime</div>
-    </div>
+  <div class="date-container">
+    <a href="../polaris/" class="dates dateleft">07/06/25</a>
+    <a href="../index.html" class="clockname">SUV</a>
+    <a href="../index.html" class="dates dateright">07/08/25</a>
+  </div>
 
-    <div class="date-container">
-        <a href="../polaris/" class="dates dateleft">07/06/25</a>
-        <a href="../index.html" class="clockname">SUV</a>
-                <a href="../index.html" class="dates dateright">07/08/25</a>
-    </div>
-    <img src="./suvx.jpg" class="bgimage2">
-  <img src="suv.gif" class="bgimage" >
-  <div id="clock"><span id="h">00</span><span id="m">00</span><span id="s">00</span></div>
+  <img src="./suvx.jpg" class="bgimage2">
+  <img src="suv.gif" class="bgimage">
+
+  <div id="clock">
+    <span id="h">00</span><span id="m">00</span><span id="ampm">AM</span>
+  </div>
 
   <script>
     function pad(num) {
@@ -184,9 +188,16 @@
 
     function updateClock() {
       const now = new Date();
-      document.getElementById('h').textContent = pad(now.getHours());
-      document.getElementById('m').textContent = pad(now.getMinutes());
-      document.getElementById('s').textContent = pad(now.getSeconds());
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+
+      document.getElementById('h').textContent = pad(hours);
+      document.getElementById('m').textContent = pad(minutes);
+      document.getElementById('ampm').textContent = ampm;
     }
 
     updateClock();
