@@ -24,7 +24,7 @@
       width: 100vw;
       height: 100vh;
       border: none;
-      z-index: 1; /* Make sure it's behind the clock */
+      z-index: 1;
     }
 
     html, body {
@@ -41,7 +41,7 @@
       transform: translate(-50%, -50%);
       width: max-content;
       max-width: 100vw;
-      z-index: 10; /* On top of iframe */
+      z-index: 10;
     }
 
     .clock-container {
@@ -79,6 +79,62 @@
 
     .digit-box:empty {
       visibility: hidden;
+    }
+
+    /* Flicker animations for 0.15s duration */
+    .flicker-015-a {
+      animation: flicker015a 0.15s 1;
+    }
+
+    @keyframes flicker015a {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
+    }
+
+    .flicker-015-b {
+      animation: flicker015b 0.15s 1;
+    }
+
+    @keyframes flicker015b {
+      0%, 33%, 66% { opacity: 1; }
+      16%, 50%, 83% { opacity: 0; }
+    }
+
+    .flicker-015-c {
+      animation: flicker015c 0.15s 1;
+    }
+
+    @keyframes flicker015c {
+      0%, 40% { opacity: 1; }
+      20%, 60%, 80% { opacity: 0; }
+    }
+
+    /* Flicker animations for 0.3s duration */
+    .flicker-03-a {
+      animation: flicker03a 0.3s 1;
+    }
+
+    @keyframes flicker03a {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
+    }
+
+    .flicker-03-b {
+      animation: flicker03b 0.3s 1;
+    }
+
+    @keyframes flicker03b {
+      0%, 20%, 60% { opacity: 1; }
+      10%, 40%, 80% { opacity: 0; }
+    }
+
+    .flicker-03-c {
+      animation: flicker03c 0.3s 1;
+    }
+
+    @keyframes flicker03c {
+      0%, 33%, 66% { opacity: 1; }
+      16%, 50%, 83% { opacity: 0; }
     }
 
     .title-container {
@@ -183,6 +239,37 @@
   </div>
 
   <script>
+    const flickerClasses = [
+      'flicker-015-a', 'flicker-015-b', 'flicker-015-c',
+      'flicker-03-a', 'flicker-03-b', 'flicker-03-c'
+    ];
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function setFlicker() {
+      const element = document.getElementById('minute2');
+      
+      // Remove any existing flicker
+      flickerClasses.forEach(cls => element.classList.remove(cls));
+
+      // Choose a random flicker animation
+      const flickerClass = flickerClasses[Math.floor(Math.random() * flickerClasses.length)];
+      
+      // Apply flicker
+      element.classList.add(flickerClass);
+
+      // Remove flicker after animation duration
+      const duration = flickerClass.includes('015') ? 150 : 300;
+      setTimeout(() => {
+        element.classList.remove(flickerClass);
+      }, duration);
+
+      // Schedule next flicker
+      setTimeout(setFlicker, getRandomInt(1000, 3000));
+    }
+
     function updateClock() {
       const now = new Date();
       let hours = now.getHours();
@@ -203,6 +290,7 @@
 
     updateClock();
     setInterval(updateClock, 1000);
+    setTimeout(setFlicker, 2000); // Start flickering after 2 seconds
   </script>
 </body>
 </html>
