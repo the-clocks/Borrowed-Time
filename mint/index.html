@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mint Clock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+    rel="stylesheet">
+ <style>
+     @font-face {
+            font-family: 'mint';
+            src: url('./mint.ttf') format('truetype');
+        }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #85ed6b;
+    }
+
+    .clock {
+        z-index: 6;
+        position: relative;
+        width: 60vh;
+        height: 60vh;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .number {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      font-family: 'mint';
+      font-size: 7rem;
+      color: #8AE3A8;
+      text-shadow: 1px 1px 0 rgb(10, 39, 17), 2px 2px 0 #f1f6f2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .number span {
+      display: block;
+      transform: translateY(-140px); /* Adjusted to move numbers further from center */
+    }
+
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: 50% 100%;
+      transform: translateX(-50%) rotate(0deg);
+      pointer-events: none;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .hour {
+      height: 80px;
+      z-index: 2;
+        /* opacity: 0.8; */
+    }
+
+    .minute {
+      height: 130px;
+      z-index: 3;
+        /* opacity: 0.8; */
+    }
+
+    .second {
+      height: 200px;
+      z-index: 1;
+      /* opacity: 0.8; */
+    }
+
+    .center-dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      background: #333;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 4;
+    }
+
+    .bgimage {
+        background-size: cover;
+        background-position: center;
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        opacity: 0.4;
+    }
+    .date-container {
+      color: #393b39;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
+
+    .clockname {
+      font-family: "Oxanium", serif;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 4vh;
+      line-height: 4vh;
+    }
+
+    .dateleft {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: relative;
+      left: 0;
+    }
+
+    .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: absolute;
+      right: 0;
+    }
+
+    .title-container {
+      color: #d0d5d3;
+      text-shadow: #f4edf0 1px 0px;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
+
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.8vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      letter-spacing: 0.1vh;
+    }
+
+    .bttitle {
+      position: relative;
+      left: 0;
+      font-family: "Oxanium", serif;
+      font-size: 2.8vh;
+      font-style: italic;
+      z-index: 15;
+      letter-spacing: -0.1vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
+
+  <div class="date-container">
+    <a href="../suv/" class="dates dateleft">06/07/25</a>
+    <a href="../index.html" class="clockname">Mint</a>
+     <a href="../index.html" class="dates dateright">06/09/25</a>
+  </div>
+
+  <img src="./candy.jpg" class="bgimage"> 
+  <div class="clock" id="clock">
+    <img class="hand hour" src="./mint.png" alt="Hour Hand" />
+    <img class="hand minute" src="./minty.webp" alt="Minute Hand" />
+    <img class="hand second" src="./min.png" alt="Second Hand" />
+    <div class="center-dot"></div>
+  </div>
+
+  <script>
+    const clock = document.getElementById('clock');
+
+    for (let i = 1; i <= 12; i++) {
+      const numberDiv = document.createElement('div');
+      numberDiv.className = 'number';
+      numberDiv.style.transform = `rotate(${i * 30}deg) skew(-15deg)`;
+      const span = document.createElement('span');
+      span.textContent = i;
+      numberDiv.appendChild(span);
+      clock.appendChild(numberDiv);
+    }
+
+    const hourHand = document.querySelector('.hand.hour');
+    const minuteHand = document.querySelector('.hand.minute');
+    const secondHand = document.querySelector('.hand.second');
+
+    function updateClock() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+
+      const secDeg = seconds * 6;
+      const minDeg = minutes * 6 + seconds * 0.1;
+      const hrDeg = (hours % 12) * 30 + minutes * 0.5;
+
+      secondHand.style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+      minuteHand.style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
+      hourHand.style.transform = `translateX(-50%) rotate(${hrDeg}deg)`;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    [hourHand, minuteHand, secondHand].forEach(hand => {
+      hand.onerror = () => {
+        console.error(`Failed to load image for ${hand.alt} at ${hand.src}`);
+        hand.style.background = hand.classList.contains('hour') ? 'blue' : 
+                               hand.classList.contains('minute') ? 'green' : 'red';
+        hand.style.width = hand.classList.contains('hour') ? '6px' : 
+                           hand.classList.contains('minute') ? '4px' : '2px';
+        hand.style.height = hand.classList.contains('hour') ? '80px' : 
+                            hand.classList.contains('minute') ? '100px' : '120px';
+      };
+    });
+  </script>
+</body>
+</html>
