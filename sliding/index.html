@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Sliding Digital Clock</title>
+    <style>
+        @font-face {
+            font-family: 'sli';
+            src: url('sli.ttf') format('truetype');
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #6f1919;
+            font-family: 'sli', 'Courier New', monospace;
+            color: #808080;
+            overflow: hidden;
+        }
+        .clock-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .digit-group {
+            width: 50px;
+            height: 300px;
+            overflow: visible;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+        .digit-strip {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s ease;
+        }
+        .digit {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 50px;
+            color: #808080;
+            background-color: #960e0e;
+            margin: 0;
+            padding: 0;
+        }
+        .digit.current {
+            color: #ff69b4;
+            font-weight: bold;
+        }
+        .window {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            pointer-events: none;
+        }
+        @media screen and (max-width: 600px) {
+            .clock-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .digit-group {
+                width: 300px;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+            }
+            .digit-strip {
+                flex-direction: row;
+                top: 0;
+                left: 0;
+            }
+            .digit {
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+                margin: 0;
+                padding: 0;
+            }
+            .window {
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="clock-container">
+        <div class="digit-group" id="hour-tens">
+            <div class="window"></div>
+        </div>
+        <div class="digit-group" id="hour-ones">
+            <div class="window"></div>
+        </div>
+        <div class="digit-group" id="minute-tens">
+            <div class="window"></div>
+        </div>
+        <div class="digit-group" id="minute-ones">
+            <div class="window"></div>
+        </div>
+        <div class="digit-group" id="second-tens">
+            <div class="window"></div>
+        </div>
+        <div class="digit-group" id="second-ones">
+            <div class="window"></div>
+        </div>
+    </div>
+    <script>
+        // Generate digit strips (0-9) for each digit group
+        const digitGroups = [
+            'hour-tens', 'hour-ones', 
+            'minute-tens', 'minute-ones', 
+            'second-tens', 'second-ones'
+        ];
+
+        digitGroups.forEach(groupId => {
+            const group = document.getElementById(groupId);
+            const strip = document.createElement('div');
+            strip.className = 'digit-strip';
+            for (let i = 0; i < 10; i++) {
+                const digit = document.createElement('div');
+                digit.className = 'digit';
+                digit.textContent = i;
+                strip.appendChild(digit);
+            }
+            group.appendChild(strip);
+        });
+
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+
+            const isMobile = window.innerWidth <= 600;
+            const digitWidth = 50; // Fixed digit width
+            const digitHeight = 50; // Fixed digit height
+
+            // Update each digit group
+            const digits = [
+                hours[0], hours[1], 
+                minutes[0], minutes[1], 
+                seconds[0], seconds[1]
+            ];
+
+            digitGroups.forEach((groupId, index) => {
+                const group = document.getElementById(groupId);
+                const strip = group.querySelector('.digit-strip');
+                const digitElements = strip.querySelectorAll('.digit');
+                const digitValue = parseInt(digits[index]);
+                const groupRect = group.getBoundingClientRect();
+
+                // Calculate offset to center the current digit on the screen
+                let offset;
+                if (isMobile) {
+                    // Horizontal sliding: Center the current digit in the viewport's horizontal center
+                    const digitCenterX = groupRect.left + (digitValue * digitWidth) + (digitWidth / 2);
+                    const viewportCenterX = window.innerWidth / 2;
+                    offset = viewportCenterX - digitCenterX;
+                } else {
+                    // Vertical sliding: Center the current digit in the viewport's vertical center
+                    const digitCenterY = groupRect.top + (digitValue * digitHeight) + (digitHeight / 2);
+                    const viewportCenterY = window.innerHeight / 2;
+                    offset = viewportCenterY - digitCenterY;
+                }
+
+                // Apply transform to position the strip
+                if (isMobile) {
+                    strip.style.transform = `translateX(${offset}px)`;
+                } else {
+                    strip.style.transform = `translateY(${offset}px)`;
+                }
+
+                // Highlight current digit
+                digitElements.forEach((digit, i) => {
+                    digit.classList.toggle('current', i === digitValue);
+                });
+            });
+        }
+
+        // Update clock every 100ms for smooth transitions
+        setInterval(updateClock, 100);
+        updateClock(); // Initial update
+
+        // Update on window resize
+        window.addEventListener('resize', updateClock);
+    </script>
+</body>
+</html>
