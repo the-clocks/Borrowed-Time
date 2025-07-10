@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blob Clock</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+    rel="stylesheet">
+    
+  <style>
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .title-container {
+            color: #a2b1a6;
+            text-shadow: #15b28a 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 7;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        .date-container {
+            color: #f9b908;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 9;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+
+    
+    </style>
+</head>
+
+<body>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../mint/" class="dates dateleft">07/08/25</a>
+        <a href="../index.html" class="clockname">Blobs</a>
+        <a href="../sliding/" class="dates dateright">07/10/25</a>
+    </div>
+    <canvas id="clockCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('clockCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size to match window
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Digit path definitions (curvy, linear, blobby at top)
+       const digitPaths = {
+    '0': (x, y, w, h) => [
+        ['moveTo', x + w * 0.1, y + h * 0.9],
+        ['quadraticCurveTo', x - w * 0.2, y + h * 0.5, x + w * 0.1, y + h * 0.1],
+        ['quadraticCurveTo', x + w * 0.5, y - h * 0.2, x + w * 0.9, y + h * 0.1],
+        ['quadraticCurveTo', x + w * 1.2, y + h * 0.5, x + w * 0.9, y + h * 0.9],
+        ['quadraticCurveTo', x + w * 0.5, y + h * 1.2, x + w * 0.1, y + h * 0.9],
+        ['closePath']
+    ],
+    '1': (x, y, w, h) => [
+        ['moveTo', x + w * 0.5, y + h],
+        ['quadraticCurveTo', x + w * 0.4, y + h * 0.5, x + w * 0.5, y],
+        ['quadraticCurveTo', x + w * 0.6, y - h * 0.2, x + w * 0.7, y],
+        ['quadraticCurveTo', x + w * 0.6, y + h * 0.5, x + w * 0.7, y + h],
+        ['closePath']
+    ],
+    '2': (x, y, w, h) => [
+        ['moveTo', x + w * 0.15, y + h],
+        ['quadraticCurveTo', x + w * 0.8, y + h, x + w * 0.85, y + h * 0.5],
+        ['quadraticCurveTo', x + w * 0.9, y + h * 0.2, x + w * 0.5, y + h * 0.2],
+        ['quadraticCurveTo', x + w * 0.2, y + h * 0.2, x + w * 0.15, y],
+        ['lineTo', x + w * 0.9, y],
+        ['closePath']
+    ],
+    '3': (x, y, w, h) => [
+        ['moveTo', x + w * 0.2, y + h * 0.1],
+        ['quadraticCurveTo', x + w * 0.7, y - h * 0.2, x + w * 0.85, y + h * 0.3],
+        ['quadraticCurveTo', x + w * 0.6, y + h * 0.5, x + w * 0.85, y + h * 0.7],
+        ['quadraticCurveTo', x + w * 0.7, y + h * 1.2, x + w * 0.2, y + h * 0.9],
+        ['lineTo', x + w * 0.5, y + h * 0.5],
+        ['lineTo', x + w * 0.2, y + h * 0.1],
+        ['closePath']
+    ],
+    '4': (x, y, w, h) => [
+        ['moveTo', x + w * 0.1, y + h * 0.6],
+        ['lineTo', x + w * 0.1, y + h * 0.1],
+        ['quadraticCurveTo', x + w * 0.5, y - h * 0.1, x + w * 0.9, y + h * 0.1],
+        ['lineTo', x + w * 0.9, y + h],
+        ['lineTo', x + w * 0.6, y + h],
+        ['lineTo', x + w * 0.6, y + h * 0.6],
+        ['closePath']
+    ],
+    '5': (x, y, w, h) => [
+        ['moveTo', x + w * 0.85, y + h * 0.1],
+        ['quadraticCurveTo', x + w * 0.2, y - h * 0.2, x + w * 0.1, y + h * 0.5],
+        ['quadraticCurveTo', x + w * 0.6, y + h * 0.4, x + w * 0.9, y + h * 0.5],
+        ['quadraticCurveTo', x + w * 1.1, y + h * 0.9, x + w * 0.5, y + h * 1.1],
+        ['quadraticCurveTo', x + w * 0.2, y + h * 0.9, x + w * 0.2, y + h * 0.8],
+        ['closePath']
+    ],
+    '6': (x, y, w, h) => [
+        ['moveTo', x + w * 0.85, y + h * 0.1],
+        ['quadraticCurveTo', x + w * 0.4, y - h * 0.2, x + w * 0.1, y + h * 0.5],
+        ['quadraticCurveTo', x, y + h * 1.0, x + w * 0.5, y + h],
+        ['quadraticCurveTo', x + w, y + h * 0.9, x + w * 0.7, y + h * 0.5],
+        ['quadraticCurveTo', x + w * 0.5, y + h * 0.4, x + w * 0.2, y + h * 0.5],
+        ['closePath']
+    ],
+    '7': (x, y, w, h) => [
+        ['moveTo', x + w * 0.1, y + h * 0.1],
+        ['quadraticCurveTo', x + w * 0.6, y - h * 0.2, x + w * 0.9, y + h * 0.1],
+        ['lineTo', x + w * 0.6, y + h],
+        ['quadraticCurveTo', x + w * 0.3, y + h * 1.1, x + w * 0.4, y + h],
+        ['lineTo', x + w * 0.7, y + h * 0.3],
+        ['lineTo', x + w * 0.1, y + h * 0.1],
+        ['closePath']
+    ],
+    '8': (x, y, w, h) => [
+        ['moveTo', x + w * 0.5, y + h * 0.5],
+        ['quadraticCurveTo', x + w * 0.1, y, x + w * 0.5, y + h * 0.1],
+        ['quadraticCurveTo', x + w * 0.9, y, x + w * 0.5, y + h * 0.5],
+        ['quadraticCurveTo', x + w * 0.1, y + h, x + w * 0.5, y + h * 0.9],
+        ['quadraticCurveTo', x + w * 0.9, y + h, x + w * 0.5, y + h * 0.5],
+        ['closePath']
+    ],
+    '9': (x, y, w, h) => [
+        ['moveTo', x + w * 0.1, y + h * 0.9],
+        ['quadraticCurveTo', x + w * 0.4, y + h * 1.1, x + w * 0.9, y + h * 0.5],
+        ['quadraticCurveTo', x + w * 1.1, y + h * 0.1, x + w * 0.5, y],
+        ['quadraticCurveTo', x + w * 0.1, y + h * 0.2, x + w * 0.4, y + h * 0.5],
+        ['quadraticCurveTo', x + w * 0.6, y + h * 0.6, x + w * 0.9, y + h * 0.5],
+        ['closePath']
+    ],
+    ':': (x, y, w, h) => [
+        ['ellipse', x + w * 0.5, y + h * 0.3, w * 0.2, h * 0.15, 0, 0, Math.PI * 2],
+        ['ellipse', x + w * 0.5, y + h * 0.7, w * 0.2, h * 0.15, 0, 0, Math.PI * 2],
+        ['closePath']
+    ]
+};
+
+        
+
+        // Animation state
+        let currentTimeString = '';
+        let targetTimeString = '';
+        let animationStartTime = 0;
+        const animationDuration = 500; // 0.5 seconds for morphing
+        let digitStates = [];
+        const gradientCycleDuration = 10000; // 10 seconds for gradient cycle
+
+        // Linear interpolation for morphing
+        function lerp(start, end, t) {
+            return start + (end - start) * t;
+        }
+
+        // Normalize paths to have the same number of segments
+        function normalizePaths(path1, path2) {
+            const maxLength = Math.max(path1.length, path2.length);
+            const normalizedPath1 = [...path1];
+            const normalizedPath2 = [...path2];
+
+            while (normalizedPath1.length < maxLength) {
+                const lastCmd = normalizedPath1[normalizedPath1.length - 1];
+                if (lastCmd[0] === 'closePath') {
+                    normalizedPath1.push(['moveTo', lastCmd[1] || 0, lastCmd[2] || 0]);
+                } else {
+                    normalizedPath1.push(lastCmd);
+                }
+            }
+            while (normalizedPath2.length < maxLength) {
+                const lastCmd = normalizedPath2[normalizedPath2.length - 1];
+                if (lastCmd[0] === 'closePath') {
+                    normalizedPath2.push(['moveTo', lastCmd[1] || 0, lastCmd[2] || 0]);
+                } else {
+                    normalizedPath2.push(lastCmd);
+                }
+            }
+            return [normalizedPath1, normalizedPath2];
+        }
+
+        // Create shifting gradient
+        function createShiftingGradient(x0, y0, x1, y1, baseHue, time) {
+            const gradient = ctx.createLinearGradient(x0, y0, x1, y1);
+            const t = (time % gradientCycleDuration) / gradientCycleDuration;
+            gradient.addColorStop(0, `hsl(${baseHue + t * 360}, 70%, 50%)`);
+            gradient.addColorStop(1, `hsl(${baseHue + (t + 0.5) * 360 % 360}, 70%, 50%)`);
+            return gradient;
+        }
+
+        // Draw a path with interpolated points and gradient
+        function drawInterpolatedPath(path, x, y, w, h, t, targetPath, gradient) {
+            const [normPath1, normPath2] = normalizePaths(path, targetPath || path);
+            ctx.beginPath();
+            ctx.lineWidth = w * 0.15;
+            ctx.strokeStyle = gradient;
+            ctx.fillStyle = gradient;
+            for (let i = 0; i < normPath1.length; i++) {
+                const [cmd, ...args] = normPath1[i];
+                const targetArgs = normPath2[i].slice(1);
+                const interpolatedArgs = args.map((arg, idx) => lerp(arg, targetArgs[idx] || arg, t));
+                if (cmd === 'moveTo' || cmd === 'lineTo') {
+                    ctx[cmd](interpolatedArgs[0], interpolatedArgs[1]);
+                } else if (cmd === 'quadraticCurveTo') {
+                    ctx.quadraticCurveTo(
+                        interpolatedArgs[0], interpolatedArgs[1],
+                        interpolatedArgs[2], interpolatedArgs[3]
+                    );
+                } else if (cmd === 'ellipse') {
+                    ctx.ellipse(
+                        interpolatedArgs[0], interpolatedArgs[1],
+                        interpolatedArgs[2], interpolatedArgs[3],
+                        interpolatedArgs[4], interpolatedArgs[5], interpolatedArgs[6]
+                    );
+                } else if (cmd === 'closePath') {
+                    ctx.closePath();
+                }
+            }
+            ctx.fill();
+            ctx.stroke();
+        }
+
+        function drawDigit(digit, x, y, w, h, index, time) {
+            const state = digitStates[index] || { currentDigit: digit, t: 1 };
+            const path = digitPaths[digit] ? digitPaths[digit](x, y, w, h) : [];
+            const targetPath = state.targetDigit && digitPaths[state.targetDigit]
+                ? digitPaths[state.targetDigit](x, y, w, h)
+                : path;
+            // Assign unique hue for each digit, offset from background
+            const digitHue = (180 + index * 30) % 360; // Offset 180° from background, unique per digit
+            const gradient = createShiftingGradient(x, y, x, y + h, digitHue, time);
+            drawInterpolatedPath(path, x, y, w, h, state.t, targetPath, gradient);
+        }
+
+        function updateClock(timestamp) {
+            const now = new Date();
+            let hours = now.getHours();
+            if (hours > 12) hours -= 12;
+            if (hours === 0) hours = 12;
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            targetTimeString = hours + ':' + minutes + ':' + seconds;
+
+            // Initialize digit states if empty
+            if (digitStates.length === 0) {
+                currentTimeString = targetTimeString;
+                digitStates = targetTimeString.split('').map(digit => ({
+                    currentDigit: digit,
+                    targetDigit: digit,
+                    t: 1
+                }));
+            }
+
+            // Update animation states
+            if (currentTimeString !== targetTimeString) {
+                animationStartTime = timestamp || performance.now();
+                const chars = targetTimeString.split('');
+                const prevStates = [...digitStates];
+                digitStates = [];
+                let stateIndex = 0;
+                for (let i = 0; i < chars.length; i++) {
+                    if (i === 0 && chars[i] === '0') continue; // Skip leading zero
+                    digitStates.push({
+                        currentDigit: prevStates[stateIndex]?.currentDigit || chars[i],
+                        targetDigit: chars[i],
+                        t: prevStates[stateIndex]?.currentDigit !== chars[i] ? 0 : 1
+                    });
+                    stateIndex++;
+                }
+                currentTimeString = targetTimeString;
+            }
+
+            // Update interpolation
+            const elapsed = timestamp - animationStartTime;
+            let animationComplete = true;
+            digitStates.forEach(state => {
+                if (state.t < 1) {
+                    state.t = Math.min(elapsed / animationDuration, 1);
+                    if (state.t >= 1) {
+                        state.currentDigit = state.targetDigit;
+                    }
+                    animationComplete = false;
+                }
+            });
+
+            // Draw background gradient
+            const backgroundGradient = createShiftingGradient(0, 0, canvas.width, canvas.height, 0, timestamp);
+            ctx.fillStyle = backgroundGradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the clock
+            const digitWidth = canvas.width * 0.1;
+            const digitHeight = canvas.height * 0.5;
+            const spacing = digitWidth * 0.2;
+            const chars = targetTimeString.split('');
+            const displayChars = chars[0] === '0' ? chars.slice(1) : chars;
+            const totalWidth = displayChars.length * digitWidth + (displayChars.length - 1) * spacing;
+            let x = (canvas.width - totalWidth) / 2;
+            const y = canvas.height * 0.25;
+
+            for (let i = 0; i < chars.length; i++) {
+                if (i === 0 && chars[i] === '0') continue; // Skip leading zero
+                drawDigit(digitStates[i - (chars[0] === '0' ? 1 : 0)].currentDigit, x, y, digitWidth, digitHeight, i - (chars[0] === '0' ? 1 : 0), timestamp);
+                x += digitWidth + spacing;
+            }
+
+            requestAnimationFrame(updateClock);
+        }
+
+        requestAnimationFrame(updateClock);
+    </script>
+</body>
+</html>

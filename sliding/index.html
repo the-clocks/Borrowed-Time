@@ -1,341 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Sliding Digital Clock</title>
-    <style>
-        @font-face {
-            font-family: 'sli';
-            src: url('sli.ttf') format('truetype');
-        }
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #8c5948;
-            overflow: hidden;
-        }
-        .clock-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        .digit-group {
-            width: 50px;
-            height: 300px;
-            overflow: visible;
-            position: relative;
-            margin: 0;
-            padding: 0;
-        }
-        .digit-strip {
-            display: flex;
-            flex-direction: column;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sliding Clock</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+    rel="stylesheet">
+    
+ <style>
+    :root {
+      --digit-width: 46px;
+      --digit-height: 46px;
+      --digit-font-size: 60px;
+      --group-height: calc(var(--digit-height) * 6);
+
+    }
+
+    @font-face {
+      font-family: 'sli';
+      src: url('sli.otf') format('opentype');
+    }
+       @font-face {
+      font-family: 'sli2';
+      src: url('sli2.ttf') format('truetype');
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #080807;
+      overflow: hidden;
+    }
+
+    .clock-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .digit-group, .ampm-group {
+      width: var(--digit-width);
+      height: var(--group-height);
+      overflow: visible;
+      position: relative;
+    }
+
+    .digit-strip {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .digit {
+      width: var(--digit-width);
+      height: var(--digit-height);
+      line-height: var(--digit-height);
+      text-align: center;
+      font-size: var(--digit-font-size);
+      font-family: 'sli', cursive, sans-serif;
+      transition: color 0.3s ease;
+    }
+
+    .digit.current {
+      color: rgb(83, 70, 70);
+      font-size: 23px;
+      font-family: 'sli2', Courier, monospace;
+    }
+
+    .digit:not(.current) {
+      color: rgb(246, 187, 244);
+    }
+
+    .window {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: var(--digit-width);
+      height: var(--digit-height);
+      pointer-events: none;
+    }
+
+    .static-m {
+      width: var(--digit-width);
+      height: var(--digit-height);
+      line-height: var(--digit-height);
+      text-align: center;
+      font-size: var(--digit-font-size);
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+   color: rgb(83, 70, 70);
+      font-size: 23px;
+      font-family: 'sli2', Courier, monospace;
+
+    }
+
+    @media screen and (max-width: 600px) {
+      .clock-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .digit-group, .ampm-group {
+        width: calc(var(--digit-height) * 6);
+        height: var(--digit-height);
+        display: flex;
+        align-items: center;
+      }
+      .digit-strip {
+        flex-direction: row;
+      }
+      .window {
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .static-m {
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+    
+        .title-container {
+            color: #1d1c1d;
+            text-shadow: #f4c5f0 1px 0px;
             position: absolute;
-            top: 0;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 7;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
             left: 0;
-            transition: transform 0.3s ease;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
         }
-        .digit {
-            width: 50px;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            font-size: 50px;
-            color: #242424;
-            background-color: #865906;
-            margin: 0;
-            padding: 0;
-            transition: color 0.5s ease, font-family 0.5s ease, opacity 0.5s ease;
-            font-family: 'Comic Sans MS', cursive, sans-serif; /* Default for all digits */
+
+        a {
+            color: inherit;
+            text-decoration: none;
         }
-        .digit.current {
-            color: #cca437;
-            opacity: 1;
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
         }
-        .digit:not(.current) {
-            opacity: 0.6;
-            font-family: 'Comic Sans MS', cursive, sans-serif; /* Non-current digits use Comic Sans */
-        }
-        .window {
+
+        .date-container {
+            color: #d3d2ce;
             position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 9;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+
+        .clock {
+            position: absolute;
+            width: 60vh;
+            height: 60vh;
             top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
             pointer-events: none;
         }
-        .ampm-group {
-            width: 50px;
-            height: 300px;
-            overflow: visible;
-            position: relative;
-            margin: 0;
-            padding: 0;
-        }
-        .ampm-group .digit {
-            font-family: 'Comic Sans MS', cursive, sans-serif; /* Default for AM/PM digits */
-        }
-        .ampm-group .digit.current {
-            color: #cca437;
-            opacity: 1;
-        }
-        .static-m {
-            width: 50px;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            font-size: 50px;
-            color: #cca437;
-            background-color: #865906;
+
+        .ball {
             position: absolute;
+            width: 15vh;
+            height: 15vh;
+            opacity: 0.8;
+            border-radius: 50%;
             top: 50%;
-            transform: translateY(-50%);
-            transition: opacity 0.5s ease;
-            opacity: 1;
-            font-family: 'Comic Sans MS', cursive, sans-serif; /* Static M uses Comic Sans */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9;
         }
-        @media screen and (max-width: 600px) {
-            .clock-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .digit-group, .ampm-group {
-                width: 300px;
-                height: 50px;
-                display: flex;
-                align-items: center;
-                margin: 0;
-                padding: 0;
-            }
-            .digit-strip {
-                flex-direction: row;
-                top: 0;
-                left: 0;
-            }
-            .digit {
-                width: 50px;
-                height: 50px;
-                line-height: 50px;
-                margin: 0;
-                padding: 0;
-            }
-            .window {
-                top: 0;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 50px;
-                height: 50px;
-            }
-            .static-m {
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
-                top: 0;
-            }
+
+        .hour {
+            background: rgb(55, 68, 239);
+        }
+
+        .minute {
+            background: #3f3;
+        }
+
+        .second {
+            background: rgb(250, 7, 3);
         }
     </style>
 </head>
+
 <body>
-    <div class="clock-container">
-        <div class="digit-group" id="hour-tens">
-            <div class="window"></div>
-        </div>
-        <div class="digit-group" id="hour-ones">
-            <div class="window"></div>
-        </div>
-        <div class="digit-group" id="minute-tens">
-            <div class="window"></div>
-        </div>
-        <div class="digit-group" id="minute-ones">
-            <div class="window"></div>
-        </div>
-        <div class="digit-group" id="second-tens">
-            <div class="window"></div>
-        </div>
-        <div class="digit-group" id="second-ones">
-            <div class="window"></div>
-        </div>
-        <div class="ampm-group" id="ampm-indicator">
-            <div class="window"></div>
-        </div>
-        <div class="ampm-group" id="static-m">
-            <div class="static-m">M</div>
-        </div>
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
     </div>
-    <script>
-        // List of fonts for random selection
-        const fonts = [
-            'Arial, sans-serif',
-            'Verdana, sans-serif',
-            'Helvetica, sans-serif',
-            'Times New Roman, serif',
-            'Georgia, serif',
-            'Courier New, monospace',
-            'sli, Comic Sans MS, cursive, sans-serif'
-        ];
 
-        // Function to get a random font
-        function getRandomFont(usedFonts) {
-            const availableFonts = fonts.filter(font => !usedFonts.includes(font));
-            if (availableFonts.length === 0) return fonts[Math.floor(Math.random() * fonts.length)]; // Fallback if all fonts used
-            const randomIndex = Math.floor(Math.random() * availableFonts.length);
-            return availableFonts[randomIndex];
-        }
 
-        // Generate digit strips (0-9) for each digit group
-        const digitGroups = [
-            'hour-tens', 'hour-ones', 
-            'minute-tens', 'minute-ones', 
-            'second-tens', 'second-ones'
-        ];
+    <div class="date-container">
+        <a href="../confetti/" class="dates dateleft">07/09/25</a>
+        <a href="../index.html" class="clockname">Sliding Clock</a>
+        <a href="../index.html"class="dates dateright">07/11/25</a>
+    </div>
+  <div class="clock-container">
+    <div class="digit-group" id="hour-tens"><div class="window"></div></div>
+    <div class="digit-group" id="hour-ones"><div class="window"></div></div>
+    <div class="digit-group" id="minute-tens"><div class="window"></div></div>
+    <div class="digit-group" id="minute-ones"><div class="window"></div></div>
+    <div class="digit-group" id="second-tens"><div class="window"></div></div>
+    <div class="digit-group" id="second-ones"><div class="window"></div></div>
+    <div class="ampm-group" id="ampm-indicator"><div class="window"></div></div>
+    <div class="ampm-group" id="static-m"><div class="static-m">M</div></div>
+  </div>
+  <script>
+    const digitGroups = ['hour-tens', 'hour-ones', 'minute-tens', 'minute-ones', 'second-tens', 'second-ones'];
+    const previousDigits = Array(6).fill(null);
 
-        digitGroups.forEach(groupId => {
-            const group = document.getElementById(groupId);
-            const strip = document.createElement('div');
-            strip.className = 'digit-strip';
-            const maxDigit = (groupId === 'hour-tens') ? 2 : 9; // Limit hour-tens to 0-2
-            for (let i = 0; i <= maxDigit; i++) {
-                const digit = document.createElement('div');
-                digit.className = 'digit';
-                digit.textContent = i;
-                strip.appendChild(digit);
-            }
-            group.appendChild(strip);
+    const digitSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--digit-height')) || 50;
+
+    digitGroups.forEach(id => {
+      const group = document.getElementById(id);
+      const strip = document.createElement('div');
+      strip.className = 'digit-strip';
+      const maxDigit = id === 'hour-tens' ? 2 : 9;
+      for (let i = 0; i <= maxDigit; i++) {
+        const digit = document.createElement('div');
+        digit.className = 'digit';
+        digit.textContent = i;
+        strip.appendChild(digit);
+      }
+      group.appendChild(strip);
+    });
+
+    const ampmGroup = document.getElementById('ampm-indicator');
+    const ampmStrip = document.createElement('div');
+    ampmStrip.className = 'digit-strip';
+    ['A', 'P'].forEach(letter => {
+      const digit = document.createElement('div');
+      digit.className = 'digit';
+      digit.textContent = letter;
+      ampmStrip.appendChild(digit);
+    });
+    ampmGroup.appendChild(ampmStrip);
+
+    function updateClock() {
+      const now = new Date();
+      let h = now.getHours();
+      const m = now.getMinutes().toString().padStart(2, '0');
+      const s = now.getSeconds().toString().padStart(2, '0');
+      const ampm = h >= 12 ? 'P' : 'A';
+      h = h % 12 || 12;
+      const hStr = h.toString().padStart(2, '0');
+      const digits = [...hStr, ...m, ...s];
+      const isMobile = window.innerWidth <= 600;
+
+      digitGroups.forEach((id, i) => {
+        const group = document.getElementById(id);
+        const strip = group.querySelector('.digit-strip');
+        const digitElements = strip.querySelectorAll('.digit');
+        const val = parseInt(digits[i]);
+        const groupRect = group.getBoundingClientRect();
+        const offset = isMobile
+          ? window.innerWidth / 2 - (groupRect.left + val * digitSize + digitSize / 2)
+          : window.innerHeight / 2 - (groupRect.top + val * digitSize + digitSize / 2);
+        strip.style.transform = isMobile ? `translateX(${offset}px)` : `translateY(${offset}px)`;
+        digitElements.forEach((d, j) => {
+          d.classList.toggle('current', j === val);
         });
+      });
 
-        // Generate AM/PM strip
-        const ampmGroup = document.getElementById('ampm-indicator');
-        const ampmStrip = document.createElement('div');
-        ampmStrip.className = 'digit-strip';
-        ['A', 'P'].forEach(letter => {
-            const digit = document.createElement('div');
-            digit.className = 'digit';
-            digit.textContent = letter;
-            ampmStrip.appendChild(digit);
-        });
-        ampmGroup.appendChild(ampmStrip);
+      const ampmDigits = ampmStrip.querySelectorAll('.digit');
+      const ampmIndex = ampm === 'A' ? 0 : 1;
+      const ampmRect = ampmGroup.getBoundingClientRect();
+      const ampmOffset = isMobile
+        ? window.innerWidth / 2 - (ampmRect.left + ampmIndex * digitSize + digitSize / 2)
+        : window.innerHeight / 2 - (ampmRect.top + ampmIndex * digitSize + digitSize / 2);
+      ampmStrip.style.transform = isMobile ? `translateX(${ampmOffset}px)` : `translateY(${ampmOffset}px)`;
+      ampmDigits.forEach((d, i) => {
+        d.classList.toggle('current', i === ampmIndex);
+      });
+    }
 
-        function updateClock() {
-            const now = new Date();
-            let hours = now.getHours();
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            const ampm = hours >= 12 ? 'P' : 'A';
-            hours = hours % 12 || 12; // Convert to 12-hour format
-            const hoursStr = hours.toString().padStart(2, '0');
-
-            const isMobile = window.innerWidth <= 600;
-            const digitWidth = 50;
-            const digitHeight = 50;
-
-            // Track used fonts to ensure each current digit gets a unique font
-            const usedFonts = [];
-
-            // Update time digits
-            const digits = [
-                hoursStr[0], hoursStr[1],
-                minutes[0], minutes[1],
-                seconds[0], seconds[1]
-            ];
-
-            digitGroups.forEach((groupId, index) => {
-                const group = document.getElementById(groupId);
-                const strip = group.querySelector('.digit-strip');
-                const digitElements = strip.querySelectorAll('.digit');
-                const digitValue = parseInt(digits[index]);
-                const groupRect = group.getBoundingClientRect();
-
-                let offset;
-                if (isMobile) {
-                    const digitCenterX = groupRect.left + (digitValue * digitWidth) + (digitWidth / 2);
-                    const viewportCenterX = window.innerWidth / 2;
-                    offset = viewportCenterX - digitCenterX;
-                } else {
-                    const digitCenterY = groupRect.top + (digitValue * digitHeight) + (digitHeight / 2);
-                    const viewportCenterY = window.innerHeight / 2;
-                    offset = viewportCenterY - digitCenterY;
-                }
-
-                if (isMobile) {
-                    strip.style.transform = `translateX(${offset}px)`;
-                } else {
-                    strip.style.transform = `translateY(${offset}px)`;
-                }
-
-                digitElements.forEach((digit, i) => {
-                    const isCurrent = i === digitValue;
-                    digit.classList.toggle('current', isCurrent);
-                    if (isCurrent) {
-                        digit.style.opacity = '0'; // Fade out
-                        const randomFont = getRandomFont(usedFonts);
-                        usedFonts.push(randomFont); // Track used font
-                        setTimeout(() => {
-                            digit.style.fontFamily = randomFont;
-                            digit.style.opacity = '1'; // Fade in
-                        }, 250);
-                    } else {
-                        digit.style.fontFamily = 'Comic Sans MS, cursive, sans-serif'; // Non-current digits
-                    }
-                });
-            });
-
-            // Update AM/PM indicator
-            const ampmStrip = ampmGroup.querySelector('.digit-strip');
-            const ampmDigits = ampmStrip.querySelectorAll('.digit');
-            const ampmIndex = ampm === 'A' ? 0 : 1;
-            const ampmRect = ampmGroup.getBoundingClientRect();
-
-            let ampmOffset;
-            if (isMobile) {
-                const digitCenterX = ampmRect.left + (ampmIndex * digitWidth) + (digitWidth / 2);
-                const viewportCenterX = window.innerWidth / 2;
-                ampmOffset = viewportCenterX - digitCenterX;
-            } else {
-                const digitCenterY = ampmRect.top + (ampmIndex * digitHeight) + (digitHeight / 2);
-                const viewportCenterY = window.innerHeight / 2;
-                ampmOffset = viewportCenterY - digitCenterY;
-            }
-
-            if (isMobile) {
-                ampmStrip.style.transform = `translateX(${ampmOffset}px)`;
-            } else {
-                ampmStrip.style.transform = `translateY(${ampmOffset}px)`;
-            }
-
-            ampmDigits.forEach((digit, i) => {
-                const isCurrent = i === ampmIndex;
-                digit.classList.toggle('current', isCurrent);
-                if (isCurrent) {
-                    digit.style.opacity = '0'; // Fade out
-                    const randomFont = getRandomFont(usedFonts);
-                    usedFonts.push(randomFont); // Track used font
-                    setTimeout(() => {
-                        digit.style.fontFamily = randomFont;
-                        digit.style.opacity = '1'; // Fade in
-                    }, 250);
-                } else {
-                    digit.style.fontFamily = 'Comic Sans MS, cursive, sans-serif'; // Non-current AM/PM
-                }
-            });
-
-            // Update static 'M' with fade effect
-            const staticM = document.querySelector('.static-m');
-            staticM.style.opacity = '0'; // Fade out
-            setTimeout(() => {
-                staticM.style.opacity = '1'; // Fade in
-            }, 250);
-        }
-
-        setInterval(updateClock, 1000); // Update every second
-        updateClock();
-
-        window.addEventListener('resize', updateClock);
-    </script>
+    setInterval(updateClock, 1000);
+    updateClock();
+    window.addEventListener('resize', updateClock);
+  </script>
 </body>
 </html>
