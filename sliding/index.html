@@ -16,7 +16,6 @@
             height: 100vh;
             margin: 0;
             background-color: #8c5948;
-            font-family: 'sli', 'Courier New', monospace;
             overflow: hidden;
         }
         .clock-container {
@@ -52,10 +51,16 @@
             background-color: #865906;
             margin: 0;
             padding: 0;
+            transition: color 0.5s ease, font-family 0.5s ease, opacity 0.5s ease;
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Default for all digits */
         }
         .digit.current {
             color: #cca437;
-            font-weight: bold;
+            opacity: 1;
+        }
+        .digit:not(.current) {
+            opacity: 0.6;
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Non-current digits use Comic Sans */
         }
         .window {
             position: absolute;
@@ -65,12 +70,42 @@
             height: 50px;
             pointer-events: none;
         }
+        .ampm-group {
+            width: 50px;
+            height: 300px;
+            overflow: visible;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+        .ampm-group .digit {
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Default for AM/PM digits */
+        }
+        .ampm-group .digit.current {
+            color: #cca437;
+            opacity: 1;
+        }
+        .static-m {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 50px;
+            color: #cca437;
+            background-color: #865906;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: opacity 0.5s ease;
+            opacity: 1;
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Static M uses Comic Sans */
+        }
         @media screen and (max-width: 600px) {
             .clock-container {
                 flex-direction: column;
                 align-items: center;
             }
-            .digit-group {
+            .digit-group, .ampm-group {
                 width: 300px;
                 height: 50px;
                 display: flex;
@@ -97,6 +132,12 @@
                 width: 50px;
                 height: 50px;
             }
+            .static-m {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                top: 0;
+            }
         }
     </style>
 </head>
@@ -120,8 +161,33 @@
         <div class="digit-group" id="second-ones">
             <div class="window"></div>
         </div>
+        <div class="ampm-group" id="ampm-indicator">
+            <div class="window"></div>
+        </div>
+        <div class="ampm-group" id="static-m">
+            <div class="static-m">M</div>
+        </div>
     </div>
     <script>
+        // List of fonts for random selection
+        const fonts = [
+            'Arial, sans-serif',
+            'Verdana, sans-serif',
+            'Helvetica, sans-serif',
+            'Times New Roman, serif',
+            'Georgia, serif',
+            'Courier New, monospace',
+            'sli, Comic Sans MS, cursive, sans-serif'
+        ];
+
+        // Function to get a random font
+        function getRandomFont(usedFonts) {
+            const availableFonts = fonts.filter(font => !usedFonts.includes(font));
+            if (availableFonts.length === 0) return fonts[Math.floor(Math.random() * fonts.length)]; // Fallback if all fonts used
+            const randomIndex = Math.floor(Math.random() * availableFonts.length);
+            return availableFonts[randomIndex];
+        }
+
         // Generate digit strips (0-9) for each digit group
         const digitGroups = [
             'hour-tens', 'hour-ones', 
@@ -133,7 +199,8 @@
             const group = document.getElementById(groupId);
             const strip = document.createElement('div');
             strip.className = 'digit-strip';
-            for (let i = 0; i < 10; i++) {
+            const maxDigit = (groupId === 'hour-tens') ? 2 : 9; // Limit hour-tens to 0-2
+            for (let i = 0; i <= maxDigit; i++) {
                 const digit = document.createElement('div');
                 digit.className = 'digit';
                 digit.textContent = i;
@@ -142,20 +209,38 @@
             group.appendChild(strip);
         });
 
+        // Generate AM/PM strip
+        const ampmGroup = document.getElementById('ampm-indicator');
+        const ampmStrip = document.createElement('div');
+        ampmStrip.className = 'digit-strip';
+        ['A', 'P'].forEach(letter => {
+            const digit = document.createElement('div');
+            digit.className = 'digit';
+            digit.textContent = letter;
+            ampmStrip.appendChild(digit);
+        });
+        ampmGroup.appendChild(ampmStrip);
+
         function updateClock() {
             const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
+            let hours = now.getHours();
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'P' : 'A';
+            hours = hours % 12 || 12; // Convert to 12-hour format
+            const hoursStr = hours.toString().padStart(2, '0');
 
             const isMobile = window.innerWidth <= 600;
-            const digitWidth = 50; // Fixed digit width
-            const digitHeight = 50; // Fixed digit height
+            const digitWidth = 50;
+            const digitHeight = 50;
 
-            // Update each digit group
+            // Track used fonts to ensure each current digit gets a unique font
+            const usedFonts = [];
+
+            // Update time digits
             const digits = [
-                hours[0], hours[1], 
-                minutes[0], minutes[1], 
+                hoursStr[0], hoursStr[1],
+                minutes[0], minutes[1],
                 seconds[0], seconds[1]
             ];
 
@@ -166,39 +251,90 @@
                 const digitValue = parseInt(digits[index]);
                 const groupRect = group.getBoundingClientRect();
 
-                // Calculate offset to center the current digit on the screen
                 let offset;
                 if (isMobile) {
-                    // Horizontal sliding: Center the current digit in the viewport's horizontal center
                     const digitCenterX = groupRect.left + (digitValue * digitWidth) + (digitWidth / 2);
                     const viewportCenterX = window.innerWidth / 2;
                     offset = viewportCenterX - digitCenterX;
                 } else {
-                    // Vertical sliding: Center the current digit in the viewport's vertical center
                     const digitCenterY = groupRect.top + (digitValue * digitHeight) + (digitHeight / 2);
                     const viewportCenterY = window.innerHeight / 2;
                     offset = viewportCenterY - digitCenterY;
                 }
 
-                // Apply transform to position the strip
                 if (isMobile) {
                     strip.style.transform = `translateX(${offset}px)`;
                 } else {
                     strip.style.transform = `translateY(${offset}px)`;
                 }
 
-                // Highlight current digit
                 digitElements.forEach((digit, i) => {
-                    digit.classList.toggle('current', i === digitValue);
+                    const isCurrent = i === digitValue;
+                    digit.classList.toggle('current', isCurrent);
+                    if (isCurrent) {
+                        digit.style.opacity = '0'; // Fade out
+                        const randomFont = getRandomFont(usedFonts);
+                        usedFonts.push(randomFont); // Track used font
+                        setTimeout(() => {
+                            digit.style.fontFamily = randomFont;
+                            digit.style.opacity = '1'; // Fade in
+                        }, 250);
+                    } else {
+                        digit.style.fontFamily = 'Comic Sans MS, cursive, sans-serif'; // Non-current digits
+                    }
                 });
             });
+
+            // Update AM/PM indicator
+            const ampmStrip = ampmGroup.querySelector('.digit-strip');
+            const ampmDigits = ampmStrip.querySelectorAll('.digit');
+            const ampmIndex = ampm === 'A' ? 0 : 1;
+            const ampmRect = ampmGroup.getBoundingClientRect();
+
+            let ampmOffset;
+            if (isMobile) {
+                const digitCenterX = ampmRect.left + (ampmIndex * digitWidth) + (digitWidth / 2);
+                const viewportCenterX = window.innerWidth / 2;
+                ampmOffset = viewportCenterX - digitCenterX;
+            } else {
+                const digitCenterY = ampmRect.top + (ampmIndex * digitHeight) + (digitHeight / 2);
+                const viewportCenterY = window.innerHeight / 2;
+                ampmOffset = viewportCenterY - digitCenterY;
+            }
+
+            if (isMobile) {
+                ampmStrip.style.transform = `translateX(${ampmOffset}px)`;
+            } else {
+                ampmStrip.style.transform = `translateY(${ampmOffset}px)`;
+            }
+
+            ampmDigits.forEach((digit, i) => {
+                const isCurrent = i === ampmIndex;
+                digit.classList.toggle('current', isCurrent);
+                if (isCurrent) {
+                    digit.style.opacity = '0'; // Fade out
+                    const randomFont = getRandomFont(usedFonts);
+                    usedFonts.push(randomFont); // Track used font
+                    setTimeout(() => {
+                        digit.style.fontFamily = randomFont;
+                        digit.style.opacity = '1'; // Fade in
+                    }, 250);
+                } else {
+                    digit.style.fontFamily = 'Comic Sans MS, cursive, sans-serif'; // Non-current AM/PM
+                }
+            });
+
+            // Update static 'M' with fade effect
+            const staticM = document.querySelector('.static-m');
+            staticM.style.opacity = '0'; // Fade out
+            setTimeout(() => {
+                staticM.style.opacity = '1'; // Fade in
+            }, 250);
         }
 
-        // Update clock every 100ms for smooth transitions
-        setInterval(updateClock, 100);
-        updateClock(); // Initial update
+        setInterval(updateClock, 1000); // Update every second
+        updateClock();
 
-        // Update on window resize
         window.addEventListener('resize', updateClock);
     </script>
 </body>
