@@ -15,14 +15,14 @@
       --hand-hour-height: 10vh;
       --hand-minute-height: 19vh;
       --hand-second-height: 12vh;
-      --number-font-size: 2.2rem;
+      --number-font-size: 2.8rem;
       --number-translate-y: 32vh;
       --center-size: 3.9vh;
     }
 
     @font-face {
       font-family: 'fib';
-      src: url('fib.ttf') format('truetype');
+      src: url('fib.otf') format('opentype');
     }
 
     html, body {
@@ -31,7 +31,7 @@
     }
 
     body {
-      background-color: #070606;
+      background-color: #cac7c7;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -54,8 +54,8 @@
       transform-origin: center;
       font-family: 'fib';
       font-size: var(--number-font-size);
-      color: #f1c72f;
-      text-shadow: #0a233c 0.2rem 0.06rem;
+      color: #171715;
+      text-shadow: #f1c72f 0.2rem 0.06rem;
     }
 
     .number div {
@@ -68,8 +68,8 @@
       bottom: 50%;
       left: 50%;
       transform-origin: bottom;
-      background-color: #f1c72f;
-      filter: drop-shadow(0.2rem 0.06rem rgba(0, 0, 0, 1.0));
+      background-color: #191918;
+      filter: drop-shadow(0.2rem 0.06rem  rgb(231, 196, 23));
     }
         .hour-hand {
       width: 1vh;
@@ -99,7 +99,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      opacity: ;
+      opacity: 0.1;
     }
 
     .bgimage {
