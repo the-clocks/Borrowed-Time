@@ -13,7 +13,7 @@
     :root {
       --clock-size: 0vh;
       --hand-hour-height: 10vh;
-      --hand-minute-height: 13vh;
+      --hand-minute-height: 19vh;
       --hand-second-height: 12vh;
       --number-font-size: 3.3rem;
       --number-translate-y: 28vh;
@@ -55,7 +55,7 @@
       font-family: 'fib';
       font-size: var(--number-font-size);
       color: #f1c72f;
-      text-shadow: #0a233c 0.2rem 0.06rem, #f3f4f5 0 -0.06rem 0.19rem, #4b8fd4 0 0.13rem 0;
+      text-shadow: #0a233c 0.2rem 0.06rem;
     }
 
     .number div {
@@ -63,22 +63,22 @@
       transform: translate(-50%, calc(-1 * var(--number-translate-y)));
     }
 
-    .hand {
+     .hand {
       position: absolute;
       bottom: 50%;
       left: 50%;
       transform-origin: bottom;
-      background-color: #f0d630;
+      background-color: #f1c72f;
+      filter: drop-shadow(0.2rem 0.06rem rgba(0, 0, 0, 1.0));
     }
-
-    .hour-hand {
-      width: 0.6vh;
+        .hour-hand {
+      width: 1vh;
       height: var(--hand-hour-height);
       border-radius: 0.4vh;
     }
 
     .minute-hand {
-      width: 0.4vh;
+      width: 0.7vh;
       height: var(--hand-minute-height);
       border-radius: 0.3vh;
     }
@@ -109,7 +109,7 @@
       width: 150vmax;
       height: 150vmax;
       object-fit: cover;
-      filter: contrast(0.7) brightness(1.3);
+      filter: contrast(0.3) brightness(1.6) saturate(0.2);
       z-index: 1;
       animation: slow-rotate 60s linear infinite;
       transform-origin: center center;
