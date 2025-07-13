@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tiled Digital Clock Grid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=block"
+    rel="stylesheet">
+  <style>
+    :root {
+      --clock-width: 15rem;
+      --clock-height: 18rem;
+      --clock-font-size: 1rem;
+      --clock-color: rgb(116, 114, 120);
+      --horizontal-grid-gap: 2.7rem;
+      --vertical-grid-gap: -.1rem; /* Adjusted vertical gap */
+    }
+
+    @font-face {
+      font-family: 'Pen';
+      src: url('Pen.ttf') format('truetype');
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #e8df92;
+    }
+
+    .grid {
+      display: grid;
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      column-gap: var(--horizontal-grid-gap);
+      row-gap: var(--vertical-grid-gap);
+    }
+
+    .clock {
+      font-family: 'Pen';
+      font-size: var(--clock-font-size);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--clock-color);
+      margin: 0;
+      padding: 0;
+    }
+
+    .ampm {
+      font-size: var(--clock-font-size);
+      text-transform: lowercase;
+    }
+
+    .date-container, .title-container {
+      position: fixed;
+      width: 98%;
+      z-index: 10;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      color: #ec2805;
+    }
+
+    .date-container {
+      bottom: 5px;
+    }
+
+    .title-container {
+      top: 5px;
+      color: #e30909;
+      text-shadow: #f0f0ec 1px 0px;
+    }
+
+    .clockname {
+      font-family: "Oxanium", serif;
+      font-size: 4vh;
+      line-height: 4vh;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.8vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      letter-spacing: 0.1vh;
+    }
+
+    .bttitle {
+      font-family: "Oxanium", serif;
+      font-size: 2.8vh;
+      font-style: italic;
+      letter-spacing: -0.1vh;
+      position: relative;
+      left: 0;
+      z-index: 15;
+    }
+
+    .dateleft, .dateright {
+      font-family: "Nanum Gothic Coding", monospace;
+      font-size: 3vh;
+    }
+
+    .dateleft {
+      position: relative;
+      left: 0;
+    }
+
+    .dateright {
+      position: absolute;
+      right: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+    }
+  </style>
+</head>
+<body>
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
+
+  <div class="date-container">
+    <a href="../sliding" class="dates dateleft">07/10/25</a>
+    <a href="../index.html" class="clockname">Penmanship</a>
+    <a href="../index.html" class="dates dateright">07/12/25</a>
+  </div>
+
+  <div class="grid" id="clock-grid"></div>
+
+  <script>
+    function getCSSVariable(name) {
+      return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
+    }
+
+   function updateAllClocks() {
+  const now = new Date();
+  let hours = now.getHours();
+  const minutes = now.getMinutes();
+  const ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  if (hours === 0) hours = 12;
+  const paddedMinutes = String(minutes).padStart(2, '0');
+  const timeString = ` &nbsp;&nbsp;&nbsp; ${hours}:${paddedMinutes}&nbsp;<span class="ampm">${ampm}</span>`;
+  document.querySelectorAll('.clock').forEach(clock => {
+    clock.innerHTML = timeString;
+  });
+}
+
+    function generateClocks() {
+      const grid = document.getElementById('clock-grid');
+      grid.innerHTML = ''; // Clear existing clocks
+
+      const clockWidth = getCSSVariable('--clock-width');
+      const clockHeight = getCSSVariable('--clock-height');
+
+      const columns = Math.ceil(window.innerWidth / clockWidth);
+      const rows = Math.ceil(window.innerHeight / clockHeight);
+      const clockCount = columns * rows;
+
+      const actualClockWidth = window.innerWidth / columns;
+      const actualClockHeight = window.innerHeight / rows;
+
+      grid.style.gridTemplateColumns = `repeat(${columns}, ${actualClockWidth}px)`;
+      grid.style.gridTemplateRows = `repeat(${rows}, ${actualClockHeight}px)`;
+
+      for (let i = 0; i < clockCount; i++) {
+        const div = document.createElement('div');
+        div.className = 'clock';
+        div.innerHTML = ' --:--<span class="ampm">--</span>';
+        grid.appendChild(div);
+      }
+
+      updateAllClocks();
+    }
+
+    generateClocks();
+    setInterval(updateAllClocks, 1000);
+    window.addEventListener('resize', generateClocks);
+  </script>
+</body>
+</html>
