@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Animated Clock with Image Hands</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgb(101, 102, 103);
+    }
+
+    #clock-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+
+    #clock {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    #clock span {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transform: rotate(calc(30deg * var(--i)));
+      inset: 0;
+    }
+
+   #clock span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transform: rotate(calc(30deg * var(--i))) translateY(-5px); /* <== This line */
+  inset: 0;
+}
+
+    #clock span img {
+      width: var(--img-width, 37.5px);
+      height: var(--img-height, 37.5px);
+      object-fit: contain;
+    }
+
+    .clock {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom center;
+      transform: translateX(-50%);
+      pointer-events: none;
+      transition: transform 0.5s ease-in-out;
+      z-index: 10;
+    }
+
+    .hand.hour-hand {
+      height: 90px;
+      width: auto;
+      opacity: 0.7;
+      filter: brightness(2.4) saturate(0%) contrast(90%);
+    }
+
+    .hand.min-hand {
+      height: 120px;
+      width: auto;
+      opacity: 0.7;
+    }
+
+    .hand.second-hand {
+      height: 140px;
+      width: auto;
+      opacity: 0.7;
+      transition: transform 0.1s linear;
+     filter: brightness(1.4) saturate(0%) contrast(100%);
+    }
+
+    .no-transition {
+      transition: none !important;
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    #clock span:nth-child(1) { --img-width: 95px; --img-height: 95px; }
+    #clock span:nth-child(2) { --img-width: 111.25px; --img-height: 111.25px; }
+    #clock span:nth-child(3) { --img-width: 112.5px; --img-height: 112.5px; }
+    #clock span:nth-child(4) { --img-width: 97.5px; --img-height: 97.5px; }
+    #clock span:nth-child(5) { --img-width: 98.75px; --img-height: 98.75px; }
+    #clock span:nth-child(6) { --img-width: 95px; --img-height: 95px; }
+    #clock span:nth-child(7) { --img-width: 91.25px; --img-height: 91.25px; }
+    #clock span:nth-child(8) { --img-width: 95px; --img-height: 95px; }
+    #clock span:nth-child(9) { --img-width: 92.5px; --img-height: 92.5px; }
+    #clock span:nth-child(10) { --img-width: 97.5px; --img-height: 91.25px; }
+    #clock span:nth-child(11) { --img-width: 91.25px; --img-height: 91.25px; }
+    #clock span:nth-child(12) { --img-width: 108.75px; --img-height: 108.75px; }
+  </style>
+</head>
+
+<body>
+  <div id="clock-container">
+    <div id="clock">
+      <span style="--i: 1; --j: 1;"><i><img src="./digits/1.gif"></i></span>
+      <span style="--i: 2; --j: 2;"><i><img src="./digits/number-two.gif"></i></span>
+      <span style="--i: 3; --j: 3;"><i><img src="./digits/dancing-number-dancing-letter.gif"></i></span>
+      <span style="--i: 4; --j: 4;"><i><img src="./digits/kochstrasse-fussball.gif"></i></span>
+      <span style="--i: 5; --j: 5;"><i><img src="./digits/2to5-rolling.gif"></i></span>
+      <span style="--i: 6; --j: 6;"><i><img src="./digits/6.gif"></i></span>
+      <span style="--i: 7; --j: 7;"><i><img src="./digits/agenturleben-agencylife.gif"></i></span>
+      <span style="--i: 8; --j: 8;"><i><img src="./digits/number-8-gif.gif"></i></span>
+      <span style="--i: 9; --j: 9;"><i><img src="./digits/numero-9.gif"></i></span>
+      <span style="--i: 10; --j: 10;"><i><img src="./digits/tv10-sweden-tv3-sweden.gif"></i></span>
+      <span style="--i: 11; --j: 11;"><i><img src="./digits/11.gif"></i></span>
+      <span style="--i: 12; --j: 12;"><i><img src="./digits/goura-goura12.gif"></i></span>
+      <div class="clock">
+        <img class="hand hour-hand" src="./cart.gif" />
+        <img class="hand min-hand" src="./ca.gif" />
+        <img class="hand second-hand" src="./car.gif" />
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const secondHand = document.querySelector('.second-hand');
+      const minsHand = document.querySelector('.min-hand');
+      const hourHand = document.querySelector('.hour-hand');
+
+      function setDate() {
+        const now = new Date();
+
+        // Seconds
+        const seconds = now.getSeconds();
+        const secondsDegrees = (seconds / 60) * 360;
+        if (seconds === 0) {
+          secondHand.classList.add('no-transition');
+        } else {
+          secondHand.classList.remove('no-transition');
+        }
+        secondHand.style.transform = `translateX(-50%) rotate(${secondsDegrees}deg)`;
+
+        // Minutes
+        const mins = now.getMinutes();
+        const minsDegrees = (mins / 60) * 360 + (seconds / 60) * 6;
+        if (mins === 0 && seconds === 0) {
+          minsHand.classList.add('no-transition');
+        } else {
+          minsHand.classList.remove('no-transition');
+        }
+        minsHand.style.transform = `translateX(-50%) rotate(${minsDegrees}deg)`;
+
+        // Hours (12-hour format)
+        const hour = now.getHours() % 12 || 12;
+        const hourDegrees = (hour / 12) * 360 + (mins / 60) * 30;
+        if (hour === 12 && mins === 0 && seconds === 0) {
+          hourHand.classList.add('no-transition');
+        } else {
+          hourHand.classList.remove('no-transition');
+        }
+        hourHand.style.transform = `translateX(-50%) rotate(${hourDegrees}deg)`;
+      }
+
+      setInterval(setDate, 1000);
+      setDate();
+    });
+  </script>
+</body>
+</html>
