@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Möbius Strip with Scrolling Clock</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #650955 0%, #ff69b4 100%);
+    }
+    canvas {
+      display: block;
+      background-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
+    document.body.appendChild(renderer.domElement);
+
+    const clockCanvas = document.createElement('canvas');
+    clockCanvas.width = 512;
+    clockCanvas.height = 128;
+    const clockContext = clockCanvas.getContext('2d');
+
+    const clockTexture = new THREE.CanvasTexture(clockCanvas);
+    clockTexture.minFilter = THREE.LinearFilter;
+    clockTexture.wrapS = THREE.RepeatWrapping;
+    clockTexture.wrapT = THREE.RepeatWrapping;
+
+    const geometry = new THREE.ParametricGeometry((u, v, target) => {
+      const r = 1;
+      const w = 0.2;
+      const theta = u * Math.PI * 2;
+      const t = v * 2 - 1;
+      const x = (r + w * t * Math.cos(theta / 2)) * Math.cos(theta);
+      const y = (r + w * t * Math.cos(theta / 2)) * Math.sin(theta);
+      const z = w * t * Math.sin(theta / 2);
+      target.set(x, y, z);
+    }, 100, 20);
+
+    const material = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      map: clockTexture,
+      side: THREE.DoubleSide,
+      metalness: 0.2,
+      roughness: 0.3,
+    });
+
+    const mobius = new THREE.Mesh(geometry, material);
+    scene.add(mobius);
+
+    scene.add(new THREE.AmbientLight(0x404040));
+    const pointLight = new THREE.PointLight(0xffffff, 1.2);
+    pointLight.position.set(5, 5, 5);
+    scene.add(pointLight);
+
+    camera.position.z = 3;
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+
+    let lastMinute = null;
+    let timeString = '';
+
+    function updateClockTexture() {
+      const now = new Date();
+      const currentMinute = now.getMinutes();
+      let currentHour = now.getHours();
+
+      const ampm = currentHour >= 12 ? 'PM' : 'AM';
+      currentHour = currentHour % 12 || 12;
+
+      if (currentMinute !== lastMinute) {
+        lastMinute = currentMinute;
+        const hourStr = currentHour.toString();
+        const minuteStr = currentMinute.toString().padStart(2, '0');
+        timeString = `${hourStr}:${minuteStr} ${ampm}`;
+      }
+
+      clockContext.clearRect(0, 0, clockCanvas.width, clockCanvas.height);
+
+      clockContext.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      clockContext.fillRect(0, 0, clockCanvas.width, clockCanvas.height);
+
+      clockContext.font = '110px Georgia';
+      clockContext.fillStyle = '#000000';
+      clockContext.textBaseline = 'middle';
+      clockContext.textAlign = 'left';
+
+      // Draw timeString only once
+      clockContext.fillText(timeString, 10, clockCanvas.height / 2);
+
+      clockTexture.needsUpdate = true;
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      mobius.rotation.x += 0.003;
+      mobius.rotation.y += 0.005;
+      mobius.rotation.z += 0.002;
+
+      controls.update();
+
+      updateClockTexture();
+
+      clockTexture.offset.x -= 0.002;
+      if (clockTexture.offset.x < -1) {
+        clockTexture.offset.x += 1;
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>

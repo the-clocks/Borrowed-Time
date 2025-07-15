@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digital Clock with Mirror</title>
+  <style>
+    @font-face {
+      font-family: 'ror';
+      src: url('./ror.ttf') format('truetype');
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f5f0f0;
+      position: relative;
+    }
+
+    .clock-container {
+      font-family: 'ror', monospace, sans-serif;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .clock {
+      font-weight: bold;
+      color: #333;
+      white-space: nowrap;
+      display: flex;
+      padding: 0;
+      margin: 0;
+      opacity: 1;
+      transition: opacity 1.5s ease;
+    }
+
+    .clock span {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      letter-spacing: -0.4em;
+      line-height: 1;
+      vertical-align: baseline;
+    }
+
+    /* AM/PM letters get class ampm but size is set inline in JS */
+    .ampm {
+      letter-spacing: normal;
+      line-height: 1;
+      vertical-align: baseline;
+    }
+
+    .right {
+      right: calc(50% - 200px);
+    }
+
+    .right .clock {
+      transform: rotate(90deg);
+    }
+
+    .left {
+      left: calc(50% - 200px);
+    }
+
+    .left .clock {
+      transform: rotate(-90deg) scaleX(-1);
+    }
+    .title-container {
+      color: #4b2c04;
+      text-shadow: #dee3e3 1px 0px;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
+
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.8vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      letter-spacing: 0.1vh;
+    }
+
+    .bttitle {
+      position: relative;
+      left: 0;
+      font-family: "Oxanium", serif;
+      font-size: 2.8vh;
+      font-style: italic;
+      z-index: 15;
+      letter-spacing: -0.1vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+      text-decoration: none;
+    }
+
+    .date-container {
+      color: #f3dee7;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
+
+    .clockname {
+      font-family: "Oxanium", serif;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 4vh;
+      line-height: 4vh;
+    }
+
+    .dateleft {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: relative;
+      left: 0;
+    }
+
+    .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: absolute;
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
+  <div class="date-container">
+    <a href="../treehouse/" class="dates dateleft">067/12/25</a>
+    <a href="../index.html" class="clockname">Rorshcach</a>
+   <a href="../index.html"  class="dates dateright">07/14/25</a>
+  </div>
+  <div class="clock-container left">
+    <div id="mirrorClock" class="clock">00:00<span class="ampm">AM</span></div>
+  </div>
+  <div class="clock-container right">
+    <div id="clock" class="clock">00:00<span class="ampm">AM</span></div>
+  </div>
+
+  <script>
+    function getRandomFontSize(min = 50, max = 140) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function wrapDigits(timeStr, ampm) {
+      // Each digit random size 50-140px
+      const digitsHtml = timeStr
+        .split('')
+        .map(char => {
+          const size = getRandomFontSize();
+          return `<span style="font-size: ${size}px;">${char}</span>`;
+        })
+        .join('');
+
+      // Each AM/PM letter random size 20-40px
+      const ampmHtml = ampm
+        .split('')
+        .map(char => {
+          const size = getRandomFontSize(20, 40);
+          return `<span style="font-size: ${size}px;" class="ampm">${char}</span>`;
+        })
+        .join('');
+
+      return digitsHtml + ampmHtml;
+    }
+
+    function formatTime(date) {
+      let hours = date.getHours();
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      if (hours === 0) hours = 12; // 12-hour format
+      return {
+        timeString: `${hours}:${minutes}`,
+        ampm
+      };
+    }
+
+    function fadeUpdateClock() {
+      const clock = document.getElementById('clock');
+      const mirrorClock = document.getElementById('mirrorClock');
+
+      // Fade out both clocks
+      clock.style.opacity = 0;
+      mirrorClock.style.opacity = 0;
+
+      setTimeout(() => {
+        const now = new Date();
+        const { timeString, ampm } = formatTime(now);
+
+        // Generate wrapped HTML once, reuse for mirror
+        const wrapped = wrapDigits(timeString, ampm);
+
+        clock.innerHTML = wrapped;
+        mirrorClock.innerHTML = wrapped;
+
+        // Fade in both clocks
+        clock.style.opacity = 1;
+        mirrorClock.style.opacity = 1;
+      }, 1500);
+    }
+
+    function startClock() {
+      fadeUpdateClock();
+      setInterval(fadeUpdateClock, 5000);
+    }
+
+    startClock();
+  </script>
+</body>
+</html>
