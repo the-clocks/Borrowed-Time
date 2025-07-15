@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Penmanship Clock </title>
+  <title>Penmanship Clock</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -10,12 +10,12 @@
     rel="stylesheet">
   <style>
     :root {
-      --clock-width: 256rem;
-      --clock-height: 83rem;
-      --clock-font-size: 5rem;
+      --clock-width: 18vw;
+      --clock-height: 8.2vh;
+      --clock-font-size: 7.6vw;
       --clock-color: rgb(116, 114, 120);
-      --horizontal-grid-gap: 5.2rem;
-      --vertical-grid-gap: -.01rem; /* Adjusted vertical gap */
+      --horizontal-grid-gap: 9vw;
+      --vertical-grid-gap: .1vh;
     }
 
     @font-face {
@@ -61,7 +61,7 @@
 
     .date-container, .title-container {
       position: fixed;
-      width: 98%;
+      width: 98vw;
       z-index: 10;
       left: 50%;
       transform: translateX(-50%);
@@ -70,13 +70,13 @@
     }
 
     .date-container {
-      bottom: 5px;
+      bottom: 0.5vh;
     }
 
     .title-container {
-      top: 5px;
+      top: 0.5vh;
       color: #c20303;
-      text-shadow: #f0f0ec 1px 0px;
+      text-shadow: #f0f0ec 0.1vw 0px;
     }
 
     .clockname {
@@ -92,8 +92,8 @@
       font-family: "Roboto Slab", serif;
       font-size: 2.8vh;
       position: absolute;
-      top: 1px;
-      right: 1px;
+      top: 0.3vh;
+      right: 0.3vw;
       letter-spacing: 0.1vh;
     }
 
@@ -152,26 +152,26 @@
       return parseFloat(getComputedStyle(document.documentElement).getPropertyValue(name));
     }
 
-   function updateAllClocks() {
-  const now = new Date();
-  let hours = now.getHours();
-  const minutes = now.getMinutes();
-  const ampm = hours >= 12 ? 'pm' : 'am';
-  hours = hours % 12;
-  if (hours === 0) hours = 12;
-  const paddedMinutes = String(minutes).padStart(2, '0');
-  const timeString = ` &nbsp;&nbsp;&nbsp; ${hours}:${paddedMinutes}&nbsp;<span class="ampm">${ampm}</span>`;
-  document.querySelectorAll('.clock').forEach(clock => {
-    clock.innerHTML = timeString;
-  });
-}
+    function updateAllClocks() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      if (hours === 0) hours = 12;
+      const paddedMinutes = String(minutes).padStart(2, '0');
+      const timeString = `&nbsp;&nbsp;&nbsp;${hours}:${paddedMinutes}&nbsp;<span class="ampm">${ampm}</span>`;
+      document.querySelectorAll('.clock').forEach(clock => {
+        clock.innerHTML = timeString;
+      });
+    }
 
     function generateClocks() {
       const grid = document.getElementById('clock-grid');
       grid.innerHTML = ''; // Clear existing clocks
 
-      const clockWidth = getCSSVariable('--clock-width');
-      const clockHeight = getCSSVariable('--clock-height');
+      const clockWidth = getCSSVariable('--clock-width') * window.innerWidth / 100;
+      const clockHeight = getCSSVariable('--clock-height') * window.innerHeight / 100;
 
       const columns = Math.ceil(window.innerWidth / clockWidth);
       const rows = Math.ceil(window.innerHeight / clockHeight);
@@ -186,7 +186,7 @@
       for (let i = 0; i < clockCount; i++) {
         const div = document.createElement('div');
         div.className = 'clock';
-        div.innerHTML = ' --:--<span class="ampm">--</span>';
+        div.innerHTML = '--:--<span class="ampm">--</span>';
         grid.appendChild(div);
       }
 
