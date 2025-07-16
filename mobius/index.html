@@ -3,20 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Möbius Strip with Scrolling Clock</title>
-  <style>
+  <title>Möbius Strip Clock</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=block"
+    rel="stylesheet"><style>
     body {
       margin: 0;
       overflow: hidden;
-      background: radial-gradient(circle at center, #650955 0%, #ff69b4 100%);
+      background: radial-gradient(circle at center, #e39dd8 0%, #ffee69 100%);
     }
     canvas {
       display: block;
       background-color: transparent;
     }
+    
+
+    .date-container, .title-container {
+      position: fixed;
+      width: 98vw;
+      z-index: 10;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      color: #743c3c;
+    }
+
+    .date-container {
+      bottom: 0.5vh;
+    }
+
+    .title-container {
+      top: 0.5vh;
+      color: #dcabab;
+      text-shadow: #343432 0.1vw 0px;
+    }
+
+    .clockname {
+      font-family: "Oxanium", serif;
+      font-size: 4vh;
+      line-height: 4vh;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.8vh;
+      position: absolute;
+      top: 0.3vh;
+      right: 0.3vw;
+      letter-spacing: 0.1vh;
+    }
+
+    .bttitle {
+      font-family: "Oxanium", serif;
+      font-size: 2.8vh;
+      font-style: italic;
+      letter-spacing: -0.1vh;
+      position: relative;
+      left: 0;
+      z-index: 15;
+    }
+
+    .dateleft, .dateright {
+      font-family: "Nanum Gothic Coding", monospace;
+      font-size: 3vh;
+    }
+
+    .dateleft {
+      position: relative;
+      left: 0;
+    }
+
+    .dateright {
+      position: absolute;
+      right: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+    }
   </style>
 </head>
 <body>
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
+
+  <div class="date-container">
+    <a href="../ascii/"  class="dates dateleft">07/15/25</a>
+    <a href="../index.html" class="clockname">Möbius Strip</a>
+    <a href="../index.html"  class="dates dateright">07/17/25</a>
+  </div>
+
   <script type="importmap">
     {
       "imports": {
