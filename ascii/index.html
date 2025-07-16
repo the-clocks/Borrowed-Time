@@ -33,27 +33,17 @@
       letter-spacing: 0.3;
       font-family: 'ascii';
       display: flex;
-      flex-direction: row;
-      gap: 0.1rem;
-      flex-wrap: nowrap;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
     }
 
     .digit-group {
       display: flex;
       flex-direction: column;
+      text-align: center;
     }
 
-    @media (max-width: 600px) {
-      #clock {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.2rem;
-      }
-      .digit-group {
-        flex-direction: row;
-        flex-wrap: nowrap;
-      }
-    }
     .title-container {
       color: #a2a2a0;
       text-shadow: #100f0f 1px 0px;
@@ -134,239 +124,90 @@
         transform: translateX(25vw) rotate(26deg);
       }
     }
-     .bgimage {
+    .bgimage {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh; 
       background-repeat: repeat;
-       transform: scaleX(-1);
-       filter: invert(0.9) brightness(0.5);
+      transform: scaleX(-1);
+      filter: invert(0.9) brightness(0.5);
       z-index: -1;
     }
   </style>
 </head>
 <body>
-    <img src="./ascii.jpg" class="bgimage">
-    <div class="title-container">
-      <div class="chltitle">Cubist Heart Laboratories</div>
-      <div class="bttitle">BorrowedTime</div>
-    </div>
-    <div class="date-container">
-      <a href="../cartoon/" class="dates dateleft">07/14/25</a>
-      <a href="../index.html" class="clockname">ASCII</a>
-      <a href="../mobius" class="dates dateright">07/16/25</a>
-    </div>
+  <img src="./ascii.jpg" class="bgimage" />
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
+  <div class="date-container">
+    <a href="../cartoon/" class="dates dateleft">07/14/25</a>
+    <a href="../index.html" class="clockname">ASCII</a>
+    <a href="../mobius" class="dates dateright">07/16/25</a>
+  </div>
 
-<div id="clock"></div>
+  <div id="clock"></div>
 
-<script>
-const DIGITS = {
-  '0': [
-    " 00000 ",
-    "00   00",
-    "00   00",
-    "00   00",
-    "00   00",
-    "00   00",
-    " 00000 ",
-    "       "
-  ],
-  '1': [
-    "   11  ",
-    "  111  ",
-    " 1 11  ",
-    "   11  ",
-    "   11  ",
-    "   11  ",
-    " 111111",
-    "       "
-  ],
-  '2': [
-    " 22222 ",
-    "22   22",
-    "    22 ",
-    "   22  ",
-    "  22   ",
-    " 22    ",
-    "2222222",
-    "       "
-  ],
-  '3': [
-    " 33333 ",
-    "33   33",
-    "     33",
-    "  3333 ",
-    "     33",
-    "33   33",
-    " 33333 ",
-    "       "
-  ],
-  '4': [
-    "   44  ",
-    "  444  ",
-    " 4 44  ",
-    "4  44  ",
-    "4444444",
-    "   44  ",
-    "   44  ",
-    "       "
-  ],
-  '5': [
-    "5555555",
-    "55     ",
-    "55555  ",
-    "    55 ",
-    "     55",
-    "55   55",
-    " 55555 ",
-    "       "
-  ],
-  '6': [
-    " 66666 ",
-    "66     ",
-    "66666  ",
-    "66  66 ",
-    "66  66 ",
-    "66  66 ",
-    " 66666 ",
-    "       "
-  ],
-  '7': [
-    "7777777",
-    "     77",
-    "    77 ",
-    "   77  ",
-    "  77   ",
-    " 77    ",
-    "77     ",
-    "       "
-  ],
-  '8': [
-    " 88888 ",
-    "88   88",
-    "88   88",
-    " 88888 ",
-    "88   88",
-    "88   88",
-    " 88888 ",
-    "       "
-  ],
-  '9': [
-    " 99999 ",
-    "99   99",
-    "99   99",
-    " 999999",
-    "     99",
-    "    99 ",
-    " 9999  ",
-    "       "
-  ],
-  ':': [
-    " ",
-    ":",
-    " ",
-    " ",
-    ":",
-    " ",
-    " ",
-    " "
-  ],
-  'A': [
-    "   AA  ",
-    "  A  A ",
-    " A    A",
-    " AAAAAA",
-    " A    A",
-    " A    A",
-    "A      A",
-    "       "
-  ],
-  'M': [
-    "M     M",
-    "MM   MM",
-    "M M M M",
-    "M  M  M",
-    "M     M",
-    "M     M",
-    "M     M",
-    "       "
-  ],
-  'P': [
-    "PPPPP  ",
-    "P    P ",
-    "P    P ",
-    "PPPPP  ",
-    "P      ",
-    "P      ",
-    "P      ",
-    "       "
-  ]
-};
+  <script>
+    const DIGITS = {
+      '0': [" 00000 ","00   00","00   00","00   00","00   00","00   00"," 00000 ","       "],
+      '1': ["   11  ","  111  "," 1 11  ","   11  ","   11  ","   11  "," 111111","       "],
+      '2': [" 22222 ","22   22","    22 ","   22  ","  22   "," 22    ","2222227","       "],
+      '3': [" 33333 ","33   33","     33","  3333 ","     33","33   33"," 33333 ","       "],
+      '4': ["   44  ","  444  "," 4 44  ","4  44  ","4444444","   44  ","   44  ","       "],
+      '5': ["5555555","55     ","55555  ","    55 ","     55","55   55"," 55555 ","       "],
+      '6': [" 66666 ","66     ","66666  ","66  66 ","66  66 ","66  66 "," 66666 ","       "],
+      '7': ["7777777","     77","    77 ","   77  ","  77   "," 77    ","77     ","       "],
+      '8': [" 88888 ","88   88","88   88"," 88888 ","88   88","88   88"," 88888 ","       "],
+      '9': [" 99999 ","99   99","99   99"," 999999","     99","    99 "," 9999  ","       "],
+      'A': ["   AA  ","  A  A "," A    A"," AAAAAA"," A    A"," A    A","A      A","       "],
+      'M': ["M     M","MM   MM","M M M M","M  M  M","M     M","M     M","M     M","       "],
+      'P': ["PPPPP  ","P    P ","P    P ","PPPPP  ","P      ","P      ","P      ","       "]
+    };
 
-function makeGroup(str) {
-  const rows = Array(8).fill('');
-  for (const char of str) {
-    const glyph = DIGITS[char] || ['       ','       ','       ','       ','       ','       ','       ','       '];
-    for (let i = 0; i < 8; i++) {
-      rows[i] += glyph[i] + '';
-    }
-  }
-  return rows.join('\n');
-}
-
-function drawClock() {
-  const now = new Date();
-  let h = now.getHours();
-  const m = String(now.getMinutes()).padStart(2, '0');
-  const s = String(now.getSeconds()).padStart(2, '0');
-  const isPM = h >= 12;
-
-  h = h % 12 || 12;
-  const hStr = String(h);
-  const ampm = isPM ? 'PM' : 'AM';
-
-  const clock = document.getElementById('clock');
-  clock.innerHTML = ''; // clear
-
-  const group = (str) => {
-    const div = document.createElement('div');
-    div.className = 'digit-group';
-    div.textContent = makeGroup(str);
-    return div;
-  };
-
-  const isMobile = window.innerWidth <= 600;
-
-  if (isMobile) {
-    clock.appendChild(group(hStr));
-    clock.appendChild(group(m));
-    clock.appendChild(group(s));
-    clock.appendChild(group(ampm));
-  } else {
-    // Horizontal layout with colons
-    const rows = Array(8).fill('');
-    const full = hStr + ':' + m + ':' + s;
-    for (let i = 0; i < full.length; i++) {
-      const char = full[i];
-      const glyph = DIGITS[char] || ['       ','       ','       ','       ','       ','       ','       ','       '];
-      for (let r = 0; r < 8; r++) {
-        rows[r] += glyph[r] + ' ';
+    function makeGroup(str) {
+      const rows = Array(8).fill('');
+      for (const char of str) {
+        const glyph = DIGITS[char] || ['       ','       ','       ','       ','       ','       ','       ','       '];
+        for (let i = 0; i < 8; i++) {
+          rows[i] += glyph[i] + '';
+        }
       }
+      return rows.join('\n');
     }
 
-    const div = document.createElement('div');
-    div.className = 'digit-group';
-    div.textContent = rows.join('\n');
-    clock.appendChild(div);
-    clock.appendChild(group(ampm));
-  }
-}
+    function drawClock() {
+      const now = new Date();
+      let h = now.getHours();
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      const isPM = h >= 12;
 
-setInterval(drawClock, 1000);
-drawClock();
-</script>
+      h = h % 12 || 12;
+      const hStr = String(h);
+      const ampm = isPM ? 'PM' : 'AM';
 
+      const clock = document.getElementById('clock');
+      clock.innerHTML = '';
+
+      const group = (str) => {
+        const div = document.createElement('div');
+        div.className = 'digit-group';
+        div.textContent = makeGroup(str);
+        return div;
+      };
+
+      clock.appendChild(group(hStr));
+      clock.appendChild(group(m));
+      clock.appendChild(group(s));
+      clock.appendChild(group(ampm));
+    }
+
+    setInterval(drawClock, 1000);
+    drawClock();
+  </script>
 </body>
 </html>
