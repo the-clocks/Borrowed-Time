@@ -58,7 +58,6 @@
       left: 50%;
       transform-origin: bottom;
       transform: translateX(-50%) rotate(0deg);
-      z-index: 7;
     }
 
     .hour {
@@ -81,7 +80,7 @@
       width: 0.4vmin;
       height: 225vmin;
       background: red;
-      z-index: 1;
+      z-index: 7;
     }
 
 
@@ -96,13 +95,15 @@
   text-shadow: #f13805 1px 0px, #f8f7f7 -1px 0px ;
   font-size: 1.6rem;
   text-align: left;
+  
   transform-origin: top center;
   writing-mode: vertical-lr;
-  z-index: 2;
+  z-index: 6;
   white-space: nowrap; /* ADDED */
 }
 
 .label {
+
   display: block;
   margin-top: 39px; /* radial push from center */
   white-space: nowrap; /* ADDED */
