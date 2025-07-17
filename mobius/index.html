@@ -154,8 +154,14 @@
       roughness: 0.3,
     });
 
+    // Original Möbius strip
     const mobius = new THREE.Mesh(geometry, material);
     scene.add(mobius);
+
+    // Second Möbius strip, closer to camera and larger
+    const mobiusInner = new THREE.Mesh(geometry.clone(), material.clone());
+    mobiusInner.scale.set(2.5, 2.5, 2.5);
+    scene.add(mobiusInner);
 
     scene.add(new THREE.AmbientLight(0x404040));
     const pointLight = new THREE.PointLight(0xffffff, 1.2);
@@ -186,7 +192,6 @@
       }
 
       clockContext.clearRect(0, 0, clockCanvas.width, clockCanvas.height);
-
       clockContext.fillStyle = 'rgba(255, 255, 255, 0.6)';
       clockContext.fillRect(0, 0, clockCanvas.width, clockCanvas.height);
 
@@ -195,8 +200,8 @@
       clockContext.fillStyle = '#000000';
       clockContext.textBaseline = 'middle';
       clockContext.textAlign = 'left';
-
       clockContext.fillText(timeString, 10, clockCanvas.height / 2);
+
       clockTexture.needsUpdate = true;
     }
 
@@ -206,6 +211,10 @@
       mobius.rotation.x += 0.003;
       mobius.rotation.y += 0.005;
       mobius.rotation.z += 0.002;
+
+      mobiusInner.rotation.x -= 0.002;
+      mobiusInner.rotation.y -= 0.003;
+      mobiusInner.rotation.z -= 0.001;
 
       controls.update();
       updateClockTexture();
