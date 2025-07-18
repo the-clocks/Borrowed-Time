@@ -12,6 +12,10 @@
     rel="stylesheet" />
 
   <style>
+       @font-face {
+            font-family: 'mob';
+            src: url('fonts/mob.otf') format('opentype');
+        }
     html, body {
       margin: 0;
       padding: 0;
@@ -196,7 +200,7 @@
       clockContext.fillRect(0, 0, clockCanvas.width, clockCanvas.height);
 
       const fontSize = Math.round(clockCanvas.width / 4.5);
-      clockContext.font = `${fontSize}px Georgia`;
+      clockContext.font = `${fontSize}px mob`;
       clockContext.fillStyle = '#000000';
       clockContext.textBaseline = 'middle';
       clockContext.textAlign = 'left';
