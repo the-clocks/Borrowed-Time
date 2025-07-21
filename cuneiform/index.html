@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cuneiform Clock</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&family=Syne+Mono&display=swap"
+        rel="stylesheet">
+ <style>
+    @font-face {
+      font-family: 'cun';
+      src: url('./cun.ttf') format('truetype');
+    }
+
+    body {
+      margin: 0;
+      background-color: #062bb4;
+      font-family: 'cun', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .new-clock {
+      font-size: 5rem;
+      z-index: 10;
+      text-align: center;
+      /* font-weight: bold; */
+      
+    background: linear-gradient(to bottom,
+     #0b0b0a 1%,
+     #f2b02c 4%,
+     #0b0b0a 9%,
+     #cfc09f 27%,
+     #ffecb3 40%,
+     #7c560a 81%,
+       #e3d9c5 93%); 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #fff; letter-spacing: 1vw;
+    }
+
+  
+
+    .bgimage {
+      z-index: 1;
+      transform: scale(1.3);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform-origin: center;
+      filter: sepia(0.7) contrast(0.2) saturate(2.5);
+    }
+
+  
+        @keyframes slow-rotate {
+            0% {
+                transform: rotate(0deg) scale(1.5);
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1.5);
+            }
+        }
+.bgimage2 {
+  position: absolute;
+  /* top: 50%; */
+  /* left: 50%; */
+  width: auto;
+  height: auto;
+  max-width: 70vw;
+  max-height: 70vw;
+  transform: translate(-50%, -50%) scale(0.4); /* smaller scale */
+  transform-origin: center;
+  z-index: 2;
+  animation: slow-rotate 800s linear infinite;
+  /* opacity: 0.9; */
+  pointer-events: none;
+}
+
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+    }
+
+    .date-container {
+      color: #d7d5c7;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 6;
+    }
+
+    .clockname {
+      font-family: "Oxanium", serif;
+      font-size: 4vh;
+      line-height: 4vh;
+    }
+
+    .dateleft, .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+    }
+
+    .title-container {
+      color: #91918a;
+      text-shadow: 1px 0 #05228d;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      justify-content: space-between;
+      z-index: 6;
+    }
+
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.8vh;
+      letter-spacing: 0.1vh;
+    }
+
+    .bttitle {
+      font-family: "Oxanium", serif;
+      font-size: 2.8vh;
+      font-style: italic;
+      letter-spacing: -0.1vh;
+    }
+  </style>
+</head>
+<body>
+  <div class="title-container">
+    <div class="bttitle">BorrowedTime</div>
+    <div class="chltitle">Cubist Heart Laboratories</div>
+  </div>
+
+  <div class="new-clock" id="clock"></div>
+
+  <div class="date-container">
+    <a href="../radar/" class="dates dateleft">07/19/25</a>
+    <a href="../index.html" class="clockname">Cuneiform</a>
+    <a href="../morse/" class="dates dateright">07/21/25</a>
+  </div>
+
+  <img src="./cun1.webp" class="bgimage2" alt="Overlay Background" />
+  <img src="./cuf.jpg" class="bgimage" alt="Main Background" />
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours() % 12 || 12;
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+
+      const timeStr = `${hours}:${minutes}`;
+      document.getElementById('clock').textContent = timeStr;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
