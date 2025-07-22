@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Slot Machine Clock</title> 
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preload" href="fonts/Inner.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Monofett&family=Nanum+Gothic+Coding:wght@400;700&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+        rel="stylesheet">
+
+
+  <style>
+    @font-face {
+      font-family: 'slot';
+      src: url('slot.otf') format('opentype');
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #080808;
+    }
+
+    #slot-machine {
+      border: 5px solid #333;
+      padding: 20px;
+      background-color: #83773c;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    #reels {
+      display: flex;
+      justify-content: center;
+    }
+
+    .reel { 
+      z-index: 3;
+      width: 80px;
+      height: 180px;
+      border: 2px solid #000;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+      background-color: #f8f8f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0) 15%,
+        rgba(0, 0, 0, 0) 85%,
+        rgba(0, 0, 0, 0.4) 100%
+      );
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+      user-select: none;
+    }
+
+    .reel-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+      line-height: 100px;
+      opacity: 0.9;
+      z-index: 1;
+      user-select: none;
+    }
+
+    .reel-background > div {
+      height: 100px;
+      line-height: 100px;
+      width: 100%;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .reel-content {
+      font-family: 'slot';
+      color: red;
+      font-weight: bold;
+      letter-spacing: -0.1em;
+      transform: scaleX(1.1);
+      text-shadow:
+        -1px -1px 0 gold,
+        1px -1px 0 gold,
+        -1px 1px 0 gold,
+        1px 1px 0 gold,
+        -2px -2px 0 rgb(5, 5, 4),
+        2px -1px 0 rgb(36, 36, 35),
+        -2px 2px 0 rgb(58, 58, 56),
+        2px 2px 0 rgb(21, 21, 20),
+        0 0 10px gold,
+        0 0 20px black;
+      font-size: 58px;
+      line-height: 100px; /* Matched to reel-background for exact centering */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 180px;
+      width: 100%;
+      z-index: 2;
+      user-select: none;
+    }
+
+    .reel-content > div {
+      height: 100px; /* Matched to reel-background for exact centering */
+      line-height: 100px;
+      width: 100%;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .spinning {
+      animation: spin 0.15s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-100px); }
+    }
+
+    #time-display {
+         z-index: 2;
+      margin-top: 0px;
+      font-size: 0px;
+      font-weight: bold;
+      text-align: center;
+      color: white;
+      font-family: sans-serif;
+      user-select: none;
+    }
+
+        .bgimage {
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            height: 100vh;
+            width: 700px; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+        }
+
+        .date-container {
+            color: #bcbfc2;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+        .dateleft,
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+        }
+
+        .dateleft {
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #b7b7b0;
+            text-shadow: #4a494a 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.1vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.2vh;
+            font-style: italic;
+            letter-spacing: -0.1vh;
+        }
+  </style>
+</head>
+<body>
+
+
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../fstop/" class="dates dateleft">07/20/25</a>
+        <a href="../index.html" class="clockname">Slot Machine</a>
+       <a href="../slots/ class=" dates dateright">07/22/25</a>
+    </div>
+  <img src="./IMAGE_1688551792.webp" class="bgimage">
+  <div id="slot-machine">
+    <div id="reels">
+      <div class="reel" id="reel1">
+        <div class="reel-background" id="bg1"></div>
+        <div class="reel-content"></div>
+      </div>
+      <div class="reel" id="reel2">
+        <div class="reel-background" id="bg2"></div>
+        <div class="reel-content"></div>
+      </div>
+      <div class="reel" id="reel3">
+        <div class="reel-background" id="bg3"></div>
+        <div class="reel-content"></div>
+      </div>
+    </div>
+    <div id="time-display"></div>
+  </div>
+
+  <script>
+    const hourSymbols = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+    const minuteSymbols = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
+    const secondSymbols = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
+    const slotEmojis = ['🍒', '🍋', '🍊', '🍉', '⭐', '🔔', '🧊', '🫀', '🔭', '🍒', '🍋', '🍊', '🍉', '⭐', '🔔'];
+    const reels = [
+      document.getElementById('reel1').querySelector('.reel-content'),
+      document.getElementById('reel2').querySelector('.reel-content'),
+      document.getElementById('reel3').querySelector('.reel-content')
+    ];
+    const backgrounds = [
+      document.getElementById('bg1'),
+      document.getElementById('bg2'),
+      document.getElementById('bg3')
+    ];
+    const timeDisplay = document.getElementById('time-display');
+    let isSpinning = false;
+
+    function getRandomEmoji() {
+      return slotEmojis[Math.floor(Math.random() * slotEmojis.length)];
+    }
+
+    function populateReel(reel, symbol, reelType, bgReel) {
+      reel.innerHTML = '';
+      bgReel.innerHTML = '';
+      const symbols = reelType === 'hour' ? hourSymbols : (reelType === 'minute' ? minuteSymbols : secondSymbols);
+      const symbolIndex = symbols.indexOf(symbol);
+      const selectedEmoji = getRandomEmoji();
+      for (let i = -1; i <= 1; i++) {
+        const symbolElement = document.createElement('div');
+        symbolElement.textContent = symbols[(symbolIndex + i + symbols.length) % symbols.length];
+        reel.appendChild(symbolElement);
+        const bgElement = document.createElement('div');
+        bgElement.textContent = selectedEmoji;
+        bgReel.appendChild(bgElement);
+      }
+    }
+
+    function getCurrentTime() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12 || 12;
+      return {
+        hour: hours.toString(),
+        minute: minutes.toString().padStart(2, '0'),
+        second: seconds.toString().padStart(2, '0'),
+        ampm: ampm
+      };
+    }
+
+    function updateTimeDisplay() {
+      const time = getCurrentTime();
+      timeDisplay.textContent = `${time.hour}:${time.minute}:${time.second} ${time.ampm}`;
+    }
+
+    function spinReels() {
+      if (isSpinning) return;
+      isSpinning = true;
+
+      const time = getCurrentTime();
+      const targets = [time.hour, time.minute, time.second];
+
+      reels.forEach((reel, index) => {
+        reel.classList.add('spinning');
+        backgrounds[index].classList.add('spinning');
+        const reelType = index === 0 ? 'hour' : (index === 1 ? 'minute' : 'second');
+        populateReel(reel, targets[index], reelType, backgrounds[index]);
+      });
+
+      setTimeout(() => stopReel(0, targets[0], 'hour'), 500);
+      setTimeout(() => stopReel(1, targets[1], 'minute'), 1000);
+      setTimeout(() => stopReel(2, targets[2], 'second'), 1500);
+    }
+
+    function stopReel(reelIndex, targetSymbol, reelType) {
+      const reel = reels[reelIndex];
+      const bgReel = backgrounds[reelIndex];
+      reel.classList.remove('spinning');
+      bgReel.classList.remove('spinning');
+      reel.style.transform = 'translateY(0)';
+      bgReel.style.transform = 'translateY(0)';
+      reel.innerHTML = `<div>${targetSymbol}</div>`;
+      bgReel.innerHTML = `<div style="opacity: 0.5;">${getRandomEmoji()}</div><div>${getRandomEmoji()}</div><div style="opacity: 0.5;">${getRandomEmoji()}</div>`;
+      if (reelIndex === 2) {
+        updateTimeDisplay();
+        setTimeout(() => {
+          isSpinning = false;
+          spinReels();
+        }, 1500);
+      }
+    }
+
+    function initialize() {
+      const time = getCurrentTime();
+      const targets = [time.hour, time.minute, time.second];
+      reels.forEach((reel, index) => {
+        const reelType = index === 0 ? 'hour' : (index === 1 ? 'minute' : 'second');
+        reel.innerHTML = `<div>${targets[index]}</div>`;
+        backgrounds[index].innerHTML = `<div style="opacity: 0.5;">${getRandomEmoji()}</div><div>${getRandomEmoji()}</div><div style="opacity: 0.5;">${getRandomEmoji()}</div>`;
+      });
+      updateTimeDisplay();
+    }
+
+    initialize();
+    spinReels();
+  </script>
+</body>
+</html>
