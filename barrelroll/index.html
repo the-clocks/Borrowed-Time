@@ -121,7 +121,7 @@
     }
 
     .second {
-      width: 0px;
+      width: 2px;
       height: 45%;
       background: red;
     }
@@ -139,107 +139,104 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 2rem;
-      height: 2rem;
+      width: 8vmin;
+      height: 8vmin;
+      line-height: 8vmin;
       text-align: center;
-      transform: translate(-50%, -50%) rotate(calc(30deg * var(--i))) translateY(-45vmin) rotate(calc(-30deg * var(--i)));
-      color: rgb(128, 126, 126);
-      font-size: 2rem;
+      font-size: 3rem; /* Adjustable: change this to any size (e.g., 4vmin, 6vmin, 10px, 2rem) */
+      font-family: 'ber', 'Arial', sans-serif;
+      color: rgb(128, 126, 126); /* Lighter for better visibility */
       z-index: 13;
+      transform: translate(-50%, -50%) rotate(calc(30deg * var(--i))) translateY(-45vmin) rotate(calc(-30deg * var(--i)));
     }
 
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+      text-decoration: none;
+    }
 
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-            text-decoration: none;
-        }
+    .date-container {
+      color: #c0d5ed;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
 
-        .date-container {
-            color: #c0d5ed;
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
+    .clockname {
+      font-family: "Oxanium", serif;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 4vh;
+      line-height: 4vh;
+    }
 
-        .clockname {
-            font-family: "Oxanium", serif;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: "Oxanium", serif;
-            font-size: 4vh;
-            line-height: 4vh;
-        }
+    .dateleft {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: relative;
+      left: 0;
+    }
 
+    .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: absolute;
+      right: 0;
+    }
 
-        .dateleft {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: relative;
-            left: 0;
-        }
+    .title-container {
+      color: #8b8e91;
+      text-shadow: #d3d0d1 1px 0px;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
 
-        .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: absolute;
-            right: 0;
-        }
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.8vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      letter-spacing: 0.1vh;
+    }
 
-        .title-container {
-            color: #8b8e91;
-            text-shadow: #d3d0d1 1px 0px;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            /* justify-content: space-between; */
-            z-index: 6;
-        }
-
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.8vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
-
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.8vh;
-            font-style: italic;
-            z-index: 15;
-            letter-spacing: -0.1vh;
-        }
-
+    .bttitle {
+      position: relative;
+      left: 0;
+      font-family: "Oxanium", serif;
+      font-size: 2.8vh;
+      font-style: italic;
+      z-index: 15;
+      letter-spacing: -0.1vh;
+    }
   </style>
 </head>
 <body>
-    <div class="title-container">
-        <div class="chltitle">Cubist Heart Laboratories</div>
-        <div class="bttitle">BorrowedTime</div>
-    </div>
-    <div class="date-container">
-        <a href="../slots/" class="dates dateleft">07/21/25</a>
-        <a href="../index.html" class="clockname">Barrelroll</a>
-       <a href="../index.html"  class="dates dateright">07/23/25</a>
-    </div>
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
+  <div class="date-container">
+    <a href="../slots/" class="dates dateleft">07/21/25</a>
+    <a href="../index.html" class="clockname">Barrelroll</a>
+    <a href="../index.html" class="dates dateright">07/23/25</a>
+  </div>
   <div class="container">
     <div class="spin-wrapper">
       <div class="half left">
