@@ -38,8 +38,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 350vw;
-      height: 300vh;
+      width: 380vw;
+      height: 280vh;
       transform-origin: center;
       animation: spin 60s linear infinite;
       transform: translate(-50%, -50%);
@@ -62,10 +62,21 @@
     }
 
     .half img {
-      width: 100%;
+      position: absolute;
+      width: 200%;
       height: 100%;
       object-fit: cover;
+      filter: brightness(0.9) contrast(1.4);
+    }
+
+    .left img {
       transform: rotate(-90deg);
+      left: 0;
+    }
+
+    .right img {
+      transform: rotate(-90deg);
+      right: 0;
     }
 
     .center-line {
@@ -121,7 +132,7 @@
     }
 
     .second {
-      width: 2px;
+      width: 0px;
       height: 45%;
       background: red;
     }
@@ -143,9 +154,9 @@
       height: 8vmin;
       line-height: 8vmin;
       text-align: center;
-      font-size: 3rem; /* Adjustable: change this to any size (e.g., 4vmin, 6vmin, 10px, 2rem) */
+      font-size: 3rem;
       font-family: 'ber', 'Arial', sans-serif;
-      color: rgb(128, 126, 126); /* Lighter for better visibility */
+      color: rgb(128, 126, 126);
       z-index: 13;
       transform: translate(-50%, -50%) rotate(calc(30deg * var(--i))) translateY(-45vmin) rotate(calc(-30deg * var(--i)));
     }
