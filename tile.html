@@ -1,29 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stretched Background</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analog Clock</title>
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
       overflow: hidden;
     }
-    img.bg {
-      position: fixed;
-      top: 0;
-      left: 0;
+
+    .clock {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 10px solid #fff;
+      border-radius: 50%;
+      background: #222;
+    }
+
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom;
+      transform: translateX(-50%) rotate(0deg);
+      background: #fff;
+    }
+
+    .hour {
+      width: 8px;
+      height: 70px;
+      background: #f00;
+    }
+
+    .minute {
+      width: 6px;
+      height: 100px;
+      background: #0f0;
+    }
+
+    .second {
       width: 100vw;
-      height: 100vh;
-      object-fit: fill; /* distort to fill */
-      z-index: -1;
+      height: 2px;
+      background: #00f;
+      top: 50%;
+      transform-origin: center;
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
     }
   </style>
 </head>
 <body>
-  <img class="bg" src="./antartica/images/Antarctica Satellite Image.jpg" alt="Background" />
-  <!-- Add your content here -->
+  <div class="clock">
+    <div class="hand hour" id="hour-hand"></div>
+    <div class="hand minute" id="minute-hand"></div>
+    <div class="hand second" id="second-hand"></div>
+    <div class="center"></div>
+  </div>
+
+  <script>
+    const hourHand = document.getElementById('hour-hand');
+    const minuteHand = document.getElementById('minute-hand');
+    const secondHand = document.getElementById('second-hand');
+
+    let startTime = Date.now();
+
+    function updateClock() {
+      const now = new Date(); // Create a Date object
+      const elapsed = (Date.now() - startTime) / 1000; // Time in seconds for smooth seconds
+
+      // Calculate angles
+      const seconds = elapsed % 60; // Continuous seconds
+      const minutes = now.getMinutes() + seconds / 60; // Use Date object for minutes
+      const hours = now.getHours() + minutes / 60; // Use Date object for hours
+
+      const secondDeg = seconds * 6; // 360 / 60 = 6 degrees per second
+      const minuteDeg = minutes * 6; // 360 / 60 = 6 degrees per minute
+      const hourDeg = ((hours % 12) / 12) * 360; // 360 / 12 = 30 degrees per hour
+
+      // Apply transformations
+      secondHand.style.transform = `translate(-50%, -50%) rotate(${secondDeg}deg)`;
+      minuteHand.style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+      hourHand.style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+
+      requestAnimationFrame(updateClock);
+    }
+
+    updateClock(); // Start the animation
+  </script>
 </body>
 </html>
