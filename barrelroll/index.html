@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Barrelroll Clock</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+      href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Slab:wght@100..900&display=swap"
+      rel="stylesheet"> 
+  <style>
+    @font-face {
+      font-family: 'ber';
+      src: url('./ber.otf') format('opentype');
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .spin-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300vw;
+      height: 300vh;
+      transform-origin: center;
+      animation: spin 60s linear infinite;
+      transform: translate(-50%, -50%);
+    }
+
+    .half {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .left {
+      left: 0;
+    }
+
+    .right {
+      right: 0;
+    }
+
+    .half img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: rotate(-90deg);
+    }
+
+    .center-line {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 100%;
+      background: rgb(128, 126, 126);
+    }
+
+    @keyframes spin {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    .clock {
+      position: absolute;
+      font-family: 'ber', sans-serif;
+      top: 50%;
+      left: 50%;
+      width: 100vmin;
+      height: 100vmin;
+      border: 4px solid rgb(128, 126, 126);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      animation: counterspin 60s linear infinite;
+    }
+
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom;
+      background: rgb(128, 126, 126);
+      z-index: 12;
+    }
+
+    .hour {
+      width: 4px;
+      height: 30%;
+    }
+
+    .minute {
+      width: 4px;
+      height: 50%;
+    }
+
+    .second {
+      width: 0px;
+      height: 45%;
+      background: red;
+    }
+
+    @keyframes counterspin {
+      from {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%, -50%) rotate(-360deg);
+      }
+    }
+
+    .number {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 2rem;
+      height: 2rem;
+      text-align: center;
+      transform: translate(-50%, -50%) rotate(calc(30deg * var(--i))) translateY(-45vmin) rotate(calc(-30deg * var(--i)));
+      color: rgb(128, 126, 126);
+      font-size: 2rem;
+      z-index: 13;
+    }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #c0d5ed;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #8b8e91;
+            text-shadow: #d3d0d1 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+
+  </style>
+</head>
+<body>
+    <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+    <div class="date-container">
+        <a href="../slots/" class="dates dateleft">07/21/25</a>
+        <a href="../index.html" class="clockname">Barrelroll</a>
+       <a href="../index.html"  class="dates dateright">07/23/25</a>
+    </div>
+  <div class="container">
+    <div class="spin-wrapper">
+      <div class="half left">
+        <img src="./bard.webp" alt="Left Image">
+      </div>
+      <div class="half right">
+        <img src="barrs.webp" alt="Right Image">
+      </div>
+      <div class="center-line"></div>
+    </div>
+
+    <!-- Analog Clock -->
+    <div class="clock" id="clock">
+      <!-- Clock Numbers -->
+      <div class="number" style="--i:1">1</div>
+      <div class="number" style="--i:2">2</div>
+      <div class="number" style="--i:3">3</div>
+      <div class="number" style="--i:4">4</div>
+      <div class="number" style="--i:5">5</div>
+      <div class="number" style="--i:6">6</div>
+      <div class="number" style="--i:7">7</div>
+      <div class="number" style="--i:8">8</div>
+      <div class="number" style="--i:9">9</div>
+      <div class="number" style="--i:10">10</div>
+      <div class="number" style="--i:11">11</div>
+      <div class="number" style="--i:12">12</div>
+
+      <div class="hand hour" id="hour"></div>
+      <div class="hand minute" id="minute"></div>
+      <div class="hand second" id="second"></div>
+    </div>
+  </div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const second = now.getSeconds();
+      const minute = now.getMinutes();
+      const hour = now.getHours();
+
+      const secondDeg = second * 6;
+      const minuteDeg = minute * 6 + second * 0.1;
+      const hourDeg = ((hour % 12) / 12) * 360 + (minute / 60) * 30;
+
+      document.getElementById('second').style.transform = `translateX(-50%) rotate(${secondDeg}deg)`;
+      document.getElementById('minute').style.transform = `translateX(-50%) rotate(${minuteDeg}deg)`;
+      document.getElementById('hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
