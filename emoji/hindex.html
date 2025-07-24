@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Image Border Page</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      /* Simulate 100px border using padding */
+      padding: 100px;
+      box-sizing: border-box;
+
+      /* Use background image to simulate the border */
+      background-image: url('./castel.jpg'); /* <-- Replace with your image path */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+
+      /* Optional: in case content shrinks too much */
+      min-width: 300px;
+      min-height: 300px;
+    }
+
+    .content {
+      background-color: white; /* Contrast against image border */
+      padding: 20px;
+      height: 100%;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>Hello, world!</h1>
+    <p>This page has a simulated 100px border using a background image.</p>
+  </div>
+</body>
+</html>

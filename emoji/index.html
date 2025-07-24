@@ -1,116 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Analog Clock with Images</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: #000;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .clock {
-      position: relative;
-      width: 60vmin;
-      height: 60vmin;
-    }
-
-    .num {
-      position: absolute;
-      width: 10%;
-      transform: translate(-50%, -50%);
-    }
-
-    .n1  { top: 15%; left: 75%; }
-    .n2  { top: 27%; left: 85%; }
-    .n3  { top: 50%; left: 90%; }
-    .n4  { top: 73%; left: 85%; }
-    .n5  { top: 85%; left: 73%; }
-    .n6  { top: 90%; left: 50%; }
-    .n7  { top: 85%; left: 27%; }
-    .n8  { top: 73%; left: 15%; }
-    .n9  { top: 50%; left: 10%; }
-    .n10 { top: 27%; left: 15%; }
-    .n11 { top: 15%; left: 27%; }
-    .n12 { top: 10%; left: 50%; }
-
-    .hand {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform-origin: 10% 50%;
-      transform: rotate(0deg);
-      pointer-events: none;
-    }
-
-    .hand img {
-      height: 2vmin;
-      width: 30vmin;
-    }
-
-    .hand.hour img {
-      width: 20vmin;
-    }
-
-    .hand.minute img {
-      width: 27vmin;
-    }
-
-    .hand.second img {
-      width: 30vmin;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color:#6A7A82FF;
+        }
+        canvas {
+            border: 1px solid #707c7c;
+            border-radius: 50%;
+            background-color: #738282;
+        }
+    </style>
 </head>
 <body>
-  <div class="clock">
-    <!-- Number images -->
-    <img src="images/num1.png" class="num n1" />
-    <img src="images/num2.png" class="num n2" />
-    <img src="images/num3.png" class="num n3" />
-    <img src="images/num4.png" class="num n4" />
-    <img src="images/num5.png" class="num n5" />
-    <img src="images/num6.png" class="num n6" />
-    <img src="images/num7.png" class="num n7" />
-    <img src="images/num8.png" class="num n8" />
-    <img src="images/num9.png" class="num n9" />
-    <img src="images/num10.png" class="num n10" />
-    <img src="images/num11.png" class="num n11" />
-    <img src="images/num12.png" class="num n12" />
+    <canvas id="clock" width="300vw" height="300vw"></canvas>
+    <script>
+        const canvas = document.getElementById('clock');
+        const ctx = canvas.getContext('2d');
+        const radius = canvas.width / 2;
+        // Array of Roman numerals for hours 1-12
+        const hourNumbers = ['🎄', '🥇', '✌️', '🎶', '🍀', '⭐', '🀞', '🎰', '🎱', '🐈', '🎯', '⏸️'];
 
-    <!-- Hands -->
-    <div class="hand hour"><img src="images/hour.png" alt="hour" /></div>
-    <div class="hand minute"><img src="images/minute.png" alt="minute" /></div>
-    <div class="hand second"><img src="images/second.png" alt="second" /></div>
-  </div>
+        function drawClock() {
+            const now = new Date(); // Use current system time
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
 
-  <script>
-    const hourHand = document.querySelector('.hour');
-    const minuteHand = document.querySelector('.minute');
-    const secondHand = document.querySelector('.second');
+            // Draw clock face
+            ctx.beginPath();
+            ctx.arc(0, 0, radius * 0.9, 0, 2 * Math.PI);
+            ctx.fillStyle = '#6A7A82FF';
+            ctx.fill();
+            ctx.strokeStyle = '#738282';
+            ctx.lineWidth = 2;
+            ctx.stroke();
 
-    function updateClock() {
-      const now = new Date();
-      const sec = now.getSeconds();
-      const min = now.getMinutes();
-      const hr = now.getHours() % 12;
+            // Draw hour markers and Roman numerals
+            for (let i = 0; i < 12; i++) {
+                const angle = (i * 30) * Math.PI / 180;
+                // // Hour markers
+                // ctx.beginPath();
+                // ctx.moveTo(0, -radius * 0.8);
+                // ctx.lineTo(0, -radius * 0.9);
+                // ctx.lineWidth = 2;
+                // ctx.stroke();
+                // Roman numerals
+                ctx.save();
+                ctx.translate(0, -radius * 0.75);
+                ctx.rotate(-angle); // Counter-rotate to keep numbers upright
+                ctx.font = '52px Times New Roman'; // Use Times New Roman for Roman numerals
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = 'black';
+                ctx.fillText(hourNumbers[i], 0, 0);
+                ctx.restore();
+                ctx.rotate(30 * Math.PI / 180);
+            }
 
-      const secDeg = sec * 6;
-      const minDeg = min * 6 + sec * 0.1;
-      const hrDeg = hr * 30 + min * 0.5;
+            // Get time
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const milliseconds = now.getMilliseconds();
 
-      hourHand.style.transform = `rotate(${hrDeg}deg)`;
-      minuteHand.style.transform = `rotate(${minDeg}deg)`;
-      secondHand.style.transform = `rotate(${secDeg}deg)`;
-    }
+            // Draw hour hand
+            ctx.save();
+            ctx.rotate((hours + minutes / 60 + seconds / 3600) * 30 * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, -radius * 0.4);
+            ctx.lineWidth = 6;
+            ctx.strokeStyle = 'white';
+            ctx.stroke();
+            ctx.restore();
 
-    setInterval(updateClock, 1000);
-    updateClock();
-  </script>
+            // Draw minute hand
+            ctx.save();
+            ctx.rotate((minutes + seconds / 60 + milliseconds / 60000) * 6 * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, -radius * 0.6);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = 'white';
+            ctx.stroke();
+            ctx.restore();
+
+            // Draw second hand
+            ctx.save();
+            ctx.rotate((seconds + milliseconds / 1000) * 6 * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, -radius * 0.9);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'white';
+            ctx.stroke();
+            ctx.restore();
+
+            // Draw center dot
+            ctx.beginPath();
+            ctx.arc(0, 0, radius * 0.05, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Update clock every 50ms for smoother second hand movement
+        setInterval(drawClock, 50);
+        drawClock(); // Initial draw
+    </script>
 </body>
 </html>
