@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analog Clock</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #c4d1c1;
+        }
+        canvas {
+            border: 2px solid #333;
+            border-radius: 50%;
+            background-color: #dbdbd2;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="clock" width="300vw" height="300vw"></canvas>
+    <script>
+        const canvas = document.getElementById('clock');
+        const ctx = canvas.getContext('2d');
+        const radius = canvas.width / 2;
+        // Array of Roman numerals for hours 1-12
+        const hourNumbers = ['🎄', '🥇', '✌️', '🎶', '🍀', '⭐', '🕕', '🎰', '🎱', '🐈', '🎯', '⏸️'];
+
+        function drawClock() {
+            const now = new Date(); // Use current system time
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(radius, radius);
+
+            // Draw clock face
+            ctx.beginPath();
+            ctx.arc(0, 0, radius * 0.9, 0, 2 * Math.PI);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Draw hour markers and Roman numerals
+            for (let i = 0; i < 12; i++) {
+                const angle = (i * 30) * Math.PI / 180;
+                // Hour markers
+                ctx.beginPath();
+                ctx.moveTo(0, -radius * 0.8);
+                ctx.lineTo(0, -radius * 0.9);
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                // Roman numerals
+                ctx.save();
+                ctx.translate(0, -radius * 0.75);
+                ctx.rotate(-angle); // Counter-rotate to keep numbers upright
+                ctx.font = '12px Times New Roman'; // Use Times New Roman for Roman numerals
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = 'black';
+                ctx.fillText(hourNumbers[i], 0, 0);
+                ctx.restore();
+                ctx.rotate(30 * Math.PI / 180);
+            }
+
+            // Get time
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const milliseconds = now.getMilliseconds();
+
+            // Draw hour hand
+            ctx.save();
+            ctx.rotate((hours + minutes / 60 + seconds / 3600) * 30 * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, -radius * 0.5);
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+            ctx.restore();
+
+            // Draw minute hand
+            ctx.save();
+            ctx.rotate((minutes + seconds / 60 + milliseconds / 60000) * 6 * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, -radius * 0.7);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = 'blue';
+            ctx.stroke();
+            ctx.restore();
+
+            // Draw second hand
+            ctx.save();
+            ctx.rotate((seconds + milliseconds / 1000) * 6 * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(0, 0);
+            ctx.lineTo(0, -radius * 0.8);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'red';
+            ctx.stroke();
+            ctx.restore();
+
+            // Draw center dot
+            ctx.beginPath();
+            ctx.arc(0, 0, radius * 0.05, 0, 2 * Math.PI);
+            ctx.fillStyle = 'black';
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Update clock every 50ms for smoother second hand movement
+        setInterval(drawClock, 50);
+        drawClock(); // Initial draw
+    </script>
+</body>
+</html>

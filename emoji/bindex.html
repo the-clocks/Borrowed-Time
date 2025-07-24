@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analog Clock</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .clock {
+      position: relative;
+      width: 60vmin;
+      height: 60vmin;
+      border: 0.5vmin solid #fff;
+      border-radius: 50%;
+      background: radial-gradient(#222, #000);
+    }
+
+    .center {
+      width: 2vmin;
+      height: 2vmin;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+
+    .hand {
+      position: absolute;
+      width: 50%;
+      height: 0.4vmin;
+      background: white;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0% 50%;
+      transform: rotate(0deg);
+      border-radius: 1vmin;
+    }
+
+    .hour {
+      width: 30%;
+      height: 0.6vmin;
+      background: #fff;
+      z-index: 3;
+    }
+
+    .minute {
+      width: 40%;
+      height: 0.4vmin;
+      background: #ccc;
+      z-index: 2;
+    }
+
+    .second {
+      width: 45%;
+      height: 0.2vmin;
+      background: red;
+      z-index: 1;
+    }
+
+    .number {
+      position: absolute;
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 3vmin;
+      font-weight: bold;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <div class="clock">
+    <div class="center"></div>
+    <div class="hand hour" id="hour"></div>
+    <div class="hand minute" id="minute"></div>
+    <div class="hand second" id="second"></div>
+
+    <!-- Clock numbers -->
+    <div class="number" style="top: 10%; left: 50%;">12</div>
+    <div class="number" style="top: 20%; left: 85%;">1</div>
+    <div class="number" style="top: 38%; left: 95%;">2</div>
+    <div class="number" style="top: 50%; left: 100%;">3</div>
+    <div class="number" style="top: 62%; left: 95%;">4</div>
+    <div class="number" style="top: 80%; left: 85%;">5</div>
+    <div class="number" style="top: 90%; left: 50%;">6</div>
+    <div class="number" style="top: 80%; left: 15%;">7</div>
+    <div class="number" style="top: 62%; left: 5%;">8</div>
+    <div class="number" style="top: 50%; left: 0%;">9</div>
+    <div class="number" style="top: 38%; left: 5%;">10</div>
+    <div class="number" style="top: 20%; left: 15%;">11</div>
+  </div>
+
+  <script>
+    const hourEl = document.getElementById('hour');
+    const minuteEl = document.getElementById('minute');
+    const secondEl = document.getElementById('second');
+
+    function updateClock() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+
+      const secondDeg = seconds * 6;
+      const minuteDeg = minutes * 6 + seconds * 0.1;
+      const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+
+      secondEl.style.transform = `rotate(${secondDeg}deg)`;
+      minuteEl.style.transform = `rotate(${minuteDeg}deg)`;
+      hourEl.style.transform = `rotate(${hourDeg}deg)`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
