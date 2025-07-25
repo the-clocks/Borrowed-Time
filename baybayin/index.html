@@ -22,23 +22,41 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      width: 100vw;
       margin: 0;
-      background-color: #4b9b7f;
+      /* background-color: #4b9b7f; */
     }
 
     .clock {
       display: flex;
       /* gap: 0.4rem; */
-      /* background-color: #fff; */
+      background-color: #514e4e;
       /* padding: 1rem 2rem; */
       border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(7, 60, 221, 0.2);
+      box-shadow: 0 4px 10px rgba(15, 220, 134, 0.5);
     }
 
     .digit {
-      width: 3rem;
+      width: 2.9rem;
       height: 4rem;
       font-family: 'bay', monospace;
+      font-size: 4rem;
+      font-weight: bold;
+      background: #e9e9e9; /* Solid background */
+      background: linear-gradient(135deg, #60ff04, hsl(219, 82%, 65%)); /* Gradient for text */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; /* Makes text show gradient */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 6px;
+      user-select: none
+    }
+
+    .colon {
+      width: 0.9rem;
+      height: 4rem;
+      font-family: 'Roboto Mono', monospace;
       font-size: 3rem;
       font-weight: bold;
       background: #e9e9e9; /* Solid background */
@@ -52,127 +70,109 @@
       user-select: none;
     }
 
-    @media (max-width: 600px) {
-      .digit {
-        width: 2.2rem;
-        height: 3rem;
-        font-size: 3rem;
-      }
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    @media (max-width: 400px) {
-      .digit {
-        width: 1.8rem;
-        height: 2.4rem;
-        font-size: 3rem;
-      }
+    a:hover {
+      color: #e8ecec;
+      background-color: rgb(21, 0, 255);
+      text-decoration: none;
     }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+    .date-container {
+      color: #191920;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      z-index: 6;
+    }
 
-        a:hover {
-            color: #e8ecec;
-            background-color: rgb(21, 0, 255);
-            text-decoration: none;
-        }
+    .clockname {
+      font-family: "Oxanium", serif;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "Oxanium", serif;
+      font-size: 4vh;
+      line-height: 4vh;
+    }
 
-        .date-container {
-            color: #191920;
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            z-index: 6;
-        }
+    .dateleft {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: relative;
+      left: 0;
+    }
 
-        .clockname {
-            font-family: "Oxanium", serif;
-            position: fixed;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: "Oxanium", serif;
-            font-size: 4vh;
-            line-height: 4vh;
-        }
+    .dateright {
+      font-size: 3vh;
+      font-family: "Nanum Gothic Coding", monospace;
+      position: absolute;
+      right: 0;
+    }
 
+    .title-container {
+      color: #0e0c0d;
+      text-shadow: #9dd9ed 1px 0px;
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 98%;
+      display: flex;
+      /* justify-content: space-between; */
+      z-index: 6;
+    }
 
-        .dateleft {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: relative;
-            left: 0;
-        }
+    .chltitle {
+      font-family: "Roboto Slab", serif;
+      font-size: 2.8vh;
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      /* letter-spacing: 0.1vh; */
+    }
 
-        .dateright {
-            font-size: 3vh;
-            font-family: "Nanum Gothic Coding", monospace;
-            position: absolute;
-            right: 0;
-        }
+    .bttitle {
+      position: relative;
+      left: 0;
+      font-family: "Oxanium", serif;
+      font-size: 2.8vh;
+      font-style: italic;
+      z-index: 15;
+      letter-spacing: -0.1vh;
+    }
 
-        .title-container {
-            color: #0e0c0d;
-            text-shadow: #9dd9ed 1px 0px;
-            position: absolute;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 98%;
-            display: flex;
-            /* justify-content: space-between; */
-            z-index: 6;
-        }
-
-        .chltitle {
-            font-family: "Roboto Slab", serif;
-            font-size: 2.8vh;
-            position: absolute;
-            top: 1px;
-            right: 1px;
-            letter-spacing: 0.1vh;
-        }
-
-        .bttitle {
-            position: relative;
-            left: 0;
-            font-family: "Oxanium", serif;
-            font-size: 2.8vh;
-            font-style: italic;
-            z-index: 15;
-            letter-spacing: -0.1vh;
-        }
-  .bgimage {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 150%;       /* or whatever stretch amount you want */
-  height: 150%;      /* same as above */
-  transform: translate(-50%, -50%); /* centers it */
-  z-index: 1;
-  opacity: 0.1;
-  transform-origin: center center;
-}
-
-
+    .bgimage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150%;       /* or whatever stretch amount you want */
+      height: 150%;      /* same as above */
+      transform: translate(-50%, -50%); /* centers it */
+      z-index: -1;
+      opacity: 0.5;
+      transform-origin: center center;
+    }
   </style>
 </head>
 <body>
-     <div class="title-container">
-        <div class="chltitle">Cubist Heart Laboratories</div>
-        <div class="bttitle">BorrowedTime</div>
-    </div>
+  <div class="title-container">
+    <div class="chltitle">Cubist Heart Laboratories</div>
+    <div class="bttitle">BorrowedTime</div>
+  </div>
 
-    <div class="date-container">
-        <a href="../barrelroll" class="dates dateleft">07/22/25</a>
-        <a href="../index.html" class="clockname">Baybayin</a>
-       <a href="../index.html"  class="dates dateright">07/24/25</a>
-    </div>
-    <img src="./bay01s52djxo1_400.webp" class="bgimage">
+  <div class="date-container">
+    <a href="../barrelroll" class="dates dateleft">07/22/25</a>
+    <a href="../index.html" class="clockname">Baybayin</a>
+    <a href="../index.html" class="dates dateright">07/24/25</a>
+  </div>
+  <img src="./bay01s52djxo1_400.webp" class="bgimage">
   <div class="clock" id="clock"></div>
 
   <script>
@@ -187,7 +187,7 @@
 
       for (const char of timeStr) {
         const span = document.createElement('div');
-        span.className = 'digit';
+        span.className = char === ':' ? 'colon' : 'digit';
         span.textContent = char;
         clock.appendChild(span);
       }
