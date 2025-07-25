@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digital Clock</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Nanum+Gothic+Coding&family=Oxanium:wght@200..800&family=Roboto+Mono:wght@400&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    @font-face {
+      font-family: 'bay';
+      src: url('./bay.ttf') format('truetype');
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #4b9b7f;
+    }
+
+    .clock {
+      display: flex;
+      /* gap: 0.4rem; */
+      /* background-color: #fff; */
+      /* padding: 1rem 2rem; */
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(7, 60, 221, 0.2);
+    }
+
+    .digit {
+      width: 3rem;
+      height: 4rem;
+      font-family: 'bay', monospace;
+      font-size: 3rem;
+      font-weight: bold;
+      background: #e9e9e9; /* Solid background */
+      background: linear-gradient(135deg, #60ff04, hsl(219, 82%, 65%)); /* Gradient for text */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; /* Makes text show gradient */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 6px;
+      user-select: none;
+    }
+
+    @media (max-width: 600px) {
+      .digit {
+        width: 2.2rem;
+        height: 3rem;
+        font-size: 3rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .digit {
+        width: 1.8rem;
+        height: 2.4rem;
+        font-size: 3rem;
+      }
+    }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #e8ecec;
+            background-color: rgb(21, 0, 255);
+            text-decoration: none;
+        }
+
+        .date-container {
+            color: #191920;
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            z-index: 6;
+        }
+
+        .clockname {
+            font-family: "Oxanium", serif;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: "Oxanium", serif;
+            font-size: 4vh;
+            line-height: 4vh;
+        }
+
+
+        .dateleft {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: relative;
+            left: 0;
+        }
+
+        .dateright {
+            font-size: 3vh;
+            font-family: "Nanum Gothic Coding", monospace;
+            position: absolute;
+            right: 0;
+        }
+
+        .title-container {
+            color: #0e0c0d;
+            text-shadow: #9dd9ed 1px 0px;
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 98%;
+            display: flex;
+            /* justify-content: space-between; */
+            z-index: 6;
+        }
+
+        .chltitle {
+            font-family: "Roboto Slab", serif;
+            font-size: 2.8vh;
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            letter-spacing: 0.1vh;
+        }
+
+        .bttitle {
+            position: relative;
+            left: 0;
+            font-family: "Oxanium", serif;
+            font-size: 2.8vh;
+            font-style: italic;
+            z-index: 15;
+            letter-spacing: -0.1vh;
+        }
+  .bgimage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;       /* or whatever stretch amount you want */
+  height: 150%;      /* same as above */
+  transform: translate(-50%, -50%); /* centers it */
+  z-index: 1;
+  opacity: 0.1;
+  transform-origin: center center;
+}
+
+
+  </style>
+</head>
+<body>
+     <div class="title-container">
+        <div class="chltitle">Cubist Heart Laboratories</div>
+        <div class="bttitle">BorrowedTime</div>
+    </div>
+
+    <div class="date-container">
+        <a href="../barrelroll" class="dates dateleft">07/22/25</a>
+        <a href="../index.html" class="clockname">Baybayin</a>
+       <a href="../index.html"  class="dates dateright">07/24/25</a>
+    </div>
+    <img src="./bay01s52djxo1_400.webp" class="bgimage">
+  <div class="clock" id="clock"></div>
+
+  <script>
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now
+        .toLocaleTimeString('en-GB', { hour12: false })
+        .replace(/:/g, ':'); // keeps colons
+
+      const clock = document.getElementById('clock');
+      clock.innerHTML = ''; // Clear previous content
+
+      for (const char of timeStr) {
+        const span = document.createElement('div');
+        span.className = 'digit';
+        span.textContent = char;
+        clock.appendChild(span);
+      }
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>
